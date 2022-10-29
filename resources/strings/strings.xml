@@ -1,0 +1,88 @@
+<strings>
+    <string id="AppName">Simple Pixels</string>
+
+    <string id="GroupColor">Colors</string>
+    <string id="GroupMain">Main</string>
+    <string id="GroupSeparator">Separator</string>
+    <string id="GroupLeftInfo">Left Sensor Info</string>
+    <string id="GroupTopFields">Top Sensor Fields</string>
+    <string id="GroupBottomFields">Bottom Sensor Fields</string>
+
+    <string id="BackgroundColorTitle">Background Color</string>
+    <string id="ForegroundColorTitle">Foreground Color</string>
+    <string id="TextColorTitle">Text Color</string>
+    <string id="SeparatorColorTitle">Separator Color</string>
+    <string id="SeparatorInfoTitle">Separator Data</string>
+
+    <string id="ColorBlack">Black</string>
+    <string id="ColorWhite">White</string>
+    <string id="ColorLightGray">Light Gray</string>
+    <string id="ColorGrey">Gray</string>
+    <string id="ColorIndigo">Indigo</string>
+    <string id="ColorPurple">Purple</string>
+    <string id="ColorDeepPurple">DeepPurple</string>
+    <string id="ColorPink">Pink</string>
+    <string id="ColorBlueGrey">Blue Grey</string>
+    <string id="ColorBlue">Blue</string>
+    <string id="ColorLightBlue">LightBlue</string>
+    <string id="ColorTeal">Teal</string>
+    <string id="ColorOceanBlue">Ocean Blue</string>
+    <string id="ColorLime">Lime</string>
+    <string id="ColorGreen">Green</string>
+    <string id="ColorDarkGreen">Dark Green</string>
+    <string id="ColorLightGreen">LightGreen</string>
+    <string id="ColorYellow">Yellow</string>
+    <string id="ColorAmber">Amber</string>
+    <string id="ColorOrange">Orange</string>
+    <string id="ColorDeepOrange">Deep Orange</string>
+    <string id="ColorRed">Red</string>
+    <string id="ColorDarkRed">Dark Red</string>
+    <string id="ColorBrown">Brown</string>
+    <string id="ColorLightBrown">Light Brown</string>
+
+    <string id="TopSensor1">Top sensor 1</string>
+    <string id="TopSensor2">Top sensor 2</string>
+    <string id="TopSensor3">Top sensor 3</string>
+    <string id="BottomSensor1">Bottom sensor 1</string>
+    <string id="BottomSensor2">Bottom sensor 2</string>
+    <string id="BottomSensor3">Bottom sensor 3</string>
+    <string id="LeftSensor">Left sensor</string>
+    <string id="DisplayStatusIcons">Show status icons</string>
+
+    <string id="None">None</string>
+    <string id="Steps">Steps</string>
+    <string id="Calories">Calories</string>
+    <string id="Temperature">Temperature</string>
+    <string id="Battery">Battery %</string>
+    <string id="BatteryInDays">Battery d/left</string>
+    <string id="IsConnected">Is connected</string>
+    <string id="HeartRate">Heart rate</string>
+    <string id="Floors">Floors</string>
+    <string id="Altitude">Altitude</string>
+    <string id="Messages">Messages</string>
+    <string id="AlarmCount">Alarm count</string>
+    <string id="Memory">Memory Used</string>
+    <string id="Weather">Current Weather</string>
+    <string id="OxygenSaturation">Oxygen saturation</string>
+    <string id="Pressure">Pressure</string>
+    <string id="TimeToRecovery">Recovery time</string>
+    <string id="RespirationRate">Respiration rate</string>
+    <string id="MetersClimbed">Meters climbed</string>
+    <string id="IsNightMode">Is night mode</string>
+    <string id="IsSleepTime">Is sleep time</string>
+    <string id="IsDoNotDisturb">Is DnD</string>
+    <string id="Distance">Distance</string>
+    <string id="ActiveMinutesDay">Active m/day</string>
+    <string id="BodyBattery">Body battery</string>
+    <string id="Stress">Stress</string>
+    <string id="ActiveMinutesWeek">Active m/week</string>
+    <string id="SolarIntensity">Solar intensity</string>
+    <string id="IsCharging">Is charging</string>
+
+    <string id="DisplaySeconds">Display seconds</string>
+
+    <string id="Never">Never</string>
+    <string id="OnGesture">On Gesture</string>
+
+    <string id="NA">---</string>
+</strings>

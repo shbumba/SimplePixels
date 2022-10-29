@@ -1,0 +1,16 @@
+info face="Cone" size=-154 bold=1 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=4 padding=0,0,0,0 spacing=1,1 outline=0
+common lineHeight=185 base=149 scaleW=300 scaleH=240 pages=1 packed=0 alphaChnl=0 redChnl=4 greenChnl=4 blueChnl=4
+page id=0 file="hours_0.png"
+chars count=12
+char id=32   x=287   y=0     width=1     height=1     xoffset=0     yoffset=0     xadvance=21    page=0  chnl=15
+char id=48   x=0     y=0     width=53    height=94    xoffset=0     yoffset=55    xadvance=62    page=0  chnl=15
+char id=49   x=270   y=0     width=16    height=94    xoffset=0     yoffset=55    xadvance=24    page=0  chnl=15
+char id=50   x=54    y=0     width=53    height=94    xoffset=0     yoffset=55    xadvance=62    page=0  chnl=15
+char id=51   x=108   y=0     width=53    height=94    xoffset=0     yoffset=55    xadvance=62    page=0  chnl=15
+char id=52   x=162   y=0     width=53    height=94    xoffset=0     yoffset=55    xadvance=62    page=0  chnl=15
+char id=53   x=216   y=0     width=53    height=94    xoffset=0     yoffset=55    xadvance=62    page=0  chnl=15
+char id=54   x=0     y=95    width=53    height=94    xoffset=0     yoffset=55    xadvance=62    page=0  chnl=15
+char id=55   x=54    y=95    width=53    height=94    xoffset=0     yoffset=55    xadvance=62    page=0  chnl=15
+char id=56   x=108   y=95    width=53    height=94    xoffset=0     yoffset=55    xadvance=62    page=0  chnl=15
+char id=57   x=162   y=95    width=53    height=94    xoffset=0     yoffset=55    xadvance=62    page=0  chnl=15
+char id=58   x=216   y=95    width=16    height=65    xoffset=0     yoffset=83    xadvance=24    page=0  chnl=15

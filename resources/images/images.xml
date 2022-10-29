@@ -1,0 +1,5 @@
+<resources>
+    <bitmap id="LauncherIcon" filename="icon.png" />
+    <font id="pattern" filename="pattern.fnt" antialias="true"/>
+    <font id="sensorIcons" filename="sensor_icons.fnt" antialias="true"/>
+</resources>
