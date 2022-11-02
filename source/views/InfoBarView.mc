@@ -18,7 +18,7 @@ class InfoBarView extends Component.Box {
         SensorType.STEPS => SensorType.STEPS_GOAL,
     };
 
-    function initialize(params as Dictionary<String, String?>) {
+    function initialize(params as Component.BoxProps) {
         Component.Box.initialize(params);
 
         self.updateSettings();

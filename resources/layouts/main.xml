@@ -2,132 +2,132 @@
     <layout id="MainLayout">
         <drawable id="Background" class="BackgroundView"/>
         <drawable id="PrevHours" class="PhantomTimeView">
-            <param name="xPosition">"50%"</param>
-            <param name="yPosition">"26%"</param>
             <param name="boxWidth">"116"</param>
             <param name="boxHeight">"110"</param>
-            <param name="boxXShift">"-5"</param>
-            <param name="boxYShift">"-1"</param>
-            <param name="horizontalAlignment">"end"</param>
-            <param name="verticalAlignment">"end"</param>
+            <param name="xPos">"50%"</param>
+            <param name="yPos">"26%"</param>
+            <param name="xShift">"-5"</param>
+            <param name="yShift">"-1"</param>
+            <param name="horizontalAlignment">PositionUtils.ALIGN_END</param>
+            <param name="verticalAlignment">PositionUtils.ALIGN_END</param>
             <param name="font">@Rez.Fonts.hours</param>
             <param name="timeShift">-1</param>
             <param name="type">Component.TimeViewType.HOURS</param>
             <param name="textAligment">Graphics.TEXT_JUSTIFY_RIGHT</param>
         </drawable>
         <drawable id="Date" class="DateView">
-            <param name="xPosition">"50%"</param>
-            <param name="yPosition">"26%"</param>
-            <param name="boxXShift">"-14"</param>
-            <param name="boxYShift">"0"</param>
             <param name="boxWidth">"80"</param>
             <param name="boxHeight">"40"</param>
-            <param name="horizontalAlignment">"end"</param>
-            <param name="verticalAlignment">"end"</param>
+            <param name="xPos">"50%"</param>
+            <param name="yPos">"26%"</param>
+            <param name="xShift">"-14"</param>
+            <param name="yShift">"0"</param>
+            <param name="horizontalAlignment">PositionUtils.ALIGN_END</param>
+            <param name="verticalAlignment">PositionUtils.ALIGN_END</param>
             <param name="font">@Rez.Fonts.data</param>
         </drawable>
         <drawable id="Hours" class="Component.TimeView">
-            <param name="xPosition">"50%"</param>
-            <param name="yPosition">"50%"</param>
             <param name="boxWidth">"116"</param>
             <param name="boxHeight">"110"</param>
-            <param name="boxXShift">"-5"</param>
-            <param name="horizontalAlignment">"end"</param>
-            <param name="verticalAlignment">"center"</param>
+            <param name="xPos">"50%"</param>
+            <param name="yPos">"50%"</param>
+            <param name="xShift">"-5"</param>
+            <param name="horizontalAlignment">PositionUtils.ALIGN_END</param>
+            <param name="verticalAlignment">PositionUtils.ALIGN_CENTER</param>
             <param name="font">@Rez.Fonts.hours</param>
             <param name="type">Component.TimeViewType.HOURS</param>
             <param name="textAligment">Graphics.TEXT_JUSTIFY_RIGHT</param>
         </drawable>
         <drawable id="NextHours" class="PhantomTimeView">
-            <param name="xPosition">"50%"</param>
-            <param name="yPosition">"74%"</param>
             <param name="boxWidth">"116"</param>
             <param name="boxHeight">"110"</param>
-            <param name="boxXShift">"-5"</param>
-            <param name="boxYShift">"1"</param>
-            <param name="horizontalAlignment">"end"</param>
-            <param name="verticalAlignment">"start"</param>
+            <param name="xPos">"50%"</param>
+            <param name="yPos">"74%"</param>
+            <param name="xShift">"-5"</param>
+            <param name="yShift">"1"</param>
+            <param name="horizontalAlignment">PositionUtils.ALIGN_END</param>
+            <param name="verticalAlignment">PositionUtils.ALIGN_START</param>
             <param name="font">@Rez.Fonts.hours</param>
             <param name="timeShift">1</param>
             <param name="type">Component.TimeViewType.HOURS</param>
             <param name="textAligment">Graphics.TEXT_JUSTIFY_RIGHT</param>
         </drawable>
         <drawable id="LeftSensors" class="LeftSensorsView">
-            <param name="xPosition">"50%"</param>
-            <param name="yPosition">"74%"</param>
-            <param name="boxXShift">"-14"</param>
-            <param name="boxYShift">"2"</param>
             <param name="boxWidth">"80"</param>
             <param name="boxHeight">"42"</param>
-            <param name="horizontalAlignment">"end"</param>
-            <param name="verticalAlignment">"start"</param>
+            <param name="xPos">"50%"</param>
+            <param name="yPos">"74%"</param>
+            <param name="xShift">"-14"</param>
+            <param name="yShift">"2"</param>
+            <param name="horizontalAlignment">PositionUtils.ALIGN_END</param>
+            <param name="verticalAlignment">PositionUtils.ALIGN_START</param>
             <param name="font">@Rez.Fonts.data</param>
             <param name="itemHeight">"21"</param>
             <param name="iconSize">"19"</param>
         </drawable>
         <drawable id="InfoBar" class="InfoBarView">
-            <param name="xPosition">"50%"</param>
-            <param name="yPosition">"50%"</param>
             <param name="boxWidth">"10"</param>
             <param name="boxHeight">"91%"</param>
-            <param name="horizontalAlignment">"center"</param>
-            <param name="verticalAlignment">"center"</param>
+            <param name="xPos">"50%"</param>
+            <param name="yPos">"50%"</param>
+            <param name="horizontalAlignment">PositionUtils.ALIGN_CENTER</param>
+            <param name="verticalAlignment">PositionUtils.ALIGN_CENTER</param>
         </drawable>
         <drawable id="Minutes" class="Component.TimeView">
-            <param name="xPosition">"50%"</param>
-            <param name="yPosition">"50%"</param>
             <param name="boxWidth">"66"</param>
             <param name="boxHeight">"67"</param>
-            <param name="boxXShift">"12"</param>
-            <param name="boxYShift">"-1"</param>
-            <param name="horizontalAlignment">"start"</param>
-            <param name="verticalAlignment">"center"</param>
+            <param name="xPos">"50%"</param>
+            <param name="yPos">"50%"</param>
+            <param name="xShift">"12"</param>
+            <param name="yShift">"-1"</param>
+            <param name="horizontalAlignment">PositionUtils.ALIGN_START</param>
+            <param name="verticalAlignment">PositionUtils.ALIGN_CENTER</param>
             <param name="font">@Rez.Fonts.minutes</param>
             <param name="type">Component.TimeViewType.MINUTES</param>
         </drawable>
         <drawable id="PM" class="PMView">
-            <param name="xPosition">"82%"</param>
-            <param name="yPosition">"43%"</param>
             <param name="boxWidth">"28"</param>
             <param name="boxHeight">"22"</param>
-            <param name="horizontalAlignment">"start"</param>
-            <param name="verticalAlignment">"end"</param>
+            <param name="xPos">"82%"</param>
+            <param name="yPos">"43%"</param>
+            <param name="horizontalAlignment">PositionUtils.ALIGN_START</param>
+            <param name="verticalAlignment">PositionUtils.ALIGN_END</param>
             <param name="font">@Rez.Fonts.data</param>
         </drawable>
         <drawable id="Seconds" class="SecondsView">
-            <param name="xPosition">"82%"</param>
-            <param name="yPosition">"52%"</param>
             <param name="boxWidth">"26"</param>
             <param name="boxHeight">"28"</param>
-            <param name="boxYShift">"1"</param>
-            <param name="horizontalAlignment">"start"</param>
-            <param name="verticalAlignment">"start"</param>
+            <param name="xPos">"82%"</param>
+            <param name="yPos">"52%"</param>
+            <param name="yShift">"1"</param>
+            <param name="horizontalAlignment">PositionUtils.ALIGN_START</param>
+            <param name="verticalAlignment">PositionUtils.ALIGN_START</param>
             <param name="font">@Rez.Fonts.seconds</param>
         </drawable>
         <drawable id="TopSensors" class="SensorsInfoView">
-            <param name="xPosition">"50%"</param>
-            <param name="yPosition">"34%"</param>
             <param name="boxWidth">"80"</param>
             <param name="boxHeight">"60"</param>
-            <param name="boxXShift">"13"</param>
-            <param name="boxYShift">"1"</param>
+            <param name="xPos">"50%"</param>
+            <param name="yPos">"34%"</param>
+            <param name="xShift">"13"</param>
+            <param name="yShift">"1"</param>
             <param name="itemHeight">"20"</param>
             <param name="iconSize">"20"</param>
-            <param name="horizontalAlignment">"start"</param>
-            <param name="verticalAlignment">"end"</param>
+            <param name="horizontalAlignment">PositionUtils.ALIGN_START</param>
+            <param name="verticalAlignment">PositionUtils.ALIGN_END</param>
             <param name="font">@Rez.Fonts.data</param>
             <param name="fields">[SettingsModule.SettingType.TOP_SENSOR_1, SettingsModule.SettingType.TOP_SENSOR_2, SettingsModule.SettingType.TOP_SENSOR_3]</param>
         </drawable>
         <drawable id="BottomSensors" class="SensorsInfoView">
-            <param name="xPosition">"50%"</param>
-            <param name="yPosition">"66%"</param>
             <param name="boxWidth">"80"</param>
             <param name="boxHeight">"60"</param>
-            <param name="boxXShift">"13"</param>
+            <param name="xPos">"50%"</param>
+            <param name="yPos">"66%"</param>
+            <param name="xShift">"13"</param>
             <param name="itemHeight">"20"</param>
             <param name="iconSize">"20"</param>
-            <param name="horizontalAlignment">"start"</param>
-            <param name="verticalAlignment">"start"</param>
+            <param name="horizontalAlignment">PositionUtils.ALIGN_START</param>
+            <param name="verticalAlignment">PositionUtils.ALIGN_START</param>
             <param name="font">@Rez.Fonts.data</param>
             <param name="fields">[SettingsModule.SettingType.BOTTOM_SENSOR_1, SettingsModule.SettingType.BOTTOM_SENSOR_2, SettingsModule.SettingType.BOTTOM_SENSOR_3]</param>
         </drawable>

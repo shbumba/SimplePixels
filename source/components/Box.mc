@@ -1,17 +1,17 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
+import Toybox.System;
 import PositionUtils;
 
 module Component {
     typedef BoxProps as {
         :boxWidth as String?,
         :boxHeight as String?,
-        :xPosition as String?,
-        :yPosition as String?,
-        :boxXShift as String?,
-        :boxYShift as String?,
-        :boxYShift as String?,
+        :xPos as String?,
+        :yPos as String?,
+        :xShift as String?,
+        :yShift as String?,
         :horizontalAlignment as PositionUtils.AlignmentEnum?,
         :verticalAlignment as PositionUtils.AlignmentEnum?,
         :font as Symbol?,
@@ -37,12 +37,13 @@ module Component {
         }
 
         private function calcActualBoxSize(params as BoxProps) {
+            var deviceSettings = System.getDeviceSettings();
             var boxWidth = params.hasKey(:boxWidth) ? params.get(:boxWidth) : "0";
             var boxHeight = params.hasKey(:boxHeight) ? params.get(:boxHeight) : "0";
 
             self._actualBoxSize = {
-                :width => self.parseActualSize(boxWidth, self.deviceWidth),
-                :height => self.parseActualSize(boxHeight, self.deviceHeight)
+                :width => self.parseActualSize(boxWidth, deviceSettings.screenWidth),
+                :height => self.parseActualSize(boxHeight, deviceSettings.screenHeight)
             };
         }
 
@@ -54,7 +55,7 @@ module Component {
         }
 
         protected function getFont() as Resource or Number {
-            return self._font ? WatchUi.loadResource(self._font) : Graphics.FONT_MEDIUM;
+            return self._font ? ResourcesCache.get(self._font) : Graphics.FONT_MEDIUM;
         }
 
         protected function getActualBoxSize() as {:width as Number, :height as Number} {
@@ -69,29 +70,37 @@ module Component {
             return PositionUtils.parsePosition(position, size);
         }
 
-        private function calcXPoint(xPosition as String) as Number {
-            return self.parseActualSize(xPosition, self.deviceWidth);
+        private function calcXPoint(xPos as String) as Number {
+            var deviceWidth = System.getDeviceSettings().screenWidth;
+
+            return self.parseActualSize(xPos, deviceWidth);
         }
 
-        private function calcXShift(boxXShift as String) as Number {
-            return self.parseActualSize(boxXShift, self.deviceWidth);
+        private function calcXShift(xShift as String) as Number {
+            var deviceWidth = System.getDeviceSettings().screenWidth;
+
+            return self.parseActualSize(xShift, deviceWidth);
         }
 
-        private function calcYPoint(yPosition as String) as Number {
-            return self.parseActualSize(yPosition, self.deviceHeight);
+        private function calcYPoint(yPos as String) as Number {
+            var screenHeight = System.getDeviceSettings().screenHeight;
+            
+            return self.parseActualSize(yPos, screenHeight);
         }
 
-        private function calcYShift(boxYShift as String) as Number {
-            return self.parseActualSize(boxYShift, self.deviceHeight);
+        private function calcYShift(yShift as String) as Number {
+            var screenHeight = System.getDeviceSettings().screenHeight;
+
+            return self.parseActualSize(yShift, screenHeight);
         }
 
         private function calcHorizontalAlignment(params as BoxProps) as Number {
             var horizontalAlignment = params.hasKey(:horizontalAlignment) ? params.get(:horizontalAlignment) : PositionUtils.ALIGN_START;
-            var xPosition = params.hasKey(:xPosition) ? params.get(:xPosition) : "0";
-            var boxXShift = params.hasKey(:boxXShift) ? params.get(:boxXShift) : "0";
+            var xPos = params.hasKey(:xPos) ? params.get(:xPos) : "0";
+            var xShift = params.hasKey(:xShift) ? params.get(:xShift) : "0";
 
-            var position = self.calcXPoint(xPosition);
-            var shift = self.calcXShift(boxXShift);
+            var position = self.calcXPoint(xPos);
+            var shift = self.calcXShift(xShift);
             var boxSize = self.getActualBoxSize();
 
             return position - PositionUtils.calcAlignmentShift(horizontalAlignment, boxSize.get(:width)) + shift;
@@ -99,16 +108,17 @@ module Component {
 
         private function calcVerticalAlignment(params as BoxProps) as Number {
             var verticalAlignment = params.hasKey(:verticalAlignment) ? params.get(:verticalAlignment) : PositionUtils.ALIGN_START;
-            var yPosition = params.hasKey(:yPosition) ? params.get(:yPosition) : "0";
-            var boxYShift = params.hasKey(:boxYShift) ? params.get(:boxYShift) : "0";
+            var yPos = params.hasKey(:yPos) ? params.get(:yPos) : "0";
+            var yShift = params.hasKey(:yShift) ? params.get(:yShift) : "0";
 
-            var position = self.calcYPoint(yPosition);
-            var shift = self.calcYShift(boxYShift);
+            var position = self.calcYPoint(yPos);
+            var shift = self.calcYShift(yShift);
             var boxSize = self.getActualBoxSize();
 
             return position - PositionUtils.calcAlignmentShift(verticalAlignment, boxSize.get(:height)) + shift;
         }
 
+        (:debug)
         private function renderDebugArea(drawContext as Dc) {
             var position = self.getPosition();
 
@@ -156,6 +166,7 @@ module Component {
             // Abstract
         }
 
+        (:debug)
         function draw(drawContext as Dc) as Void {
             self.onRenderBefore(drawContext);
 
@@ -165,6 +176,17 @@ module Component {
 
             if (self._debug) {
                 self.renderDebugArea(drawContext);
+            }
+
+            self.render(drawContext);
+        }
+
+        (:release)
+        function draw(drawContext as Dc) as Void {
+            self.onRenderBefore(drawContext);
+
+            if (!self.isVisible) {
+                return;
             }
 
             self.render(drawContext);

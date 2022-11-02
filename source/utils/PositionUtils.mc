@@ -2,9 +2,9 @@ import Toybox.Lang;
 
 module PositionUtils {
     enum AlignmentEnum {
-        ALIGN_START = "start",
-        ALIGN_CENTER = "center",
-        ALIGN_END = "end"
+        ALIGN_START = 1,
+        ALIGN_CENTER,
+        ALIGN_END
     }
 
     function parsePosition(position as String, size as Number) as Number {

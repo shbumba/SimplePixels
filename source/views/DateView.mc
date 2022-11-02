@@ -5,24 +5,18 @@ import Toybox.Time;
 import Toybox.Time.Gregorian;
 
 class DateView extends Component.Box {
-    function initialize(params as Dictionary<String, String?>) {
+    function initialize(params as Component.BoxProps) {
         Component.Box.initialize(params);
     }
 
-    protected function getDateMonth() as {
-        :dayOfWeek as String,
-        :dayMonth as String
-    } {
+    protected function getDateMonth() as Array<String> { // [dayOfWeek, dayMonth]
         var currentDate = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
 
         var month = currentDate.month;
         var dayOfWeek = currentDate.day_of_week.substring(0, 3);
         var dayMonth = currentDate.day.toString() + " " + month;
 
-        return {
-            :dayOfWeek => dayOfWeek,
-            :dayMonth => dayMonth
-        };
+        return [dayOfWeek, dayMonth];
     }
 
     protected function render(drawContext as Dc) as Void {
@@ -46,14 +40,14 @@ class DateView extends Component.Box {
             posX + width,
             posY,
             font,
-            dateObj.get(:dayOfWeek),
+            dateObj[0],
             Graphics.TEXT_JUSTIFY_RIGHT
         );
         drawContext.drawText(
             posX + width,
             posY + fontHeight,
             font,
-            dateObj.get(:dayMonth),
+            dateObj[1],
             Graphics.TEXT_JUSTIFY_RIGHT
         );
     }

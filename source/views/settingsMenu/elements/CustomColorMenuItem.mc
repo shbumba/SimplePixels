@@ -23,26 +23,28 @@ class CustomColorMenuItem extends WatchUi.CustomMenuItem {
     }
 
     function draw(drawContext as Dc) {
+        var iconWidth = 40;
+        var textLeftMargin = 10;
         var font = Graphics.FONT_SMALL;
         var fontColor = Graphics.COLOR_DK_GRAY;
         var width = drawContext.getWidth();
         var height = drawContext.getHeight();
 
         if (isFocused()) {
-            font = Graphics.FONT_LARGE;
+            font = Graphics.FONT_MEDIUM;
             fontColor = Graphics.COLOR_BLACK;
         }
 
         drawContext.setColor(fontColor, Graphics.COLOR_TRANSPARENT);
         drawContext.drawText(
-            width / 4,
+            iconWidth + textLeftMargin,
             height / 2,
             font,
-            symbolToText(self._label),
+            WatchUi.loadResource(self._label),
             Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
         );
 
         drawContext.setColor(self._color, Graphics.COLOR_BLACK);
-        drawContext.fillRectangle(0, 0, width / 5, height);
+        drawContext.fillRectangle(0, 0, iconWidth, height);
     }
 }

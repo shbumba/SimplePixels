@@ -22,14 +22,14 @@ module WatchSettingsMenuBuilder {
         };
 
     typedef MenuItemProps as {
-            :label as Symbol or Null,
+            :label as Symbol,
             :subLabel as Symbol or Null,
             :identifier as Object,
             :options as { :alignment as MenuItem.Alignment }?
         };
 
     typedef ToggleItemProps as {
-            :label as Symbol or Null,
+            :label as Symbol,
             :subLabel as Symbol or Null,
             :identifier as Object,
             :enabled as Boolean?,
@@ -123,13 +123,11 @@ module WatchSettingsMenuBuilder {
                 isEnabled = false;
             }
 
-            return new WatchUi.ToggleMenuItem(
-                symbolToText(params.get(:label)),
-                symbolToTextOrNull(params.get(:subLabel)),
-                params.get(:identifier),
-                isEnabled,
-                params.get(:options)
-            );
+            var label as String = WatchUi.loadResource(params.get(:label));
+            var subLabel = params.get(:subLabel);
+            subLabel = subLabel != null ? WatchUi.loadResource(subLabel) : null;
+
+            return new WatchUi.ToggleMenuItem(label, subLabel, params.get(:identifier), isEnabled, params.get(:options));
         }
     }
 

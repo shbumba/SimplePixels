@@ -97,8 +97,8 @@ module SensorInfoModule {
                 var high = forecast[1];
                 high = high != null ? transformTemperature(high) : high;
 
-                var lowValue = low != null ? low : WatchUi.loadResource(Rez.Strings.NA);
-                var highValue = high != null ? high : WatchUi.loadResource(Rez.Strings.NA);
+                var lowValue = low != null ? low : ResourcesCache.get(Rez.Strings.NA);
+                var highValue = high != null ? high : ResourcesCache.get(Rez.Strings.NA);
 
 
                 return Lang.format("$1$ / $2$", [lowValue, highValue]);
@@ -156,6 +156,24 @@ module SensorInfoModule {
 
             function transformActiveMinutesDay(value as Number) as String {
                 return transformToThreeNumbers(value) + " m";
+            }
+
+            function transformTime(time as Time.Moment) as String {
+                var utcTime = Gregorian.utcInfo(time, Time.FORMAT_SHORT);
+                var is24hour = System.getDeviceSettings().is24Hour;
+
+                var hour = utcTime.hour;
+                var min = utcTime.min;
+
+                if (!is24hour && hour > 12) {
+                    hour = hour - 12;
+                }
+
+                var formatedTime = Lang.format("$1$:$2$", [hour.format("%02u"), min.format("%02u")]);
+
+                var typeType = utcTime.hour >= 12 ? "pm" : "am";
+
+                return is24hour ? formatedTime : formatedTime + " " + typeType;
             }
         }
 
@@ -287,7 +305,7 @@ module SensorInfoModule {
 
         function transformValue(sensorType as SensorType, value as Object?) as String {
             if (value == null) {
-                return WatchUi.loadResource(Rez.Strings.NA);
+                return ResourcesCache.get(Rez.Strings.NA);
             }
 
             var handler = getItem(sensorType)[0];
@@ -305,24 +323,6 @@ module SensorInfoModule {
             var method = new Lang.Method(Icons, handler);
 
             return method.invoke(value);
-        }
-
-        function transformTime(time as Time.Moment) as String {
-            var utcTime = Gregorian.utcInfo(time, Time.FORMAT_SHORT);
-            var is24hour = System.getDeviceSettings().is24Hour;
-
-            var hour = utcTime.hour;
-            var min = utcTime.min;
-
-            if (!is24hour && hour > 12) {
-                hour = hour - 12;
-            }
-
-            var formatedTime = Lang.format("$1$:$2$", [hour.format("%02u"), min.format("%02u")]);
-
-            var typeType = utcTime.hour >= 12 ? "pm" : "am";
-
-            return is24hour ? formatedTime : formatedTime + " " + typeType;
         }
     }
 }

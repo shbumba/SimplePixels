@@ -23,24 +23,19 @@ class DisplaySecondsObservedKey extends ObservedStore.KeyInstance {
         return SettingsModule.getValue(SettingsModule.SettingType.DISPLAY_SECONDS);
     }
 
-    private function updateViewProps(props as ValueUpdatedProps or ValueItinProps) as Void {
-        var displaySecondsType = props.get(:value);
-
+    private function updateViewProps(displaySecondsType as DisplaySecondsType) as Void {
         var secondsViewID = $.VIEWS_LIST.get(:seconds);
         var secondsView = self._mainView.findDrawableById(secondsViewID) as SecondsView;
         var isAwake = Services.get(ServiceType.OBSERVED_STORE).getValue(AwakeObservedKey);
 
-        secondsView.setViewProps({
-            :displaySecondsType => displaySecondsType,
-            :isAwake => isAwake
-        });
+        secondsView.setViewProps(displaySecondsType, isAwake);
     }
 
-    function onValueInit(props as ValueItinProps) as Void {
-        self.updateViewProps(props);
+    function onValueInit(value as DisplaySecondsType) as Void {
+        self.updateViewProps(value);
     }
 
-    function onValueUpdated(props as ValueUpdatedProps) as Void {
-        self.updateViewProps(props);
+    function onValueUpdated(value as DisplaySecondsType, prevValue as DisplaySecondsType) as Void {
+        self.updateViewProps(value);
     }
 }

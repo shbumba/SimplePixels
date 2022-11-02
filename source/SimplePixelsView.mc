@@ -24,10 +24,7 @@ class SimplePixelsView extends WatchUi.WatchFace {
     }
 
     private function setupStore(drawContext as Dc) as Void {
-        self.awakeMemoryKey = new AwakeObservedKey({
-            :mainView => self,
-            :isAwake => true
-        });
+        self.awakeMemoryKey = new AwakeObservedKey(self, true);
 
         self.memoryStore.setup([
             self.awakeMemoryKey,
@@ -37,38 +34,44 @@ class SimplePixelsView extends WatchUi.WatchFace {
     }
 
     function onLayout(drawContext as Dc) as Void {
-        View.setLayout(Rez.Layouts.MainLayout(drawContext));
+        WatchFace.onLayout(drawContext);
+
+        WatchFace.setLayout(Rez.Layouts.MainLayout(drawContext));
 
         self.setupStore(drawContext);
     }
 
     function onUpdate(drawContext as Dc) as Void {
-        drawContext.clearClip();
-
         self.memoryStore.runScope(Scope.ON_UPDATE);
+
+        drawContext.clearClip();
         
-        View.onUpdate(drawContext);
+        WatchFace.onUpdate(drawContext);
     }
 
     function onPartialUpdate(drawContext as Dc) as Void {
         self.memoryStore.runScope(Scope.ON_PARTIAL_UPDATE);
+    
+        WatchFace.onPartialUpdate(drawContext);
     }
 
     function onShow() as Void {
         self.awakeMemoryKey.setIsAwake(true);
 
-        WatchUi.requestUpdate();
+        WatchFace.onShow();
     }
 
     function onEnterSleep() as Void {
         self.awakeMemoryKey.setIsAwake(false);
 
+        WatchFace.onEnterSleep();
         WatchUi.requestUpdate();
     }
 
     function onExitSleep() as Void {
         self.awakeMemoryKey.setIsAwake(true);
 
+        WatchFace.onExitSleep();
         WatchUi.requestUpdate();
     }
 
@@ -78,7 +81,7 @@ class SimplePixelsView extends WatchUi.WatchFace {
         WatchUi.requestUpdate();
 	}
 
-    function onNightModeChanged(drawContext) {
+    function onNightModeChanged() {
         self.awakeMemoryKey.setIsAwake(false);
         self.memoryStore.runScope(Scope.ON_NIGHT_MODE_CHANGED);
 

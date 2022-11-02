@@ -3,7 +3,7 @@ import Toybox.Graphics;
 import Toybox.WatchUi;
 
 class BackgroundView extends Component.BaseDrawable {
-    function initialize(params as Dictionary<String, String?>) {
+    function initialize(params) {
         Component.BaseDrawable.initialize(params);
     }
 

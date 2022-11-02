@@ -5,11 +5,15 @@ import Services;
 import Services.ServiceType;
 import SensorInfoModule.SensorType;
 
+typedef SensorsInfoProps as Component.ListProps | {
+    :fields as Array<String>?
+};
+
 class SensorsInfoView extends Component.List {
     private var _sensors as Array<String>;
     private var _fields as Array<String>;
 
-    function initialize(params as Dictionary<String, String?>) {
+    function initialize(params as SensorsInfoProps) {
         self._fields = params.hasKey(:fields) ? params.get(:fields) : [];
         self.updateSensors();
 
@@ -80,7 +84,7 @@ class SensorsInfoView extends Component.List {
             :posX => posX,
             :posY => posY,
             :drawContext => drawContext,
-            :direction => Component.ListItemsDerection.get(:left)
+            :direction => Component.ListItemsDerection.LEFT
         });
     }
 }

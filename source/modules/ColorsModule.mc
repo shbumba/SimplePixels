@@ -31,7 +31,7 @@ module ColorsModule {
         }
     }
 
-    typedef ColorsDictionaryItem as Array; // [color as Hex, title as Resource]
+    typedef ColorsDictionaryItem as Array; // [color as Hex, title as Symbol]
 
     var ColorsDictionary as Dictionary<ColorsTypes, ColorsDictionaryItem> = {
         ColorsTypes.BLACK => [0x000000, Rez.Strings.ColorBlack],
@@ -69,7 +69,7 @@ module ColorsModule {
         return getColorItem(key)[0];
     }
 
-    function getColorName(key as ColorsTypes) as String {
-        return symbolToText(getColorItem(key)[1]);
+    function getColorName(key as ColorsTypes) as Symbol {
+        return getColorItem(key)[1];
     }
 }

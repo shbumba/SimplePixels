@@ -3,10 +3,12 @@ import Toybox.WatchUi;
 import Toybox.Graphics;
 
 module Component {
-    const ListItemsDerection = {
-        :left => "left",
-        :rigth => "right"
-    };
+    module ListItemsDerection {
+        enum ListItemsDerection {
+            LEFT = 1,
+            RIGHT
+        }
+    }
 
     typedef ItemType as {
         :text as String?,
@@ -19,25 +21,32 @@ module Component {
         :posX as Number,
         :posY as Number,
         :drawContext as Dc,
-        :derection as String? // @type: ListItemsDerection
+        :derection as ListItemsDerection?
     };
 
     typedef ElementRenderProps as {
         :item as ItemType,
-        :derection as String?, // @type: ListItemsDerection
+        :derection as ListItemsDerection?,
         :posX as Number,
         :posY as Number,
+    };
+
+    typedef ListProps as BoxProps | {
+        :itemHeight as String?,
+        :iconSize as String?
     };
 
     class List extends Box {
         protected var _itemHeight as String or Null = null;
         protected var _iconSize as Number;
 
-        function initialize(params as Dictionary<String, String?>) {
+        function initialize(params as ListProps) {
             Box.initialize(params);
 
-            self._itemHeight = params.hasKey(:itemHeight) ? self.parseActualSize(params.get(:itemHeight), self.deviceHeight) : 10;
-            self._iconSize = params.hasKey(:iconSize) ? self.parseActualSize(params.get(:iconSize), self.deviceHeight) : 10;
+            var screenHeight = System.getDeviceSettings().screenHeight;
+
+            self._itemHeight = params.hasKey(:itemHeight) ? self.parseActualSize(params.get(:itemHeight), screenHeight) : 10;
+            self._iconSize = params.hasKey(:iconSize) ? self.parseActualSize(params.get(:iconSize), screenHeight) : 10;
         }
 
         private function setupItemHeight(drawContext as Dc) as Void {
@@ -49,7 +58,7 @@ module Component {
         }
 
         private function getJustify(direction) {
-            if (direction == ListItemsDerection.get(:left)) {
+            if (direction == ListItemsDerection.LEFT) {
                 return Graphics.TEXT_JUSTIFY_LEFT;
             }
 
@@ -71,7 +80,7 @@ module Component {
             var textXPos = posX + self._iconSize;
             var textJustify = self.getJustify(textDerection);
 
-            if (textDerection == ListItemsDerection.get(:right)) {
+            if (textDerection == ListItemsDerection.RIGHT) {
                 textXPos = posX - self._iconSize;
             }
 
@@ -136,9 +145,9 @@ module Component {
             var items = props.get(:items);
             var posX = props.get(:posX);
             var posY = props.get(:posY);
-            var direction = props.hasKey(:direction) ? props.get(:direction) : ListItemsDerection.get(:left);
+            var direction = props.hasKey(:direction) ? props.get(:direction) : ListItemsDerection.LEFT;
 
-            if (direction == ListItemsDerection.get(:right)) {
+            if (direction == ListItemsDerection.RIGHT) {
                 posX = posX + boxSize.get(:width);
             }
 

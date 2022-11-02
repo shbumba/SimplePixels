@@ -22,7 +22,7 @@ class LeftSensorsView extends Component.List {
         SensorType.IS_CHARGING,
     ];
 
-    function initialize(params as Dictionary<String, String?>) {
+    function initialize(params as Component.ListProps) {
         List.initialize(params);
         self.updateSensorType();
         self.updateDisplayIcons();
@@ -110,7 +110,7 @@ class LeftSensorsView extends Component.List {
         
         self.renderItems({
             :items => items,
-            :direction => Component.ListItemsDerection.get(:right),
+            :direction => Component.ListItemsDerection.RIGHT,
             :posX => posX,
             :posY => posY,
             :drawContext => drawContext,

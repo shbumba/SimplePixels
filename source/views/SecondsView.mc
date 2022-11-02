@@ -5,13 +5,8 @@ import Toybox.System;
 import SettingsModule;
 import SettingsModule.DisplaySecondsType;
 
-typedef SecondsViewProps as {
-    :displaySecondsType as DisplaySecondsType,
-    :isAwake as Boolean
-};
-
 class SecondsView extends Component.Box {
-    function initialize(params as Dictionary<String, String?>) {
+    function initialize(params as Component.BoxProps) {
         Component.Box.initialize(params);
     }
 
@@ -21,10 +16,7 @@ class SecondsView extends Component.Box {
         return seconds;
     }
 
-    function setViewProps(props as SecondsViewProps) as Void {
-        var displaySecondsType = props.get(:displaySecondsType);
-        var isAwake = props.get(:isAwake);
-
+    function setViewProps(displaySecondsType as DisplaySecondsType, isAwake as Boolean) as Void {
         switch (displaySecondsType) {
             case DisplaySecondsType.NEVER:
                 self.setVisible(false);

@@ -11,6 +11,11 @@ module Component {
         }
     }
 
+    typedef TimeViewProps as BoxProps | {
+        :type as TimeViewType?,
+        :textAligment as Graphics.TextJustification?
+    };
+
     class TimeView extends Box {
         protected var _timeType as TimeViewType;
         protected var _is24hour as Boolean;
@@ -18,7 +23,7 @@ module Component {
 
         private var _calculatedTextPosition as Dictionary or Null = null;
         
-        function initialize(params as Dictionary<String, String?>) {
+        function initialize(params as TimeViewProps) {
             Box.initialize(params);
 
             self._timeType = params.hasKey(:type) ? params.get(:type) : TimeViewType.HOURS;

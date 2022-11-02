@@ -5,10 +5,6 @@ import Services;
 import Services.ServiceType;
 import SensorInfoModule.SensorType;
 
-typedef AwakeObservedKeyProps as {
-    :isAwake as Boolean,
-    :mainView as WatchUi.View,
-};
 class AwakeObservedKey extends ObservedStore.KeyInstance {
     public static var key = "AwakeObservedKey";
     public var scope as Array<ObservedStore.Scope> = [
@@ -20,10 +16,9 @@ class AwakeObservedKey extends ObservedStore.KeyInstance {
     private var _isAwake as Boolean;
     private var _mainView as WatchUi.View;
 
-    function initialize(props as AwakeObservedKeyProps) {
-        self._mainView = props.get(:mainView);
-
-        self.setIsAwake(props.get(:isAwake));
+    function initialize(mainView as WatchUi.View, isAwake as Boolean) {
+        self._mainView = mainView;
+        self._isAwake = isAwake;
 
         ObservedStore.KeyInstance.initialize();
     }
@@ -40,24 +35,19 @@ class AwakeObservedKey extends ObservedStore.KeyInstance {
         return isNightMode == true || isSleepTime == true ? false : self._isAwake;
     }
 
-    private function updateViewProps(props as ValueUpdatedProps or ValueItinProps) as Void {
-        var isAwake = props.get(:value);
-
+    private function updateViewProps(isAwake as Boolean) as Void {
         var secondsViewID = $.VIEWS_LIST.get(:seconds);
         var secondsView = self._mainView.findDrawableById(secondsViewID) as SecondsView;
         var displaySecondsType = Services.get(ServiceType.OBSERVED_STORE).getValue(DisplaySecondsObservedKey);
 
-        secondsView.setViewProps({
-            :displaySecondsType => displaySecondsType,
-            :isAwake => isAwake
-        });
+        secondsView.setViewProps(displaySecondsType, isAwake);
     }
 
-    function onValueInit(props as ValueItinProps) as Void {
-        self.updateViewProps(props);
+    function onValueInit(value) as Void {
+        self.updateViewProps(value);
     }
 
-    function onValueUpdated(props as ValueUpdatedProps) as Void {
-        self.updateViewProps(props);
+    function onValueUpdated(value as Boolean, prevValue as Boolean) as Void {
+        self.updateViewProps(value);
     }
 }

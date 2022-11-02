@@ -90,14 +90,10 @@ module SensorInfoModule {
             return SensorsDisplay.transformValue(sensorType, self.getValue(sensorType));
         }
 
-        public function getText(sensorType as SensorType) as String {
-            return symbolToText(SensorsDisplay.getText(sensorType));
-        }
-
         public function getIcon(sensorType as SensorType) as FontResource or Null {
-            var icon = SensorsDisplay.getIcon(sensorType, self.getValue(sensorType));
+            var iconSymbol = SensorsDisplay.getIcon(sensorType, self.getValue(sensorType));
 
-            return symbolToTextOrNull(icon);
+            return iconSymbol != null ? ResourcesCache.get(iconSymbol) : null;
         }
     }
 }

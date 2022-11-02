@@ -2,10 +2,6 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 import ObservedStore;
 
-typedef OnSettingsChangedObservedKeyProps as {
-    :mainView as WatchUi.View
-};
-
 class OnSettingsChangedObservedKey extends ObservedStore.KeyInstance {
     public static var key = "OnSettingsChangedObservedKey";
     public var scope as Array<ObservedStore.Scope> = [
@@ -24,7 +20,7 @@ class OnSettingsChangedObservedKey extends ObservedStore.KeyInstance {
         return System.getClockTime().sec;
     }
 
-    function onValueUpdated(props as ValueUpdatedProps) as Void {
+    function onValueUpdated(value, prevValue) as Void {
         var viewValues = $.VIEWS_LIST.values();
 
         for (var i = 0; i < viewValues.size(); i++) {

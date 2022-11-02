@@ -1,25 +1,17 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
-import Toybox.System;
 import ColorsModule;
 import SettingsModule;
 import SettingsModule.SettingType;
 
 module Component {
     class BaseDrawable extends WatchUi.Drawable {        
-        protected var deviceWidth as Number;
-        protected var deviceHeight as Number;
         protected var backgroundColor as Number;
         protected var foregroundColor as Number;
         protected var textColor as Number;
 
-        function initialize(params as Dictionary<String, String or Null>) {
+        function initialize(params) {
             Drawable.initialize(params);
-
-            var deviceSettings = System.getDeviceSettings();
-
-            self.deviceWidth = deviceSettings.screenWidth;
-            self.deviceHeight = deviceSettings.screenHeight;
 
             self.onSettingsChanged();
         }

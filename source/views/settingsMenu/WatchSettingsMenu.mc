@@ -9,7 +9,7 @@ module WatchSettingsMenu {
     function createMenu() {
         var structure as GenerateMenuProps = {
             :buider => MenuBuilders.MENU,
-            :buiderProps => { :title => "Settings" },
+            :buiderProps => { :title => Rez.Strings.SettingsMenu },
             :items => [
                 // Color
                 {
@@ -17,7 +17,6 @@ module WatchSettingsMenu {
                     :buiderProps => {
                         :identifier => SettingType.BACKGROUND_COLOR,
                         :label => Rez.Strings.BackgroundColorTitle,
-                        :subLabel => null
                     }
                 },
                 {
@@ -25,7 +24,7 @@ module WatchSettingsMenu {
                     :buiderProps => {
                         :identifier => SettingType.FOREGROUND_COLOR,
                         :label => Rez.Strings.ForegroundColorTitle,
-                        :subLabel => "Time color"
+                        :subLabel => Rez.Strings.ForegroundColorSubLabel,
                     }
                 },
                 {
@@ -33,7 +32,7 @@ module WatchSettingsMenu {
                     :buiderProps => {
                         :identifier => SettingType.TEXT_COLOR,
                         :label => Rez.Strings.TextColorTitle,
-                        :subLabel => "Data color"
+                        :subLabel => Rez.Strings.TextColorTitleSubLabel,
                     }
                 },
                 // Main
@@ -42,7 +41,6 @@ module WatchSettingsMenu {
                     :buiderProps => {
                         :identifier => SettingType.DISPLAY_SECONDS,
                         :label => Rez.Strings.DisplaySeconds,
-                        :subLabel => null
                     }
                 },
                 // Separator
@@ -51,7 +49,6 @@ module WatchSettingsMenu {
                     :buiderProps => {
                         :identifier => SettingType.SEPARATOR_COLOR,
                         :label => Rez.Strings.SeparatorColorTitle,
-                        :subLabel => null
                     }
                 },
                 {
@@ -59,7 +56,6 @@ module WatchSettingsMenu {
                     :buiderProps => {
                         :identifier => SettingType.SEPARATOR_INFO,
                         :label => Rez.Strings.SeparatorInfoTitle,
-                        :subLabel => null
                     }
                 },
                 // Left Sensor Info
@@ -67,8 +63,7 @@ module WatchSettingsMenu {
                     :buider => ItemBuilders.ITEM,
                     :buiderProps => {
                         :identifier => SettingType.LEFT_SENSOR,
-                        :label => Rez.Strings.LeftSensor,
-                        :subLabel => null
+                        :label => Rez.Strings.LeftSensor
                     }
                 },
                 {
@@ -77,7 +72,6 @@ module WatchSettingsMenu {
                     :buiderProps => {
                         :identifier => SettingType.DISPLAY_STATUS_ICONS,
                         :label => Rez.Strings.DisplayStatusIcons,
-                        :subLabel => null,
                         :options => {
                             :alignment => WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_RIGHT,
                         }
@@ -89,7 +83,6 @@ module WatchSettingsMenu {
                     :buiderProps => {
                         :identifier => SettingType.TOP_SENSOR_1,
                         :label => Rez.Strings.TopSensor1,
-                        :subLabel => null
                     }
                 },
                 {
@@ -97,7 +90,6 @@ module WatchSettingsMenu {
                     :buiderProps => {
                         :identifier => SettingType.TOP_SENSOR_2,
                         :label => Rez.Strings.TopSensor2,
-                        :subLabel => null
                     }
                 },
                 {
@@ -105,7 +97,6 @@ module WatchSettingsMenu {
                     :buiderProps => {
                         :identifier => SettingType.TOP_SENSOR_3,
                         :label => Rez.Strings.TopSensor3,
-                        :subLabel => null
                     }
                 },
                 // Bottom Sensor Fields
@@ -114,7 +105,6 @@ module WatchSettingsMenu {
                     :buiderProps => {
                         :identifier => SettingType.BOTTOM_SENSOR_1,
                         :label => Rez.Strings.BottomSensor1,
-                        :subLabel => null
                     }
                 },
                 {
@@ -122,7 +112,6 @@ module WatchSettingsMenu {
                     :buiderProps => {
                         :identifier => SettingType.BOTTOM_SENSOR_2,
                         :label => Rez.Strings.BottomSensor2,
-                        :subLabel => null
                     }
                 },
                 {
@@ -130,7 +119,6 @@ module WatchSettingsMenu {
                     :buiderProps => {
                         :identifier => SettingType.BOTTOM_SENSOR_3,
                         :label => Rez.Strings.BottomSensor3,
-                        :subLabel => null
                     }
                 }
             ]

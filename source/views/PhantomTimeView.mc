@@ -2,14 +2,16 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
 
-typedef PatternProps as { :drawContext as Dc, :width as Number, :height as Number, :color as Number? };
+typedef PhantomTimeViewProps as Component.TimeViewProps | {
+    :timeShift as Number?
+};
 
 class PhantomTimeView extends Component.TimeView {
     private var _timeShift as Number;
     private var _patternBitmap as BufferedBitmap or Null = null;
     private static var PATTERN_SIZE = 2;
 
-    function initialize(params as Dictionary<String, String?>) {
+    function initialize(params as PhantomTimeViewProps) {
         Component.TimeView.initialize(params);
 
         self._timeShift = params.hasKey(:timeShift) ? params.get(:timeShift) : 0;
@@ -22,9 +24,9 @@ class PhantomTimeView extends Component.TimeView {
     }
 
     private function generatePattern(
-        props as PatternProps
+        width as Number
     ) as Void {
-        var columns = props.get(:width) / PATTERN_SIZE;
+        var columns = width / self.PATTERN_SIZE;
 
         var patternString = "";
 
@@ -35,19 +37,20 @@ class PhantomTimeView extends Component.TimeView {
         return patternString;
     }
 
-    private function createPattern(props as PatternProps) as BufferedBitmap {
+    private function createPattern(width as Number, height as Number, color as Number?) as BufferedBitmap {
         var patternFont = WatchUi.loadResource(Rez.Fonts.pattern);
         var bitmap as BufferedBitmap = createBitmap({
-            :width => props.get(:width),
-            :height => props.get(:height),
+            :width => width,
+            :height => height,
         });
 
-        var color = props.hasKey(:color) ? props.get(:color) : Graphics.COLOR_TRANSPARENT;
+        color = color != null ? color : Graphics.COLOR_TRANSPARENT;
+
         var xPos = 0;
         var yPos = 0;
-        var rows = props.get(:height) / self.PATTERN_SIZE;
+        var rows = height / self.PATTERN_SIZE;
 
-        var pattern = self.generatePattern(props);
+        var pattern = self.generatePattern(width);
         var patternDc = bitmap.getDc();
 
         patternDc.clearClip();
@@ -63,17 +66,17 @@ class PhantomTimeView extends Component.TimeView {
         return bitmap;
     }
 
-    private function setPattern(props as PatternProps) as Void {
-        self._patternBitmap = self.createPattern(props);
+    private function setPattern(width as Number, height as Number, color as Number?) as Void {
+        self._patternBitmap = self.createPattern(width, height, color);
     }
 
     private function removePattern() as Void {
         self._patternBitmap = null;
     }
 
-    private function createPatternIfNeeded(props as PatternProps) as Void {
+    private function createPatternIfNeeded(width as Number, height as Number, color as Number?) as Void {
         if (self._patternBitmap == null) {
-            self.setPattern(props);
+            self.setPattern(width, height, color);
         }
     }
 
@@ -120,13 +123,11 @@ class PhantomTimeView extends Component.TimeView {
 
         var posX = position.get(:x);
         var posY = position.get(:y);
+        var width = boxSize.get(:width);
+        var height = boxSize.get(:height);
         var time = self.shiftTime(self.getTime());
 
-        self.createPatternIfNeeded({
-            :width => boxSize.get(:width),
-            :height => boxSize.get(:height),
-            :color => backgroundColor
-        });
+        self.createPatternIfNeeded(width, height, self.backgroundColor);
 
         self.renderTime(time, drawContext);
         drawContext.drawBitmap(posX, posY, self._patternBitmap);

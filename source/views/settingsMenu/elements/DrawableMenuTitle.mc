@@ -21,7 +21,7 @@ class DrawableMenuTitle extends WatchUi.Drawable {
         drawContext.drawText(
             posX,
             posY,
-            Graphics.FONT_MEDIUM,
+            Graphics.FONT_SMALL,
             self.title,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );

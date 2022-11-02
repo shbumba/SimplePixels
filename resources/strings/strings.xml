@@ -1,5 +1,6 @@
 <strings>
     <string id="AppName">Simple Pixels</string>
+    <string id="SettingsMenu">Settings</string>
 
     <string id="GroupColor">Colors</string>
     <string id="GroupMain">Main</string>
@@ -8,9 +9,11 @@
     <string id="GroupTopFields">Top Sensor Fields</string>
     <string id="GroupBottomFields">Bottom Sensor Fields</string>
 
-    <string id="BackgroundColorTitle">Background Color</string>
+    <string id="BackgroundColorTitle">Background color</string>
     <string id="ForegroundColorTitle">Foreground Color</string>
-    <string id="TextColorTitle">Text Color</string>
+    <string id="ForegroundColorSubLabel">Time color</string>
+    <string id="TextColorTitle">Text color</string>
+    <string id="TextColorTitleSubLabel">Data color</string>
     <string id="SeparatorColorTitle">Separator Color</string>
     <string id="SeparatorInfoTitle">Separator Data</string>
 
@@ -20,17 +23,17 @@
     <string id="ColorGrey">Gray</string>
     <string id="ColorIndigo">Indigo</string>
     <string id="ColorPurple">Purple</string>
-    <string id="ColorDeepPurple">DeepPurple</string>
+    <string id="ColorDeepPurple">Deep Purple</string>
     <string id="ColorPink">Pink</string>
     <string id="ColorBlueGrey">Blue Grey</string>
     <string id="ColorBlue">Blue</string>
-    <string id="ColorLightBlue">LightBlue</string>
+    <string id="ColorLightBlue">Light Blue</string>
     <string id="ColorTeal">Teal</string>
     <string id="ColorOceanBlue">Ocean Blue</string>
     <string id="ColorLime">Lime</string>
     <string id="ColorGreen">Green</string>
     <string id="ColorDarkGreen">Dark Green</string>
-    <string id="ColorLightGreen">LightGreen</string>
+    <string id="ColorLightGreen">Light Green</string>
     <string id="ColorYellow">Yellow</string>
     <string id="ColorAmber">Amber</string>
     <string id="ColorOrange">Orange</string>
@@ -61,8 +64,8 @@
     <string id="Altitude">Altitude</string>
     <string id="Messages">Messages</string>
     <string id="AlarmCount">Alarm count</string>
-    <string id="Memory">Memory Used</string>
-    <string id="Weather">Current Weather</string>
+    <string id="Memory">Memory used</string>
+    <string id="Weather">Current weather</string>
     <string id="WeatherFeels">Weather as it feels</string>
     <string id="WeatherForecast">Daily forecast</string>
     <string id="OxygenSaturation">Oxygen saturation</string>
