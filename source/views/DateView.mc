@@ -38,20 +38,21 @@ class DateView extends Component.Box {
         var backgroundColor = Graphics.COLOR_TRANSPARENT;
         var textColor = self.textColor;
 
-        var fontHeight = drawContext.getFontHeight(self._font);
+        var font = self.getFont();
+        var fontHeight = drawContext.getFontHeight(font);
 
         drawContext.setColor(textColor, backgroundColor);
         drawContext.drawText(
             posX + width,
             posY,
-            self._font,
+            font,
             dateObj.get(:dayOfWeek),
             Graphics.TEXT_JUSTIFY_RIGHT
         );
         drawContext.drawText(
             posX + width,
             posY + fontHeight,
-            self._font,
+            font,
             dateObj.get(:dayMonth),
             Graphics.TEXT_JUSTIFY_RIGHT
         );

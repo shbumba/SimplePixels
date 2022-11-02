@@ -10,7 +10,8 @@ module Component {
 
     typedef ItemType as {
         :text as String?,
-        :icon as String?,
+        :icon as FontResource or Null,
+        :icons as Array<FontResource> or Null,
     };
 
     typedef ItemsRenderProps as {
@@ -30,7 +31,6 @@ module Component {
 
     class List extends Box {
         protected var _itemHeight as String or Null = null;
-        protected var _iconFont;
         protected var _iconSize as Number;
 
         function initialize(params as Dictionary<String, String?>) {
@@ -38,7 +38,6 @@ module Component {
 
             self._itemHeight = params.hasKey(:itemHeight) ? self.parseActualSize(params.get(:itemHeight), self.deviceHeight) : 10;
             self._iconSize = params.hasKey(:iconSize) ? self.parseActualSize(params.get(:iconSize), self.deviceHeight) : 10;
-            self._iconFont = params.hasKey(:iconFont) ? WatchUi.loadResource(params.get(:iconFont)) : null;
         }
 
         private function setupItemHeight(drawContext as Dc) as Void {
@@ -46,7 +45,7 @@ module Component {
                 return;
             }
 
-            self._itemHeight = drawContext.getFontHeight(self._font).toString();
+            self._itemHeight = drawContext.getFontHeight(self.getFont()).toString();
         }
 
         private function getJustify(direction) {
@@ -76,14 +75,14 @@ module Component {
                 textXPos = posX - self._iconSize;
             }
 
-            drawContext.drawText(textXPos, textYPos, self._font, text, textJustify);
+            drawContext.drawText(textXPos, textYPos, self.getFont(), text, textJustify);
         }
 
         private function renderIcon(props as ElementRenderProps, drawContext as Dc) as Void {
             var item = props.get(:item);
             var icon = item.get(:icon);
 
-            if (self._iconFont == null || icon == null || icon == "") {
+            if (icon == null) {
                 return;
             }
 
@@ -93,7 +92,42 @@ module Component {
             var iconDerection = props.get(:direction);
             var iconJustify = self.getJustify(iconDerection);
 
-            drawContext.drawText(posX, posY, self._iconFont, icon, iconJustify);
+            drawContext.drawText(posX, posY, icon, $.ICON_SYMBOL, iconJustify);
+        }
+
+        private function renderIcons(props as ElementRenderProps, drawContext as Dc) as Void {
+            var item = props.get(:item);
+            var icons = item.get(:icons);
+
+            if (icons == null || icons.size() == 0) {
+                return;
+            }
+
+            var posX = props.get(:posX);
+            var posY = props.get(:posY);
+
+            var iconDerection = props.get(:direction);
+            var iconJustify = self.getJustify(iconDerection);
+
+            for (var i = 0; i < icons.size(); i++) {
+                var icon = icons[i];
+                var offset = i * self._iconSize;
+                var iconXPos = posX;
+
+                if (offset > 0) {
+                    switch(iconJustify) {
+                        case Graphics.TEXT_JUSTIFY_LEFT:
+                            iconXPos += offset;
+                        break;
+
+                        case Graphics.TEXT_JUSTIFY_RIGHT:
+                            iconXPos -= offset;
+                        break;
+                    }
+                }
+
+                drawContext.drawText(iconXPos, posY, icon, $.ICON_SYMBOL, iconJustify);
+            }
         }
 
         protected function renderItems(props as ItemsRenderProps) {
@@ -121,6 +155,7 @@ module Component {
 
                 self.renderText(renderProps, drawContext);
                 self.renderIcon(renderProps, drawContext);
+                self.renderIcons(renderProps, drawContext);
             }
         }
 

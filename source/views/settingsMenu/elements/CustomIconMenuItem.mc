@@ -4,15 +4,14 @@ import Toybox.WatchUi;
 
 typedef CustomIconMenuItemProps as {
         :identifier as Lang.Object,
-        :icon as Number?,
-        :label as String,
+        :icon as Symbol?,
+        :label as Symbol,
         :options as { :drawable as WatchUi.Drawable, :alignment as MenuItem.Alignment }?
     };
 
 class CustomIconMenuItem extends WatchUi.CustomMenuItem {
-    private var _label as String;
-    private var _icon as Number;
-    private static var _iconFont = WatchUi.loadResource(Rez.Fonts.sensorIcons);
+    private var _label as Symbol;
+    private var _icon as Symbol or Null;
 
     function initialize(params as CustomIconMenuItemProps) {
         var itemParams = params.hasKey(:options) ? params.get(:options) : {};
@@ -39,7 +38,7 @@ class CustomIconMenuItem extends WatchUi.CustomMenuItem {
             width / 4,
             height / 2,
             font,
-            self._label,
+            symbolToText(self._label),
             Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
         );
 
@@ -48,13 +47,7 @@ class CustomIconMenuItem extends WatchUi.CustomMenuItem {
 
         if (self._icon) {
             drawContext.setColor(fontColor, Graphics.COLOR_TRANSPARENT);
-            drawContext.drawText(
-                width / 8,
-                height / 3,
-                self._iconFont,
-                self._icon,
-                Graphics.TEXT_JUSTIFY_CENTER
-            );
+            drawContext.drawText(width / 8, height / 3, WatchUi.loadResource(self._icon), $.ICON_SYMBOL, Graphics.TEXT_JUSTIFY_CENTER);
         }
     }
 }

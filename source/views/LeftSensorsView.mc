@@ -15,11 +15,11 @@ class LeftSensorsView extends Component.List {
         SensorType.IS_SLEEP_TIME,
     ];
     private var iconSensors = [
-        SensorType.IS_CHARGING,
-        SensorType.IS_DO_NOT_DISTURB,
-        SensorType.IS_NIGHT_MODE_ENABLED,
-        SensorType.IS_SLEEP_TIME,
         SensorType.IS_CONNECTED,
+        SensorType.IS_DO_NOT_DISTURB,
+        SensorType.IS_SLEEP_TIME,
+        SensorType.IS_NIGHT_MODE_ENABLED,
+        SensorType.IS_CHARGING,
     ];
 
     function initialize(params as Dictionary<String, String?>) {
@@ -61,7 +61,7 @@ class LeftSensorsView extends Component.List {
 
     private function getIconsItem() as Component.ItemsRenderProps {
         var sensorService = Services.get(ServiceType.SENSORS_INFO);
-        var icons = "";
+        var icons = [];
         var hasSleepMode = false;
 
         for (var i = 0; i < self.iconSensors.size(); i++) {
@@ -80,11 +80,11 @@ class LeftSensorsView extends Component.List {
                 hasSleepMode = true;
             }
 
-            icons += sensorService.getIcon(iconSensorType);
+            icons.add(sensorService.getIcon(iconSensorType));
         }
 
         return {
-            :icon => icons,
+            :icons => icons,
         };
     }
 

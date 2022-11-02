@@ -12,3 +12,5 @@ const VIEWS_LIST = {
     :topSensors => "TopSensors",
     :bottomSensors => "BottomSensors",
 };
+
+const ICON_SYMBOL = " ";

@@ -1,5 +1,4 @@
 import Toybox.Lang;
-import Toybox.WatchUi;
 
 module ColorsModule {
     module ColorsTypes {
@@ -71,6 +70,6 @@ module ColorsModule {
     }
 
     function getColorName(key as ColorsTypes) as String {
-        return WatchUi.loadResource(getColorItem(key)[1]);
+        return symbolToText(getColorItem(key)[1]);
     }
 }

@@ -16,7 +16,7 @@ module WatchSettingsMenu {
                     :buider => ItemBuilders.ITEM,
                     :buiderProps => {
                         :identifier => SettingType.BACKGROUND_COLOR,
-                        :label => WatchUi.loadResource(Rez.Strings.BackgroundColorTitle),
+                        :label => Rez.Strings.BackgroundColorTitle,
                         :subLabel => null
                     }
                 },
@@ -24,7 +24,7 @@ module WatchSettingsMenu {
                     :buider => ItemBuilders.ITEM,
                     :buiderProps => {
                         :identifier => SettingType.FOREGROUND_COLOR,
-                        :label => WatchUi.loadResource(Rez.Strings.ForegroundColorTitle),
+                        :label => Rez.Strings.ForegroundColorTitle,
                         :subLabel => "Time color"
                     }
                 },
@@ -32,7 +32,7 @@ module WatchSettingsMenu {
                     :buider => ItemBuilders.ITEM,
                     :buiderProps => {
                         :identifier => SettingType.TEXT_COLOR,
-                        :label => WatchUi.loadResource(Rez.Strings.TextColorTitle),
+                        :label => Rez.Strings.TextColorTitle,
                         :subLabel => "Data color"
                     }
                 },
@@ -41,7 +41,7 @@ module WatchSettingsMenu {
                     :buider => ItemBuilders.ITEM,
                     :buiderProps => {
                         :identifier => SettingType.DISPLAY_SECONDS,
-                        :label => WatchUi.loadResource(Rez.Strings.DisplaySeconds),
+                        :label => Rez.Strings.DisplaySeconds,
                         :subLabel => null
                     }
                 },
@@ -50,7 +50,7 @@ module WatchSettingsMenu {
                     :buider => ItemBuilders.ITEM,
                     :buiderProps => {
                         :identifier => SettingType.SEPARATOR_COLOR,
-                        :label => WatchUi.loadResource(Rez.Strings.SeparatorColorTitle),
+                        :label => Rez.Strings.SeparatorColorTitle,
                         :subLabel => null
                     }
                 },
@@ -58,7 +58,7 @@ module WatchSettingsMenu {
                     :buider => ItemBuilders.ITEM,
                     :buiderProps => {
                         :identifier => SettingType.SEPARATOR_INFO,
-                        :label => WatchUi.loadResource(Rez.Strings.SeparatorInfoTitle),
+                        :label => Rez.Strings.SeparatorInfoTitle,
                         :subLabel => null
                     }
                 },
@@ -67,7 +67,7 @@ module WatchSettingsMenu {
                     :buider => ItemBuilders.ITEM,
                     :buiderProps => {
                         :identifier => SettingType.LEFT_SENSOR,
-                        :label => WatchUi.loadResource(Rez.Strings.LeftSensor),
+                        :label => Rez.Strings.LeftSensor,
                         :subLabel => null
                     }
                 },
@@ -76,7 +76,7 @@ module WatchSettingsMenu {
                     :valueKey => SettingType.DISPLAY_STATUS_ICONS,
                     :buiderProps => {
                         :identifier => SettingType.DISPLAY_STATUS_ICONS,
-                        :label => WatchUi.loadResource(Rez.Strings.DisplayStatusIcons),
+                        :label => Rez.Strings.DisplayStatusIcons,
                         :subLabel => null,
                         :options => {
                             :alignment => WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_RIGHT,
@@ -88,7 +88,7 @@ module WatchSettingsMenu {
                     :buider => ItemBuilders.ITEM,
                     :buiderProps => {
                         :identifier => SettingType.TOP_SENSOR_1,
-                        :label => WatchUi.loadResource(Rez.Strings.TopSensor1),
+                        :label => Rez.Strings.TopSensor1,
                         :subLabel => null
                     }
                 },
@@ -96,7 +96,7 @@ module WatchSettingsMenu {
                     :buider => ItemBuilders.ITEM,
                     :buiderProps => {
                         :identifier => SettingType.TOP_SENSOR_2,
-                        :label => WatchUi.loadResource(Rez.Strings.TopSensor2),
+                        :label => Rez.Strings.TopSensor2,
                         :subLabel => null
                     }
                 },
@@ -104,7 +104,7 @@ module WatchSettingsMenu {
                     :buider => ItemBuilders.ITEM,
                     :buiderProps => {
                         :identifier => SettingType.TOP_SENSOR_3,
-                        :label => WatchUi.loadResource(Rez.Strings.TopSensor3),
+                        :label => Rez.Strings.TopSensor3,
                         :subLabel => null
                     }
                 },
@@ -113,7 +113,7 @@ module WatchSettingsMenu {
                     :buider => ItemBuilders.ITEM,
                     :buiderProps => {
                         :identifier => SettingType.BOTTOM_SENSOR_1,
-                        :label => WatchUi.loadResource(Rez.Strings.BottomSensor1),
+                        :label => Rez.Strings.BottomSensor1,
                         :subLabel => null
                     }
                 },
@@ -121,7 +121,7 @@ module WatchSettingsMenu {
                     :buider => ItemBuilders.ITEM,
                     :buiderProps => {
                         :identifier => SettingType.BOTTOM_SENSOR_2,
-                        :label => WatchUi.loadResource(Rez.Strings.BottomSensor2),
+                        :label => Rez.Strings.BottomSensor2,
                         :subLabel => null
                     }
                 },
@@ -129,7 +129,7 @@ module WatchSettingsMenu {
                     :buider => ItemBuilders.ITEM,
                     :buiderProps => {
                         :identifier => SettingType.BOTTOM_SENSOR_3,
-                        :label => WatchUi.loadResource(Rez.Strings.BottomSensor3),
+                        :label => Rez.Strings.BottomSensor3,
                         :subLabel => null
                     }
                 }

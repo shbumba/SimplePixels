@@ -63,7 +63,11 @@
     <string id="AlarmCount">Alarm count</string>
     <string id="Memory">Memory Used</string>
     <string id="Weather">Current Weather</string>
+    <string id="WeatherFeels">Weather as it feels</string>
+    <string id="WeatherForecast">Daily forecast</string>
     <string id="OxygenSaturation">Oxygen saturation</string>
+    <string id="Sunrise">Sunrise</string>
+    <string id="Sunset">Sunset</string>
     <string id="Pressure">Pressure</string>
     <string id="TimeToRecovery">Recovery time</string>
     <string id="RespirationRate">Respiration rate</string>

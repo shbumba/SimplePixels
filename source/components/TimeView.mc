@@ -94,10 +94,9 @@ module Component {
 
             var backgroundColor = Graphics.COLOR_TRANSPARENT;
             var foregroundColor = self.foregroundColor;
-            var font = self._font;
 
             drawContext.setColor(foregroundColor, backgroundColor);
-            drawContext.drawText(posX, posY, font, time.format("%02d"), self._textAligment);
+            drawContext.drawText(posX, posY, self.getFont(), time.format("%02d"), self._textAligment);
         }
 
         protected function render(drawContext as Dc) as Void {

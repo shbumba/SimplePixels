@@ -2,6 +2,8 @@ import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
 import Toybox.Math;
+import Toybox.Time;
+import Toybox.Time.Gregorian;
 
 module SensorInfoModule {
     module SensorsDisplay {
@@ -12,6 +14,10 @@ module SensorInfoModule {
             SensorType.BATTERY => [:transformPercent, Rez.Strings.Battery, :batteryIcon],
             SensorType.BATTERY_IN_DAYS => [:transformBatteryInDays, Rez.Strings.BatteryInDays, :batteryIcon],
             SensorType.CURRENT_WEATHER => [:transformTemperature, Rez.Strings.Weather, :currentWeatherIcon],
+            SensorType.WEATHER_FEELS => [:transformTemperature, Rez.Strings.WeatherFeels, :currentWeatherIcon],
+            SensorType.WEATHER_FORECAST => [:transformTemperatureForecast, Rez.Strings.WeatherForecast, :currentWeatherIcon],
+            SensorType.SUNRISE => [:transformTime, Rez.Strings.Sunrise, :sunriseIcon],
+            SensorType.SUNSET => [:transformTime, Rez.Strings.Sunset, :sunsetIcon],
             SensorType.STEPS => [:transformToFourNumbers, Rez.Strings.Steps, :stepsIcon],
             SensorType.CALORIES => [:transformToFourNumbers, Rez.Strings.Calories, :caloriesIcon],
             SensorType.HEART_RATE => [:transformToThreeNumbers, Rez.Strings.HeartRate, :heartRateIcon],
@@ -84,6 +90,20 @@ module SensorInfoModule {
                 return value.toString() + "°";
             }
 
+            function transformTemperatureForecast(forecast as Array<Number or Null>) as String {
+                var low = forecast[0];
+                low = low != null ? transformTemperature(low) : low;
+
+                var high = forecast[1];
+                high = high != null ? transformTemperature(high) : high;
+
+                var lowValue = low != null ? low : WatchUi.loadResource(Rez.Strings.NA);
+                var highValue = high != null ? high : WatchUi.loadResource(Rez.Strings.NA);
+
+
+                return Lang.format("$1$ / $2$", [lowValue, highValue]);
+            }
+
             function transformPercent(value as Number) as String {
                 return value.toString() + " %";
             }
@@ -140,110 +160,118 @@ module SensorInfoModule {
         }
 
         module Icons {
-            function emptyIcon(value as Object?) as String {
-                return "";
+            function emptyIcon(value as Object?) as Null {
+                return null;
             }
 
-            function stepsIcon(value as Object?) as String {
-                return "1";
+            function stepsIcon(value as Object?) as Symbol {
+                return Rez.Fonts.steps_icon;
             }
 
-            function caloriesIcon(value as Object?) as String {
-                return "2";
+            function caloriesIcon(value as Object?) as Symbol {
+                return Rez.Fonts.calories_icon;
             }
 
-            function temperatureIcon(value as Object?) as String {
-                return "3";
+            function temperatureIcon(value as Object?) as Symbol {
+                return Rez.Fonts.temperature_icon;
             }
 
-            function batteryIcon(value as Object?) as String {
+            function batteryIcon(value as Object?) as Symbol {
                 if (value == null || value == true || value >= 85) {
-                    return "4"; // 100%
+                    return Rez.Fonts.battery_100_icon; // 100%
                 } else if (value >= 65) {
-                    return "5"; // 75%
+                    return Rez.Fonts.battery_75_icon; // 75%
                 } else if (value >= 45) {
-                    return "6"; // 50%
+                    return Rez.Fonts.battery_50_icon; // 50%
                 } else if (value >= 15) {
-                    return "7"; // 25%
+                    return Rez.Fonts.battery_25_icon; // 25%
                 }
 
-                return "8"; // 0%
+                return Rez.Fonts.battery_0_icon; // 0%
             }
 
-            function solarIcon(value as Object?) as String {
-                return "9";
+            function solarIcon(value as Object?) as Symbol {
+                return Rez.Fonts.sun_icon;
             }
 
-            function isConnectedIcon(value as Object?) as String {
-                return value ? "a" : "";
+            function sunriseIcon(value as Object?) as Symbol {
+                return Rez.Fonts.sunrise_icon;
+            }
+            
+            function sunsetIcon(value as Object?) as Symbol {
+                return Rez.Fonts.sunset_icon;
             }
 
-            function heartRateIcon(value as Object?) as String {
-                return "b";
+            function isConnectedIcon(value as Object?) as Symbol or Null {
+                return value ? Rez.Fonts.connection_icon : null;
             }
 
-            function floorsIcon(value as Object?) as String {
-                return "c";
+            function heartRateIcon(value as Object?) as Symbol {
+                return Rez.Fonts.heart_icon;
             }
 
-            function altitudeIcon(value as Object?) as String {
-                return "d";
+            function floorsIcon(value as Object?) as Symbol {
+                return Rez.Fonts.floors_icon;
             }
 
-            function messagesIcon(value as Object?) as String {
-                return "e";
+            function altitudeIcon(value as Object?) as Symbol {
+                return Rez.Fonts.altitude_icon;
             }
 
-            function alarmCountIcon(value as Object?) as String {
-                return "f";
+            function messagesIcon(value as Object?) as Symbol {
+                return Rez.Fonts.messages_icon;
             }
 
-            function memoryIcon(value as Object?) as String {
-                return "g";
+            function alarmCountIcon(value as Object?) as Symbol {
+                return Rez.Fonts.alarm_icon;
             }
 
-            function currentWeatherIcon(value as Object?) as String {
-                return "h";
+            function memoryIcon(value as Object?) as Symbol {
+                return Rez.Fonts.memory_icon;
             }
 
-            function oxygenSaturationIcon(value as Object?) as String {
-                return "i";
+            function currentWeatherIcon(value as Object?) as Symbol {
+                return Rez.Fonts.weather_icon;
             }
 
-            function pressureIcon(value as Object?) as String {
-                return "j";
+            function oxygenSaturationIcon(value as Object?) as Symbol {
+                return Rez.Fonts.oxygen_icon;
             }
 
-            function timeToRecoveryIcon(value as Object?) as String {
-                return "k";
+            function pressureIcon(value as Object?) as Symbol {
+                return Rez.Fonts.preasure_icon;
             }
 
-            function isNightModeIcon(value as Object?) as String {
-                return value ? "l" : "";
+            function timeToRecoveryIcon(value as Object?) as Symbol {
+                return Rez.Fonts.recovery_icon;
             }
 
-            function isDoNotDisturbIcon(value as Object?) as String {
-                return value ? "m" : "";
+            function isNightModeIcon(value as Object?) as Symbol or Null {
+                return value ? Rez.Fonts.sleep_icon : null;
             }
 
-            function distanceIcon(value as Object?) as String {
-                return "n";
+            function isDoNotDisturbIcon(value as Object?) as Symbol or Null {
+                return value ? Rez.Fonts.dnd_icon : null;
             }
 
-            function activeMinutesDayIcon(value as Object?) as String {
-                return "o";
+            function distanceIcon(value as Object?) as Symbol {
+                return Rez.Fonts.distance_icon;
             }
 
-            function bodyBatteryIcon(value as Object?) as String {
-                return "p";
+            function activeMinutesDayIcon(value as Object?) as Symbol {
+                return Rez.Fonts.activity_icon;
             }
 
-            function isChargingIcon(value as Object?) as String {
-                return value ? "p" : "";
+            function bodyBatteryIcon(value as Object?) as Symbol {
+                return Rez.Fonts.energy_icon;
             }
 
-            function stressIcon(value as Object?) as String {
-                return "q";
+            function isChargingIcon(value as Object?) as Symbol {
+                return value ? Rez.Fonts.energy_icon : null;
+            }
+
+            function stressIcon(value as Object?) as Symbol {
+                return Rez.Fonts.stress_icon;
             }
         }
 
@@ -268,17 +296,33 @@ module SensorInfoModule {
             return method.invoke(value);
         }
 
-        function getText(sensorType as SensorType) as String {
-            var resource = getItem(sensorType)[1];
-
-            return WatchUi.loadResource(resource);
+        function getText(sensorType as SensorType) as Symbol {
+            return getItem(sensorType)[1];
         }
 
-        function getIcon(sensorType as SensorType, value as Object?) as String {
+        function getIcon(sensorType as SensorType, value as Object?) as Symbol or Null {
             var handler = getItem(sensorType)[2];
             var method = new Lang.Method(Icons, handler);
 
             return method.invoke(value);
+        }
+
+        function transformTime(time as Time.Moment) as String {
+            var utcTime = Gregorian.utcInfo(time, Time.FORMAT_SHORT);
+            var is24hour = System.getDeviceSettings().is24Hour;
+
+            var hour = utcTime.hour;
+            var min = utcTime.min;
+
+            if (!is24hour && hour > 12) {
+                hour = hour - 12;
+            }
+
+            var formatedTime = Lang.format("$1$:$2$", [hour.format("%02u"), min.format("%02u")]);
+
+            var typeType = utcTime.hour >= 12 ? "pm" : "am";
+
+            return is24hour ? formatedTime : formatedTime + " " + typeType;
         }
     }
 }

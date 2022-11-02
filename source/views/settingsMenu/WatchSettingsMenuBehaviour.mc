@@ -77,8 +77,7 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
                 :options => {
                     :focusItemHeight => 45,
                     :title => new DrawableMenuTitle(params.get(:title)),
-                    :foreground => new Rez.Drawables.MenuForeground(),
-                    :footer => new DrawableMenuFooter()
+                    :foreground => new Rez.Drawables.MenuForeground()
                 }
             },
             :valueKey => params.get(:settingKey),
@@ -154,7 +153,7 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
                 :buider => ItemBuilders.CUSTOM_ICON_ITEM,
                 :buiderProps => {
                     :identifier => fieldKey,
-                    :label => WatchUi.loadResource(self.secondsFields.get(fieldKey))
+                    :label => self.secondsFields.get(fieldKey)
                 }
             });
         }

@@ -4,33 +4,33 @@ import Toybox.Graphics;
 import SettingsModule;
 
 module WatchSettingsMenuBuilder {
-    typedef MenuProps as { :title as String or Symbol or WatchUi.Drawable, :focus as Number? };
+    typedef MenuProps as { :title as Symbol, :focus as Number? };
 
     typedef CustomMenuProps as {
             :itemHeight as Number,
             :backgroundColor as Graphics.ColorType,
             :options as
                 {
-                    :focus as Number,
+                    :focus as Number?,
                     :focusItemHeight as Number?,
-                    :title as WatchUi.Drawable,
-                    :footer as WatchUi.Drawable,
-                    :foreground as WatchUi.Drawable,
+                    :title as WatchUi.Drawable?,
+                    :footer as WatchUi.Drawable?,
+                    :foreground as WatchUi.Drawable?,
                     :titleItemHeight as Number?,
                     :footerItemHeight as Number?
-                }?
+                } or Null
         };
 
     typedef MenuItemProps as {
-            :label as String or Symbol,
-            :subLabel as String or Symbol or Null,
+            :label as Symbol or Null,
+            :subLabel as Symbol or Null,
             :identifier as Object,
             :options as { :alignment as MenuItem.Alignment }?
         };
 
     typedef ToggleItemProps as {
-            :label as String,
-            :subLabel as String or { :enabled as String, :disabled as String } or Null,
+            :label as Symbol or Null,
+            :subLabel as Symbol or Null,
             :identifier as Object,
             :enabled as Boolean?,
             :options as { :alignment as MenuItem.Alignment }?
@@ -124,8 +124,8 @@ module WatchSettingsMenuBuilder {
             }
 
             return new WatchUi.ToggleMenuItem(
-                params.get(:label),
-                params.get(:subLabel),
+                symbolToText(params.get(:label)),
+                symbolToTextOrNull(params.get(:subLabel)),
                 params.get(:identifier),
                 isEnabled,
                 params.get(:options)

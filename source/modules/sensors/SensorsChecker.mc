@@ -25,6 +25,10 @@ module SensorInfoModule {
             SensorType.IS_VIBRATE_ON => :checkVibrateOn,
             SensorType.MEMORY_USED => :checkMemory,
             SensorType.CURRENT_WEATHER => :checkCurrentWeather,
+            SensorType.WEATHER_FEELS => :checkCurrentWeather,
+            SensorType.WEATHER_FORECAST => :checkWeatherForecast,
+            SensorType.SUNRISE => :checkSunrise,
+            SensorType.SUNSET => :checkSunset,
             SensorType.OXYGEN_SATURATION => :checkOxygenSaturation,
             SensorType.PRESSURE => :checkPressure,
             SensorType.TIME_TO_RECOVERY => :checkTimeToRecovery,
@@ -178,6 +182,17 @@ module SensorInfoModule {
 
         function checkCurrentWeather() as Boolean {
             return Weather has :getCurrentConditions;
+        }
+
+        function checkWeatherForecast() as Boolean {
+            return Weather has :getDailyForecast;
+        }
+
+        function checkSunrise() as Boolean {
+            return Weather has :getSunrise;
+        }
+        function checkSunset() as Boolean {
+            return Weather has :getSunset;
         }
 
         function checkSensorHistory() as Boolean {

@@ -5,12 +5,12 @@ import Toybox.WatchUi;
 typedef CustomColorMenuItemProps as {
         :identifier as Lang.Object,
         :color as Number,
-        :label as String,
+        :label as Symbol,
         :options as { :drawable as WatchUi.Drawable, :alignment as MenuItem.Alignment }?
     };
 
 class CustomColorMenuItem extends WatchUi.CustomMenuItem {
-    private var _label as String;
+    private var _label as Symbol;
     private var _color as Number;
 
     function initialize(params as CustomColorMenuItemProps) {
@@ -38,7 +38,7 @@ class CustomColorMenuItem extends WatchUi.CustomMenuItem {
             width / 4,
             height / 2,
             font,
-            self._label,
+            symbolToText(self._label),
             Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
         );
 

@@ -7,6 +7,7 @@ import Toybox.Math;
 import Toybox.Weather;
 import Toybox.UserProfile;
 import Toybox.Time;
+import Toybox.Position;
 
 module SensorInfoModule {
     module SensorsInfoGetter {
@@ -15,6 +16,10 @@ module SensorInfoModule {
             SensorType.BATTERY => :getBattery,
             SensorType.BATTERY_IN_DAYS => :getBatteryInDays,
             SensorType.CURRENT_WEATHER => :getCurrentWeather,
+            SensorType.WEATHER_FEELS => :getWeatherFeels,
+            SensorType.WEATHER_FORECAST => :getCurrentForecast,
+            SensorType.SUNRISE => :getSunrise,
+            SensorType.SUNSET => :getSunset,
             SensorType.STEPS => :getSteps,
             SensorType.CALORIES => :getCalories,
             SensorType.HEART_RATE => :getHR,
@@ -253,6 +258,52 @@ module SensorInfoModule {
             var info = Weather.getCurrentConditions();
 
             return (info != null) ? info.temperature : null;
+        }
+
+        function getWeatherFeels() as Number or Null {
+            var info = Weather.getCurrentConditions();
+
+            return (info != null) ? info.feelsLikeTemperature : null;
+        }
+
+        function getCurrentForecast() as Array<Number or Null> or Null { // Array<[low, high]>
+            var info = Weather.getDailyForecast();
+
+            if (info == null || info.size() == 0) {
+                return null;
+            }
+
+            return [info[0].lowTemperature, info[0].highTemperature];
+        }
+
+        function getCurrentLocation() as Position.Info or Null {
+            var positionInfo = Position.getInfo();
+
+            if (positionInfo has :position && positionInfo.position != null) {
+                return positionInfo.position;
+            }
+
+            return null;
+        }
+
+        function getSunrise() as Time.Moment or Null {
+            var location = getCurrentLocation();
+
+            if (location == null) {
+                return null;
+            }
+
+            return Weather.getSunrise(location, Time.today());
+        }
+
+        function getSunset() as Time.Moment or Null {
+            var location = getCurrentLocation();
+
+            if (location == null) {
+                return null;
+            }
+
+            return Weather.getSunset(location, Time.today());
         }
 
         function getBatteryGoal() as Number {

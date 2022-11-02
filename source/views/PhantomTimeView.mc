@@ -6,7 +6,6 @@ typedef PatternProps as { :drawContext as Dc, :width as Number, :height as Numbe
 
 class PhantomTimeView extends Component.TimeView {
     private var _timeShift as Number;
-    private var _patternFont;
     private var _patternBitmap as BufferedBitmap or Null = null;
     private static var PATTERN_SIZE = 2;
 
@@ -14,7 +13,6 @@ class PhantomTimeView extends Component.TimeView {
         Component.TimeView.initialize(params);
 
         self._timeShift = params.hasKey(:timeShift) ? params.get(:timeShift) : 0;
-        self._patternFont = WatchUi.loadResource(Rez.Fonts.pattern);
     }
 
     function onSettingsChanged() {
@@ -38,17 +36,11 @@ class PhantomTimeView extends Component.TimeView {
     }
 
     private function createPattern(props as PatternProps) as BufferedBitmap {
-        var bitmap as BufferedBitmap;
-        var bitmapProps = {
+        var patternFont = WatchUi.loadResource(Rez.Fonts.pattern);
+        var bitmap as BufferedBitmap = createBitmap({
             :width => props.get(:width),
             :height => props.get(:height),
-        };
-
-        if (Graphics has :createBufferedBitmap) {
-            bitmap = Graphics.createBufferedBitmap(bitmapProps).get();
-        } else {
-            bitmap = new Graphics.BufferedBitmap(bitmapProps);
-        }
+        });
 
         var color = props.hasKey(:color) ? props.get(:color) : Graphics.COLOR_TRANSPARENT;
         var xPos = 0;
@@ -65,7 +57,7 @@ class PhantomTimeView extends Component.TimeView {
         for (var i = 1; i <= rows; i++) {
             var yShift = i == 1 ? yPos : yPos + self.PATTERN_SIZE * (i - 1);
 
-            patternDc.drawText(xPos, yShift, self._patternFont, pattern, Graphics.TEXT_JUSTIFY_LEFT);
+            patternDc.drawText(xPos, yShift, patternFont, pattern, Graphics.TEXT_JUSTIFY_LEFT);
         }
 
         return bitmap;

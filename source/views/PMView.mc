@@ -46,6 +46,6 @@ class PMView extends Component.Box {
         var boxSize = self.getActualBoxSize();
 
         drawContext.setColor(foregroundColor, backgroundColor);
-        drawContext.drawText(posX, posY, self._font, pm, Graphics.TEXT_JUSTIFY_LEFT);
+        drawContext.drawText(posX, posY, self.getFont(), pm, Graphics.TEXT_JUSTIFY_LEFT);
     }
 }

@@ -22,14 +22,14 @@ module Component {
         private var DEBUG_LINE_SIZE = 2;
         private var _actualBoxSize as Dictionary or Null = null;
         private var _calculatedPosition as Dictionary or Null = null;
+        private var _font as Symbol or Null;
         
-        protected var _font as WatchUi.Resource or Number;
         protected var _debug as Boolean;
 
         function initialize(params as BoxProps) {
             BaseDrawable.initialize(params);
             
-            self._font = params.hasKey(:font) ? WatchUi.loadResource(params.get(:font)) : Graphics.FONT_MEDIUM;
+            self._font = params.hasKey(:font) ? params.get(:font) : null;
             self._debug = params.hasKey(:debug) ? params.get(:debug) : false;
 
             self.calcActualBoxSize(params);
@@ -51,6 +51,10 @@ module Component {
                 :x => self.calcHorizontalAlignment(params),
                 :y => self.calcVerticalAlignment(params),
             };
+        }
+
+        protected function getFont() as Resource or Number {
+            return self._font ? WatchUi.loadResource(self._font) : Graphics.FONT_MEDIUM;
         }
 
         protected function getActualBoxSize() as {:width as Number, :height as Number} {

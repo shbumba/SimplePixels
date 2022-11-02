@@ -1,12 +1,12 @@
 info face="Cone" size=23 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=1,0,1,0 spacing=1,1
 common lineHeight=18 base=18 scaleW=117 scaleH=117 pages=1 packed=0
 page id=0 file="cone_small_0.png"
-chars count=70
+chars count=71
 char id=32 x=0 y=0 width=0 height=0 xoffset=0 yoffset=0 xadvance=2 page=0 chnl=15
 char id=37 x=100 y=38 width=17 height=16 xoffset=-1 yoffset=0 xadvance=17 page=0 chnl=15
 char id=43 x=35 y=89 width=12 height=11 xoffset=-1 yoffset=1 xadvance=12 page=0 chnl=15
-char id=44 x=58 y=89 width=4 height=6 xoffset=-1 yoffset=12 xadvance=4 page=0 chnl=15
-char id=45 x=63 y=89 width=7 height=5 xoffset=-1 yoffset=8 xadvance=6 page=0 chnl=15
+char id=44 x=63 y=89 width=4 height=6 xoffset=-1 yoffset=12 xadvance=4 page=0 chnl=15
+char id=45 x=68 y=89 width=7 height=5 xoffset=-1 yoffset=8 xadvance=6 page=0 chnl=15
 char id=46 x=106 y=84 width=4 height=4 xoffset=-1 yoffset=12 xadvance=4 page=0 chnl=15
 char id=47 x=109 y=55 width=8 height=16 xoffset=-1 yoffset=0 xadvance=7 page=0 chnl=15
 char id=48 x=9 y=0 width=10 height=16 xoffset=-1 yoffset=0 xadvance=10 page=0 chnl=15
@@ -19,6 +19,7 @@ char id=54 x=69 y=0 width=10 height=16 xoffset=-1 yoffset=0 xadvance=10 page=0 c
 char id=55 x=80 y=0 width=10 height=16 xoffset=-1 yoffset=0 xadvance=10 page=0 chnl=15
 char id=56 x=91 y=0 width=10 height=16 xoffset=-1 yoffset=0 xadvance=10 page=0 chnl=15
 char id=57 x=0 y=21 width=10 height=16 xoffset=-1 yoffset=0 xadvance=10 page=0 chnl=15
+char id=58 x=48 y=89 width=4 height=11 xoffset=-1 yoffset=3 xadvance=4 page=0 chnl=15
 char id=65 x=11 y=38 width=12 height=16 xoffset=-1 yoffset=0 xadvance=12 page=0 chnl=15
 char id=66 x=24 y=38 width=12 height=16 xoffset=-1 yoffset=0 xadvance=12 page=0 chnl=15
 char id=67 x=37 y=38 width=12 height=16 xoffset=-1 yoffset=0 xadvance=12 page=0 chnl=15
@@ -71,4 +72,4 @@ char id=119 x=102 y=106 width=14 height=11 xoffset=-1 yoffset=5 xadvance=14 page
 char id=120 x=13 y=89 width=10 height=11 xoffset=-1 yoffset=5 xadvance=10 page=0 chnl=15
 char id=121 x=0 y=38 width=10 height=16 xoffset=-1 yoffset=4 xadvance=10 page=0 chnl=15
 char id=122 x=24 y=89 width=10 height=11 xoffset=-1 yoffset=5 xadvance=10 page=0 chnl=15
-char id=176 x=48 y=89 width=9 height=8 xoffset=0 yoffset=0 xadvance=17 page=0 chnl=15
+char id=176 x=53 y=89 width=8 height=8 xoffset=0 yoffset=0 xadvance=8 page=0 chnl=15

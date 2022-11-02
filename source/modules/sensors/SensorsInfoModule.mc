@@ -1,5 +1,6 @@
 import Toybox.Lang;
 import Toybox.System;
+import Toybox.WatchUi;
 
 module SensorInfoModule {
     module SensorType {
@@ -27,17 +28,21 @@ module SensorInfoModule {
             ALARM_COUNT = 20,
             SOLAR_INTENSITY = 21,
             TEMPERATURE = 22,
-            IS_CONNECTED = 23,
-            IS_DO_NOT_DISTURB = 24,
-            IS_NIGHT_MODE_ENABLED = 25,
-            IS_SLEEP_TIME = 26,
-            IS_CHARGING = 27,
-            MEMORY_USED = 100,
-            IS_VIBRATE_ON = 101,
-            STEPS_GOAL = 102,
-            FLOORS_CLIMBED_GOAL = 103,
-            BATTERY_GOAL = 104,
-            ACTIVE_MINUTES_WEEK_GOAL = 105,
+            WEATHER_FEELS = 23,
+            WEATHER_FORECAST = 24,
+            SUNRISE = 25,
+            SUNSET = 26,
+            IS_CONNECTED = 100,
+            IS_DO_NOT_DISTURB = 101,
+            IS_NIGHT_MODE_ENABLED = 102,
+            IS_SLEEP_TIME = 103,
+            IS_CHARGING = 104,
+            MEMORY_USED = 500,
+            IS_VIBRATE_ON = 501,
+            STEPS_GOAL = 502,
+            FLOORS_CLIMBED_GOAL = 503,
+            BATTERY_GOAL = 504,
+            ACTIVE_MINUTES_WEEK_GOAL = 505,
         }
     }
 
@@ -86,11 +91,13 @@ module SensorInfoModule {
         }
 
         public function getText(sensorType as SensorType) as String {
-            return SensorsDisplay.getText(sensorType);
+            return symbolToText(SensorsDisplay.getText(sensorType));
         }
 
-        public function getIcon(sensorType as SensorType) as String {
-            return SensorsDisplay.getIcon(sensorType, self.getValue(sensorType));
+        public function getIcon(sensorType as SensorType) as FontResource or Null {
+            var icon = SensorsDisplay.getIcon(sensorType, self.getValue(sensorType));
+
+            return symbolToTextOrNull(icon);
         }
     }
 }
