@@ -6,7 +6,7 @@ import Toybox.Time;
 import Toybox.Time.Gregorian;
 
 class PMView extends Component.Box {
-    protected var _is24hour as Boolean;
+    protected var _is24hour as Boolean = false;
 
     function initialize(params as Component.BoxProps) {
         Component.Box.initialize(params);

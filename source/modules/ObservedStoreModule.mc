@@ -1,8 +1,8 @@
 import Toybox.Lang;
 
-module ObservedStore {
+module ObservedStoreModule {
     module Scope {
-        enum {
+        enum Enum {
             ON_LAYOUT = 1,
             ON_UPDATE,
             ON_PARTIAL_UPDATE,
@@ -11,12 +11,16 @@ module ObservedStore {
         }
     }
 
+    typedef InstanceKey as String;
+    typedef InstanceGetter as Object?;
+
     class KeyInstance {
-        public static var key as String;
+        public static var key as String = "";
 
-        public var scope as Array<Scope> = [Scope.ON_UPDATE];
+        public var scope as Array<Scope.Enum> = [Scope.ON_UPDATE] as Array<Scope.Enum>;
 
-        function get() as Object? {
+        function get() as InstanceGetter {
+            return null;
             // Abstract
         }
 
@@ -30,31 +34,36 @@ module ObservedStore {
     }
 
     class Store {
-        private var _keyInstances as Array<KeyInstance> = [];
-        private var _cachedResults as Dictionary<KeyInstance, Lang.Object?> = {};
+        private var _keyInstances as Array<KeyInstance> = [] as Array<KeyInstance>;
+        private var _cachedResults as Dictionary<InstanceKey, InstanceGetter> = {} as Dictionary<InstanceKey, InstanceGetter>;
 
         function setup(keyInstances as Array<KeyInstance>) as Void {
             self._keyInstances = keyInstances;
 
-            var onValueInitQueue = [];
+            var onValueInitQueue = [] as Array;
 
-            for (var i = 0; i < self._keyInstances.size(); i++) {
-                var instance = self._keyInstances[i];
+            for (var i = 0; i < keyInstances.size(); i++) {
+                var instance = keyInstances[i] as KeyInstance;
                 var processResult = self.processInstance(instance, true);
+
+                if (processResult == null) {
+                    continue;
+                }
+
                 var value = processResult[0];
 
                 onValueInitQueue.add([instance, value]);
             }
 
             for (var i = 0; i < onValueInitQueue.size(); i++) {
-                var instance = onValueInitQueue[i][0];
-                var value = onValueInitQueue[i][1];
+                var instance = onValueInitQueue[i][0] as KeyInstance;
+                var value = onValueInitQueue[i][1] as InstanceGetter;
 
                 instance.onValueInit(value);
             }
         }
 
-        private function processInstance(instance as KeyInstance, isInitial as Boolean) as Array { // [value, prevValue]
+        private function processInstance(instance as KeyInstance, isInitial as Boolean) as Array or Null { // [value, prevValue]
             var prevValue = self._cachedResults.get(instance.key);
             var currentValue = instance.get();
 
@@ -71,11 +80,11 @@ module ObservedStore {
             return self._cachedResults.get(instance.key);
         }
 
-        function runScope(scope as Scope) as Void {
-            var onUpdateQueue = [];
+        function runScope(scope as Scope.Enum) as Void {
+            var onUpdateQueue = [] as Array;
 
             for (var i = 0; i < self._keyInstances.size(); i++) {
-                var instance = self._keyInstances[i];
+                var instance = self._keyInstances[i] as KeyInstance;
 
                 if (instance.scope.indexOf(scope) == -1) {
                     continue;
@@ -94,9 +103,9 @@ module ObservedStore {
             }
 
             for (var i = 0; i < onUpdateQueue.size(); i++) {
-                var instance = onUpdateQueue[i][0];
-                var currentValue = onUpdateQueue[i][1];
-                var prevValue = onUpdateQueue[i][2];
+                var instance = onUpdateQueue[i][0] as KeyInstance;
+                var currentValue = onUpdateQueue[i][1] as InstanceGetter;
+                var prevValue = onUpdateQueue[i][2] as InstanceGetter;
 
                 instance.onValueUpdated(currentValue, prevValue);
             }

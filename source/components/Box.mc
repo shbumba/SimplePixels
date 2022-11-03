@@ -18,10 +18,13 @@ module Component {
         :debug as Boolean?,
     };
 
+    typedef ActualBoxSize as {:width as Number, :height as Number};
+    typedef CalculatedPosition as {:x as Number, :y as Number};
+
     class Box extends BaseDrawable {
         private var DEBUG_LINE_SIZE = 2;
-        private var _actualBoxSize as Dictionary or Null = null;
-        private var _calculatedPosition as Dictionary or Null = null;
+        private var _actualBoxSize as ActualBoxSize or Null = null;
+        private var _calculatedPosition as CalculatedPosition or Null = null;
         private var _font as Symbol or Null;
         
         protected var _debug as Boolean;
@@ -47,7 +50,7 @@ module Component {
             };
         }
 
-        private function calcPosition(params as BoxProps) as {:x as Number, :y as Number} {
+        private function calcPosition(params as BoxProps) as Void {
             self._calculatedPosition = {
                 :x => self.calcHorizontalAlignment(params),
                 :y => self.calcVerticalAlignment(params),
@@ -55,14 +58,14 @@ module Component {
         }
 
         protected function getFont() as Resource or Number {
-            return self._font ? ResourcesCache.get(self._font) : Graphics.FONT_MEDIUM;
+            return self._font != null ? ResourcesCache.get(self._font) : Graphics.FONT_MEDIUM;
         }
 
-        protected function getActualBoxSize() as {:width as Number, :height as Number} {
+        protected function getActualBoxSize() as ActualBoxSize {
             return self._actualBoxSize;
         }
 
-        protected function getPosition() as {:x as Number, :y as Number} {
+        protected function getPosition() as CalculatedPosition {
             return self._calculatedPosition;
         }
 

@@ -3,7 +3,6 @@ import Toybox.WatchUi;
 import Toybox.Graphics;
 import ColorsModule;
 import Services;
-import Services.ServiceType;
 import SensorInfoModule.SensorsDisplay;
 import SensorInfoModule.SensorType;
 import SettingsModule;
@@ -15,7 +14,7 @@ import WatchSettingsMenuBuilder.ItemBuilders;
 
 class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     private var onBackCallback as Lang.Method;
-    private var subMenuHandlers as Dictionary = {
+    private var subMenuHandlers = {
         SettingType.BACKGROUND_COLOR => :colorHandler,
         SettingType.FOREGROUND_COLOR => :colorHandler,
         SettingType.TEXT_COLOR => :colorHandler,
@@ -32,7 +31,7 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         SettingType.DISPLAY_SECONDS => :displaySecondsHandler
     };
 
-    private var subMenuAwailableKeys as Dictionary = {
+    private var subMenuAwailableKeys = {
         SettingType.SEPARATOR_INFO => [
             SensorType.BATTERY,
             SensorType.ACTIVE_MINUTES_WEEK,
@@ -41,7 +40,7 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         ],
     };
 
-    private var subMenuUnawailableKeys as Dictionary = {
+    private var subMenuUnawailableKeys = {
         SettingType.LEFT_SENSOR => [
             SensorType.IS_CHARGING,
             SensorType.IS_DO_NOT_DISTURB,
@@ -51,7 +50,7 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         ],
     };
 
-    private var secondsFields as Dictionary = {
+    private var secondsFields = {
         DisplaySecondsType.NEVER => Rez.Strings.Never,
         DisplaySecondsType.ON_GESTURE => Rez.Strings.OnGesture,
     };
@@ -62,12 +61,12 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     }
 
     private function renderCustomMenu(
-        settingKey as SettingType,
+        settingKey as SettingType.Enum,
         title as String,
         menuItems as Array<GenerateItemProps>,
         clearPrevSensorCache as Boolean?
     ) as Void {
-        var structure as GenerateMenuProps = {
+        var structure = {
             :buider => MenuBuilders.CUSTOM_MENU,
             :buiderProps => {
                 :itemHeight => 35,
@@ -89,8 +88,8 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     }
 
     private function generateColorItems() as Array<GenerateItemProps> {
-        var menuItems = [];
-        var keys = ColorsModule.ColorsDictionary.keys();
+        var menuItems = [] as Array<GenerateItemProps>;
+        var keys = ColorsModule.ColorsDictionary.keys() as Array<ColorsTypes.Enum>;
 
         for (var i = 0; i < keys.size(); i++) {
             var colorKey = keys[i];
@@ -100,7 +99,7 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             menuItems.add({
                 :buider => ItemBuilders.CUSTOM_COLOR_ITEM,
                 :buiderProps => {
-                    :identifier => colorKey,
+                    :identifier => colorKey as Number,
                     :color => color,
                     :label => colorName
                 }
@@ -110,12 +109,12 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         return menuItems;
     }
 
-    private function generateSensorFieldItems(settingKey as SettingType) as Array<GenerateItemProps> {
-        var menuItems = [];
-        var keys = SensorsDisplay.SensorsDictionary.keys();
+    private function generateSensorFieldItems(settingKey as SettingType.Enum) as Array<GenerateItemProps> {
+        var menuItems = [] as Array<GenerateItemProps>;
+        var keys = SensorsDisplay.SensorsDictionary.keys() as Array<SensorType.Enum>;
         var availableKeys = self.subMenuAwailableKeys.get(settingKey);
         var unavailableKeys = self.subMenuUnawailableKeys.get(settingKey);
-        var sensorInfoService = Services.get(ServiceType.SENSORS_INFO);
+        var sensorInfoService = Services.SensorInfo();
 
         for (var i = 0; i < keys.size(); i++) {
             var sensorKey = keys[i];
@@ -131,7 +130,7 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             menuItems.add({
                 :buider => ItemBuilders.CUSTOM_ICON_ITEM,
                 :buiderProps => {
-                    :identifier => sensorKey,
+                    :identifier => sensorKey as Number,
                     :label => SensorsDisplay.getText(sensorKey),
                     :icon => SensorsDisplay.getIcon(sensorKey, true)
                 }
@@ -142,8 +141,8 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     }
 
     private function generateSecondsFieldItems() as Array<GenerateItemProps> {
-        var menuItems = [];
-        var keys = self.secondsFields.keys();
+        var menuItems = [] as Array<GenerateItemProps>;
+        var keys = self.secondsFields.keys() as Array<ColorsTypes.Enum>;
 
         for (var i = 0; i < keys.size(); i++) {
             var fieldKey = keys[i];
@@ -151,8 +150,8 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             menuItems.add({
                 :buider => ItemBuilders.CUSTOM_ICON_ITEM,
                 :buiderProps => {
-                    :identifier => fieldKey,
-                    :label => self.secondsFields.get(fieldKey)
+                    :identifier => fieldKey as Number,
+                    :label => self.secondsFields.get(fieldKey) as Symbol
                 }
             });
         }
@@ -161,7 +160,7 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     }
 
     public function colorHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
-        self.renderCustomMenu(item.getId(), item.getLabel(), self.generateColorItems());
+        self.renderCustomMenu(item.getId(), item.getLabel(), self.generateColorItems(), false);
     }
 
     public function sensorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
@@ -169,7 +168,7 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     }
 
     public function displaySecondsHandler(item as WatchUi.ToggleMenuItem) as Void {
-        self.renderCustomMenu(item.getId(), item.getLabel(), self.generateSecondsFieldItems());
+        self.renderCustomMenu(item.getId(), item.getLabel(), self.generateSecondsFieldItems(), false);
     }
 
     public function toggleFieldHangler(item as WatchUi.ToggleMenuItem) as Void {
@@ -198,10 +197,10 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
 }
 
 class CustomMenuDelegate extends WatchUi.Menu2InputDelegate {
-    private var settingKey as String;
+    private var settingKey as SettingType.Enum;
     private var clearPrevSensorCache as Boolean = false;
 
-    function initialize(settingKey, clearPrevSensorCache as Boolean?) {
+    function initialize(settingKey as SettingType.Enum, clearPrevSensorCache as Boolean?) {
         Menu2InputDelegate.initialize();
 
         self.settingKey = settingKey;
@@ -215,7 +214,7 @@ class CustomMenuDelegate extends WatchUi.Menu2InputDelegate {
         var valueID = item.getId();
 
         if (self.clearPrevSensorCache) {
-            var prevValue = SettingsModule.getValue(self.settingKey);
+            var prevValue = SettingsModule.getValue(self.settingKey) as SensorType.Enum;
             var icon = SensorsDisplay.getIcon(prevValue, true);
 
             ResourcesCache.remove(icon);

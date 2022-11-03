@@ -4,7 +4,7 @@ import Toybox.WatchUi;
 
 module SensorInfoModule {
     module SensorType {
-        enum {
+        enum Enum {
             NONE = 0,
             BATTERY = 1,
             BATTERY_IN_DAYS = 2,
@@ -47,7 +47,7 @@ module SensorInfoModule {
     }
 
     class SensorsInfoService {
-        private var awailableSensors as Array<SensorType> = [];
+        private var awailableSensors as Array<SensorType.Enum> = [] as Array<SensorType.Enum>;
 
         function initialize() {
             self.awailableSensors = self.checkAwailableSensors();
@@ -55,15 +55,15 @@ module SensorInfoModule {
         }
 
         private function cleanChecker() as Void {
-            SensorsChecker.SensorsDictionary = {};
+            SensorsChecker.SensorsDictionary = {} as Dictionary<SensorType.Enum, Symbol>;
         }
 
-        private function checkAwailableSensors() as Array<SensorType> {
+        private function checkAwailableSensors() as Array<SensorType.Enum> {
             var keys = SensorsInfoGetter.SensorsDictionary.keys();
-            var awailableSensors as Array<SensorType> = [];
+            var awailableSensors = [] as Array<SensorType.Enum>;
 
             for (var i = 0; i < keys.size(); i++) {
-                var key = keys[i];
+                var key = keys[i] as SensorType.Enum;
                 var isAwailable = SensorsChecker.check(key);
 
                 if (isAwailable) {
@@ -74,11 +74,11 @@ module SensorInfoModule {
             return awailableSensors;
         }
 
-        public function isAwailable(sensorType as SensorType) as Boolean {
+        public function isAwailable(sensorType as SensorType.Enum) as Boolean {
             return self.awailableSensors.indexOf(sensorType) > -1;
         }
         
-        public function getValue(sensorType as SensorType) as Object {
+        public function getValue(sensorType as SensorType.Enum) as SersorInfoGetterValue {
             if (!self.isAwailable(sensorType)) {
                 return null;
             }
@@ -86,14 +86,14 @@ module SensorInfoModule {
             return SensorsInfoGetter.getValue(sensorType);
         }
 
-        public function transformValue(sensorType as SensorType) as String {
+        public function transformValue(sensorType as SensorType.Enum) as String {
             return SensorsDisplay.transformValue(sensorType, self.getValue(sensorType));
         }
 
-        public function getIcon(sensorType as SensorType) as FontResource or Null {
+        public function getIcon(sensorType as SensorType.Enum) as FontResource or Null {
             var iconSymbol = SensorsDisplay.getIcon(sensorType, self.getValue(sensorType));
 
-            return iconSymbol != null ? ResourcesCache.get(iconSymbol) : null;
+            return iconSymbol != null ? ResourcesCache.get(iconSymbol) as FontResource : null;
         }
     }
 }

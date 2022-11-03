@@ -3,7 +3,7 @@ import Toybox.Application.Properties;
 
 module SettingsModule {
     module SettingType {
-        enum {
+        enum Enum {
             BACKGROUND_COLOR = "BackgroundColor",
             FOREGROUND_COLOR = "ForegroundColor",
             TEXT_COLOR = "TextColor",
@@ -22,17 +22,17 @@ module SettingsModule {
     }
 
     module DisplaySecondsType {
-        enum {
+        enum Enum {
             NEVER = 0,
             ON_GESTURE = 1,
         }
     }
 
-    function setValue(settingKey as SettingType, value as String or Boolean or Number) as Void {
-        Properties.setValue(settingKey, value);
+    function setValue(settingKey as SettingType.Enum, value as String or Boolean or Number) as Void {
+        Properties.setValue(settingKey as String, value);
     }
 
-    function getValue(settingKey as SettingType) as String or Number or Boolean {
-        return Properties.getValue(settingKey);
+    function getValue(settingKey as SettingType.Enum) as String or Number or Boolean {
+        return Properties.getValue(settingKey as String) as String or Number or Boolean;
     }
 }

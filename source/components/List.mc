@@ -4,7 +4,7 @@ import Toybox.Graphics;
 
 module Component {
     module ListItemsDerection {
-        enum ListItemsDerection {
+        enum Enum {
             LEFT = 1,
             RIGHT
         }
@@ -12,8 +12,8 @@ module Component {
 
     typedef ItemType as {
         :text as String?,
-        :icon as FontResource or Null,
-        :icons as Array<FontResource> or Null,
+        :icon as FontResource?,
+        :icons as Array<FontResource>?,
     };
 
     typedef ItemsRenderProps as {
@@ -21,12 +21,12 @@ module Component {
         :posX as Number,
         :posY as Number,
         :drawContext as Dc,
-        :derection as ListItemsDerection?
+        :derection as ListItemsDerection.Enum?
     };
 
     typedef ElementRenderProps as {
         :item as ItemType,
-        :derection as ListItemsDerection?,
+        :derection as ListItemsDerection.Enum?,
         :posX as Number,
         :posY as Number,
     };
@@ -37,7 +37,7 @@ module Component {
     };
 
     class List extends Box {
-        protected var _itemHeight as String or Null = null;
+        protected var _itemHeight as Number;
         protected var _iconSize as Number;
 
         function initialize(params as ListProps) {
@@ -54,10 +54,10 @@ module Component {
                 return;
             }
 
-            self._itemHeight = drawContext.getFontHeight(self.getFont()).toString();
+            self._itemHeight = drawContext.getFontHeight(self.getFont()).toNumber();
         }
 
-        private function getJustify(direction) {
+        private function getJustify(direction as ListItemsDerection.Enum) {
             if (direction == ListItemsDerection.LEFT) {
                 return Graphics.TEXT_JUSTIFY_LEFT;
             }
@@ -105,8 +105,8 @@ module Component {
         }
 
         private function renderIcons(props as ElementRenderProps, drawContext as Dc) as Void {
-            var item = props.get(:item);
-            var icons = item.get(:icons);
+            var item = props.get(:item) as ItemType;
+            var icons = item.get(:icons) as Array<FontResource>?;
 
             if (icons == null || icons.size() == 0) {
                 return;

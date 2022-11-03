@@ -48,7 +48,7 @@ module SensorInfoModule {
             SensorType.ACTIVE_MINUTES_WEEK_GOAL => :checkActiveMinutesWeekGoal,
         };
         
-        function check(sensorType as SensorType) as Boolean {
+        function check(sensorType as SensorType.Enum) as Boolean {
             var sensorFn = SensorsDictionary.get(sensorType);
 
             if (sensorFn == null) {
@@ -57,7 +57,7 @@ module SensorInfoModule {
 
             var method = new Lang.Method(SensorsChecker, sensorFn);
 
-            return method.invoke();
+            return method.invoke() as Boolean;
         }
 
         function checkSteps() as Boolean {

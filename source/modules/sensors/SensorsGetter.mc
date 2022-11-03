@@ -10,314 +10,313 @@ import Toybox.Time;
 import Toybox.Position;
 
 module SensorInfoModule {
-    module SensorsInfoGetter {
-        var SensorsDictionary = {
-            SensorType.NONE => :getNone,
-            SensorType.BATTERY => :getBattery,
-            SensorType.BATTERY_IN_DAYS => :getBatteryInDays,
-            SensorType.CURRENT_WEATHER => :getCurrentWeather,
-            SensorType.WEATHER_FEELS => :getWeatherFeels,
-            SensorType.WEATHER_FORECAST => :getCurrentForecast,
-            SensorType.SUNRISE => :getSunrise,
-            SensorType.SUNSET => :getSunset,
-            SensorType.STEPS => :getSteps,
-            SensorType.CALORIES => :getCalories,
-            SensorType.HEART_RATE => :getHR,
-            SensorType.STRESS => :getStress,
-            SensorType.BODY_BATTERY => :getBodyBattery,
-            SensorType.OXYGEN_SATURATION => :getOxygenSaturation,
-            SensorType.RESPIRATION_RATE => :getRespirationRate,
-            SensorType.TIME_TO_RECOVERY => :getTimeToRecovery,
-            SensorType.FLOORS => :getFloors,
-            SensorType.METERS_CLIMBED => :getMetersClimbed,
-            SensorType.DISTANCE => :getDistance,
-            SensorType.ALTITUDE => :getAltitude,
-            SensorType.PRESSURE => :getPressure,
-            SensorType.ACTIVE_MINUTES_DAY => :getActiveMinutesDay,
-            SensorType.ACTIVE_MINUTES_WEEK => :getActiveMinutesWeek,
-            SensorType.MESSAGES => :getMessages,
-            SensorType.ALARM_COUNT => :getAlarmCount,
-            SensorType.SOLAR_INTENSITY => :getSolarIntensity,
-            SensorType.TEMPERATURE => :getTemperature,
-            SensorType.IS_CONNECTED => :getIsConnected,
-            SensorType.IS_DO_NOT_DISTURB => :isDoNotDisturb,
-            SensorType.IS_NIGHT_MODE_ENABLED => :isNightModeEnabled,
-            SensorType.IS_SLEEP_TIME => :isSleepModeEnabled,
-            SensorType.IS_CHARGING => :getCharging,
-            SensorType.MEMORY_USED => :getMemory,
-            SensorType.IS_VIBRATE_ON => :isVibrateOn,
-            SensorType.STEPS_GOAL => :getStepGoal,
-            SensorType.FLOORS_CLIMBED_GOAL => :getFloorsClimbedGoal,
-            SensorType.BATTERY_GOAL => :getBatteryGoal,
-            SensorType.ACTIVE_MINUTES_WEEK_GOAL => :getActiveMinutesWeekGoal,
-        };
+    typedef SersorInfoGetterValue as Number or Float or Boolean or Time.Moment or Position.Info or Null;
 
-        function getValue(sensorType as SensorType) as Object {            
+    module SensorsInfoGetter {
+
+        var SensorsDictionary as Dictionary<SensorType.Enum, Symbol> =
+            {
+                SensorType.NONE => :getNone,
+                SensorType.BATTERY => :getBattery,
+                SensorType.BATTERY_IN_DAYS => :getBatteryInDays,
+                SensorType.CURRENT_WEATHER => :getCurrentWeather,
+                SensorType.WEATHER_FEELS => :getWeatherFeels,
+                SensorType.WEATHER_FORECAST => :getCurrentForecast,
+                SensorType.SUNRISE => :getSunrise,
+                SensorType.SUNSET => :getSunset,
+                SensorType.STEPS => :getSteps,
+                SensorType.CALORIES => :getCalories,
+                SensorType.HEART_RATE => :getHR,
+                SensorType.STRESS => :getStress,
+                SensorType.BODY_BATTERY => :getBodyBattery,
+                SensorType.OXYGEN_SATURATION => :getOxygenSaturation,
+                SensorType.RESPIRATION_RATE => :getRespirationRate,
+                SensorType.TIME_TO_RECOVERY => :getTimeToRecovery,
+                SensorType.FLOORS => :getFloors,
+                SensorType.METERS_CLIMBED => :getMetersClimbed,
+                SensorType.DISTANCE => :getDistance,
+                SensorType.ALTITUDE => :getAltitude,
+                SensorType.PRESSURE => :getPressure,
+                SensorType.ACTIVE_MINUTES_DAY => :getActiveMinutesDay,
+                SensorType.ACTIVE_MINUTES_WEEK => :getActiveMinutesWeek,
+                SensorType.MESSAGES => :getMessages,
+                SensorType.ALARM_COUNT => :getAlarmCount,
+                SensorType.SOLAR_INTENSITY => :getSolarIntensity,
+                SensorType.TEMPERATURE => :getTemperature,
+                SensorType.IS_CONNECTED => :getIsConnected,
+                SensorType.IS_DO_NOT_DISTURB => :isDoNotDisturb,
+                SensorType.IS_NIGHT_MODE_ENABLED => :isNightModeEnabled,
+                SensorType.IS_SLEEP_TIME => :isSleepTime,
+                SensorType.IS_CHARGING => :getCharging,
+                SensorType.MEMORY_USED => :getMemory,
+                SensorType.IS_VIBRATE_ON => :isVibrateOn,
+                SensorType.STEPS_GOAL => :getStepGoal,
+                SensorType.FLOORS_CLIMBED_GOAL => :getFloorsClimbedGoal,
+                SensorType.BATTERY_GOAL => :getBatteryGoal,
+                SensorType.ACTIVE_MINUTES_WEEK_GOAL => :getActiveMinutesWeekGoal
+            } as Dictionary<SensorType.Enum, Symbol>;
+
+        function getValue(sensorType as SensorType.Enum) as SersorInfoGetterValue {
             var sensorFn = SensorsDictionary.get(sensorType);
 
             if (sensorFn == null) {
                 throw new Lang.InvalidValueException("the item sensor prop has an incorrect value");
             }
 
-            var method = new Lang.Method(SensorsInfoGetter, sensorFn);
+            var method = new Lang.Method(Getters, sensorFn);
 
-            return method.invoke();
+            return method.invoke() as SersorInfoGetterValue;
         }
 
-        function getNone() as Null {
-            return null;
-        }
-
-        function getSteps() as Number or Null {
-            return ActivityMonitor.getInfo().steps;
-        }
-
-        function getCalories() as Number or Null {
-            return ActivityMonitor.getInfo().calories;
-        }
-
-        function getFloors() as Number or Null {
-            return ActivityMonitor.getInfo().floorsClimbed;
-        }
-
-        function getTimeToRecovery() as Number or Null {
-            return ActivityMonitor.getInfo().timeToRecovery;
-        }
-
-        function getStepGoal() as Number or Null {
-            return ActivityMonitor.getInfo().stepGoal;
-        }
-
-        function getRespirationRate() as Number or Null {
-            return ActivityMonitor.getInfo().respirationRate;
-        }
-
-        function getMetersClimbed() as Number or Null {
-            return ActivityMonitor.getInfo().metersClimbed;
-        }
-
-        function getFloorsClimbedGoal() as Number or Null {
-            return ActivityMonitor.getInfo().floorsClimbedGoal;
-        }
-
-        function getDistance() as Float or Null {
-            return ActivityMonitor.getInfo().distance / 1000;
-        }
-
-        function getActiveMinutesDay() as Number or Null {
-            var value = ActivityMonitor.getInfo().activeMinutesDay;
-
-            return value != null ? value.total : value;
-        }
-
-        function getBodyBattery() as Number or Null {
-            var value = SensorHistory.getBodyBatteryHistory({}).next();
-
-            return (value != null && value.data != null) ? value.data.toNumber() : null;
-        }
-
-        function getStress() as Number or Null {
-            var value = SensorHistory.getStressHistory({}).next();
-
-            return (value != null && value.data != null) ? value.data.toNumber() : null;
-        }
-
-        function getOxygenSaturation() as Number or Null {
-            var value = Activity.getActivityInfo().currentOxygenSaturation;
-
-            if (value == null && SensorsChecker.checkOxygenSaturationHistory()) {
-                value = SensorHistory.getOxygenSaturationHistory({}).next();
-                value = (value != null && value.data != null) ? value.data.toNumber() : null;
-            }
-
-            return value;
-        }
-
-        function getPressure() as Number or Null {
-            var value = Activity.getActivityInfo().ambientPressure;
-
-            if (value == null && SensorsChecker.checkPressureHistory()) {
-                value = SensorHistory.getPressureHistory({}).next();
-                value = (value != null && value.data != null) ? value.data.toNumber() : null;
-            }
-
-            return value;
-        }
-
-        function getMemory() as Number {
-            return System.getSystemStats().usedMemory;
-        }
-
-        function getBattery() as Number {
-            return System.getSystemStats().battery.toNumber();
-        }
-
-        function getBatteryInDays() as Number {
-            return System.getSystemStats().batteryInDays.toNumber();
-        }
-
-        function getCharging() as Boolean {
-            return System.getSystemStats().charging;
-        }
-
-        function getAlarmCount() as Number {
-            return System.getDeviceSettings().alarmCount;
-        }
-
-        function getMessages() as Number {
-            return System.getDeviceSettings().notificationCount;
-        }
-
-        function isVibrateOn() as Boolean or Null {
-            return System.getDeviceSettings().vibrateOn;
-        }
-
-        function getSolarIntensity() as Number or Null {
-            return System.getSystemStats().solarIntensity;
-        }
-
-        function isDoNotDisturb() as Boolean or Null {
-            return System.getDeviceSettings().doNotDisturb;
-        }
-
-        function isSleepTime() as Boolean or Null {
-            var userProfile = UserProfile.getProfile();
-            var sleepTime = userProfile.sleepTime;
-            var wakeTime = userProfile.wakeTime;
-
-            if (sleepTime == null || wakeTime == null) {
+        module Getters {
+            function getNone() as Null {
                 return null;
             }
 
-            var now = Time.now();
-            var midnight = Time.today();
-
-            var currentWakeTime = midnight.add(wakeTime);
-            var currentSleepTime = midnight.add(sleepTime);
-
-            return now.lessThan(currentWakeTime) || now.greaterThan(currentSleepTime);
-        }
-
-        function isNightModeEnabled() as Boolean or Null {
-            return !!System.getDeviceSettings().isNightModeEnabled;
-        }
-
-        function isSleepModeEnabled() as Boolean or Null {
-            var info = ActivityMonitor.getInfo();
-            var value = null;
-
-            if (info has :isSleepMode) {
-                value = info.isSleepMode;
+            function getSteps() as Number? {
+                return ActivityMonitor.getInfo().steps;
             }
 
-            if (!value) {
-                value = isSleepTime();
+            function getCalories() as Number? {
+                return ActivityMonitor.getInfo().calories;
             }
 
-            return !!value;
-        }
+            function getFloors() as Number? {
+                return ActivityMonitor.getInfo().floorsClimbed;
+            }
 
-        function getIsConnected() as Boolean {
-            return System.getDeviceSettings().phoneConnected;
-        }
-        
-        function getTemperature() as Number or Null {
-            var value = SensorHistory.getTemperatureHistory({}).next();
+            function getTimeToRecovery() as Number? {
+                return ActivityMonitor.getInfo().timeToRecovery;
+            }
 
-            return (value != null && value.data != null) ? value.data.toLong() : null;
-        }
+            function getStepGoal() as Number? {
+                return ActivityMonitor.getInfo().stepGoal;
+            }
 
-        function getHR() as Number or Null {
-            var value = Activity.getActivityInfo().currentHeartRate;
+            function getRespirationRate() as Number? {
+                return ActivityMonitor.getInfo().respirationRate;
+            }
 
-            if (value == null && SensorsChecker.checkHeartRateHistory()) {
-                value = SensorHistory.getHeartRateHistory({}).next();
+            function getMetersClimbed() as Float? {
+                return ActivityMonitor.getInfo().metersClimbed;
+            }
 
-                if (value == null || value.data == null || value.data >= ActivityMonitor.INVALID_HR_SAMPLE) {
-                    value = null;
-                } else {
-                    value = value.data.toNumber();
+            function getFloorsClimbedGoal() as Number? {
+                return ActivityMonitor.getInfo().floorsClimbedGoal;
+            }
+
+            function getDistance() as Number? {
+                var distance = ActivityMonitor.getInfo().distance;
+
+                return distance != null ? distance / 1000 : null;
+            }
+
+            function getActiveMinutesDay() as Number? {
+                var value = ActivityMonitor.getInfo().activeMinutesDay;
+
+                return value != null ? value.total : value;
+            }
+
+            function getBodyBattery() as Number? {
+                var sensorInfo = SensorHistory.getBodyBatteryHistory({}).next();
+                var value = sensorInfo != null ? sensorInfo.data : null;
+
+                value = value as Number or Float or Null;
+
+                return value != null ? value.toNumber() : value;
+            }
+
+            function getStress() as Number? {
+                var sensorInfo = SensorHistory.getStressHistory({}).next();
+                var value = sensorInfo != null ? sensorInfo.data : null;
+
+                value = value as Number or Float or Null;
+
+                return value != null ? value.toNumber() : value;
+            }
+
+            function getOxygenSaturation() as Number? {
+                var activityInfo = Activity.getActivityInfo();
+                var value = activityInfo != null ? activityInfo.currentOxygenSaturation : null;
+
+                if (value == null && SensorsChecker.checkOxygenSaturationHistory()) {
+                    var sensorInfo = SensorHistory.getOxygenSaturationHistory({}).next();
+                    value = sensorInfo != null ? sensorInfo.data : null;
                 }
+
+                return value != null ? value.toNumber() : value;
             }
 
-            return value;
-        }
+            function getPressure() as Number? {
+                var activityInfo = Activity.getActivityInfo();
+                var value = activityInfo != null ? activityInfo.ambientPressure : null;
 
-        function getAltitude() as Float or Null {
-            var value = Activity.getActivityInfo().altitude;
+                if (value == null && SensorsChecker.checkPressureHistory()) {
+                    var sensorInfo = SensorHistory.getPressureHistory({}).next();
+                    value = sensorInfo != null ? sensorInfo.data : null;
+                }
 
-            if (value == null && SensorsChecker.checkElevationHistory()) {
-                value = SensorHistory.getElevationHistory({}).next();
-                value = (value != null && value.data != null) ? value.data.toLong() : null;
+                return value != null ? value.toNumber() : value;
             }
 
-            return value;
-        }
+            function getMemory() as Number {
+                return System.getSystemStats().usedMemory;
+            }
 
-        function getCurrentWeather() as Number or Null {
-            var info = Weather.getCurrentConditions();
+            function getBattery() as Number {
+                return System.getSystemStats().battery.toNumber();
+            }
 
-            return (info != null) ? info.temperature : null;
-        }
+            function getBatteryInDays() as Number {
+                return System.getSystemStats().batteryInDays.toNumber();
+            }
 
-        function getWeatherFeels() as Number or Null {
-            var info = Weather.getCurrentConditions();
+            function getCharging() as Boolean {
+                return System.getSystemStats().charging;
+            }
 
-            return (info != null) ? info.feelsLikeTemperature : null;
-        }
+            function getAlarmCount() as Number {
+                return System.getDeviceSettings().alarmCount;
+            }
 
-        function getCurrentForecast() as Array<Number or Null> or Null { // Array<[low, high]>
-            var info = Weather.getDailyForecast();
+            function getMessages() as Number {
+                return System.getDeviceSettings().notificationCount;
+            }
 
-            if (info == null || info.size() == 0) {
+            function isVibrateOn() as Boolean? {
+                return System.getDeviceSettings().vibrateOn;
+            }
+
+            function getSolarIntensity() as Number? {
+                return System.getSystemStats().solarIntensity;
+            }
+
+            function isDoNotDisturb() as Boolean? {
+                return System.getDeviceSettings().doNotDisturb;
+            }
+
+            function isSleepTime() as Boolean? {
+                var userProfile = UserProfile.getProfile();
+                var sleepTime = userProfile.sleepTime;
+                var wakeTime = userProfile.wakeTime;
+
+                if (sleepTime == null || wakeTime == null) {
+                    return null;
+                }
+
+                var now = Time.now();
+                var midnight = Time.today();
+
+                var currentWakeTime = midnight.add(wakeTime);
+                var currentSleepTime = midnight.add(sleepTime);
+
+                return now.lessThan(currentWakeTime) || now.greaterThan(currentSleepTime);
+            }
+
+            function isNightModeEnabled() as Boolean {
+                return !!System.getDeviceSettings().isNightModeEnabled;
+            }
+
+            function getIsConnected() as Boolean {
+                return System.getDeviceSettings().phoneConnected;
+            }
+
+            function getTemperature() as Long? {
+                var sensorInfo = SensorHistory.getTemperatureHistory({}).next();
+                var value = sensorInfo != null ? sensorInfo.data : null;
+
+                return value != null ? value.toLong() : value;
+            }
+
+            function getHR() as Number? {
+                var activityInfo = Activity.getActivityInfo();
+                var value = activityInfo != null ? activityInfo.currentHeartRate : null;
+
+                if (value == null && SensorsChecker.checkHeartRateHistory()) {
+                    var sensorInfo = SensorHistory.getHeartRateHistory({}).next();
+                    value = sensorInfo != null ? sensorInfo.data : value;
+                }
+
+                return value != null && value < ActivityMonitor.INVALID_HR_SAMPLE ? value.toNumber() : null;
+            }
+
+            function getAltitude() as Long? {
+                var activityInfo = Activity.getActivityInfo();
+                var value = activityInfo != null ? activityInfo.altitude : null;
+
+                if (value == null && SensorsChecker.checkElevationHistory()) {
+                    var sensorInfo = SensorHistory.getElevationHistory({}).next();
+                    value = sensorInfo != null ? sensorInfo.data : value;
+                }
+
+                return value != null ? value.toLong() : value;
+            }
+
+            function getCurrentWeather() as Number? {
+                var info = Weather.getCurrentConditions();
+
+                return info != null ? info.temperature : null;
+            }
+
+            function getWeatherFeels() as Number? {
+                var info = Weather.getCurrentConditions();
+
+                return info != null ? info.feelsLikeTemperature : null;
+            }
+
+            function getCurrentForecast() as Array<Number?> or Null {
+                var info = Weather.getDailyForecast();
+
+                if (info == null || info.size() == 0) {
+                    return null;
+                }
+
+                return [info[0].lowTemperature, info[0].highTemperature] as Array<Number?>;
+            }
+
+            function getCurrentLocation() as Position.Info? {
+                var positionInfo = Position.getInfo();
+
+                if (positionInfo has :position && positionInfo.position != null) {
+                    return positionInfo.position as Position.Info;
+                }
+
                 return null;
             }
 
-            return [info[0].lowTemperature, info[0].highTemperature];
-        }
+            function getSunrise() as Time.Moment? {
+                var location = getCurrentLocation();
 
-        function getCurrentLocation() as Position.Info or Null {
-            var positionInfo = Position.getInfo();
+                if (location == null) {
+                    return null;
+                }
 
-            if (positionInfo has :position && positionInfo.position != null) {
-                return positionInfo.position;
+                return Weather.getSunrise(location, Time.today());
             }
 
-            return null;
-        }
+            function getSunset() as Time.Moment? {
+                var location = getCurrentLocation();
 
-        function getSunrise() as Time.Moment or Null {
-            var location = getCurrentLocation();
+                if (location == null) {
+                    return null;
+                }
 
-            if (location == null) {
-                return null;
+                return Weather.getSunset(location, Time.today());
             }
 
-            return Weather.getSunrise(location, Time.today());
-        }
-
-        function getSunset() as Time.Moment or Null {
-            var location = getCurrentLocation();
-
-            if (location == null) {
-                return null;
+            function getBatteryGoal() as Number {
+                return 100;
             }
 
-            return Weather.getSunset(location, Time.today());
-        }
+            function getActiveMinutesWeek() as Number? {
+                var value = ActivityMonitor.getInfo().activeMinutesWeek;
 
-        function getBatteryGoal() as Number {
-            return 100;
-        }
+                return value != null ? value.total : null;
+            }
 
-        function getActiveMinutesWeek() as Number or Null {
-            var value = ActivityMonitor.getInfo().activeMinutesWeek;
-
-            return value != null ? value.total : null;
-        }
-
-        function getActiveMinutesWeekGoal() as Number or Null {
-            return ActivityMonitor.getInfo().activeMinutesWeekGoal;
+            function getActiveMinutesWeekGoal() as Number? {
+                return ActivityMonitor.getInfo().activeMinutesWeekGoal;
+            }
         }
     }
 }

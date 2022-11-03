@@ -2,23 +2,28 @@ import Toybox.Lang;
 
 module Services {
     module ServiceType {
-        enum {
+        enum Enum {
             SENSORS_INFO = 1,
             OBSERVED_STORE,
         }
     }
 
-    var cachedServices = {};
+    var _cachedServices = {} as Dictionary<ServiceType.Enum, Object>;
 
-    function register(serviceType as ServiceType, service as Object) as Void {
-        if (cachedServices.hasKey(serviceType)) {
+    function register() as Void {
+        if (_cachedServices.size() > 0) {
             return;
         }
 
-        cachedServices.put(serviceType, service);
+        _cachedServices.put(ServiceType.SENSORS_INFO, new SensorInfoModule.SensorsInfoService());
+        _cachedServices.put(ServiceType.OBSERVED_STORE, new ObservedStoreModule.Store());
     }
 
-    function get(serviceKey as ServiceType) {
-        return cachedServices.get(serviceKey);
+    function SensorInfo() as SensorInfoModule.SensorsInfoService {
+        return _cachedServices.get(ServiceType.SENSORS_INFO);
+    }
+
+    function ObservedStore() as ObservedStoreModule.Store {
+        return _cachedServices.get(ServiceType.OBSERVED_STORE);
     }
 }

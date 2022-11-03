@@ -3,7 +3,7 @@ import Toybox.Application;
 import Toybox.WatchUi;
 
 class SimplePixelsApp extends Application.AppBase {
-    private var mainView as SimplePixelsView;
+    private var mainView as SimplePixelsView or Null = null;
 
     function initialize() {
         AppBase.initialize();
@@ -16,21 +16,25 @@ class SimplePixelsApp extends Application.AppBase {
     function getInitialView() as Array<Views or InputDelegates>? {
         self.mainView = new SimplePixelsView();
 
-        return [self.mainView];
+        return [self.mainView] as Array<Views or InputDelegates>;
     }
 
     function getSettingsView() as Array<Views or InputDelegates>? {
         var onSettingsChanged = new Lang.Method(self, :onSettingsChanged);
 
-        return [new WatchSettingsView(onSettingsChanged)];
+        return [new WatchSettingsView(onSettingsChanged)] as Array<Views or InputDelegates>;
     }
     
     function onSettingsChanged() as Void {
-        self.mainView.onSettingsChanged();
+        if (self.mainView != null) {
+            self.mainView.onSettingsChanged();
+        }
     }
 
     function onNightModeChanged() as Void {
-        self.mainView.onNightModeChanged();
+        if (self.mainView != null) {
+            self.mainView.onNightModeChanged();
+        }
     }
 
 }

@@ -16,7 +16,7 @@ class SecondsView extends Component.Box {
         return seconds;
     }
 
-    function setViewProps(displaySecondsType as DisplaySecondsType, isAwake as Boolean) as Void {
+    function setViewProps(displaySecondsType as DisplaySecondsType.Enum, isAwake as Boolean) as Void {
         switch (displaySecondsType) {
             case DisplaySecondsType.NEVER:
                 self.setVisible(false);

@@ -1,41 +1,42 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
-import ObservedStore;
+import ObservedStoreModule;
+import ObservedStoreModule.Scope;
 import Services;
-import Services.ServiceType;
 import SettingsModule;
 
-class DisplaySecondsObservedKey extends ObservedStore.KeyInstance {
-    public static var key = "DisplaySecondsObservedKey";
-    public var scope as Array<ObservedStore.Scope> = [
-        ObservedStore.Scope.ON_SETTINGS_CHANGED
-    ];
+class DisplaySecondsObservedKey extends ObservedStoreModule.KeyInstance {
+    public static var key as String = "DisplaySecondsObservedKey";
+    public var scope as Array<Scope.Enum> = [
+        Scope.ON_SETTINGS_CHANGED
+    ] as Array<Scope.Enum>;
 
     private var _mainView as WatchUi.View;
 
     function initialize(mainView as WatchUi.View) {
-        self._mainView = mainView;
+        ObservedStoreModule.KeyInstance.initialize();
 
-        ObservedStore.KeyInstance.initialize();
+        self._mainView = mainView;
     }
 
     function get() as Lang.Object? {
         return SettingsModule.getValue(SettingsModule.SettingType.DISPLAY_SECONDS);
     }
 
-    private function updateViewProps(displaySecondsType as DisplaySecondsType) as Void {
+    private function updateViewProps(value as InstanceGetter) as Void {
+        var displaySecondsType = value as DisplaySecondsType.Enum;
         var secondsViewID = $.VIEWS_LIST.get(:seconds);
         var secondsView = self._mainView.findDrawableById(secondsViewID) as SecondsView;
-        var isAwake = Services.get(ServiceType.OBSERVED_STORE).getValue(AwakeObservedKey);
+        var isAwake = Services.ObservedStore().getValue(AwakeObservedKey) as Boolean;
 
         secondsView.setViewProps(displaySecondsType, isAwake);
     }
 
-    function onValueInit(value as DisplaySecondsType) as Void {
+    function onValueInit(value as InstanceGetter) as Void {
         self.updateViewProps(value);
     }
 
-    function onValueUpdated(value as DisplaySecondsType, prevValue as DisplaySecondsType) as Void {
+    function onValueUpdated(value as InstanceGetter, prevValue as InstanceGetter) as Void {
         self.updateViewProps(value);
     }
 }

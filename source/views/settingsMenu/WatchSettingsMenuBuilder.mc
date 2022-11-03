@@ -24,23 +24,23 @@ module WatchSettingsMenuBuilder {
     typedef MenuItemProps as {
             :label as Symbol,
             :subLabel as Symbol or Null,
-            :identifier as Object,
+            :identifier as Object or Number or String,
             :options as { :alignment as MenuItem.Alignment }?
         };
 
     typedef ToggleItemProps as {
             :label as Symbol,
             :subLabel as Symbol or Null,
-            :identifier as Object,
+            :identifier as Object or Number or String,
             :enabled as Boolean?,
             :options as { :alignment as MenuItem.Alignment }?
         };
 
-    typedef MenuValueKey as String or Number;
+    typedef MenuValueKey as SettingType.Enum;
 
     typedef GenerateItemProps as {
             :buider as ItemBuilders.ItemBuilder,
-            :buiderProps as MenuItemProps or CustomColorMenuItemProps or ToggleItemProps,
+            :buiderProps as MenuItemProps or CustomColorMenuItemProps or CustomIconMenuItemProps or ToggleItemProps,
             :valueKey as MenuValueKey?
         };
 
@@ -115,7 +115,7 @@ module WatchSettingsMenuBuilder {
         ) as WatchUi.ToggleMenuItem {
             var isEnabled = params.get(:enabled);
 
-            if (valueKey) {
+            if (valueKey != null) {
                 isEnabled = SettingsModule.getValue(valueKey);
             }
 
@@ -123,7 +123,7 @@ module WatchSettingsMenuBuilder {
                 isEnabled = false;
             }
 
-            var label as String = WatchUi.loadResource(params.get(:label));
+            var label = WatchUi.loadResource(params.get(:label));
             var subLabel = params.get(:subLabel);
             subLabel = subLabel != null ? WatchUi.loadResource(subLabel) : null;
 
@@ -175,7 +175,7 @@ module WatchSettingsMenuBuilder {
             menu.addItem(generateMenuItem(item));
         }
 
-        if (valueKey) {
+        if (valueKey != null) {
             var settingValue = SettingsModule.getValue(valueKey);
             var valueItem = menu.findItemById(settingValue);
 

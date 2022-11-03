@@ -6,8 +6,8 @@ import WatchSettingsMenuBuilder.MenuBuilders;
 import WatchSettingsMenuBuilder.ItemBuilders;
 
 module WatchSettingsMenu {
-    function createMenu() {
-        var structure as GenerateMenuProps = {
+    function createMenu() as WatchUi.Menu2 or WatchUi.CustomMenu {
+        var structure = {
             :buider => MenuBuilders.MENU,
             :buiderProps => { :title => Rez.Strings.SettingsMenu },
             :items => [
@@ -121,7 +121,7 @@ module WatchSettingsMenu {
                         :label => Rez.Strings.BottomSensor3,
                     }
                 }
-            ]
+            ] as Array<GenerateItemProps>
         };
 
         return WatchSettingsMenuBuilder.generateMenu(structure);

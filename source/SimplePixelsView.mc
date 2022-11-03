@@ -2,35 +2,26 @@ import Toybox.Lang;
 import Toybox.Graphics;
 import Toybox.WatchUi;
 import Services;
-import Services.ServiceType;
 import SensorInfoModule;
-import ObservedStore;
-import ObservedStore.Scope;
+import ObservedStoreModule;
+import ObservedStoreModule.Scope;
 
 class SimplePixelsView extends WatchUi.WatchFace {
     private var awakeMemoryKey as AwakeObservedKey;
-    private var memoryStore as ObservedStore.Store;
 
     function initialize() {
         WatchFace.initialize();
-        self.initServices();
-    }
+        Services.register();
 
-    private function initServices() as Void {
-        self.memoryStore = new ObservedStore.Store();
-        
-        Services.register(ServiceType.SENSORS_INFO, new SensorInfoModule.SensorsInfoService());
-        Services.register(ServiceType.OBSERVED_STORE, self.memoryStore);
+        self.awakeMemoryKey = new AwakeObservedKey(self, true);
     }
 
     private function setupStore(drawContext as Dc) as Void {
-        self.awakeMemoryKey = new AwakeObservedKey(self, true);
-
-        self.memoryStore.setup([
+        Services.ObservedStore().setup([
             self.awakeMemoryKey,
             new DisplaySecondsObservedKey(self),
             new OnSettingsChangedObservedKey(self)
-        ]);
+        ] as Array<KeyInstance>);
     }
 
     function onLayout(drawContext as Dc) as Void {
@@ -42,7 +33,7 @@ class SimplePixelsView extends WatchUi.WatchFace {
     }
 
     function onUpdate(drawContext as Dc) as Void {
-        self.memoryStore.runScope(Scope.ON_UPDATE);
+        Services.ObservedStore().runScope(Scope.ON_UPDATE);
 
         drawContext.clearClip();
         
@@ -50,7 +41,7 @@ class SimplePixelsView extends WatchUi.WatchFace {
     }
 
     function onPartialUpdate(drawContext as Dc) as Void {
-        self.memoryStore.runScope(Scope.ON_PARTIAL_UPDATE);
+        Services.ObservedStore().runScope(Scope.ON_PARTIAL_UPDATE);
     
         WatchFace.onPartialUpdate(drawContext);
     }
@@ -75,15 +66,15 @@ class SimplePixelsView extends WatchUi.WatchFace {
         WatchUi.requestUpdate();
     }
 
-    function onSettingsChanged() {
-        self.memoryStore.runScope(Scope.ON_SETTINGS_CHANGED);
+    function onSettingsChanged() as Void {
+        Services.ObservedStore().runScope(Scope.ON_SETTINGS_CHANGED);
 
         WatchUi.requestUpdate();
 	}
 
-    function onNightModeChanged() {
+    function onNightModeChanged() as Void {
         self.awakeMemoryKey.setIsAwake(false);
-        self.memoryStore.runScope(Scope.ON_NIGHT_MODE_CHANGED);
+        Services.ObservedStore().runScope(Scope.ON_NIGHT_MODE_CHANGED);
 
         WatchUi.requestUpdate();
     }

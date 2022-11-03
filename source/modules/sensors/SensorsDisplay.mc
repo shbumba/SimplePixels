@@ -9,13 +9,17 @@ module SensorInfoModule {
     module SensorsDisplay {
         typedef SensorDisplayItem as Array; // [transform as Method, title as Resource, icon as Method]
 
-        var SensorsDictionary as Dictionary<SensorType, SensorDisplayItem> = {
+        var SensorsDictionary = {
             SensorType.NONE => [:transformToEmpty, Rez.Strings.None, :emptyIcon],
             SensorType.BATTERY => [:transformPercent, Rez.Strings.Battery, :batteryIcon],
             SensorType.BATTERY_IN_DAYS => [:transformBatteryInDays, Rez.Strings.BatteryInDays, :batteryIcon],
             SensorType.CURRENT_WEATHER => [:transformTemperature, Rez.Strings.Weather, :currentWeatherIcon],
             SensorType.WEATHER_FEELS => [:transformTemperature, Rez.Strings.WeatherFeels, :currentWeatherIcon],
-            SensorType.WEATHER_FORECAST => [:transformTemperatureForecast, Rez.Strings.WeatherForecast, :currentWeatherIcon],
+            SensorType.WEATHER_FORECAST => [
+                :transformTemperatureForecast,
+                Rez.Strings.WeatherForecast,
+                :currentWeatherIcon
+            ],
             SensorType.SUNRISE => [:transformTime, Rez.Strings.Sunrise, :sunriseIcon],
             SensorType.SUNSET => [:transformTime, Rez.Strings.Sunset, :sunsetIcon],
             SensorType.STEPS => [:transformToFourNumbers, Rez.Strings.Steps, :stepsIcon],
@@ -24,7 +28,11 @@ module SensorInfoModule {
             SensorType.STRESS => [:transformPercent, Rez.Strings.Stress, :stressIcon],
             SensorType.BODY_BATTERY => [:transformPercent, Rez.Strings.BodyBattery, :bodyBatteryIcon],
             SensorType.OXYGEN_SATURATION => [:transformPercent, Rez.Strings.OxygenSaturation, :oxygenSaturationIcon],
-            SensorType.RESPIRATION_RATE => [:transformRespirationRate, Rez.Strings.RespirationRate, :oxygenSaturationIcon],
+            SensorType.RESPIRATION_RATE => [
+                :transformRespirationRate,
+                Rez.Strings.RespirationRate,
+                :oxygenSaturationIcon
+            ],
             SensorType.TIME_TO_RECOVERY => [:transformTimeToRecovery, Rez.Strings.TimeToRecovery, :timeToRecoveryIcon],
             SensorType.FLOORS => [:transformToTwoNumbers, Rez.Strings.Floors, :floorsIcon],
             SensorType.METERS_CLIMBED => [:transformMeters, Rez.Strings.MetersClimbed, :floorsIcon],
@@ -50,7 +58,7 @@ module SensorInfoModule {
             SensorType.IS_NIGHT_MODE_ENABLED => [:transformToEmpty, Rez.Strings.IsNightMode, :isNightModeIcon],
             SensorType.IS_SLEEP_TIME => [:transformToEmpty, Rez.Strings.IsSleepTime, :isNightModeIcon],
             SensorType.IS_CHARGING => [:transformToEmpty, Rez.Strings.IsCharging, :isChargingIcon],
-            SensorType.MEMORY_USED => [:transformBytesToKb, Rez.Strings.Memory, :memoryIcon],
+            SensorType.MEMORY_USED => [:transformBytesToKb, Rez.Strings.Memory, :memoryIcon]
         };
 
         module Handlers {
@@ -58,25 +66,25 @@ module SensorInfoModule {
                 return "";
             }
 
-            function transformBytesToKb(value as Number) as String {
+            function transformBytesToKb(value as Float or Number) as String {
                 value = value.toFloat() / 1024;
 
                 return value.format("%.1f") + " kb";
             }
 
-            function transformFullNumbers(value as Number) as String {
+            function transformFullNumbers(value as Float or Number) as String {
                 return value.toString();
             }
 
-            function transformToTwoNumbers(value as Number) as String {
+            function transformToTwoNumbers(value as Float or Number) as String {
                 return value.format("%02d");
             }
 
-            function transformToThreeNumbers(value as Number) as String {
+            function transformToThreeNumbers(value as Float or Number) as String {
                 return value.format("%03d");
             }
 
-            function transformToFourNumbers(value as Number) as String {
+            function transformToFourNumbers(value as Float or Number) as String {
                 return value.format("%04d");
             }
 
@@ -90,7 +98,7 @@ module SensorInfoModule {
                 return value.toString() + "°";
             }
 
-            function transformTemperatureForecast(forecast as Array<Number or Null>) as String {
+            function transformTemperatureForecast(forecast as Array<Number?>) as String {
                 var low = forecast[0];
                 low = low != null ? transformTemperature(low) : low;
 
@@ -99,7 +107,6 @@ module SensorInfoModule {
 
                 var lowValue = low != null ? low : ResourcesCache.get(Rez.Strings.NA);
                 var highValue = high != null ? high : ResourcesCache.get(Rez.Strings.NA);
-
 
                 return Lang.format("$1$ / $2$", [lowValue, highValue]);
             }
@@ -112,8 +119,8 @@ module SensorInfoModule {
                 return value.toString() + " d";
             }
 
-            function transformPressure(value as Number) as String {
-                value = value / 133.322;
+            function transformPressure(value as Float or Number) as String {
+                value = value.toFloat() / 133.322;
 
                 return transformToThreeNumbers(value) + " mmHg";
             }
@@ -126,21 +133,21 @@ module SensorInfoModule {
                 return value.toString() + " b/m";
             }
 
-            function transformMetrToFeet(value as Number) as Number {
+            function transformMetrToFeet(value as Float or Number) as Float or Number {
                 return value * 3.280839895;
             }
 
-            function transformMetrToMil(value as Number) as Number {
+            function transformMetrToMil(value as Float or Number) as Float or Number {
                 return value * 0.000621;
             }
 
-            function transformMeters(value as Number) as String {
-                var distanceUnits as System.UnitsSystem = System.getDeviceSettings().distanceUnits;
-                
+            function transformMeters(value as Float or Number) as String {
+                var distanceUnits = System.getDeviceSettings().distanceUnits;
+
                 var unitText = "";
                 var isKilometr = value >= 1000;
                 var isMetricSystem = distanceUnits == System.UNIT_METRIC;
-                
+
                 value = value.toFloat();
 
                 if (isKilometr) {
@@ -178,23 +185,23 @@ module SensorInfoModule {
         }
 
         module Icons {
-            function emptyIcon(value as Object?) as Null {
+            function emptyIcon(value as SersorInfoGetterValue) as Null {
                 return null;
             }
 
-            function stepsIcon(value as Object?) as Symbol {
+            function stepsIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.steps_icon;
             }
 
-            function caloriesIcon(value as Object?) as Symbol {
+            function caloriesIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.calories_icon;
             }
 
-            function temperatureIcon(value as Object?) as Symbol {
+            function temperatureIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.temperature_icon;
             }
 
-            function batteryIcon(value as Object?) as Symbol {
+            function batteryIcon(value as SersorInfoGetterValue) as Symbol {
                 if (value == null || value == true || value >= 85) {
                     return Rez.Fonts.battery_100_icon; // 100%
                 } else if (value >= 65) {
@@ -208,92 +215,92 @@ module SensorInfoModule {
                 return Rez.Fonts.battery_0_icon; // 0%
             }
 
-            function solarIcon(value as Object?) as Symbol {
+            function solarIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.sun_icon;
             }
 
-            function sunriseIcon(value as Object?) as Symbol {
+            function sunriseIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.sunrise_icon;
             }
-            
-            function sunsetIcon(value as Object?) as Symbol {
+
+            function sunsetIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.sunset_icon;
             }
 
-            function isConnectedIcon(value as Object?) as Symbol or Null {
-                return value ? Rez.Fonts.connection_icon : null;
+            function isConnectedIcon(value as SersorInfoGetterValue) as Symbol? {
+                return value == true ? Rez.Fonts.connection_icon : null;
             }
 
-            function heartRateIcon(value as Object?) as Symbol {
+            function heartRateIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.heart_icon;
             }
 
-            function floorsIcon(value as Object?) as Symbol {
+            function floorsIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.floors_icon;
             }
 
-            function altitudeIcon(value as Object?) as Symbol {
+            function altitudeIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.altitude_icon;
             }
 
-            function messagesIcon(value as Object?) as Symbol {
+            function messagesIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.messages_icon;
             }
 
-            function alarmCountIcon(value as Object?) as Symbol {
+            function alarmCountIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.alarm_icon;
             }
 
-            function memoryIcon(value as Object?) as Symbol {
+            function memoryIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.memory_icon;
             }
 
-            function currentWeatherIcon(value as Object?) as Symbol {
+            function currentWeatherIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.weather_icon;
             }
 
-            function oxygenSaturationIcon(value as Object?) as Symbol {
+            function oxygenSaturationIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.oxygen_icon;
             }
 
-            function pressureIcon(value as Object?) as Symbol {
+            function pressureIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.preasure_icon;
             }
 
-            function timeToRecoveryIcon(value as Object?) as Symbol {
+            function timeToRecoveryIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.recovery_icon;
             }
 
-            function isNightModeIcon(value as Object?) as Symbol or Null {
-                return value ? Rez.Fonts.sleep_icon : null;
+            function isNightModeIcon(value as SersorInfoGetterValue) as Symbol? {
+                return value == true ? Rez.Fonts.sleep_icon : null;
             }
 
-            function isDoNotDisturbIcon(value as Object?) as Symbol or Null {
-                return value ? Rez.Fonts.dnd_icon : null;
+            function isDoNotDisturbIcon(value as SersorInfoGetterValue) as Symbol? {
+                return value == true ? Rez.Fonts.dnd_icon : null;
             }
 
-            function distanceIcon(value as Object?) as Symbol {
+            function distanceIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.distance_icon;
             }
 
-            function activeMinutesDayIcon(value as Object?) as Symbol {
+            function activeMinutesDayIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.activity_icon;
             }
 
-            function bodyBatteryIcon(value as Object?) as Symbol {
+            function bodyBatteryIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.energy_icon;
             }
 
-            function isChargingIcon(value as Object?) as Symbol {
-                return value ? Rez.Fonts.energy_icon : null;
+            function isChargingIcon(value as SersorInfoGetterValue) as Symbol? {
+                return value == true ? Rez.Fonts.energy_icon : null;
             }
 
-            function stressIcon(value as Object?) as Symbol {
+            function stressIcon(value as SersorInfoGetterValue) as Symbol {
                 return Rez.Fonts.stress_icon;
             }
         }
 
-        function getItem(sensorType as SensorType) as SensorDisplayItem {
+        function getItem(sensorType as SensorType.Enum) as SensorDisplayItem {
             var sensorItem = SensorsDictionary.get(sensorType);
 
             if (sensorItem == null) {
@@ -303,26 +310,26 @@ module SensorInfoModule {
             return sensorItem;
         }
 
-        function transformValue(sensorType as SensorType, value as Object?) as String {
+        function transformValue(sensorType as SensorType.Enum, value as SersorInfoGetterValue) as String {
             if (value == null) {
-                return ResourcesCache.get(Rez.Strings.NA);
+                return ResourcesCache.get(Rez.Strings.NA) as String;
             }
 
             var handler = getItem(sensorType)[0];
             var method = new Lang.Method(Handlers, handler);
 
-            return method.invoke(value);
+            return method.invoke(value) as String;
         }
 
-        function getText(sensorType as SensorType) as Symbol {
-            return getItem(sensorType)[1];
+        function getText(sensorType as SensorType.Enum) as Symbol {
+            return getItem(sensorType)[1] as Symbol;
         }
 
-        function getIcon(sensorType as SensorType, value as Object?) as Symbol or Null {
+        function getIcon(sensorType as SensorType.Enum, value as SersorInfoGetterValue) as Symbol? {
             var handler = getItem(sensorType)[2];
             var method = new Lang.Method(Icons, handler);
 
-            return method.invoke(value);
+            return method.invoke(value) as Symbol?;
         }
     }
 }

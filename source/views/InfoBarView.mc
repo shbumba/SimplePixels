@@ -2,15 +2,14 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
 import Services;
-import Services.ServiceType;
 import SensorInfoModule.SensorType;
 import SettingsModule;
 import SettingsModule.SettingType;
 import ColorsModule;
 
 class InfoBarView extends Component.Box {
-    private var _sensorType as String;
-    private var _barColor as Number;
+    private var _sensorType as SensorType.Enum = SensorType.NONE;
+    private var _barColor as Number = 0;
     private var _sensorToGoalMap = {
         SensorType.BATTERY => SensorType.BATTERY_GOAL,
         SensorType.ACTIVE_MINUTES_WEEK => SensorType.ACTIVE_MINUTES_WEEK_GOAL,
@@ -31,11 +30,11 @@ class InfoBarView extends Component.Box {
     }
 
     private function updateSettings() as Void {
-        self._barColor = ColorsModule.getColor(SettingsModule.getValue(SettingType.SEPARATOR_COLOR));
-        self._sensorType = SettingsModule.getValue(SettingType.SEPARATOR_INFO);
+        self._barColor = ColorsModule.getColor(SettingsModule.getValue(SettingType.SEPARATOR_COLOR) as ColorsTypes.Enum);
+        self._sensorType = SettingsModule.getValue(SettingType.SEPARATOR_INFO) as SensorType.Enum;
     }
 
-    private function calculatePercente(curentValue as Number or Null, maxValue as Number or Null) as Float {
+    private function calculatePercente(curentValue as Number or Null, maxValue as Number or Null) as Float or Number {
         if (curentValue == 0 || curentValue == null || maxValue == 0 || maxValue == null) {
             return 0;
         }
@@ -45,14 +44,14 @@ class InfoBarView extends Component.Box {
         return result > 100 ? 100 : result;
     }
 
-    private function getGoal(sensorKey as SensorType) as Number {
+    private function getGoal(sensorKey as SensorType.Enum) as Number or Null {
         var sensorGoal = self._sensorToGoalMap.get(sensorKey);
 
         if (sensorGoal == null) {
             return null;
         }
 
-        return Services.get(ServiceType.SENSORS_INFO).getValue(sensorGoal);
+        return Services.SensorInfo().getValue(sensorGoal);
     }    
 
     protected function render(drawContext as Dc) as Void {
@@ -60,7 +59,7 @@ class InfoBarView extends Component.Box {
         var posX = position.get(:x);
         var posY = position.get(:y);
 
-        var sensorValue = Services.get(ServiceType.SENSORS_INFO).getValue(self._sensorType);
+        var sensorValue = Services.SensorInfo().getValue(self._sensorType);
         var maxValue = self.getGoal(self._sensorType);
         var percent = self.calculatePercente(sensorValue, maxValue);
 

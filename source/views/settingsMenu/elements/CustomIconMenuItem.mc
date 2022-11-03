@@ -3,20 +3,17 @@ import Toybox.Graphics;
 import Toybox.WatchUi;
 
 typedef CustomIconMenuItemProps as {
-        :identifier as Lang.Object,
-        :icon as Symbol?,
-        :label as Symbol,
-        :options as { :drawable as WatchUi.Drawable, :alignment as MenuItem.Alignment }?
-    };
+    :identifier as Object or Number or String,
+    :icon as Symbol?,
+    :label as Symbol
+};
 
 class CustomIconMenuItem extends WatchUi.CustomMenuItem {
     private var _label as Symbol;
-    private var _icon as Symbol or Null;
+    private var _icon as Symbol?;
 
     function initialize(params as CustomIconMenuItemProps) {
-        var itemParams = params.hasKey(:options) ? params.get(:options) : {};
-
-        WatchUi.CustomMenuItem.initialize(params.get(:identifier), itemParams);
+        WatchUi.CustomMenuItem.initialize(params.get(:identifier), {});
 
         self._icon = params.get(:icon);
         self._label = params.get(:label);
@@ -45,7 +42,13 @@ class CustomIconMenuItem extends WatchUi.CustomMenuItem {
 
         if (self._icon != null) {
             drawContext.setColor(fontColor, Graphics.COLOR_TRANSPARENT);
-            drawContext.drawText(iconWidth / 2, height / 2, WatchUi.loadResource(self._icon), $.ICON_SYMBOL, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            drawContext.drawText(
+                iconWidth / 2,
+                height / 2,
+                WatchUi.loadResource(self._icon),
+                $.ICON_SYMBOL,
+                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
+            );
         }
     }
 }

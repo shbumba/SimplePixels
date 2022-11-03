@@ -5,24 +5,25 @@ import Toybox.System;
 
 module Component {
     module TimeViewType {
-        enum {
+        enum Enum {
             HOURS = 1,
-            MINUTES = 2,
+            MINUTES = 2
         }
     }
 
-    typedef TimeViewProps as BoxProps | {
-        :type as TimeViewType?,
+    typedef TimeViewProps as BoxProps or
+        {
+        :type as TimeViewType.Enum?,
         :textAligment as Graphics.TextJustification?
     };
 
     class TimeView extends Box {
-        protected var _timeType as TimeViewType;
+        protected var _timeType as TimeViewType.Enum;
         protected var _is24hour as Boolean;
         protected var _textAligment as Graphics.TextJustification;
 
-        private var _calculatedTextPosition as Dictionary or Null = null;
-        
+        private var _calculatedTextPosition as CalculatedPosition? = null;
+
         function initialize(params as TimeViewProps) {
             Box.initialize(params);
 
@@ -49,15 +50,14 @@ module Component {
             switch (self._timeType) {
                 case TimeViewType.HOURS:
                     return self.getHours();
-                break;
 
+                default:
                 case TimeViewType.MINUTES:
                     return self.getMinutes();
-                break;
             }
         }
 
-        protected function calcTextPosition(drawContext as Dc) as {:x as Number, :y as Number} {
+        protected function calcTextPosition(drawContext as Dc) as CalculatedPosition {
             if (self._calculatedTextPosition == null) {
                 var position = self.getPosition();
                 var boxSize = self.getActualBoxSize();
@@ -66,23 +66,22 @@ module Component {
                 var width = boxSize.get(:width);
                 var height = boxSize.get(:height);
 
-                switch(self._textAligment) {
+                switch (self._textAligment) {
                     case Graphics.TEXT_JUSTIFY_RIGHT:
                         posX += width;
-                    break;
+                        break;
                     case Graphics.TEXT_JUSTIFY_CENTER:
                         posX += (width * 0.5).toNumber();
                         posY += (height * 0.5).toNumber();
-                    break;
+                        break;
                     case Graphics.TEXT_JUSTIFY_VCENTER:
                         posY += (height * 0.5).toNumber();
-                    break;
+                        break;
                 }
-
 
                 self._calculatedTextPosition = {
                     :x => posX,
-                    :y => posY,
+                    :y => posY
                 };
             }
 
@@ -109,4 +108,3 @@ module Component {
         }
     }
 }
-

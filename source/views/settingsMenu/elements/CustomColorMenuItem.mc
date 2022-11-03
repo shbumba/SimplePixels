@@ -3,10 +3,9 @@ import Toybox.Graphics;
 import Toybox.WatchUi;
 
 typedef CustomColorMenuItemProps as {
-        :identifier as Lang.Object,
+        :identifier as Object or Number or String,
         :color as Number,
-        :label as Symbol,
-        :options as { :drawable as WatchUi.Drawable, :alignment as MenuItem.Alignment }?
+        :label as Symbol
     };
 
 class CustomColorMenuItem extends WatchUi.CustomMenuItem {
@@ -14,9 +13,7 @@ class CustomColorMenuItem extends WatchUi.CustomMenuItem {
     private var _color as Number;
 
     function initialize(params as CustomColorMenuItemProps) {
-        var itemParams = params.hasKey(:options) ? params.get(:options) : {};
-
-        WatchUi.CustomMenuItem.initialize(params.get(:identifier), itemParams);
+        WatchUi.CustomMenuItem.initialize(params.get(:identifier), {});
 
         self._color = params.get(:color);
         self._label = params.get(:label);

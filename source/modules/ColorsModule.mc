@@ -2,7 +2,7 @@ import Toybox.Lang;
 
 module ColorsModule {
     module ColorsTypes {
-        enum {
+        enum Enum {
             BLACK = 1,
             WHITE,
             LIGHT_GRAY,
@@ -31,9 +31,9 @@ module ColorsModule {
         }
     }
 
-    typedef ColorsDictionaryItem as Array; // [color as Hex, title as Symbol]
+    typedef ColorsDictionaryItem as Array<Number or Symbol>; // [color as Hex, title as Symbol]
 
-    var ColorsDictionary as Dictionary<ColorsTypes, ColorsDictionaryItem> = {
+    var ColorsDictionary = {
         ColorsTypes.BLACK => [0x000000, Rez.Strings.ColorBlack],
         ColorsTypes.WHITE => [0xffffff, Rez.Strings.ColorWhite],
         ColorsTypes.LIGHT_GRAY => [0xaaaaaa, Rez.Strings.ColorLightGray],
@@ -61,15 +61,15 @@ module ColorsModule {
         ColorsTypes.LIGHT_BROWN => [0xaa5500, Rez.Strings.ColorLightBrown]
     };
 
-    function getColorItem(key as ColorsTypes) as Number {
-        return ColorsDictionary.get(key);
+    function getColorItem(key as ColorsTypes.Enum) as ColorsDictionaryItem {
+        return ColorsDictionary.get(key) as ColorsDictionaryItem;
     }
 
-    function getColor(key as ColorsTypes) as Number {
-        return getColorItem(key)[0];
+    function getColor(key as ColorsTypes.Enum) as Number {
+        return getColorItem(key)[0] as Number;
     }
 
-    function getColorName(key as ColorsTypes) as Symbol {
-        return getColorItem(key)[1];
+    function getColorName(key as ColorsTypes.Enum) as Symbol {
+        return getColorItem(key)[1] as Symbol;
     }
 }

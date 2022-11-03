@@ -2,13 +2,14 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
 
-typedef PhantomTimeViewProps as Component.TimeViewProps | {
+typedef PhantomTimeViewProps as Component.TimeViewProps or
+    {
     :timeShift as Number?
 };
 
 class PhantomTimeView extends Component.TimeView {
     private var _timeShift as Number;
-    private var _patternBitmap as BufferedBitmap or Null = null;
+    private var _patternBitmap as BufferedBitmap? = null;
     private static var PATTERN_SIZE = 2;
 
     function initialize(params as PhantomTimeViewProps) {
@@ -23,9 +24,7 @@ class PhantomTimeView extends Component.TimeView {
         self.removePattern();
     }
 
-    private function generatePattern(
-        width as Number
-    ) as Void {
+    private function generatePattern(width as Number) as String {
         var columns = width / self.PATTERN_SIZE;
 
         var patternString = "";
@@ -33,15 +32,15 @@ class PhantomTimeView extends Component.TimeView {
         for (var i = 1; i <= columns; i++) {
             patternString += "*";
         }
-        
+
         return patternString;
     }
 
     private function createPattern(width as Number, height as Number, color as Number?) as BufferedBitmap {
         var patternFont = WatchUi.loadResource(Rez.Fonts.pattern);
-        var bitmap as BufferedBitmap = createBitmap({
+        var bitmap = createBitmap({
             :width => width,
-            :height => height,
+            :height => height
         });
 
         color = color != null ? color : Graphics.COLOR_TRANSPARENT;
@@ -109,11 +108,10 @@ class PhantomTimeView extends Component.TimeView {
         switch (self._timeType) {
             case Component.TimeViewType.HOURS:
                 return self.shiftHours(time);
-            break;
 
+            default:
             case Component.TimeViewType.MINUTES:
                 return self.shiftMinutes(time);
-            break;
         }
     }
 
