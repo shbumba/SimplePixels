@@ -1,6 +1,6 @@
 <fonts>
-    <font id="hours" filename="./blackout3L_big/blackout3L_big.fnt" antialias="true"/>
-    <font id="minutes" filename="./blackout3L_medium/blackout3L_medium.fnt" antialias="true"/>
-    <font id="seconds" filename="./blackout3L_small/blackout3L_small.fnt" antialias="true"/>
-    <font id="data" filename="./cone_small/cone_small.fnt" antialias="true"/>
+    <font id="hours" filename="blackout-big.fnt" antialias="true"/>
+    <font id="minutes" filename="blackout-medium.fnt" antialias="true"/>
+    <font id="seconds" filename="blackout-small.fnt" antialias="true"/>
+    <font id="data" filename="cone-small.fnt" antialias="true"/>
 </fonts>

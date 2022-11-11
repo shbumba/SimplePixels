@@ -206,11 +206,16 @@ module SensorInfoModule {
 
                 var now = Time.now();
                 var midnight = Time.today();
+                var oneDay = new Time.Duration(Time.Gregorian.SECONDS_PER_DAY);
 
-                var currentWakeTime = midnight.add(wakeTime);
-                var currentSleepTime = midnight.add(sleepTime);
+                var actualWakeTime = midnight.add(wakeTime);
+                var actualSleepTime = midnight.add(sleepTime);
 
-                return now.lessThan(currentWakeTime) || now.greaterThan(currentSleepTime);
+                if (actualSleepTime.greaterThan(actualWakeTime)) {
+                    actualWakeTime = actualWakeTime.add(oneDay);
+                }
+
+                return now.greaterThan(actualSleepTime) && now.lessThan(actualWakeTime);
             }
 
             function isNightModeEnabled() as Boolean {
