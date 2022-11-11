@@ -10,7 +10,7 @@ typedef PhantomTimeViewProps as Component.TimeViewProps or
 class PhantomTimeView extends Component.TimeView {
     private var _timeShift as Number;
     private var _patternBitmap as BufferedBitmap? = null;
-    private static var PATTERN_SIZE = 2;
+    private var PATTERN_SIZE = 2;
 
     function initialize(params as PhantomTimeViewProps) {
         Component.TimeView.initialize(params);
@@ -24,20 +24,25 @@ class PhantomTimeView extends Component.TimeView {
         self.removePattern();
     }
 
-    private function generatePattern(width as Number) as String {
-        var columns = width / self.PATTERN_SIZE;
+    private function generatePattern(width as Number, color as Number) as BufferedBitmap {
+        var bitmap = createBitmap({
+            :width => width,
+            :height => self.PATTERN_SIZE
+        });
+        var dc = bitmap.getDc();
 
-        var patternString = "";
+        dc.setColor(color, Graphics.COLOR_TRANSPARENT);
 
-        for (var i = 1; i <= columns; i++) {
-            patternString += "*";
+        for (var i = 1; i <= width; i++) {
+            var yPos = i % 2 == 0 ? 1 : 0;
+
+            dc.drawPoint(i, yPos);
         }
 
-        return patternString;
+        return bitmap;
     }
 
     private function createPattern(width as Number, height as Number, color as Number?) as BufferedBitmap {
-        var patternFont = WatchUi.loadResource(Rez.Fonts.pattern);
         var bitmap = createBitmap({
             :width => width,
             :height => height
@@ -49,17 +54,13 @@ class PhantomTimeView extends Component.TimeView {
         var yPos = 0;
         var rows = height / self.PATTERN_SIZE;
 
-        var pattern = self.generatePattern(width);
-        var patternDc = bitmap.getDc();
-
-        patternDc.clearClip();
-
-        patternDc.setColor(Graphics.COLOR_TRANSPARENT, color);
+        var pattern = self.generatePattern(width, color);
+        var dc = bitmap.getDc();
 
         for (var i = 1; i <= rows; i++) {
             var yShift = i == 1 ? yPos : yPos + self.PATTERN_SIZE * (i - 1);
 
-            patternDc.drawText(xPos, yShift, patternFont, pattern, Graphics.TEXT_JUSTIFY_LEFT);
+            dc.drawBitmap(xPos, yShift, pattern);
         }
 
         return bitmap;
