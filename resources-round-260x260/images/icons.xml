@@ -10,7 +10,7 @@
     <font id="calories_icon" filename="./icons/calories.fnt" antialias="true"/>
     <font id="connection_icon" filename="./icons/connection.fnt" antialias="true"/>
     <font id="distance_icon" filename="./icons/distance.fnt" antialias="true"/>
-    <font id="dnd_icon" filename="icons/do-not-disturb.fnt" antialias="true"/>
+    <font id="dnd_icon" filename="./icons/do-not-disturb.fnt" antialias="true"/>
     <font id="energy_icon" filename="./icons/energy.fnt" antialias="true"/>
     <font id="floors_icon" filename="./icons/floors.fnt" antialias="true"/>
     <font id="heart_icon" filename="./icons/heart.fnt" antialias="true"/>

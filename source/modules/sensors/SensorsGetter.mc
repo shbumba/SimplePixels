@@ -13,7 +13,6 @@ module SensorInfoModule {
     typedef SersorInfoGetterValue as Number or Float or Boolean or Time.Moment or Position.Info or Null;
 
     module SensorsInfoGetter {
-
         var SensorsDictionary as Dictionary<SensorType.Enum, Symbol> =
             {
                 SensorType.NONE => :getNone,
@@ -46,7 +45,7 @@ module SensorInfoModule {
                 SensorType.IS_CONNECTED => :getIsConnected,
                 SensorType.IS_DO_NOT_DISTURB => :isDoNotDisturb,
                 SensorType.IS_NIGHT_MODE_ENABLED => :isNightModeEnabled,
-                SensorType.IS_SLEEP_TIME => :isSleepTime,
+                SensorType.IS_SLEEP_TIME => :getSleepTime,
                 SensorType.IS_CHARGING => :getCharging,
                 SensorType.MEMORY_USED => :getMemory,
                 SensorType.IS_VIBRATE_ON => :isVibrateOn,
@@ -195,7 +194,7 @@ module SensorInfoModule {
                 return System.getDeviceSettings().doNotDisturb;
             }
 
-            function isSleepTime() as Boolean? {
+            function getSleepTime() as Boolean? {
                 var userProfile = UserProfile.getProfile();
                 var sleepTime = userProfile.sleepTime;
                 var wakeTime = userProfile.wakeTime;
@@ -206,13 +205,29 @@ module SensorInfoModule {
 
                 var now = Time.now();
                 var midnight = Time.today();
+
+                return isSleepTime(sleepTime, wakeTime, now, midnight);
+            }
+
+            function isSleepTime(
+                sleepTime as Time.Duration,
+                wakeTime as Time.Duration,
+                now as Time.Moment,
+                midnight as Time.Moment
+            ) as Boolean {
                 var oneDay = new Time.Duration(Time.Gregorian.SECONDS_PER_DAY);
 
                 var actualWakeTime = midnight.add(wakeTime);
                 var actualSleepTime = midnight.add(sleepTime);
 
                 if (actualSleepTime.greaterThan(actualWakeTime)) {
-                    actualWakeTime = actualWakeTime.add(oneDay);
+                    if (now.lessThan(actualSleepTime)) {
+                        actualSleepTime = actualSleepTime.subtract(oneDay);
+                    } else {
+                        actualWakeTime = actualWakeTime.add(oneDay);
+                    }
+                } else if (now.greaterThan(actualSleepTime) && now.greaterThan(actualWakeTime)) {
+                    return false;
                 }
 
                 return now.greaterThan(actualSleepTime) && now.lessThan(actualWakeTime);
@@ -269,7 +284,7 @@ module SensorInfoModule {
                 return info != null ? info.feelsLikeTemperature : null;
             }
 
-            function getCurrentForecast() as Array<Number?> or Null {
+            function getCurrentForecast() as Array<Number?>? {
                 var info = Weather.getDailyForecast();
 
                 if (info == null || info.size() == 0) {

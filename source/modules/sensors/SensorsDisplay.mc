@@ -166,7 +166,7 @@ module SensorInfoModule {
             }
 
             function transformTime(time as Time.Moment) as String {
-                var utcTime = Gregorian.utcInfo(time, Time.FORMAT_SHORT);
+                var utcTime = Gregorian.info(time, Time.FORMAT_SHORT);
                 var is24hour = System.getDeviceSettings().is24Hour;
 
                 var hour = utcTime.hour;
