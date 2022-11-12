@@ -22,7 +22,7 @@ class SimplePixelsApp extends Application.AppBase {
     function getSettingsView() as Array<Views or InputDelegates>? {
         var onSettingsChanged = new Lang.Method(self, :onSettingsChanged);
 
-        return [new WatchSettingsView(onSettingsChanged)] as Array<Views or InputDelegates>;
+        return [new SettingsMenuView(onSettingsChanged)] as Array<Views or InputDelegates>;
     }
     
     function onSettingsChanged() as Void {

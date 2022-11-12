@@ -15,7 +15,8 @@ class SensorsInfoView extends Component.List {
     private var _fields as Array<SettingType.Enum> = [] as Array<SettingType.Enum>;
 
     function initialize(params as SensorsInfoProps) {
-        self._fields = params.hasKey(:fields) ? params.get(:fields) : [];
+        var fields = params.get(:fields);
+        self._fields = fields != null ? fields : [];
         self.updateSensors();
 
         List.initialize(params);

@@ -32,8 +32,11 @@ module Component {
         function initialize(params as BoxProps) {
             BaseDrawable.initialize(params);
             
-            self._font = params.hasKey(:font) ? params.get(:font) : null;
-            self._debug = params.hasKey(:debug) ? params.get(:debug) : false;
+            var font = params.get(:font);
+            self._font = font != null ? font : null;
+
+            var debug = params.get(:debug);
+            self._debug = debug != null ? debug : false;
 
             self.calcActualBoxSize(params);
             self.calcPosition(params);
@@ -41,8 +44,11 @@ module Component {
 
         private function calcActualBoxSize(params as BoxProps) {
             var deviceSettings = System.getDeviceSettings();
-            var boxWidth = params.hasKey(:boxWidth) ? params.get(:boxWidth) : "0";
-            var boxHeight = params.hasKey(:boxHeight) ? params.get(:boxHeight) : "0";
+            var boxWidth = params.get(:boxWidth);
+            boxWidth = boxWidth != null ? boxWidth : "0";
+
+            var boxHeight = params.get(:boxHeight);
+            boxHeight = boxHeight != null ? boxHeight : "0";
 
             self._actualBoxSize = {
                 :width => self.parseActualSize(boxWidth, deviceSettings.screenWidth),
@@ -98,9 +104,14 @@ module Component {
         }
 
         private function calcHorizontalAlignment(params as BoxProps) as Number {
-            var horizontalAlignment = params.hasKey(:horizontalAlignment) ? params.get(:horizontalAlignment) : PositionUtils.ALIGN_START;
-            var xPos = params.hasKey(:xPos) ? params.get(:xPos) : "0";
-            var xShift = params.hasKey(:xShift) ? params.get(:xShift) : "0";
+            var horizontalAlignment = params.get(:horizontalAlignment);
+            horizontalAlignment = horizontalAlignment ? horizontalAlignment : PositionUtils.ALIGN_START;
+
+            var xPos = params.get(:xPos);
+            xPos = xPos != null ? xPos : "0";
+
+            var xShift = params.get(:xShift);
+            xShift = xShift != null ? xShift : "0";
 
             var position = self.calcXPoint(xPos);
             var shift = self.calcXShift(xShift);
@@ -110,9 +121,14 @@ module Component {
         }
 
         private function calcVerticalAlignment(params as BoxProps) as Number {
-            var verticalAlignment = params.hasKey(:verticalAlignment) ? params.get(:verticalAlignment) : PositionUtils.ALIGN_START;
-            var yPos = params.hasKey(:yPos) ? params.get(:yPos) : "0";
-            var yShift = params.hasKey(:yShift) ? params.get(:yShift) : "0";
+            var verticalAlignment = params.get(:verticalAlignment);
+            verticalAlignment = verticalAlignment ? verticalAlignment : PositionUtils.ALIGN_START;
+
+            var yPos = params.get(:yPos);
+            yPos = yPos != null ? yPos : "0";
+
+            var yShift = params.get(:yShift);
+            yShift = yShift != null ? yShift : "0";
 
             var position = self.calcYPoint(yPos);
             var shift = self.calcYShift(yShift);

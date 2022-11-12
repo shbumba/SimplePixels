@@ -1,18 +1,17 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
-import ObservedStoreModule;
-import ObservedStoreModule.Scope;
+import WatcherModule;
 
-class OnSettingsChangedObservedKey extends ObservedStoreModule.KeyInstance {
-    public static var key as String = "OnSettingsChangedObservedKey";
-    public var scope as Array<Scope.Enum> = [
-        Scope.ON_SETTINGS_CHANGED
-    ] as Array<Scope.Enum>;
+class OnSettingsChangedWatcher extends WatcherModule.Watcher {
+    public static var key as String = "OnSettingsChangedWatcher";
+    public var scope as Array<Scope> = [
+        WatcherModule.ON_SETTINGS_CHANGED
+    ] as Array<Scope>;
 
     private var _mainView as WatchUi.View;
 
     function initialize(mainView as WatchUi.View) {
-        ObservedStoreModule.KeyInstance.initialize();
+        WatcherModule.Watcher.initialize();
 
         self._mainView = mainView;
     }

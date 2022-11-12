@@ -27,8 +27,12 @@ module Component {
         function initialize(params as TimeViewProps) {
             Box.initialize(params);
 
-            self._timeType = params.hasKey(:type) ? params.get(:type) : TimeViewType.HOURS;
-            self._textAligment = params.hasKey(:textAligment) ? params.get(:textAligment) : Graphics.TEXT_JUSTIFY_LEFT;
+            var timeType = params.get(:type);
+            self._timeType = timeType != null ? timeType : TimeViewType.HOURS;
+
+            var textAligment = params.get(:textAligment);
+            self._textAligment = textAligment != null ? textAligment : Graphics.TEXT_JUSTIFY_LEFT;
+
             self._is24hour = System.getDeviceSettings().is24Hour;
         }
 

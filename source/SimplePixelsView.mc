@@ -3,25 +3,24 @@ import Toybox.Graphics;
 import Toybox.WatchUi;
 import Services;
 import SensorInfoModule;
-import ObservedStoreModule;
-import ObservedStoreModule.Scope;
+import WatcherModule;
 
 class SimplePixelsView extends WatchUi.WatchFace {
-    private var awakeMemoryKey as AwakeObservedKey;
+    private var awakeWatcher as AwakeWatcher;
 
     function initialize() {
         WatchFace.initialize();
         Services.register();
 
-        self.awakeMemoryKey = new AwakeObservedKey(self, true);
+        self.awakeWatcher = new AwakeWatcher(self, true);
     }
 
     private function setupStore(drawContext as Dc) as Void {
-        Services.ObservedStore().setup([
-            self.awakeMemoryKey,
-            new DisplaySecondsObservedKey(self),
-            new OnSettingsChangedObservedKey(self)
-        ] as Array<KeyInstance>);
+        Services.WathersStore().setup([
+            self.awakeWatcher,
+            new DisplaySecondsWatcher(self),
+            new OnSettingsChangedWatcher(self)
+        ] as Array<Watcher>);
     }
 
     function onLayout(drawContext as Dc) as Void {
@@ -33,7 +32,7 @@ class SimplePixelsView extends WatchUi.WatchFace {
     }
 
     function onUpdate(drawContext as Dc) as Void {
-        Services.ObservedStore().runScope(Scope.ON_UPDATE);
+        Services.WathersStore().runScope(WatcherModule.ON_UPDATE);
 
         drawContext.clearClip();
         
@@ -41,40 +40,40 @@ class SimplePixelsView extends WatchUi.WatchFace {
     }
 
     function onPartialUpdate(drawContext as Dc) as Void {
-        Services.ObservedStore().runScope(Scope.ON_PARTIAL_UPDATE);
+        Services.WathersStore().runScope(WatcherModule.ON_PARTIAL_UPDATE);
     
         WatchFace.onPartialUpdate(drawContext);
     }
 
     function onShow() as Void {
-        self.awakeMemoryKey.setIsAwake(true);
+        self.awakeWatcher.setIsAwake(true);
 
         WatchFace.onShow();
     }
 
     function onEnterSleep() as Void {
-        self.awakeMemoryKey.setIsAwake(false);
+        self.awakeWatcher.setIsAwake(false);
 
         WatchFace.onEnterSleep();
         WatchUi.requestUpdate();
     }
 
     function onExitSleep() as Void {
-        self.awakeMemoryKey.setIsAwake(true);
+        self.awakeWatcher.setIsAwake(true);
 
         WatchFace.onExitSleep();
         WatchUi.requestUpdate();
     }
 
     function onSettingsChanged() as Void {
-        Services.ObservedStore().runScope(Scope.ON_SETTINGS_CHANGED);
+        Services.WathersStore().runScope(WatcherModule.ON_SETTINGS_CHANGED);
 
         WatchUi.requestUpdate();
 	}
 
     function onNightModeChanged() as Void {
-        self.awakeMemoryKey.setIsAwake(false);
-        Services.ObservedStore().runScope(Scope.ON_NIGHT_MODE_CHANGED);
+        self.awakeWatcher.setIsAwake(false);
+        Services.WathersStore().runScope(WatcherModule.ON_NIGHT_MODE_CHANGED);
 
         WatchUi.requestUpdate();
     }

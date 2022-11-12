@@ -3,16 +3,14 @@ import Toybox.WatchUi;
 import Toybox.Graphics;
 import ColorsModule;
 import Services;
-import SensorInfoModule.SensorsDisplay;
+import SensorsDisplay;
 import SensorInfoModule.SensorType;
 import SettingsModule;
 import SettingsModule.SettingType;
 import SettingsModule.DisplaySecondsType;
-import WatchSettingsMenuBuilder;
-import WatchSettingsMenuBuilder.MenuBuilders;
-import WatchSettingsMenuBuilder.ItemBuilders;
+import SettingsMenuBuilder;
 
-class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
+class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     private var onBackCallback as Lang.Method;
     private var subMenuHandlers = {
         SettingType.BACKGROUND_COLOR => :colorHandler,
@@ -42,7 +40,6 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
 
     private var subMenuUnawailableKeys = {
         SettingType.LEFT_SENSOR => [
-            SensorType.IS_CHARGING,
             SensorType.IS_DO_NOT_DISTURB,
             SensorType.IS_NIGHT_MODE_ENABLED,
             SensorType.IS_SLEEP_TIME,
@@ -66,8 +63,8 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         menuItems as Array<GenerateItemProps>,
         clearPrevSensorCache as Boolean?
     ) as Void {
-        var structure = {
-            :buider => MenuBuilders.CUSTOM_MENU,
+        var menu = SettingsMenuBuilder.generateMenu({
+            :buider => SettingsMenuBuilder.CUSTOM_MENU,
             :buiderProps => {
                 :itemHeight => 35,
                 :backgroundColor => Graphics.COLOR_WHITE,
@@ -80,9 +77,7 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             },
             :valueKey => settingKey,
             :items => menuItems
-        };
-
-        var menu = WatchSettingsMenuBuilder.generateMenu(structure);
+        });
 
         WatchUi.pushView(menu, new CustomMenuDelegate(settingKey, clearPrevSensorCache), WatchUi.SLIDE_UP);
     }
@@ -97,7 +92,7 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             var colorName = ColorsModule.getColorName(colorKey);
 
             menuItems.add({
-                :buider => ItemBuilders.CUSTOM_COLOR_ITEM,
+                :buider => SettingsMenuBuilder.CUSTOM_COLOR_ITEM,
                 :buiderProps => {
                     :identifier => colorKey as Number,
                     :color => color,
@@ -128,7 +123,7 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             }
             
             menuItems.add({
-                :buider => ItemBuilders.CUSTOM_ICON_ITEM,
+                :buider => SettingsMenuBuilder.CUSTOM_ICON_ITEM,
                 :buiderProps => {
                     :identifier => sensorKey as Number,
                     :label => SensorsDisplay.getText(sensorKey),
@@ -148,7 +143,7 @@ class WatchSettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             var fieldKey = keys[i];
 
             menuItems.add({
-                :buider => ItemBuilders.CUSTOM_ICON_ITEM,
+                :buider => SettingsMenuBuilder.CUSTOM_ICON_ITEM,
                 :buiderProps => {
                     :identifier => fieldKey as Number,
                     :label => self.secondsFields.get(fieldKey) as Symbol

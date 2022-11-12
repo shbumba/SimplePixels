@@ -1,20 +1,19 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
-import ObservedStoreModule;
-import ObservedStoreModule.Scope;
+import WatcherModule;
 import Services;
 import SettingsModule;
 
-class DisplaySecondsObservedKey extends ObservedStoreModule.KeyInstance {
-    public static var key as String = "DisplaySecondsObservedKey";
-    public var scope as Array<Scope.Enum> = [
-        Scope.ON_SETTINGS_CHANGED
-    ] as Array<Scope.Enum>;
+class DisplaySecondsWatcher extends WatcherModule.Watcher {
+    public static var key as String = "DisplaySecondsWatcher";
+    public var scope as Array<Scope> = [
+        WatcherModule.ON_SETTINGS_CHANGED
+    ] as Array<Scope>;
 
     private var _mainView as WatchUi.View;
 
     function initialize(mainView as WatchUi.View) {
-        ObservedStoreModule.KeyInstance.initialize();
+        WatcherModule.Watcher.initialize();
 
         self._mainView = mainView;
     }
@@ -27,7 +26,7 @@ class DisplaySecondsObservedKey extends ObservedStoreModule.KeyInstance {
         var displaySecondsType = value as DisplaySecondsType.Enum;
         var secondsViewID = $.VIEWS_LIST.get(:seconds);
         var secondsView = self._mainView.findDrawableById(secondsViewID) as SecondsView;
-        var isAwake = Services.ObservedStore().getValue(AwakeObservedKey) as Boolean;
+        var isAwake = Services.WathersStore().getValue(AwakeWatcher) as Boolean;
 
         secondsView.setViewProps(displaySecondsType, isAwake);
     }

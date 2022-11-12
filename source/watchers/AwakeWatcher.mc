@@ -1,24 +1,23 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
-import ObservedStoreModule;
-import ObservedStoreModule.Scope;
+import WatcherModule;
 import Services;
 import SensorInfoModule.SensorType;
 import SettingsModule;
 
-class AwakeObservedKey extends ObservedStoreModule.KeyInstance {
-    public static var key as String = "AwakeObservedKey";
-    public var scope as Array<Scope.Enum> = [
-        Scope.ON_UPDATE,
-        Scope.ON_PARTIAL_UPDATE,
-        Scope.ON_NIGHT_MODE_CHANGED,
-    ] as Array<Scope.Enum>;
+class AwakeWatcher extends WatcherModule.Watcher {
+    public static var key as String = "AwakeWatcher";
+    public var scope as Array<Scope> = [
+        WatcherModule.ON_UPDATE,
+        WatcherModule.ON_PARTIAL_UPDATE,
+        WatcherModule.ON_NIGHT_MODE_CHANGED,
+    ] as Array<Scope>;
 
     private var _isAwake as Boolean;
     private var _mainView as WatchUi.View;
 
     function initialize(mainView as WatchUi.View, isAwake as Boolean) {
-        ObservedStoreModule.KeyInstance.initialize();
+        WatcherModule.Watcher.initialize();
 
         self._mainView = mainView;
         self._isAwake = isAwake;
@@ -40,7 +39,7 @@ class AwakeObservedKey extends ObservedStoreModule.KeyInstance {
         var isAwake = value as Boolean;
         var secondsViewID = $.VIEWS_LIST.get(:seconds);
         var secondsView = self._mainView.findDrawableById(secondsViewID) as SecondsView;
-        var displaySecondsType = Services.ObservedStore().getValue(DisplaySecondsObservedKey) as DisplaySecondsType.Enum;
+        var displaySecondsType = Services.WathersStore().getValue(DisplaySecondsWatcher) as DisplaySecondsType.Enum;
 
         secondsView.setViewProps(displaySecondsType, isAwake);
     }

@@ -36,13 +36,11 @@ module SensorInfoModule {
             IS_DO_NOT_DISTURB = 101,
             IS_NIGHT_MODE_ENABLED = 102,
             IS_SLEEP_TIME = 103,
-            IS_CHARGING = 104,
             MEMORY_USED = 500,
-            IS_VIBRATE_ON = 501,
             STEPS_GOAL = 502,
             FLOORS_CLIMBED_GOAL = 503,
             BATTERY_GOAL = 504,
-            ACTIVE_MINUTES_WEEK_GOAL = 505,
+            ACTIVE_MINUTES_WEEK_GOAL = 505
         }
     }
 
@@ -59,7 +57,7 @@ module SensorInfoModule {
         }
 
         private function checkAwailableSensors() as Array<SensorType.Enum> {
-            var keys = SensorsInfoGetter.SensorsDictionary.keys();
+            var keys = SensorsGetter.SensorsDictionary.keys();
             var awailableSensors = [] as Array<SensorType.Enum>;
 
             for (var i = 0; i < keys.size(); i++) {
@@ -77,20 +75,20 @@ module SensorInfoModule {
         public function isAwailable(sensorType as SensorType.Enum) as Boolean {
             return self.awailableSensors.indexOf(sensorType) > -1;
         }
-        
-        public function getValue(sensorType as SensorType.Enum) as SersorInfoGetterValue {
+
+        public function getValue(sensorType as SensorType.Enum) as SensorsGetter.SersorInfoGetterValue {
             if (!self.isAwailable(sensorType)) {
                 return null;
             }
 
-            return SensorsInfoGetter.getValue(sensorType);
+            return SensorsGetter.getValue(sensorType);
         }
 
         public function transformValue(sensorType as SensorType.Enum) as String {
             return SensorsDisplay.transformValue(sensorType, self.getValue(sensorType));
         }
 
-        public function getIcon(sensorType as SensorType.Enum) as FontResource or Null {
+        public function getIcon(sensorType as SensorType.Enum) as FontResource? {
             var iconSymbol = SensorsDisplay.getIcon(sensorType, self.getValue(sensorType));
 
             return iconSymbol != null ? ResourcesCache.get(iconSymbol) as FontResource : null;

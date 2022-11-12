@@ -15,7 +15,8 @@ class PhantomTimeView extends Component.TimeView {
     function initialize(params as PhantomTimeViewProps) {
         Component.TimeView.initialize(params);
 
-        self._timeShift = params.hasKey(:timeShift) ? params.get(:timeShift) : 0;
+        var timeShift = params.get(:timeShift);
+        self._timeShift = timeShift != null ? timeShift : 0;
     }
 
     function onSettingsChanged() {

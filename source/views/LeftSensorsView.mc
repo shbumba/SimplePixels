@@ -18,7 +18,6 @@ class LeftSensorsView extends Component.List {
         SensorType.IS_DO_NOT_DISTURB,
         SensorType.IS_SLEEP_TIME,
         SensorType.IS_NIGHT_MODE_ENABLED,
-        SensorType.IS_CHARGING,
     ] as Array<SensorType.Enum>;
 
     function initialize(params as Component.ListProps) {

@@ -45,8 +45,11 @@ module Component {
 
             var screenHeight = System.getDeviceSettings().screenHeight;
 
-            self._itemHeight = params.hasKey(:itemHeight) ? self.parseActualSize(params.get(:itemHeight), screenHeight) : 10;
-            self._iconSize = params.hasKey(:iconSize) ? self.parseActualSize(params.get(:iconSize), screenHeight) : 10;
+            var itemHeight = params.get(:itemHeight);
+            self._itemHeight = itemHeight != null ? self.parseActualSize(itemHeight, screenHeight) : 10;
+
+            var iconSize = params.get(:iconSize);
+            self._iconSize = iconSize != null ? self.parseActualSize(iconSize, screenHeight) : 10;
         }
 
         private function setupItemHeight(drawContext as Dc) as Void {
@@ -145,7 +148,8 @@ module Component {
             var items = props.get(:items);
             var posX = props.get(:posX);
             var posY = props.get(:posY);
-            var direction = props.hasKey(:direction) ? props.get(:direction) : ListItemsDerection.LEFT;
+            var direction = props.get(:direction);
+            direction = direction != null ? direction : ListItemsDerection.LEFT;
 
             if (direction == ListItemsDerection.RIGHT) {
                 posX = posX + boxSize.get(:width);

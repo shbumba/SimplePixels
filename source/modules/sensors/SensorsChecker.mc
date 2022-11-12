@@ -4,219 +4,208 @@ import Toybox.ActivityMonitor;
 import Toybox.Activity;
 import Toybox.SensorHistory;
 import Toybox.Weather;
+import SensorInfoModule.SensorType;
 
-module SensorInfoModule {
-    module SensorsChecker {
-        var SensorsDictionary = {
-            SensorType.NONE => :checkIsAlwaysTrue,
-            SensorType.STEPS => :checkSteps,
-            SensorType.CALORIES => :checkCalories,
-            SensorType.TEMPERATURE => :checkTemperature,
-            SensorType.BATTERY => :checkBattery,
-            SensorType.BATTERY_IN_DAYS => :checkBatteryInDays,
-            SensorType.IS_CHARGING => :checkCharging,
-            SensorType.SOLAR_INTENSITY => :checkSolarIntensivity,
-            SensorType.IS_CONNECTED => :checkIsConnected,
-            SensorType.HEART_RATE => :checkHR,
-            SensorType.FLOORS => :checkFloors,
-            SensorType.ALTITUDE => :checkAltitude,
-            SensorType.MESSAGES => :checkMessages,
-            SensorType.ALARM_COUNT => :checkAlarmCount,
-            SensorType.IS_VIBRATE_ON => :checkVibrateOn,
-            SensorType.MEMORY_USED => :checkMemory,
-            SensorType.CURRENT_WEATHER => :checkCurrentWeather,
-            SensorType.WEATHER_FEELS => :checkCurrentWeather,
-            SensorType.WEATHER_FORECAST => :checkWeatherForecast,
-            SensorType.SUNRISE => :checkSunrise,
-            SensorType.SUNSET => :checkSunset,
-            SensorType.OXYGEN_SATURATION => :checkOxygenSaturation,
-            SensorType.PRESSURE => :checkPressure,
-            SensorType.TIME_TO_RECOVERY => :checkTimeToRecovery,
-            SensorType.STEPS_GOAL => :checkStepGoal,
-            SensorType.RESPIRATION_RATE => :checkRespirationRate,
-            SensorType.METERS_CLIMBED => :checkMetersClimbed,
-            SensorType.IS_DO_NOT_DISTURB => :checkDoNotDisturb,
-            SensorType.IS_NIGHT_MODE_ENABLED => :checkIsNightMode,
-            SensorType.IS_SLEEP_TIME => :checkIsAlwaysTrue,
-            SensorType.FLOORS_CLIMBED_GOAL => :checkFloorsClimbedGoal,
-            SensorType.DISTANCE => :checkDistance,
-            SensorType.ACTIVE_MINUTES_DAY => :checkActiveMinutesDay,
-            SensorType.BODY_BATTERY => :checkBodyBattery,
-            SensorType.STRESS => :checkStress,
-            SensorType.BATTERY_GOAL => :checkIsAlwaysTrue,
-            SensorType.ACTIVE_MINUTES_WEEK => :checkActiveMinutesWeek,
-            SensorType.ACTIVE_MINUTES_WEEK_GOAL => :checkActiveMinutesWeekGoal,
-        };
-        
-        function check(sensorType as SensorType.Enum) as Boolean {
-            var sensorFn = SensorsDictionary.get(sensorType);
+module SensorsChecker {
+    var SensorsDictionary = {
+        SensorType.NONE => :checkIsAlwaysTrue,
+        SensorType.STEPS => :checkSteps,
+        SensorType.CALORIES => :checkCalories,
+        SensorType.TEMPERATURE => :checkTemperature,
+        SensorType.BATTERY => :checkBattery,
+        SensorType.BATTERY_IN_DAYS => :checkBatteryInDays,
+        SensorType.SOLAR_INTENSITY => :checkSolarIntensivity,
+        SensorType.IS_CONNECTED => :checkIsConnected,
+        SensorType.HEART_RATE => :checkHR,
+        SensorType.FLOORS => :checkFloors,
+        SensorType.ALTITUDE => :checkAltitude,
+        SensorType.MESSAGES => :checkMessages,
+        SensorType.ALARM_COUNT => :checkAlarmCount,
+        SensorType.MEMORY_USED => :checkMemory,
+        SensorType.CURRENT_WEATHER => :checkCurrentWeather,
+        SensorType.WEATHER_FEELS => :checkCurrentWeather,
+        SensorType.WEATHER_FORECAST => :checkWeatherForecast,
+        SensorType.SUNRISE => :checkSunrise,
+        SensorType.SUNSET => :checkSunset,
+        SensorType.OXYGEN_SATURATION => :checkOxygenSaturation,
+        SensorType.PRESSURE => :checkPressure,
+        SensorType.TIME_TO_RECOVERY => :checkTimeToRecovery,
+        SensorType.STEPS_GOAL => :checkStepGoal,
+        SensorType.RESPIRATION_RATE => :checkRespirationRate,
+        SensorType.METERS_CLIMBED => :checkMetersClimbed,
+        SensorType.IS_DO_NOT_DISTURB => :checkDoNotDisturb,
+        SensorType.IS_NIGHT_MODE_ENABLED => :checkIsNightMode,
+        SensorType.IS_SLEEP_TIME => :checkIsAlwaysTrue,
+        SensorType.FLOORS_CLIMBED_GOAL => :checkFloorsClimbedGoal,
+        SensorType.DISTANCE => :checkDistance,
+        SensorType.ACTIVE_MINUTES_DAY => :checkActiveMinutesDay,
+        SensorType.BODY_BATTERY => :checkBodyBattery,
+        SensorType.STRESS => :checkStress,
+        SensorType.BATTERY_GOAL => :checkIsAlwaysTrue,
+        SensorType.ACTIVE_MINUTES_WEEK => :checkActiveMinutesWeek,
+        SensorType.ACTIVE_MINUTES_WEEK_GOAL => :checkActiveMinutesWeekGoal
+    };
 
-            if (sensorFn == null) {
-                throw new Toybox.Lang.InvalidValueException("the item sensor prop has an incorrect value");
-            }
+    function check(sensorType as SensorType.Enum) as Boolean {
+        var sensorFn = SensorsDictionary.get(sensorType);
 
-            var method = new Lang.Method(SensorsChecker, sensorFn);
-
-            return method.invoke() as Boolean;
+        if (sensorFn == null) {
+            throw new Toybox.Lang.InvalidValueException("the item sensor prop has an incorrect value");
         }
 
-        function checkSteps() as Boolean {
-            return ActivityMonitor.getInfo() has :steps;
-        }
+        var method = new Lang.Method(SensorsChecker, sensorFn);
 
-        function checkCalories() as Boolean {
-            return ActivityMonitor.getInfo() has :calories;
-        }
+        return method.invoke() as Boolean;
+    }
 
-        function checkFloors() as Boolean {
-            return ActivityMonitor.getInfo() has :floorsClimbed;
-        }
+    function checkSteps() as Boolean {
+        return ActivityMonitor.getInfo() has :steps;
+    }
 
-        function checkTimeToRecovery() as Boolean {
-            return ActivityMonitor.getInfo() has :timeToRecovery;
-        }
+    function checkCalories() as Boolean {
+        return ActivityMonitor.getInfo() has :calories;
+    }
 
-        function checkStepGoal() as Boolean {
-            return ActivityMonitor.getInfo() has :stepGoal;
-        }
+    function checkFloors() as Boolean {
+        return ActivityMonitor.getInfo() has :floorsClimbed;
+    }
 
-        function checkRespirationRate() as Boolean {
-            return ActivityMonitor.getInfo() has :respirationRate;
-        }
+    function checkTimeToRecovery() as Boolean {
+        return ActivityMonitor.getInfo() has :timeToRecovery;
+    }
 
-        function checkMetersClimbed() as Boolean {
-            return ActivityMonitor.getInfo() has :metersClimbed;
-        }
+    function checkStepGoal() as Boolean {
+        return ActivityMonitor.getInfo() has :stepGoal;
+    }
 
-        function checkFloorsClimbedGoal() as Boolean {
-            return ActivityMonitor.getInfo() has :floorsClimbedGoal;
-        }
+    function checkRespirationRate() as Boolean {
+        return ActivityMonitor.getInfo() has :respirationRate;
+    }
 
-        function checkDistance() as Boolean {
-            return ActivityMonitor.getInfo() has :distance;
-        }
+    function checkMetersClimbed() as Boolean {
+        return ActivityMonitor.getInfo() has :metersClimbed;
+    }
 
-        function checkActiveMinutesDay() as Boolean {
-            return ActivityMonitor.getInfo() has :activeMinutesDay;
-        }
+    function checkFloorsClimbedGoal() as Boolean {
+        return ActivityMonitor.getInfo() has :floorsClimbedGoal;
+    }
 
-        function checkActiveMinutesWeek() as Boolean {
-            return ActivityMonitor.getInfo() has :activeMinutesWeek;
-        }
+    function checkDistance() as Boolean {
+        return ActivityMonitor.getInfo() has :distance;
+    }
 
-        function checkActiveMinutesWeekGoal() as Boolean {
-            return ActivityMonitor.getInfo() has :activeMinutesWeekGoal;
-        }
+    function checkActiveMinutesDay() as Boolean {
+        return ActivityMonitor.getInfo() has :activeMinutesDay;
+    }
 
-        function checkOxygenSaturation() as Boolean {
-            return Activity.getActivityInfo() has :currentOxygenSaturation;
-        }
+    function checkActiveMinutesWeek() as Boolean {
+        return ActivityMonitor.getInfo() has :activeMinutesWeek;
+    }
 
-        function checkPressure() as Boolean {
-            return Activity.getActivityInfo() has :ambientPressure;
-        }
+    function checkActiveMinutesWeekGoal() as Boolean {
+        return ActivityMonitor.getInfo() has :activeMinutesWeekGoal;
+    }
 
-        function checkHR() as Boolean {
-            return Activity.getActivityInfo() has :currentHeartRate;
-        }
+    function checkOxygenSaturation() as Boolean {
+        return Activity.getActivityInfo() has :currentOxygenSaturation;
+    }
 
-        function checkAltitude() as Boolean {
-            return Activity.getActivityInfo() has :altitude;
-        }
+    function checkPressure() as Boolean {
+        return Activity.getActivityInfo() has :ambientPressure;
+    }
 
-        function checkBodyBattery() as Boolean {
-            return checkSensorHistory() && SensorHistory has :getBodyBatteryHistory;
-        }
+    function checkHR() as Boolean {
+        return Activity.getActivityInfo() has :currentHeartRate;
+    }
 
-        function checkStress() as Boolean {
-            return checkSensorHistory() && SensorHistory has :getStressHistory;
-        }
+    function checkAltitude() as Boolean {
+        return Activity.getActivityInfo() has :altitude;
+    }
 
-        function checkOxygenSaturationHistory() as Boolean {
-            return checkSensorHistory() && SensorHistory has :getOxygenSaturationHistory;
-        }
+    function checkBodyBattery() as Boolean {
+        return checkSensorHistory() && SensorHistory has :getBodyBatteryHistory;
+    }
 
-        function checkPressureHistory() as Boolean {
-            return checkSensorHistory() && SensorHistory has :getPressureHistory;
-        }
+    function checkStress() as Boolean {
+        return checkSensorHistory() && SensorHistory has :getStressHistory;
+    }
 
-        function checkMemory() as Boolean {
-            return System.getSystemStats() has :usedMemory;
-        }
-        
-        function checkSolarIntensivity() as Boolean {
-            return System.getSystemStats() has :solarIntensity;
-        }
+    function checkOxygenSaturationHistory() as Boolean {
+        return checkSensorHistory() && SensorHistory has :getOxygenSaturationHistory;
+    }
 
-        function checkBattery() as Boolean {
-            return System.getSystemStats() has :battery;
-        }
+    function checkPressureHistory() as Boolean {
+        return checkSensorHistory() && SensorHistory has :getPressureHistory;
+    }
 
-        function checkBatteryInDays() as Boolean {
-            return System.getSystemStats() has :batteryInDays;
-        }
+    function checkMemory() as Boolean {
+        return System.getSystemStats() has :usedMemory;
+    }
 
-        function checkCharging() as Boolean {
-            return System.getSystemStats() has :charging;
-        }
+    function checkSolarIntensivity() as Boolean {
+        return System.getSystemStats() has :solarIntensity;
+    }
 
-        function checkAlarmCount() as Boolean {
-            return System.getDeviceSettings() has :alarmCount;
-        }
+    function checkBattery() as Boolean {
+        return System.getSystemStats() has :battery;
+    }
 
-        function checkMessages() as Boolean {
-            return System.getDeviceSettings() has :notificationCount;
-        }
+    function checkBatteryInDays() as Boolean {
+        return System.getSystemStats() has :batteryInDays;
+    }
 
-        function checkVibrateOn() as Boolean {
-            return System.getDeviceSettings() has :vibrateOn;
-        }
+    function checkAlarmCount() as Boolean {
+        return System.getDeviceSettings() has :alarmCount;
+    }
 
-        function checkDoNotDisturb() as Boolean {
-            return System.getDeviceSettings() has :doNotDisturb;
-        }
+    function checkMessages() as Boolean {
+        return System.getDeviceSettings() has :notificationCount;
+    }
 
-        function checkIsConnected() as Boolean {
-            return System.getDeviceSettings() has :phoneConnected;
-        }
+    function checkDoNotDisturb() as Boolean {
+        return System.getDeviceSettings() has :doNotDisturb;
+    }
 
-        function checkCurrentWeather() as Boolean {
-            return Weather has :getCurrentConditions;
-        }
+    function checkIsConnected() as Boolean {
+        return System.getDeviceSettings() has :phoneConnected;
+    }
 
-        function checkWeatherForecast() as Boolean {
-            return Weather has :getDailyForecast;
-        }
+    function checkCurrentWeather() as Boolean {
+        return Weather has :getCurrentConditions;
+    }
 
-        function checkSunrise() as Boolean {
-            return Weather has :getSunrise;
-        }
-        function checkSunset() as Boolean {
-            return Weather has :getSunset;
-        }
+    function checkWeatherForecast() as Boolean {
+        return Weather has :getDailyForecast;
+    }
 
-        function checkSensorHistory() as Boolean {
-            return Toybox has :SensorHistory;
-        }
+    function checkSunrise() as Boolean {
+        return Weather has :getSunrise;
+    }
+    function checkSunset() as Boolean {
+        return Weather has :getSunset;
+    }
 
-        function checkTemperature() as Boolean {
-            return checkSensorHistory() && SensorHistory has :getTemperatureHistory;
-        }
+    function checkSensorHistory() as Boolean {
+        return Toybox has :SensorHistory;
+    }
 
-        function checkHeartRateHistory() as Boolean {
-            return checkSensorHistory() && SensorHistory has :getHeartRateHistory;
-        }
+    function checkTemperature() as Boolean {
+        return checkSensorHistory() && SensorHistory has :getTemperatureHistory;
+    }
 
-        function checkElevationHistory() as Boolean {
-            return checkSensorHistory() && SensorHistory has :getElevationHistory;
-        }
-        
-        function checkIsNightMode() as Boolean {
-            return System.getDeviceSettings() has :isNightModeEnabled;
-        }
+    function checkHeartRateHistory() as Boolean {
+        return checkSensorHistory() && SensorHistory has :getHeartRateHistory;
+    }
 
-        function checkIsAlwaysTrue() as Boolean {
-            return true;
-        }
+    function checkElevationHistory() as Boolean {
+        return checkSensorHistory() && SensorHistory has :getElevationHistory;
+    }
+
+    function checkIsNightMode() as Boolean {
+        return System.getDeviceSettings() has :isNightModeEnabled;
+    }
+
+    function checkIsAlwaysTrue() as Boolean {
+        return true;
     }
 }
