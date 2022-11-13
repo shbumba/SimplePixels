@@ -11,9 +11,7 @@
 
     <string id="BackgroundColorTitle">Background color</string>
     <string id="ForegroundColorTitle">Foreground Color</string>
-    <string id="ForegroundColorSubLabel">Time color</string>
-    <string id="TextColorTitle">Text color</string>
-    <string id="TextColorTitleSubLabel">Data color</string>
+    <string id="InforColorTitle">Information color</string>
     <string id="SeparatorColorTitle">Separator Color</string>
     <string id="SeparatorInfoTitle">Separator Data</string>
 

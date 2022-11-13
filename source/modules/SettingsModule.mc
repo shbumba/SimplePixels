@@ -6,7 +6,7 @@ module SettingsModule {
         enum Enum {
             BACKGROUND_COLOR = "BackgroundColor",
             FOREGROUND_COLOR = "ForegroundColor",
-            TEXT_COLOR = "TextColor",
+            INFO_COLOR = "InfoColor",
             SEPARATOR_COLOR = "SeparatorColor",
             SEPARATOR_INFO = "SeparatorInfo",
             TOP_SENSOR_1 = "TopSensor1",

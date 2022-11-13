@@ -30,12 +30,12 @@ class DateView extends Component.Box {
         var dateObj = self.getDateMonth();
 
         var backgroundColor = Graphics.COLOR_TRANSPARENT;
-        var textColor = self.textColor;
+        var infoColor = self.infoColor;
 
         var font = self.getFont();
         var fontHeight = drawContext.getFontHeight(font);
 
-        drawContext.setColor(textColor, backgroundColor);
+        drawContext.setColor(infoColor, backgroundColor);
         drawContext.drawText(
             posX + width,
             posY,

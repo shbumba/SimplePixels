@@ -1,7 +1,7 @@
 <properties>
     <property id="BackgroundColor" type="number">1</property>
     <property id="ForegroundColor" type="number">11</property>
-    <property id="TextColor" type="number">2</property>
+    <property id="InfoColor" type="number">2</property>
     <property id="DisplaySeconds" type="number">1</property>
     <property id="SeparatorColor" type="number">22</property>
     <property id="SeparatorInfo" type="number">1</property>

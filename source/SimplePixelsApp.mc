@@ -9,10 +9,6 @@ class SimplePixelsApp extends Application.AppBase {
         AppBase.initialize();
     }
 
-    function onStart(state as Dictionary?) as Void {}
-
-    function onStop(state as Dictionary?) as Void {}
-
     function getInitialView() as Array<Views or InputDelegates>? {
         self.mainView = new SimplePixelsView();
 
@@ -20,9 +16,7 @@ class SimplePixelsApp extends Application.AppBase {
     }
 
     function getSettingsView() as Array<Views or InputDelegates>? {
-        var onSettingsChanged = new Lang.Method(self, :onSettingsChanged);
-
-        return [new SettingsMenuView(onSettingsChanged)] as Array<Views or InputDelegates>;
+        return [new SettingsMenuView(self.method(:onSettingsChanged) as Method)] as Array<Views or InputDelegates>;
     }
     
     function onSettingsChanged() as Void {

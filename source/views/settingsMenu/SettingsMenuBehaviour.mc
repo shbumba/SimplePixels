@@ -15,7 +15,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     private var subMenuHandlers = {
         SettingType.BACKGROUND_COLOR => :colorHandler,
         SettingType.FOREGROUND_COLOR => :colorHandler,
-        SettingType.TEXT_COLOR => :colorHandler,
+        SettingType.INFO_COLOR => :colorHandler,
         SettingType.SEPARATOR_COLOR => :colorHandler,
         SettingType.SEPARATOR_INFO => :sensorFieldHandler,
         SettingType.TOP_SENSOR_1 => :sensorFieldHandler,
@@ -61,7 +61,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         settingKey as SettingType.Enum,
         title as String,
         menuItems as Array<GenerateItemProps>,
-        clearPrevSensorCache as Boolean?
+        clearPrevSensorCache as Boolean
     ) as Void {
         var menu = SettingsMenuBuilder.generateMenu({
             :buider => SettingsMenuBuilder.CUSTOM_MENU,
@@ -79,7 +79,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             :items => menuItems
         });
 
-        WatchUi.pushView(menu, new CustomMenuDelegate(settingKey, clearPrevSensorCache), WatchUi.SLIDE_UP);
+        WatchUi.switchToView(menu, new CustomMenuDelegate(settingKey, clearPrevSensorCache, self.onBackCallback), WatchUi.SLIDE_UP);
     }
 
     private function generateColorItems() as Array<GenerateItemProps> {
@@ -186,23 +186,21 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
 
     function onBack() as Void {
         self.onBackCallback.invoke();
-
         WatchUi.Menu2InputDelegate.onBack();
     }
 }
 
 class CustomMenuDelegate extends WatchUi.Menu2InputDelegate {
     private var settingKey as SettingType.Enum;
-    private var clearPrevSensorCache as Boolean = false;
+    private var onBackCallback as Method;
+    private var clearPrevSensorCache as Boolean;
 
-    function initialize(settingKey as SettingType.Enum, clearPrevSensorCache as Boolean?) {
+    function initialize(settingKey as SettingType.Enum, clearPrevSensorCache as Boolean, onBackCallback as Lang.Method) {
         Menu2InputDelegate.initialize();
 
         self.settingKey = settingKey;
-
-        if (clearPrevSensorCache != null) {
-            self.clearPrevSensorCache = clearPrevSensorCache;
-        }
+        self.clearPrevSensorCache = clearPrevSensorCache;
+        self.onBackCallback = onBackCallback;
     }
 
     function onSelect(item) {
@@ -216,15 +214,10 @@ class CustomMenuDelegate extends WatchUi.Menu2InputDelegate {
         }
 
         SettingsModule.setValue(self.settingKey, valueID);
-
-        WatchUi.popView(WatchUi.SLIDE_DOWN);
+        self.onBack();
     }
 
     function onBack() {
-        WatchUi.popView(WatchUi.SLIDE_DOWN);
-    }
-
-    function onWrap(key) {
-        return false;
+        RenderSettingsMenu(self.onBackCallback, WatchUi.SLIDE_DOWN, self.settingKey);
     }
 }

@@ -1,6 +1,7 @@
 import Toybox.Lang;
 import Toybox.Graphics;
 import Toybox.WatchUi;
+import SettingsModule.SettingType;
 
 class SettingsMenuView extends WatchUi.View {
     private var onSettingsChanged as Method or Null;
@@ -12,9 +13,7 @@ class SettingsMenuView extends WatchUi.View {
     }
 
     function onLayout(drawContext as Dc) {
-        var onBack = new Lang.Method(self, :onBack);
-
-        WatchUi.switchToView(SettingsMenu(), new SettingsMenuBehaviour(onBack), WatchUi.SLIDE_IMMEDIATE);
+        RenderSettingsMenu(self.method(:onBack), WatchUi.SLIDE_IMMEDIATE, null);
     }
 
     function onUpdate(drawContext as Dc) as Void {

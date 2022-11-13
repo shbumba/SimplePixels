@@ -9,6 +9,6 @@ class DrawableMenuFooter extends WatchUi.Drawable {
 
     function draw(drawContext as Dc) {
         drawContext.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
-        drawContext.fillRectangle(0, 3, drawContext.getWidth(), 3);
+        drawContext.fillRectangle(0, 0, drawContext.getWidth(), 3);
     }
 }

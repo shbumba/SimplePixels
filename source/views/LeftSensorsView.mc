@@ -101,10 +101,10 @@ class LeftSensorsView extends Component.List {
         }
 
         var backgroundColor = Graphics.COLOR_TRANSPARENT;
-        var textColor = self.textColor;
+        var infoColor = self.infoColor;
         var boxSize = self.getActualBoxSize();
 
-        drawContext.setColor(textColor, backgroundColor);
+        drawContext.setColor(infoColor, backgroundColor);
         
         self.renderItems({
             :items => items,
