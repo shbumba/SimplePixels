@@ -3,67 +3,59 @@ import Toybox.System;
 import Toybox.ActivityMonitor;
 import Toybox.Activity;
 import Toybox.SensorHistory;
-import Toybox.Weather;
 import SensorInfoModule.SensorType;
 
 module SensorsChecker {
     var SensorsDictionary = {
-        SensorType.NONE => :checkIsAlwaysTrue,
-        SensorType.STEPS => :checkSteps,
-        SensorType.CALORIES => :checkCalories,
-        SensorType.TEMPERATURE => :checkTemperature,
-        SensorType.BATTERY => :checkBattery,
+        SensorType.NONE => true,
+        SensorType.STEPS => true,
+        SensorType.CALORIES => true,
+        SensorType.BATTERY => true,
         SensorType.BATTERY_IN_DAYS => :checkBatteryInDays,
         SensorType.SOLAR_INTENSITY => :checkSolarIntensivity,
-        SensorType.IS_CONNECTED => :checkIsConnected,
-        SensorType.HEART_RATE => :checkHR,
+        SensorType.IS_CONNECTED => true,
+        SensorType.HEART_RATE => true,
         SensorType.FLOORS => :checkFloors,
-        SensorType.ALTITUDE => :checkAltitude,
-        SensorType.MESSAGES => :checkMessages,
-        SensorType.ALARM_COUNT => :checkAlarmCount,
-        SensorType.MEMORY_USED => :checkMemory,
-        SensorType.CURRENT_WEATHER => :checkCurrentWeather,
-        SensorType.WEATHER_FEELS => :checkCurrentWeather,
-        SensorType.WEATHER_FORECAST => :checkWeatherForecast,
-        SensorType.SUNRISE => :checkSunrise,
-        SensorType.SUNSET => :checkSunset,
+        SensorType.ALTITUDE => true,
+        SensorType.MESSAGES => true,
+        SensorType.ALARM_COUNT => true,
+        SensorType.MEMORY_USED => true,
+        SensorType.CURRENT_WEATHER => true,
+        SensorType.WEATHER_FEELS => true,
+        SensorType.WEATHER_FORECAST => true,
+        SensorType.SUNRISE => true,
+        SensorType.SUNSET => true,
         SensorType.OXYGEN_SATURATION => :checkOxygenSaturation,
         SensorType.PRESSURE => :checkPressure,
         SensorType.TIME_TO_RECOVERY => :checkTimeToRecovery,
-        SensorType.STEPS_GOAL => :checkStepGoal,
+        SensorType.STEPS_GOAL => true,
         SensorType.RESPIRATION_RATE => :checkRespirationRate,
         SensorType.METERS_CLIMBED => :checkMetersClimbed,
         SensorType.IS_DO_NOT_DISTURB => :checkDoNotDisturb,
         SensorType.IS_NIGHT_MODE_ENABLED => :checkIsNightMode,
-        SensorType.IS_SLEEP_TIME => :checkIsAlwaysTrue,
+        SensorType.IS_SLEEP_TIME => true,
         SensorType.FLOORS_CLIMBED_GOAL => :checkFloorsClimbedGoal,
-        SensorType.DISTANCE => :checkDistance,
-        SensorType.ACTIVE_MINUTES_DAY => :checkActiveMinutesDay,
+        SensorType.DISTANCE => true,
+        SensorType.ACTIVE_MINUTES_DAY => true,
         SensorType.BODY_BATTERY => :checkBodyBattery,
         SensorType.STRESS => :checkStress,
-        SensorType.BATTERY_GOAL => :checkIsAlwaysTrue,
-        SensorType.ACTIVE_MINUTES_WEEK => :checkActiveMinutesWeek,
-        SensorType.ACTIVE_MINUTES_WEEK_GOAL => :checkActiveMinutesWeekGoal
+        SensorType.BATTERY_GOAL => true,
+        SensorType.ACTIVE_MINUTES_WEEK => true,
+        SensorType.ACTIVE_MINUTES_WEEK_GOAL => true
     };
 
     function check(sensorType as SensorType.Enum) as Boolean {
-        var sensorFn = SensorsDictionary.get(sensorType);
+        var sensorCkecker = SensorsDictionary.get(sensorType);
 
-        if (sensorFn == null) {
+        if (sensorCkecker == null) {
             throw new Toybox.Lang.InvalidValueException("the item sensor prop has an incorrect value");
+        } else if (sensorCkecker instanceof Lang.Boolean) {
+            return sensorCkecker;
         }
 
-        var method = new Lang.Method(SensorsChecker, sensorFn);
+        var method = new Lang.Method(SensorsChecker, sensorCkecker);
 
         return method.invoke() as Boolean;
-    }
-
-    function checkSteps() as Boolean {
-        return ActivityMonitor.getInfo() has :steps;
-    }
-
-    function checkCalories() as Boolean {
-        return ActivityMonitor.getInfo() has :calories;
     }
 
     function checkFloors() as Boolean {
@@ -72,10 +64,6 @@ module SensorsChecker {
 
     function checkTimeToRecovery() as Boolean {
         return ActivityMonitor.getInfo() has :timeToRecovery;
-    }
-
-    function checkStepGoal() as Boolean {
-        return ActivityMonitor.getInfo() has :stepGoal;
     }
 
     function checkRespirationRate() as Boolean {
@@ -90,22 +78,6 @@ module SensorsChecker {
         return ActivityMonitor.getInfo() has :floorsClimbedGoal;
     }
 
-    function checkDistance() as Boolean {
-        return ActivityMonitor.getInfo() has :distance;
-    }
-
-    function checkActiveMinutesDay() as Boolean {
-        return ActivityMonitor.getInfo() has :activeMinutesDay;
-    }
-
-    function checkActiveMinutesWeek() as Boolean {
-        return ActivityMonitor.getInfo() has :activeMinutesWeek;
-    }
-
-    function checkActiveMinutesWeekGoal() as Boolean {
-        return ActivityMonitor.getInfo() has :activeMinutesWeekGoal;
-    }
-
     function checkOxygenSaturation() as Boolean {
         return Activity.getActivityInfo() has :currentOxygenSaturation;
     }
@@ -114,12 +86,24 @@ module SensorsChecker {
         return Activity.getActivityInfo() has :ambientPressure;
     }
 
-    function checkHR() as Boolean {
-        return Activity.getActivityInfo() has :currentHeartRate;
+    function checkSolarIntensivity() as Boolean {
+        return System.getSystemStats() has :solarIntensity;
     }
 
-    function checkAltitude() as Boolean {
-        return Activity.getActivityInfo() has :altitude;
+    function checkBatteryInDays() as Boolean {
+        return System.getSystemStats() has :batteryInDays;
+    }
+
+    function checkDoNotDisturb() as Boolean {
+        return System.getDeviceSettings() has :doNotDisturb;
+    }
+
+    function checkIsNightMode() as Boolean {
+        return System.getDeviceSettings() has :isNightModeEnabled;
+    }
+
+    function checkSensorHistory() as Boolean {
+        return Toybox has :SensorHistory;
     }
 
     function checkBodyBattery() as Boolean {
@@ -138,74 +122,11 @@ module SensorsChecker {
         return checkSensorHistory() && SensorHistory has :getPressureHistory;
     }
 
-    function checkMemory() as Boolean {
-        return System.getSystemStats() has :usedMemory;
-    }
-
-    function checkSolarIntensivity() as Boolean {
-        return System.getSystemStats() has :solarIntensity;
-    }
-
-    function checkBattery() as Boolean {
-        return System.getSystemStats() has :battery;
-    }
-
-    function checkBatteryInDays() as Boolean {
-        return System.getSystemStats() has :batteryInDays;
-    }
-
-    function checkAlarmCount() as Boolean {
-        return System.getDeviceSettings() has :alarmCount;
-    }
-
-    function checkMessages() as Boolean {
-        return System.getDeviceSettings() has :notificationCount;
-    }
-
-    function checkDoNotDisturb() as Boolean {
-        return System.getDeviceSettings() has :doNotDisturb;
-    }
-
-    function checkIsConnected() as Boolean {
-        return System.getDeviceSettings() has :phoneConnected;
-    }
-
-    function checkCurrentWeather() as Boolean {
-        return Weather has :getCurrentConditions;
-    }
-
-    function checkWeatherForecast() as Boolean {
-        return Weather has :getDailyForecast;
-    }
-
-    function checkSunrise() as Boolean {
-        return Weather has :getSunrise;
-    }
-    function checkSunset() as Boolean {
-        return Weather has :getSunset;
-    }
-
-    function checkSensorHistory() as Boolean {
-        return Toybox has :SensorHistory;
-    }
-
-    function checkTemperature() as Boolean {
-        return checkSensorHistory() && SensorHistory has :getTemperatureHistory;
-    }
-
     function checkHeartRateHistory() as Boolean {
         return checkSensorHistory() && SensorHistory has :getHeartRateHistory;
     }
 
     function checkElevationHistory() as Boolean {
         return checkSensorHistory() && SensorHistory has :getElevationHistory;
-    }
-
-    function checkIsNightMode() as Boolean {
-        return System.getDeviceSettings() has :isNightModeEnabled;
-    }
-
-    function checkIsAlwaysTrue() as Boolean {
-        return true;
     }
 }

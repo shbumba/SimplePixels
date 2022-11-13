@@ -41,7 +41,6 @@ module SensorsGetter {
             SensorType.MESSAGES => :getMessages,
             SensorType.ALARM_COUNT => :getAlarmCount,
             SensorType.SOLAR_INTENSITY => :getSolarIntensity,
-            SensorType.TEMPERATURE => :getTemperature,
             SensorType.IS_CONNECTED => :getIsConnected,
             SensorType.IS_DO_NOT_DISTURB => :isDoNotDisturb,
             SensorType.IS_NIGHT_MODE_ENABLED => :isNightModeEnabled,
@@ -229,13 +228,6 @@ module SensorsGetter {
 
         function getIsConnected() as Boolean {
             return System.getDeviceSettings().phoneConnected;
-        }
-
-        function getTemperature() as Long? {
-            var sensorInfo = SensorHistory.getTemperatureHistory({}).next();
-            var value = sensorInfo != null ? sensorInfo.data : null;
-
-            return value != null ? value.toLong() : value;
         }
 
         function getHR() as Number? {

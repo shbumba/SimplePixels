@@ -55,7 +55,6 @@
     <string id="None">None</string>
     <string id="Steps">Steps</string>
     <string id="Calories">Calories</string>
-    <string id="Temperature">Temperature</string>
     <string id="Battery">Battery %</string>
     <string id="BatteryInDays">Battery d/left</string>
     <string id="IsConnected">Is connected</string>

@@ -27,7 +27,6 @@ module SensorInfoModule {
             MESSAGES = 19,
             ALARM_COUNT = 20,
             SOLAR_INTENSITY = 21,
-            TEMPERATURE = 22,
             WEATHER_FEELS = 23,
             WEATHER_FORECAST = 24,
             SUNRISE = 25,

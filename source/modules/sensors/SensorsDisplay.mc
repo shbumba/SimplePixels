@@ -11,50 +11,49 @@ module SensorsDisplay {
     typedef SensorDisplayItem as Array; // [transform as Method, title as Resource, icon as Method]
 
     var SensorsDictionary = {
-        SensorType.NONE => [:transformToEmpty, Rez.Strings.None, :emptyIcon],
+        SensorType.NONE => [:transformToEmpty, Rez.Strings.None, null],
         SensorType.BATTERY => [:transformPercent, Rez.Strings.Battery, :batteryIcon],
         SensorType.BATTERY_IN_DAYS => [:transformBatteryInDays, Rez.Strings.BatteryInDays, :batteryIcon],
-        SensorType.CURRENT_WEATHER => [:transformTemperature, Rez.Strings.Weather, :currentWeatherIcon],
-        SensorType.WEATHER_FEELS => [:transformTemperature, Rez.Strings.WeatherFeels, :currentWeatherIcon],
+        SensorType.CURRENT_WEATHER => [:transformTemperature, Rez.Strings.Weather, Rez.Fonts.weather_icon],
+        SensorType.WEATHER_FEELS => [:transformTemperature, Rez.Strings.WeatherFeels, Rez.Fonts.weather_icon],
         SensorType.WEATHER_FORECAST => [
             :transformTemperatureForecast,
             Rez.Strings.WeatherForecast,
-            :currentWeatherIcon
+            Rez.Fonts.weather_icon
         ],
-        SensorType.SUNRISE => [:transformTime, Rez.Strings.Sunrise, :sunriseIcon],
-        SensorType.SUNSET => [:transformTime, Rez.Strings.Sunset, :sunsetIcon],
-        SensorType.STEPS => [:transformToFourNumbers, Rez.Strings.Steps, :stepsIcon],
-        SensorType.CALORIES => [:transformToFourNumbers, Rez.Strings.Calories, :caloriesIcon],
-        SensorType.HEART_RATE => [:transformToThreeNumbers, Rez.Strings.HeartRate, :heartRateIcon],
-        SensorType.STRESS => [:transformPercent, Rez.Strings.Stress, :stressIcon],
-        SensorType.BODY_BATTERY => [:transformPercent, Rez.Strings.BodyBattery, :bodyBatteryIcon],
-        SensorType.OXYGEN_SATURATION => [:transformPercent, Rez.Strings.OxygenSaturation, :oxygenSaturationIcon],
-        SensorType.RESPIRATION_RATE => [:transformRespirationRate, Rez.Strings.RespirationRate, :oxygenSaturationIcon],
-        SensorType.TIME_TO_RECOVERY => [:transformTimeToRecovery, Rez.Strings.TimeToRecovery, :timeToRecoveryIcon],
-        SensorType.FLOORS => [:transformToTwoNumbers, Rez.Strings.Floors, :floorsIcon],
-        SensorType.METERS_CLIMBED => [:transformMeters, Rez.Strings.MetersClimbed, :floorsIcon],
-        SensorType.DISTANCE => [:transformMeters, Rez.Strings.Distance, :distanceIcon],
-        SensorType.ALTITUDE => [:transformMeters, Rez.Strings.Altitude, :altitudeIcon],
-        SensorType.PRESSURE => [:transformPressure, Rez.Strings.Pressure, :pressureIcon],
+        SensorType.SUNRISE => [:transformTime, Rez.Strings.Sunrise, Rez.Fonts.sunrise_icon],
+        SensorType.SUNSET => [:transformTime, Rez.Strings.Sunset, Rez.Fonts.sunset_icon],
+        SensorType.STEPS => [:transformToFourNumbers, Rez.Strings.Steps, Rez.Fonts.steps_icon],
+        SensorType.CALORIES => [:transformToFourNumbers, Rez.Strings.Calories, Rez.Fonts.calories_icon],
+        SensorType.HEART_RATE => [:transformToThreeNumbers, Rez.Strings.HeartRate, Rez.Fonts.heart_icon],
+        SensorType.STRESS => [:transformPercent, Rez.Strings.Stress, Rez.Fonts.stress_icon],
+        SensorType.BODY_BATTERY => [:transformPercent, Rez.Strings.BodyBattery, Rez.Fonts.energy_icon],
+        SensorType.OXYGEN_SATURATION => [:transformPercent, Rez.Strings.OxygenSaturation, Rez.Fonts.oxygen_icon],
+        SensorType.RESPIRATION_RATE => [:transformRespirationRate, Rez.Strings.RespirationRate, Rez.Fonts.oxygen_icon],
+        SensorType.TIME_TO_RECOVERY => [:transformTimeToRecovery, Rez.Strings.TimeToRecovery, Rez.Fonts.recovery_icon],
+        SensorType.FLOORS => [:transformToTwoNumbers, Rez.Strings.Floors, Rez.Fonts.floors_icon],
+        SensorType.METERS_CLIMBED => [:transformMeters, Rez.Strings.MetersClimbed, Rez.Fonts.floors_icon],
+        SensorType.DISTANCE => [:transformMeters, Rez.Strings.Distance, Rez.Fonts.distance_icon],
+        SensorType.ALTITUDE => [:transformMeters, Rez.Strings.Altitude, Rez.Fonts.altitude_icon],
+        SensorType.PRESSURE => [:transformPressure, Rez.Strings.Pressure, Rez.Fonts.preasure_icon],
         SensorType.ACTIVE_MINUTES_DAY => [
             :transformActiveMinutesDay,
             Rez.Strings.ActiveMinutesDay,
-            :activeMinutesDayIcon
+            Rez.Fonts.activity_icon
         ],
         SensorType.ACTIVE_MINUTES_WEEK => [
             :transformActiveMinutesDay,
             Rez.Strings.ActiveMinutesWeek,
-            :activeMinutesDayIcon
+            Rez.Fonts.activity_icon
         ],
-        SensorType.MESSAGES => [:transformFullNumbers, Rez.Strings.Messages, :messagesIcon],
-        SensorType.ALARM_COUNT => [:transformFullNumbers, Rez.Strings.AlarmCount, :alarmCountIcon],
-        SensorType.SOLAR_INTENSITY => [:transformPercent, Rez.Strings.SolarIntensity, :solarIcon],
-        SensorType.TEMPERATURE => [:transformTemperature, Rez.Strings.Temperature, :temperatureIcon],
+        SensorType.MESSAGES => [:transformFullNumbers, Rez.Strings.Messages, Rez.Fonts.messages_icon],
+        SensorType.ALARM_COUNT => [:transformFullNumbers, Rez.Strings.AlarmCount, Rez.Fonts.alarm_icon],
+        SensorType.SOLAR_INTENSITY => [:transformPercent, Rez.Strings.SolarIntensity, Rez.Fonts.sun_icon],
         SensorType.IS_CONNECTED => [:transformToEmpty, Rez.Strings.IsConnected, :isConnectedIcon],
         SensorType.IS_DO_NOT_DISTURB => [:transformToEmpty, Rez.Strings.IsDoNotDisturb, :isDoNotDisturbIcon],
         SensorType.IS_NIGHT_MODE_ENABLED => [:transformToEmpty, Rez.Strings.IsNightMode, :isNightModeIcon],
         SensorType.IS_SLEEP_TIME => [:transformToEmpty, Rez.Strings.IsSleepTime, :isNightModeIcon],
-        SensorType.MEMORY_USED => [:transformBytesToKb, Rez.Strings.Memory, :memoryIcon]
+        SensorType.MEMORY_USED => [:transformBytesToKb, Rez.Strings.Memory, Rez.Fonts.memory_icon]
     };
 
     module Handlers {
@@ -181,22 +180,6 @@ module SensorsDisplay {
     }
 
     module Icons {
-        function emptyIcon(value as SersorInfoGetterValue) as Null {
-            return null;
-        }
-
-        function stepsIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.steps_icon;
-        }
-
-        function caloriesIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.calories_icon;
-        }
-
-        function temperatureIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.temperature_icon;
-        }
-
         function batteryIcon(value as SersorInfoGetterValue) as Symbol {
             if (value == null || value == true || value >= 85) {
                 return Rez.Fonts.battery_100_icon; // 100%
@@ -211,60 +194,8 @@ module SensorsDisplay {
             return Rez.Fonts.battery_0_icon; // 0%
         }
 
-        function solarIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.sun_icon;
-        }
-
-        function sunriseIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.sunrise_icon;
-        }
-
-        function sunsetIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.sunset_icon;
-        }
-
         function isConnectedIcon(value as SersorInfoGetterValue) as Symbol? {
             return value == true ? Rez.Fonts.connection_icon : null;
-        }
-
-        function heartRateIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.heart_icon;
-        }
-
-        function floorsIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.floors_icon;
-        }
-
-        function altitudeIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.altitude_icon;
-        }
-
-        function messagesIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.messages_icon;
-        }
-
-        function alarmCountIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.alarm_icon;
-        }
-
-        function memoryIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.memory_icon;
-        }
-
-        function currentWeatherIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.weather_icon;
-        }
-
-        function oxygenSaturationIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.oxygen_icon;
-        }
-
-        function pressureIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.preasure_icon;
-        }
-
-        function timeToRecoveryIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.recovery_icon;
         }
 
         function isNightModeIcon(value as SersorInfoGetterValue) as Symbol? {
@@ -273,22 +204,6 @@ module SensorsDisplay {
 
         function isDoNotDisturbIcon(value as SersorInfoGetterValue) as Symbol? {
             return value == true ? Rez.Fonts.dnd_icon : null;
-        }
-
-        function distanceIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.distance_icon;
-        }
-
-        function activeMinutesDayIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.activity_icon;
-        }
-
-        function bodyBatteryIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.energy_icon;
-        }
-
-        function stressIcon(value as SersorInfoGetterValue) as Symbol {
-            return Rez.Fonts.stress_icon;
         }
     }
 
@@ -318,8 +233,13 @@ module SensorsDisplay {
     }
 
     function getIcon(sensorType as SensorType.Enum, value as SersorInfoGetterValue) as Symbol? {
-        var handler = getItem(sensorType)[2];
-        var method = new Lang.Method(Icons, handler);
+        var iconFn = getItem(sensorType)[2];
+
+        if (iconFn instanceof Lang.Number || iconFn == null) {
+            return iconFn as Symbol or Null;
+        }
+
+        var method = new Lang.Method(Icons, iconFn);
 
         return method.invoke(value) as Symbol?;
     }

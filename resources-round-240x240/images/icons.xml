@@ -25,6 +25,5 @@
     <font id="sun_icon" filename="./icons/sun.fnt" antialias="true"/>
     <font id="sunrise_icon" filename="./icons/sunrise.fnt" antialias="true"/>
     <font id="sunset_icon" filename="./icons/sunset.fnt" antialias="true"/>
-    <font id="temperature_icon" filename="./icons/temperature.fnt" antialias="true"/>
     <font id="weather_icon" filename="./icons/weather.fnt" antialias="true"/>
 </resources>
