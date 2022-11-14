@@ -1,13 +1,12 @@
 import Toybox.Lang;
 import Toybox.Graphics;
-import Toybox.WatchUi;
 
 typedef BitmapProps as {
         :width as Lang.Number?,
         :height as Lang.Number?,
         :palette as Lang.Array<Graphics.ColorType>?,
         :colorDepth as Lang.Number?,
-        :bitmapResource as WatchUi.BitmapResource or Graphics.BitmapReference,
+        :bitmapResource as Toybox.WatchUi.BitmapResource or Graphics.BitmapReference,
         :alphaBlending as Graphics.AlphaBlending?
     };
 

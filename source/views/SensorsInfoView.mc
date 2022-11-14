@@ -55,10 +55,6 @@ class SensorsInfoView extends Component.List {
     }
 
     protected function render(drawContext as Dc) as Void {
-        var position = self.getPosition();
-        var posX = position.get(:x) as Number;
-        var posY = position.get(:y) as Number;
-
         var sensorService = Services.SensorInfo();
         var items = [] as Array<Component.ItemType>;
 
@@ -77,15 +73,12 @@ class SensorsInfoView extends Component.List {
 
         var backgroundColor = Graphics.COLOR_TRANSPARENT;
         var infoColor = self.infoColor;
-        var boxSize = self.getActualBoxSize();
 
         drawContext.setColor(infoColor, backgroundColor);
         
         self.renderItems({
             :items => items,
             :direction => Component.ListItemsDerection.LEFT,
-            :posX => posX,
-            :posY => posY,
             :drawContext => drawContext,
         });
     }

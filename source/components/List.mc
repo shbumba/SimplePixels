@@ -18,8 +18,6 @@ module Component {
 
     typedef ItemsRenderProps as {
         :items as Array<ItemType>,
-        :posX as Number,
-        :posY as Number,
         :drawContext as Dc,
         :derection as ListItemsDerection.Enum?
     };
@@ -143,16 +141,16 @@ module Component {
         }
 
         protected function renderItems(props as ItemsRenderProps) {
-            var boxSize = self.getActualBoxSize();
             var drawContext = props.get(:drawContext);
             var items = props.get(:items);
-            var posX = props.get(:posX);
-            var posY = props.get(:posY);
             var direction = props.get(:direction);
+            var posX = self.getPosX();
+            var posY = self.getPosY();
+            var width = self.getWidth();
             direction = direction != null ? direction : ListItemsDerection.LEFT;
 
             if (direction == ListItemsDerection.RIGHT) {
-                posX = posX + boxSize.get(:width);
+                posX = posX + width;
             }
 
             for (var i = 0; i < items.size(); i++) {

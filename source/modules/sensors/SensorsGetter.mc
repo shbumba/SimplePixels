@@ -3,7 +3,6 @@ import Toybox.System;
 import Toybox.ActivityMonitor;
 import Toybox.Activity;
 import Toybox.SensorHistory;
-import Toybox.Math;
 import Toybox.Weather;
 import Toybox.UserProfile;
 import Toybox.Time;

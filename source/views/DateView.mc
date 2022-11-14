@@ -20,12 +20,9 @@ class DateView extends Component.Box {
     }
 
     protected function render(drawContext as Dc) as Void {
-        var position = self.getPosition();
-        var boxSize = self.getActualBoxSize();
-        var posX = position.get(:x);
-        var posY = position.get(:y);
-        var width = boxSize.get(:width);
-        var height = boxSize.get(:height);
+        var posX = self.getPosX();
+        var posY = self.getPosY();
+        var width = self.getWidth();
 
         var dateObj = self.getDateMonth();
 

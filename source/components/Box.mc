@@ -18,18 +18,20 @@ module Component {
         :debug as Boolean?,
     };
 
-    typedef ActualBoxSize as {:width as Number, :height as Number};
-    typedef CalculatedPosition as {:x as Number, :y as Number};
-
     class Box extends BaseDrawable {
         private var DEBUG_LINE_SIZE = 2;
-        private var _actualBoxSize as ActualBoxSize or Null = null;
-        private var _calculatedPosition as CalculatedPosition or Null = null;
         private var _font as Symbol or Null;
+        private var _boxWidth as Number or Null = null;
+        private var _boxHeight as Number or Null = null;
+        private var _posY as Number or Null = null;
+        private var _posX as Number or Null = null;
         
         protected var _debug as Boolean;
 
         function initialize(params as BoxProps) {
+            self.calcActualBoxSize(params);
+            self.calcPosition(params);
+
             BaseDrawable.initialize(params);
             
             var font = params.get(:font);
@@ -37,9 +39,6 @@ module Component {
 
             var debug = params.get(:debug);
             self._debug = debug != null ? debug : false;
-
-            self.calcActualBoxSize(params);
-            self.calcPosition(params);
         }
 
         private function calcActualBoxSize(params as BoxProps) {
@@ -50,29 +49,33 @@ module Component {
             var boxHeight = params.get(:boxHeight);
             boxHeight = boxHeight != null ? boxHeight : "0";
 
-            self._actualBoxSize = {
-                :width => self.parseActualSize(boxWidth, deviceSettings.screenWidth),
-                :height => self.parseActualSize(boxHeight, deviceSettings.screenHeight)
-            };
+            self._boxWidth = self.parseActualSize(boxWidth, deviceSettings.screenWidth);
+            self._boxHeight = self.parseActualSize(boxHeight, deviceSettings.screenHeight);
         }
 
         private function calcPosition(params as BoxProps) as Void {
-            self._calculatedPosition = {
-                :x => self.calcHorizontalAlignment(params),
-                :y => self.calcVerticalAlignment(params),
-            };
+            self._posX = self.calcHorizontalAlignment(params);
+            self._posY = self.calcVerticalAlignment(params);
         }
 
         protected function getFont() as Resource or Number {
             return self._font != null ? ResourcesCache.get(self._font) : Graphics.FONT_MEDIUM;
         }
 
-        protected function getActualBoxSize() as ActualBoxSize {
-            return self._actualBoxSize;
+        protected function getWidth() as Number {
+            return self._boxWidth as Number;
         }
 
-        protected function getPosition() as CalculatedPosition {
-            return self._calculatedPosition;
+        protected function getHeight() as Number {
+            return self._boxHeight as Number;
+        }
+
+        protected function getPosX() as Number {
+            return self._posX as Number;
+        }
+
+        protected function getPosY() as Number {
+            return self._posY as Number;
         }
 
         protected function parseActualSize(position as String, size as Number) as Number {
@@ -115,9 +118,9 @@ module Component {
 
             var position = self.calcXPoint(xPos);
             var shift = self.calcXShift(xShift);
-            var boxSize = self.getActualBoxSize();
+            var width = self.getWidth();
 
-            return position - PositionUtils.calcAlignmentShift(horizontalAlignment, boxSize.get(:width)) + shift;
+            return position - PositionUtils.calcAlignmentShift(horizontalAlignment, width) + shift;
         }
 
         private function calcVerticalAlignment(params as BoxProps) as Number {
@@ -132,23 +135,17 @@ module Component {
 
             var position = self.calcYPoint(yPos);
             var shift = self.calcYShift(yShift);
-            var boxSize = self.getActualBoxSize();
+            var height = self.getHeight();
 
-            return position - PositionUtils.calcAlignmentShift(verticalAlignment, boxSize.get(:height)) + shift;
+            return position - PositionUtils.calcAlignmentShift(verticalAlignment, height) + shift;
         }
 
         (:debug)
         private function renderDebugArea(drawContext as Dc) {
-            var position = self.getPosition();
-
-            var posX = position.get(:x);
-            var posY = position.get(:y);
-            var boxSize = self.getActualBoxSize();
-
-            var debugPosX = posX - self.DEBUG_LINE_SIZE;
-            var debugPosY = posY - self.DEBUG_LINE_SIZE;
-            var debugBoxWidth = boxSize.get(:width) + (self.DEBUG_LINE_SIZE * 2);
-            var debugBoxHeight = boxSize.get(:height) + (self.DEBUG_LINE_SIZE * 2);
+            var debugPosX = self.getPosX() - self.DEBUG_LINE_SIZE;
+            var debugPosY = self.getPosY() - self.DEBUG_LINE_SIZE;
+            var debugBoxWidth = self.getWidth() + (self.DEBUG_LINE_SIZE * 2);
+            var debugBoxHeight = self.getHeight() + (self.DEBUG_LINE_SIZE * 2);
 
             drawContext.setClip(debugPosX, debugPosY, debugBoxWidth, debugBoxHeight);
             drawContext.setColor(
@@ -160,13 +157,7 @@ module Component {
         }
 
         private function clipRenderArea(drawContext as Dc) as Void {
-            var position = self.getPosition();
-            var boxSize = self.getActualBoxSize();
-
-            var posX = position.get(:x);
-            var posY = position.get(:y);
-
-            drawContext.setClip(posX, posY, boxSize.get(:width), boxSize.get(:height));
+            drawContext.setClip(self.getPosX(), self.getPosY(), self.getWidth(), self.getHeight());
         }
 
         protected function onRenderBefore(drawContext as Dc) {

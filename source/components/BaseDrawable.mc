@@ -11,12 +11,12 @@ module Component {
         protected var infoColor as Number = 0;
 
         function initialize(params) {
-            self.onSettingsChanged();
+            self.setColors();
 
             Drawable.initialize(params);
         }
 
-        public function onSettingsChanged() {
+        function setColors() as Void {
             var backgroundColor = SettingsModule.getValue(SettingType.BACKGROUND_COLOR) as ColorsTypes.Enum;
             var foregroundColor = SettingsModule.getValue(SettingType.FOREGROUND_COLOR) as ColorsTypes.Enum;
             var infoColor = SettingsModule.getValue(SettingType.INFO_COLOR) as ColorsTypes.Enum;
@@ -24,6 +24,10 @@ module Component {
             self.backgroundColor = ColorsModule.getColor(backgroundColor);
             self.foregroundColor = ColorsModule.getColor(foregroundColor);
             self.infoColor = ColorsModule.getColor(infoColor);
+        }
+
+        public function onSettingsChanged() {
+            self.setColors();
         }
     }
 }

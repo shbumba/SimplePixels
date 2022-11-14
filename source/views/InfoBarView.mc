@@ -55,9 +55,10 @@ class InfoBarView extends Component.Box {
     }    
 
     protected function render(drawContext as Dc) as Void {
-        var position = self.getPosition();
-        var posX = position.get(:x);
-        var posY = position.get(:y);
+        var posX = self.getPosX();
+        var posY = self.getPosY();
+        var width = self.getWidth();
+        var height = self.getHeight();
 
         var sensorValue = Services.SensorInfo().getValue(self._sensorType);
         var maxValue = self.getGoal(self._sensorType);
@@ -66,9 +67,6 @@ class InfoBarView extends Component.Box {
         var backgroundColor = Graphics.COLOR_TRANSPARENT;
         var foregroundColor = self._barColor;
 
-        var boxSize = self.getActualBoxSize();
-        var width = boxSize.get(:width);
-        var height = boxSize.get(:height);
         var barHeight = height.toFloat() * (percent / 100);
         var valueBarShift = height - barHeight.toNumber();
 

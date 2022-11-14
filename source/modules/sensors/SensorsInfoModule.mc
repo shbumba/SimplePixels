@@ -1,6 +1,5 @@
 import Toybox.Lang;
 import Toybox.System;
-import Toybox.WatchUi;
 
 module SensorInfoModule {
     module SensorType {
@@ -87,10 +86,10 @@ module SensorInfoModule {
             return SensorsDisplay.transformValue(sensorType, self.getValue(sensorType));
         }
 
-        public function getIcon(sensorType as SensorType.Enum) as FontResource? {
+        public function getIcon(sensorType as SensorType.Enum) as Toybox.WatchUi.FontResource? {
             var iconSymbol = SensorsDisplay.getIcon(sensorType, self.getValue(sensorType));
 
-            return iconSymbol != null ? ResourcesCache.get(iconSymbol) as FontResource : null;
+            return iconSymbol != null ? ResourcesCache.get(iconSymbol) as Toybox.WatchUi.FontResource : null;
         }
     }
 }

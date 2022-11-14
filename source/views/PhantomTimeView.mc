@@ -9,76 +9,23 @@ typedef PhantomTimeViewProps as Component.TimeViewProps or
 
 class PhantomTimeView extends Component.TimeView {
     private var _timeShift as Number;
-    private var _patternBitmap as BufferedBitmap? = null;
-    private var PATTERN_SIZE = 2;
 
     function initialize(params as PhantomTimeViewProps) {
         Component.TimeView.initialize(params);
+        self.updatePattern();
 
         var timeShift = params.get(:timeShift);
         self._timeShift = timeShift != null ? timeShift : 0;
     }
 
+    function updatePattern() {
+        DotPattern.update(self.getWidth(), self.getHeight(), self.backgroundColor);
+    }
+
     function onSettingsChanged() {
         Component.TimeView.onSettingsChanged();
 
-        self.removePattern();
-    }
-
-    private function generatePattern(width as Number, color as Number) as BufferedBitmap {
-        var bitmap = createBitmap({
-            :width => width,
-            :height => self.PATTERN_SIZE
-        });
-        var dc = bitmap.getDc();
-
-        dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-
-        for (var i = 1; i <= width; i++) {
-            var yPos = i % 2 == 0 ? 1 : 0;
-
-            dc.drawPoint(i, yPos);
-        }
-
-        return bitmap;
-    }
-
-    private function createPattern(width as Number, height as Number, color as Number?) as BufferedBitmap {
-        var bitmap = createBitmap({
-            :width => width,
-            :height => height
-        });
-
-        color = color != null ? color : Graphics.COLOR_TRANSPARENT;
-
-        var xPos = 0;
-        var yPos = 0;
-        var rows = height / self.PATTERN_SIZE;
-
-        var pattern = self.generatePattern(width, color);
-        var dc = bitmap.getDc();
-
-        for (var i = 1; i <= rows; i++) {
-            var yShift = i == 1 ? yPos : yPos + self.PATTERN_SIZE * (i - 1);
-
-            dc.drawBitmap(xPos, yShift, pattern);
-        }
-
-        return bitmap;
-    }
-
-    private function setPattern(width as Number, height as Number, color as Number?) as Void {
-        self._patternBitmap = self.createPattern(width, height, color);
-    }
-
-    private function removePattern() as Void {
-        self._patternBitmap = null;
-    }
-
-    private function createPatternIfNeeded(width as Number, height as Number, color as Number?) as Void {
-        if (self._patternBitmap == null) {
-            self.setPattern(width, height, color);
-        }
+        updatePattern();
     }
 
     private function shiftHours(time as Number) as Number {
@@ -118,18 +65,12 @@ class PhantomTimeView extends Component.TimeView {
     }
 
     protected function render(drawContext as Dc) as Void {
-        var position = self.getPosition();
-        var boxSize = self.getActualBoxSize();
-
-        var posX = position.get(:x);
-        var posY = position.get(:y);
-        var width = boxSize.get(:width);
-        var height = boxSize.get(:height);
         var time = self.shiftTime(self.getTime());
 
-        self.createPatternIfNeeded(width, height, self.backgroundColor);
-
         self.renderTime(time, drawContext);
-        drawContext.drawBitmap(posX, posY, self._patternBitmap);
+
+        if (DotPattern.pattern != null) {
+            drawContext.drawBitmap(self.getPosX(), self.getPosY(), DotPattern.pattern);
+        }
     }
 }

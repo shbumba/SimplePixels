@@ -87,9 +87,6 @@ class LeftSensorsView extends Component.List {
     }
 
     protected function render(drawContext as Dc) as Void {
-        var position = self.getPosition();
-        var posX = position.get(:x);
-        var posY = position.get(:y);
         var items = [] as Array<Component.ItemType>;
 
         if (self._sensorType != SensorType.NONE) {
@@ -102,15 +99,12 @@ class LeftSensorsView extends Component.List {
 
         var backgroundColor = Graphics.COLOR_TRANSPARENT;
         var infoColor = self.infoColor;
-        var boxSize = self.getActualBoxSize();
 
         drawContext.setColor(infoColor, backgroundColor);
         
         self.renderItems({
             :items => items,
             :direction => Component.ListItemsDerection.RIGHT,
-            :posX => posX,
-            :posY => posY,
             :drawContext => drawContext,
         });
     }

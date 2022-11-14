@@ -28,17 +28,12 @@ class SecondsView extends Component.Box {
     }
 
     protected function render(drawContext as Dc) as Void {
-        var position = self.getPosition();
-        var posX = position.get(:x);
-        var posY = position.get(:y);
-
         var seconds = self.getSeconds().format("%02d");
 
         var backgroundColor = self.backgroundColor;
         var foregroundColor = self.foregroundColor;
-        var boxSize = self.getActualBoxSize();
 
         drawContext.setColor(foregroundColor, backgroundColor);
-        drawContext.drawText(posX, posY, self.getFont(), seconds, Graphics.TEXT_JUSTIFY_LEFT);
+        drawContext.drawText(self.getPosX(), self.getPosY(), self.getFont(), seconds, Graphics.TEXT_JUSTIFY_LEFT);
     }
 }

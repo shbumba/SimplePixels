@@ -1,6 +1,5 @@
 import Toybox.Lang;
 import Toybox.System;
-import Toybox.WatchUi;
 import Toybox.Math;
 import Toybox.Time;
 import Toybox.Time.Gregorian;
