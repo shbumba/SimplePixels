@@ -4,12 +4,13 @@ import Toybox.Graphics;
 import Toybox.System;
 import Toybox.Time;
 import Toybox.Time.Gregorian;
+import Components;
 
-class PMView extends Component.Box {
+class PMView extends Components.Box {
     protected var _is24hour as Boolean = false;
 
-    function initialize(params as Component.BoxProps) {
-        Component.Box.initialize(params);
+    function initialize(params as Components.BoxProps) {
+        Components.Box.initialize(params);
 
         self.update24Hours();
     }
@@ -19,7 +20,7 @@ class PMView extends Component.Box {
     }
 
     function onSettingsChanged() {
-        Component.Box.onSettingsChanged();
+        Components.Box.onSettingsChanged();
 
         self.update24Hours();
     }

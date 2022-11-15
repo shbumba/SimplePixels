@@ -2,31 +2,32 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
 import Services;
-import SensorInfoModule.SensorType;
 import SettingsModule;
 import SettingsModule.SettingType;
+import SensorTypes;
+import Components;
 
-class LeftSensorsView extends Component.List {
-    private var _sensorType as SensorType.Enum = SensorType.NONE;
+class LeftSensorsView extends Components.List {
+    private var _sensorType as SensorTypes.Enum = SensorTypes.NONE;
     private var _displayIcons as Boolean = false;
-    private var sleepSensors as Array<SensorType.Enum> =
-        [SensorType.IS_NIGHT_MODE_ENABLED, SensorType.IS_SLEEP_TIME] as Array<SensorType.Enum>;
-    private var iconSensors as Array<SensorType.Enum> =
+    private var sleepSensors as Array<SensorTypes.Enum> =
+        [SensorTypes.IS_NIGHT_MODE_ENABLED, SensorTypes.IS_SLEEP_TIME] as Array<SensorTypes.Enum>;
+    private var iconSensors as Array<SensorTypes.Enum> =
         [
-            SensorType.IS_CONNECTED,
-            SensorType.IS_DO_NOT_DISTURB,
-            SensorType.IS_SLEEP_TIME,
-            SensorType.IS_NIGHT_MODE_ENABLED
-        ] as Array<SensorType.Enum>;
+            SensorTypes.IS_CONNECTED,
+            SensorTypes.IS_DO_NOT_DISTURB,
+            SensorTypes.IS_SLEEP_TIME,
+            SensorTypes.IS_NIGHT_MODE_ENABLED
+        ] as Array<SensorTypes.Enum>;
 
-    function initialize(params as Component.ListProps) {
+    function initialize(params as Components.ListProps) {
         List.initialize(params);
         self.updateSensorType();
         self.updateDisplayIcons();
     }
 
     private function updateSensorType() as Void {
-        self._sensorType = SettingsModule.getValue(SettingType.LEFT_SENSOR) as SensorType.Enum;
+        self._sensorType = SettingsModule.getValue(SettingType.LEFT_SENSOR) as SensorTypes.Enum;
     }
 
     private function updateDisplayIcons() as Void {
@@ -34,19 +35,19 @@ class LeftSensorsView extends Component.List {
     }
 
     function onSettingsChanged() {
-        Component.List.onSettingsChanged();
+        Components.List.onSettingsChanged();
 
         self.updateSensorType();
         self.updateDisplayIcons();
     }
 
-    private function getSensorItem(sensorType as SensorType.Enum) as Component.ItemType {
+    private function getSensorItem(sensorType as SensorTypes.Enum) as Components.ItemType {
         var sensorService = Services.SensorInfo();
 
         var icon = sensorService.getIcon(sensorType);
 
-        if (sensorType == SensorType.BATTERY_IN_DAYS) {
-            icon = sensorService.getIcon(SensorType.BATTERY);
+        if (sensorType == SensorTypes.BATTERY_IN_DAYS) {
+            icon = sensorService.getIcon(SensorTypes.BATTERY);
         }
 
         return {
@@ -55,7 +56,7 @@ class LeftSensorsView extends Component.List {
         };
     }
 
-    private function getIconsItem() as Component.ItemType {
+    private function getIconsItem() as Components.ItemType {
         var sensorService = Services.SensorInfo();
         var icons = [] as Array<FontResource>;
         var hasSleepMode = false;
@@ -85,9 +86,9 @@ class LeftSensorsView extends Component.List {
     }
 
     protected function render(drawContext as Dc) as Void {
-        var items = [] as Array<Component.ItemType>;
+        var items = [] as Array<Components.ItemType>;
 
-        if (self._sensorType != SensorType.NONE) {
+        if (self._sensorType != SensorTypes.NONE) {
             items.add(self.getSensorItem(self._sensorType));
         }
 
@@ -99,7 +100,7 @@ class LeftSensorsView extends Component.List {
 
         self.renderItems({
             :items => items,
-            :direction => Component.ListItemsDerection.RIGHT,
+            :direction => Components.ListItemsDerection.RIGHT,
             :drawContext => drawContext
         });
     }

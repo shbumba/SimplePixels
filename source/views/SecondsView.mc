@@ -4,10 +4,11 @@ import Toybox.Graphics;
 import Toybox.System;
 import SettingsModule;
 import SettingsModule.DisplaySecondsType;
+import Components;
 
-class SecondsView extends Component.Box {
-    function initialize(params as Component.BoxProps) {
-        Component.Box.initialize(params);
+class SecondsView extends Components.Box {
+    function initialize(params as Components.BoxProps) {
+        Components.Box.initialize(params);
     }
 
     protected function getSeconds() as String {

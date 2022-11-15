@@ -1,6 +1,7 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
 import WatcherModule;
+import Components;
 
 class OnSettingsChangedWatcher extends WatcherModule.Watcher {
     public static var key as String = "OnSettingsChangedWatcher";
@@ -25,7 +26,7 @@ class OnSettingsChangedWatcher extends WatcherModule.Watcher {
             var id = viewValues[i] as String;
             var view = self._mainView.findDrawableById(id);
 
-            (view as Component.BaseDrawable).onSettingsChanged();
+            (view as Components.BaseDrawable).onSettingsChanged();
         }
     }
 }

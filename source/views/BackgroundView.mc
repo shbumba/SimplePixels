@@ -1,10 +1,11 @@
 import Toybox.Lang;
 import Toybox.Graphics;
 import Toybox.WatchUi;
+import Components;
 
-class BackgroundView extends Component.BaseDrawable {
+class BackgroundView extends Components.BaseDrawable {
     function initialize(params) {
-        Component.BaseDrawable.initialize(params);
+        Components.BaseDrawable.initialize(params);
     }
 
     function draw(dc as Dc) as Void {

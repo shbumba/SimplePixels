@@ -1,17 +1,19 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
+import DotPattern;
+import Components;
 
-typedef PhantomTimeViewProps as Component.TimeViewProps or
+typedef PhantomTimeViewProps as Components.TimeViewProps or
     {
     :timeShift as Number?
 };
 
-class PhantomTimeView extends Component.TimeView {
+class PhantomTimeView extends Components.TimeView {
     private var _timeShift as Number;
 
     function initialize(params as PhantomTimeViewProps) {
-        Component.TimeView.initialize(params);
+        Components.TimeView.initialize(params);
         self.updatePattern();
 
         var timeShift = params.get(:timeShift);
@@ -23,7 +25,7 @@ class PhantomTimeView extends Component.TimeView {
     }
 
     function onSettingsChanged() {
-        Component.TimeView.onSettingsChanged();
+        Components.TimeView.onSettingsChanged();
 
         self.updatePattern();
     }
@@ -55,11 +57,11 @@ class PhantomTimeView extends Component.TimeView {
 
     private function shiftTime(time as Number) as Number {
         switch (self._timeType) {
-            case Component.TimeViewType.HOURS:
+            case Components.TimeViewType.HOURS:
                 return self.shiftHours(time);
 
             default:
-            case Component.TimeViewType.MINUTES:
+            case Components.TimeViewType.MINUTES:
                 return self.shiftMinutes(time);
         }
     }

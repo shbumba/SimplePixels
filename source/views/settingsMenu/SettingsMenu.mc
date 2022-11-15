@@ -1,8 +1,8 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
 import SettingsModule.SettingType;
-import SensorInfoModule.SensorType;
 import SettingsMenuBuilder;
+import SensorsTexts;
 
 function RenderSettingsMenu(onBack, transition as WatchUi.SlideType, selectedSetting as SettingType.Enum?) {
     var menu = SettingsMenu();
@@ -15,7 +15,7 @@ function RenderSettingsMenu(onBack, transition as WatchUi.SlideType, selectedSet
 }
 
 function _getSubLabelValue(type as SettingType.Enum) as Symbol {
-    return SensorsDisplay.getText(SettingsModule.getValue(type) as SensorType.Enum);
+    return SensorsTexts.getText(SettingsModule.getValue(type) as SensorTypes.Enum);
 }
 
 function SettingsMenu() as WatchUi.Menu2 or WatchUi.CustomMenu {

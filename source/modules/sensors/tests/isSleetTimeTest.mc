@@ -43,7 +43,7 @@ function isSleepTimeTest(logger as Test.Logger) as Boolean {
             var interval = times[i2];
             var sleetTime = interval.get(:sleep);
             var wakeTime = interval.get(:wake);
-            var isSleep = SensorsGetter.Getters.isSleepTime(
+            var isSleep = SensorsGetters.Getters.isSleepTime(
                 sleetTime,
                 wakeTime,
                 currentTime,

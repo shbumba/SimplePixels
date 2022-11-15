@@ -2,7 +2,6 @@ import Toybox.Lang;
 import Toybox.Graphics;
 import Toybox.WatchUi;
 import Services;
-import SensorInfoModule;
 import WatcherModule;
 
 class SimplePixelsView extends WatchUi.WatchFace {

@@ -3,10 +3,11 @@ import Toybox.WatchUi;
 import Toybox.Graphics;
 import Toybox.Time;
 import Toybox.Time.Gregorian;
+import Components;
 
-class DateView extends Component.Box {
-    function initialize(params as Component.BoxProps) {
-        Component.Box.initialize(params);
+class DateView extends Components.Box {
+    function initialize(params as Components.BoxProps) {
+        Components.Box.initialize(params);
     }
 
     protected function getDateMonth() as Array<String> {

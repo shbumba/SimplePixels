@@ -3,7 +3,7 @@ import Toybox.WatchUi;
 import Toybox.Graphics;
 import Toybox.System;
 
-module Component {
+module Components {
     module TimeViewType {
         enum Enum {
             HOURS = 1,

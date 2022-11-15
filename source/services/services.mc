@@ -1,4 +1,5 @@
 import Toybox.Lang;
+import WatcherModule;
 
 module Services {
     enum ServiceType {
@@ -13,11 +14,11 @@ module Services {
             return;
         }
 
-        _cachedServices.put(SENSORS_INFO, new SensorInfoModule.SensorsInfoService());
+        _cachedServices.put(SENSORS_INFO, new SensorsInfoService());
         _cachedServices.put(WATHERS_STORE, new WatcherModule.Store());
     }
 
-    function SensorInfo() as SensorInfoModule.SensorsInfoService {
+    function SensorInfo() as SensorsInfoService {
         return _cachedServices.get(SENSORS_INFO);
     }
 

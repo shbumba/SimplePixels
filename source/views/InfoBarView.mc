@@ -2,29 +2,30 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
 import Services;
-import SensorInfoModule.SensorType;
 import SettingsModule;
 import SettingsModule.SettingType;
 import ColorsModule;
+import SensorTypes;
+import Components;
 
-class InfoBarView extends Component.Box {
-    private var _sensorType as SensorType.Enum = SensorType.NONE;
+class InfoBarView extends Components.Box {
+    private var _sensorType as SensorTypes.Enum = SensorTypes.NONE;
     private var _barColor as Number = 0;
     private var _sensorToGoalMap = {
-        SensorType.BATTERY => SensorType.BATTERY_GOAL,
-        SensorType.ACTIVE_MINUTES_WEEK => SensorType.ACTIVE_MINUTES_WEEK_GOAL,
-        SensorType.FLOORS => SensorType.FLOORS_CLIMBED_GOAL,
-        SensorType.STEPS => SensorType.STEPS_GOAL
+        SensorTypes.BATTERY => SensorTypes.BATTERY_GOAL,
+        SensorTypes.ACTIVE_MINUTES_WEEK => SensorTypes.ACTIVE_MINUTES_WEEK_GOAL,
+        SensorTypes.FLOORS => SensorTypes.FLOORS_CLIMBED_GOAL,
+        SensorTypes.STEPS => SensorTypes.STEPS_GOAL
     };
 
-    function initialize(params as Component.BoxProps) {
-        Component.Box.initialize(params);
+    function initialize(params as Components.BoxProps) {
+        Components.Box.initialize(params);
 
         self.updateSettings();
     }
 
     function onSettingsChanged() {
-        Component.Box.onSettingsChanged();
+        Components.Box.onSettingsChanged();
 
         self.updateSettings();
     }
@@ -33,7 +34,7 @@ class InfoBarView extends Component.Box {
         self._barColor = ColorsModule.getColor(
             SettingsModule.getValue(SettingType.SEPARATOR_COLOR) as ColorsTypes.Enum
         );
-        self._sensorType = SettingsModule.getValue(SettingType.SEPARATOR_INFO) as SensorType.Enum;
+        self._sensorType = SettingsModule.getValue(SettingType.SEPARATOR_INFO) as SensorTypes.Enum;
     }
 
     private function calculatePercente(curentValue as Number?, maxValue as Number?) as Float or Number {
@@ -46,7 +47,7 @@ class InfoBarView extends Component.Box {
         return result > 100 ? 100 : result;
     }
 
-    private function getGoal(sensorKey as SensorType.Enum) as Number? {
+    private function getGoal(sensorKey as SensorTypes.Enum) as Number? {
         var sensorGoal = self._sensorToGoalMap.get(sensorKey);
 
         if (sensorGoal == null) {

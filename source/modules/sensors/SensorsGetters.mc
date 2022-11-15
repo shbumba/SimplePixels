@@ -7,52 +7,53 @@ import Toybox.Weather;
 import Toybox.UserProfile;
 import Toybox.Time;
 import Toybox.Position;
-import SensorInfoModule.SensorType;
+import SensorTypes;
+import SensorsCheckers;
 
-module SensorsGetter {
+module SensorsGetters {
     typedef SersorInfoGetterValue as Number or Float or Boolean or Time.Moment or Position.Info or Null;
 
-    var SensorsDictionary as Dictionary<SensorType.Enum, Symbol> =
+    var Map =
         {
-            SensorType.NONE => :getNone,
-            SensorType.BATTERY => :getBattery,
-            SensorType.BATTERY_IN_DAYS => :getBatteryInDays,
-            SensorType.CURRENT_WEATHER => :getCurrentWeather,
-            SensorType.WEATHER_FEELS => :getWeatherFeels,
-            SensorType.WEATHER_FORECAST => :getCurrentForecast,
-            SensorType.SUNRISE => :getSunrise,
-            SensorType.SUNSET => :getSunset,
-            SensorType.STEPS => :getSteps,
-            SensorType.CALORIES => :getCalories,
-            SensorType.HEART_RATE => :getHR,
-            SensorType.STRESS => :getStress,
-            SensorType.BODY_BATTERY => :getBodyBattery,
-            SensorType.OXYGEN_SATURATION => :getOxygenSaturation,
-            SensorType.RESPIRATION_RATE => :getRespirationRate,
-            SensorType.TIME_TO_RECOVERY => :getTimeToRecovery,
-            SensorType.FLOORS => :getFloors,
-            SensorType.METERS_CLIMBED => :getMetersClimbed,
-            SensorType.DISTANCE => :getDistance,
-            SensorType.ALTITUDE => :getAltitude,
-            SensorType.PRESSURE => :getPressure,
-            SensorType.ACTIVE_MINUTES_DAY => :getActiveMinutesDay,
-            SensorType.ACTIVE_MINUTES_WEEK => :getActiveMinutesWeek,
-            SensorType.MESSAGES => :getMessages,
-            SensorType.ALARM_COUNT => :getAlarmCount,
-            SensorType.SOLAR_INTENSITY => :getSolarIntensity,
-            SensorType.IS_CONNECTED => :getIsConnected,
-            SensorType.IS_DO_NOT_DISTURB => :isDoNotDisturb,
-            SensorType.IS_NIGHT_MODE_ENABLED => :isNightModeEnabled,
-            SensorType.IS_SLEEP_TIME => :getSleepTime,
-            SensorType.MEMORY_USED => :getMemory,
-            SensorType.STEPS_GOAL => :getStepGoal,
-            SensorType.FLOORS_CLIMBED_GOAL => :getFloorsClimbedGoal,
-            SensorType.BATTERY_GOAL => :getBatteryGoal,
-            SensorType.ACTIVE_MINUTES_WEEK_GOAL => :getActiveMinutesWeekGoal
-        } as Dictionary<SensorType.Enum, Symbol>;
+            SensorTypes.NONE => :getNone,
+            SensorTypes.BATTERY => :getBattery,
+            SensorTypes.BATTERY_IN_DAYS => :getBatteryInDays,
+            SensorTypes.CURRENT_WEATHER => :getCurrentWeather,
+            SensorTypes.WEATHER_FEELS => :getWeatherFeels,
+            SensorTypes.WEATHER_FORECAST => :getCurrentForecast,
+            SensorTypes.SUNRISE => :getSunrise,
+            SensorTypes.SUNSET => :getSunset,
+            SensorTypes.STEPS => :getSteps,
+            SensorTypes.CALORIES => :getCalories,
+            SensorTypes.HEART_RATE => :getHR,
+            SensorTypes.STRESS => :getStress,
+            SensorTypes.BODY_BATTERY => :getBodyBattery,
+            SensorTypes.OXYGEN_SATURATION => :getOxygenSaturation,
+            SensorTypes.RESPIRATION_RATE => :getRespirationRate,
+            SensorTypes.TIME_TO_RECOVERY => :getTimeToRecovery,
+            SensorTypes.FLOORS => :getFloors,
+            SensorTypes.METERS_CLIMBED => :getMetersClimbed,
+            SensorTypes.DISTANCE => :getDistance,
+            SensorTypes.ALTITUDE => :getAltitude,
+            SensorTypes.PRESSURE => :getPressure,
+            SensorTypes.ACTIVE_MINUTES_DAY => :getActiveMinutesDay,
+            SensorTypes.ACTIVE_MINUTES_WEEK => :getActiveMinutesWeek,
+            SensorTypes.MESSAGES => :getMessages,
+            SensorTypes.ALARM_COUNT => :getAlarmCount,
+            SensorTypes.SOLAR_INTENSITY => :getSolarIntensity,
+            SensorTypes.IS_CONNECTED => :getIsConnected,
+            SensorTypes.IS_DO_NOT_DISTURB => :isDoNotDisturb,
+            SensorTypes.IS_NIGHT_MODE_ENABLED => :isNightModeEnabled,
+            SensorTypes.IS_SLEEP_TIME => :getSleepTime,
+            SensorTypes.MEMORY_USED => :getMemory,
+            SensorTypes.STEPS_GOAL => :getStepGoal,
+            SensorTypes.FLOORS_CLIMBED_GOAL => :getFloorsClimbedGoal,
+            SensorTypes.BATTERY_GOAL => :getBatteryGoal,
+            SensorTypes.ACTIVE_MINUTES_WEEK_GOAL => :getActiveMinutesWeekGoal
+        } as Dictionary<SensorTypes.Enum, Symbol>;
 
-    function getValue(sensorType as SensorType.Enum) as SersorInfoGetterValue {
-        var sensorFn = SensorsDictionary.get(sensorType);
+    function getValue(sensorType as SensorTypes.Enum) as SersorInfoGetterValue {
+        var sensorFn = Map.get(sensorType);
 
         if (sensorFn == null) {
             throw new Lang.InvalidValueException("the item sensor prop has an incorrect value");
@@ -134,7 +135,7 @@ module SensorsGetter {
             var activityInfo = Activity.getActivityInfo();
             var value = activityInfo != null ? activityInfo.currentOxygenSaturation : null;
 
-            if (value == null && SensorsChecker.checkOxygenSaturationHistory()) {
+            if (value == null && SensorsCheckers.Checkers.checkOxygenSaturationHistory()) {
                 var sensorInfo = SensorHistory.getOxygenSaturationHistory({}).next();
                 value = sensorInfo != null ? sensorInfo.data : null;
             }
@@ -146,7 +147,7 @@ module SensorsGetter {
             var activityInfo = Activity.getActivityInfo();
             var value = activityInfo != null ? activityInfo.ambientPressure : null;
 
-            if (value == null && SensorsChecker.checkPressureHistory()) {
+            if (value == null && SensorsCheckers.Checkers.checkPressureHistory()) {
                 var sensorInfo = SensorHistory.getPressureHistory({}).next();
                 value = sensorInfo != null ? sensorInfo.data : null;
             }
@@ -233,7 +234,7 @@ module SensorsGetter {
             var activityInfo = Activity.getActivityInfo();
             var value = activityInfo != null ? activityInfo.currentHeartRate : null;
 
-            if (value == null && SensorsChecker.checkHeartRateHistory()) {
+            if (value == null && SensorsCheckers.Checkers.checkHeartRateHistory()) {
                 var sensorInfo = SensorHistory.getHeartRateHistory({}).next();
                 value = sensorInfo != null ? sensorInfo.data : value;
             }
@@ -245,7 +246,7 @@ module SensorsGetter {
             var activityInfo = Activity.getActivityInfo();
             var value = activityInfo != null ? activityInfo.altitude : null;
 
-            if (value == null && SensorsChecker.checkElevationHistory()) {
+            if (value == null && SensorsCheckers.Checkers.checkElevationHistory()) {
                 var sensorInfo = SensorHistory.getElevationHistory({}).next();
                 value = sensorInfo != null ? sensorInfo.data : value;
             }

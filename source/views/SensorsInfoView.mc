@@ -4,15 +4,16 @@ import Toybox.Graphics;
 import Services;
 import SettingsModule;
 import SettingsModule.SettingType;
-import SensorInfoModule.SensorType;
+import SensorTypes;
+import Components;
 
-typedef SensorsInfoProps as Component.ListProps or
+typedef SensorsInfoProps as Components.ListProps or
     {
     :fields as Array<SettingType.Enum>?
 };
 
-class SensorsInfoView extends Component.List {
-    private var _sensors as Array<SensorType.Enum> = [] as Array<SensorType.Enum>;
+class SensorsInfoView extends Components.List {
+    private var _sensors as Array<SensorTypes.Enum> = [] as Array<SensorTypes.Enum>;
     private var _fields as Array<SettingType.Enum> = [] as Array<SettingType.Enum>;
 
     function initialize(params as SensorsInfoProps) {
@@ -24,28 +25,28 @@ class SensorsInfoView extends Component.List {
     }
 
     private function updateSensors() as Void {
-        self._sensors = [] as Array<SensorType.Enum>;
+        self._sensors = [] as Array<SensorTypes.Enum>;
 
         for (var i = 0; i < self._fields.size(); i++) {
             var fieldType = self._fields[i];
 
-            self._sensors.add(SettingsModule.getValue(fieldType) as SensorType.Enum);
+            self._sensors.add(SettingsModule.getValue(fieldType) as SensorTypes.Enum);
         }
     }
 
     function onSettingsChanged() {
-        Component.List.onSettingsChanged();
+        Components.List.onSettingsChanged();
 
         self.updateSensors();
     }
 
-    private function getSensorItem(sensorType as SensorType.Enum) as Component.ItemType {
+    private function getSensorItem(sensorType as SensorTypes.Enum) as Components.ItemType {
         var sensorService = Services.SensorInfo();
 
         var icon = sensorService.getIcon(sensorType);
 
-        if (sensorType == SensorType.BATTERY_IN_DAYS) {
-            icon = sensorService.getIcon(SensorType.BATTERY);
+        if (sensorType == SensorTypes.BATTERY_IN_DAYS) {
+            icon = sensorService.getIcon(SensorTypes.BATTERY);
         }
 
         return {
@@ -56,12 +57,12 @@ class SensorsInfoView extends Component.List {
 
     protected function render(drawContext as Dc) as Void {
         var sensorService = Services.SensorInfo();
-        var items = [] as Array<Component.ItemType>;
+        var items = [] as Array<Components.ItemType>;
 
         for (var i = 0; i < self._sensors.size(); i++) {
-            var sensorType = self._sensors[i] as SensorType.Enum;
+            var sensorType = self._sensors[i] as SensorTypes.Enum;
 
-            if (sensorType == SensorType.NONE) {
+            if (sensorType == SensorTypes.NONE) {
                 items.add({
                     :text => null,
                     :icon => null
@@ -75,7 +76,7 @@ class SensorsInfoView extends Component.List {
 
         self.renderItems({
             :items => items,
-            :direction => Component.ListItemsDerection.LEFT,
+            :direction => Components.ListItemsDerection.LEFT,
             :drawContext => drawContext
         });
     }

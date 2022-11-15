@@ -12,7 +12,7 @@
             <param name="verticalAlignment">PositionUtils.ALIGN_END</param>
             <param name="font">@Rez.Fonts.hours</param>
             <param name="timeShift">-1</param>
-            <param name="type">Component.TimeViewType.HOURS</param>
+            <param name="type">Components.TimeViewType.HOURS</param>
             <param name="textAligment">Graphics.TEXT_JUSTIFY_RIGHT</param>
         </drawable>
         <drawable id="Date" class="DateView">
@@ -26,7 +26,7 @@
             <param name="verticalAlignment">PositionUtils.ALIGN_END</param>
             <param name="font">@Rez.Fonts.data</param>
         </drawable>
-        <drawable id="Hours" class="Component.TimeView">
+        <drawable id="Hours" class="Components.TimeView">
             <param name="boxWidth">"116"</param>
             <param name="boxHeight">"101"</param>
             <param name="xPos">"50%"</param>
@@ -35,7 +35,7 @@
             <param name="horizontalAlignment">PositionUtils.ALIGN_END</param>
             <param name="verticalAlignment">PositionUtils.ALIGN_CENTER</param>
             <param name="font">@Rez.Fonts.hours</param>
-            <param name="type">Component.TimeViewType.HOURS</param>
+            <param name="type">Components.TimeViewType.HOURS</param>
             <param name="textAligment">Graphics.TEXT_JUSTIFY_RIGHT</param>
         </drawable>
         <drawable id="NextHours" class="PhantomTimeView">
@@ -49,7 +49,7 @@
             <param name="verticalAlignment">PositionUtils.ALIGN_START</param>
             <param name="font">@Rez.Fonts.hours</param>
             <param name="timeShift">1</param>
-            <param name="type">Component.TimeViewType.HOURS</param>
+            <param name="type">Components.TimeViewType.HOURS</param>
             <param name="textAligment">Graphics.TEXT_JUSTIFY_RIGHT</param>
         </drawable>
         <drawable id="LeftSensors" class="LeftSensorsView">
@@ -73,7 +73,7 @@
             <param name="horizontalAlignment">PositionUtils.ALIGN_CENTER</param>
             <param name="verticalAlignment">PositionUtils.ALIGN_CENTER</param>
         </drawable>
-        <drawable id="Minutes" class="Component.TimeView">
+        <drawable id="Minutes" class="Components.TimeView">
             <param name="boxWidth">"66"</param>
             <param name="boxHeight">"64"</param>
             <param name="xPos">"50%"</param>
@@ -83,7 +83,7 @@
             <param name="horizontalAlignment">PositionUtils.ALIGN_START</param>
             <param name="verticalAlignment">PositionUtils.ALIGN_CENTER</param>
             <param name="font">@Rez.Fonts.minutes</param>
-            <param name="type">Component.TimeViewType.MINUTES</param>
+            <param name="type">Components.TimeViewType.MINUTES</param>
         </drawable>
         <drawable id="PM" class="PMView">
             <param name="boxWidth">"28"</param>

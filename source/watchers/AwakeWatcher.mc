@@ -2,8 +2,8 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 import WatcherModule;
 import Services;
-import SensorInfoModule.SensorType;
 import SettingsModule;
+import SensorTypes;
 
 class AwakeWatcher extends WatcherModule.Watcher {
     public static var key as String = "AwakeWatcher";
@@ -26,8 +26,8 @@ class AwakeWatcher extends WatcherModule.Watcher {
 
     function get() as Lang.Object? {
         var service = Services.SensorInfo();
-        var isNightMode = service.getValue(SensorType.IS_NIGHT_MODE_ENABLED);
-        var isSleepTime = service.getValue(SensorType.IS_SLEEP_TIME);
+        var isNightMode = service.getValue(SensorTypes.IS_NIGHT_MODE_ENABLED);
+        var isSleepTime = service.getValue(SensorTypes.IS_SLEEP_TIME);
 
         return isNightMode == true || isSleepTime == true ? false : self._isAwake;
     }

@@ -3,8 +3,9 @@ import Toybox.WatchUi;
 import Toybox.Graphics;
 import Toybox.System;
 import PositionUtils;
+import ResourcesCache;
 
-module Component {
+module Components {
     typedef BoxProps as {
         :boxWidth as String?,
         :boxHeight as String?,

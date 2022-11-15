@@ -2,7 +2,7 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
 
-module Component {
+module Components {
     module ListItemsDerection {
         enum Enum {
             LEFT = 1,

@@ -3,12 +3,14 @@ import Toybox.WatchUi;
 import Toybox.Graphics;
 import ColorsModule;
 import Services;
-import SensorsDisplay;
-import SensorInfoModule.SensorType;
 import SettingsModule;
 import SettingsModule.SettingType;
 import SettingsModule.DisplaySecondsType;
 import SettingsMenuBuilder;
+import SensorTypes;
+import SensorsTexts;
+import SensorsIcons;
+import ResourcesCache;
 
 class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     private var onBackCallback as Lang.Method;
@@ -31,10 +33,10 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
 
     private var subMenuAwailableKeys = {
         SettingType.SEPARATOR_INFO => [
-            SensorType.BATTERY,
-            SensorType.ACTIVE_MINUTES_WEEK,
-            SensorType.FLOORS,
-            SensorType.STEPS
+            SensorTypes.BATTERY,
+            SensorTypes.ACTIVE_MINUTES_WEEK,
+            SensorTypes.FLOORS,
+            SensorTypes.STEPS
         ],
     };
 
@@ -73,7 +75,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
 
     private function generateColorItems() as Array<GenerateItemProps> {
         var menuItems = [] as Array<GenerateItemProps>;
-        var keys = ColorsModule.ColorsDictionary.keys() as Array<ColorsTypes.Enum>;
+        var keys = ColorsModule.ColorsMap.keys() as Array<ColorsTypes.Enum>;
 
         for (var i = 0; i < keys.size(); i++) {
             var colorKey = keys[i];
@@ -91,11 +93,11 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         return menuItems;
     }
 
-    private function generateSensorItems(settingKey as SensorType.Enum) as Array<GenerateItemProps> {
+    private function generateSensorItems(settingKey as SensorTypes.Enum) as Array<GenerateItemProps> {
         var menuItems = [] as Array<GenerateItemProps>;
         var availableKeys = self.subMenuAwailableKeys.get(settingKey);
         var sensorInfoService = Services.SensorInfo();
-        var fields = SensorsDisplay.SensorsDictionary.keys() as Array<SensorType.Enum>;
+        var fields = SensorsTexts.Map.keys() as Array<SensorTypes.Enum>;
 
         for (var i = 0; i < fields.size(); i++) {
             var sensorKey = fields[i];
@@ -104,7 +106,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
                 continue;
             }
             
-            var text = SensorsDisplay.getText(sensorKey);
+            var text = SensorsTexts.getText(sensorKey);
 
             if (text == null || (availableKeys != null && availableKeys.indexOf(sensorKey) == -1)) {
                 continue;
@@ -115,7 +117,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
                 :buiderProps => {
                     :identifier => sensorKey as Number,
                     :label => text,
-                    :icon => SensorsDisplay.getIcon(sensorKey, true)
+                    :icon => SensorsIcons.getIcon(sensorKey, true)
                 }
             });
         }
@@ -199,9 +201,9 @@ class CustomMenuDelegate extends WatchUi.Menu2InputDelegate {
 
     function onSelect(item) {
         if (self.clearPrevSensorCache) {
-            var prevValue = SettingsModule.getValue(self.settingKey) as SensorType.Enum;
+            var prevValue = SettingsModule.getValue(self.settingKey) as SensorTypes.Enum;
 
-            ResourcesCache.remove(SensorsDisplay.getIcon(prevValue, true));
+            ResourcesCache.remove(SensorsIcons.getIcon(prevValue, true));
         }
 
         SettingsModule.setValue(self.settingKey, item.getId());
