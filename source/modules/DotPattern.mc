@@ -12,7 +12,7 @@ module DotPattern {
     var PATTERN_HEIGHT = 8;
     var IS_NEW_SDK = Graphics has :createBufferedBitmap;
 
-    function _generateRow(width as Number, color as Number) as BufferedBitmap {
+    function _generateRow(width as Numeric, color as Numeric) as BufferedBitmap {
         var bitmap = createBitmap({
             :width => width,
             :height => PATTERN_HEIGHT,
@@ -35,7 +35,7 @@ module DotPattern {
         return bitmap;
     }
 
-    function _create(width as Number, height as Number, color as Number) as BufferedBitmap {
+    function _create(width as Numeric, height as Numeric, color as Number) as BufferedBitmap {
         var bitmap = createBitmap({
             :width => width,
             :height => height,
@@ -56,7 +56,7 @@ module DotPattern {
         return bitmap;
     }
 
-    function update(key as Keys, width as Number, height as Number, color as Number?) as Void {
+    function update(key as Keys, width as Numeric, height as Numeric, color as Number?) as Void {
         if (!IS_NEW_SDK) {
             return;
         }
@@ -64,7 +64,7 @@ module DotPattern {
         patterns.put(key, _create(width, height, color));
     }
 
-    function get(key as Keys, width as Number, height as Number, color as Number?) as BufferedBitmap {
+    function get(key as Keys, width as Numeric, height as Numeric, color as Number?) as BufferedBitmap {
         if (!IS_NEW_SDK) {
             return _create(width, height, color);
         }

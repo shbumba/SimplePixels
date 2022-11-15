@@ -24,7 +24,7 @@ class InfoBarView extends Components.Box {
         self.updateSettings();
     }
 
-    function onSettingsChanged() {
+    function onSettingsChanged() as Void {
         Components.Box.onSettingsChanged();
 
         self.updateSettings();
@@ -70,11 +70,11 @@ class InfoBarView extends Components.Box {
         var percent = self.calculatePercente(sensorValue, maxValue);
 
         var barHeight = height.toFloat() * (percent / 100);
-        var valueBarShift = height - barHeight.toNumber();
+        var valueBarShift = height - barHeight;
         var pattern = DotPattern.get(DotPattern.INFO_BAR, width, height, self._barColor);
 
         drawContext.drawBitmap(posX, posY, pattern);
         drawContext.setColor(self._barColor, Graphics.COLOR_TRANSPARENT);
-        drawContext.fillRectangle(posX, posY + valueBarShift, width, barHeight.toNumber());
+        drawContext.fillRectangle(posX, posY + valueBarShift, width, barHeight);
     }
 }

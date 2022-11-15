@@ -25,8 +25,8 @@ module Components {
     typedef ElementRenderProps as {
         :item as ItemType,
         :derection as ListItemsDerection.Enum?,
-        :posX as Number,
-        :posY as Number
+        :posX as Numeric,
+        :posY as Numeric
     };
 
     typedef ListProps as BoxProps or
@@ -36,8 +36,8 @@ module Components {
     };
 
     class List extends Box {
-        protected var _itemHeight as Number;
-        protected var _iconSize as Number;
+        protected var _itemHeight as Numeric;
+        protected var _iconSize as Numeric;
 
         function initialize(params as ListProps) {
             Box.initialize(params);
@@ -56,7 +56,7 @@ module Components {
                 return;
             }
 
-            self._itemHeight = drawContext.getFontHeight(self.getFont()).toNumber();
+            self._itemHeight = drawContext.getFontHeight(self.getFont());
         }
 
         private function getJustify(direction as ListItemsDerection.Enum) {
@@ -141,7 +141,7 @@ module Components {
             }
         }
 
-        protected function renderItems(props as ItemsRenderProps) {
+        protected function renderItems(props as ItemsRenderProps) as Void {
             var drawContext = props.get(:drawContext);
             var items = props.get(:items);
             var direction = props.get(:direction);

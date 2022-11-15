@@ -20,11 +20,11 @@ class PhantomTimeView extends Components.TimeView {
         self._timeShift = timeShift != null ? timeShift : 0;
     }
 
-    function updatePattern() {
+    function updatePattern() as Void {
         DotPattern.update(DotPattern.HOURS, self.getWidth(), self.getHeight(), self.backgroundColor);
     }
 
-    function onSettingsChanged() {
+    function onSettingsChanged() as Void {
         Components.TimeView.onSettingsChanged();
 
         self.updatePattern();

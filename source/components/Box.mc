@@ -22,10 +22,10 @@ module Components {
     class Box extends BaseDrawable {
         private var DEBUG_LINE_SIZE = 2;
         private var _font as Symbol?;
-        private var _boxWidth as Number? = null;
-        private var _boxHeight as Number? = null;
-        private var _posY as Number? = null;
-        private var _posX as Number? = null;
+        private var _boxWidth as Numeric? = null;
+        private var _boxHeight as Numeric? = null;
+        private var _posY as Numeric? = null;
+        private var _posX as Numeric? = null;
 
         protected var _debug as Boolean;
 
@@ -42,7 +42,7 @@ module Components {
             self._debug = debug != null ? debug : false;
         }
 
-        private function calcActualBoxSize(params as BoxProps) {
+        private function calcActualBoxSize(params as BoxProps) as Void {
             var deviceSettings = System.getDeviceSettings();
             var boxWidth = params.get(:boxWidth);
             boxWidth = boxWidth != null ? boxWidth : "0";
@@ -79,35 +79,35 @@ module Components {
             return self._posY as Number;
         }
 
-        protected function parseActualSize(position as String, size as Number) as Number {
+        protected function parseActualSize(position as String, size as Number) as Numeric {
             return PositionUtils.parsePosition(position, size);
         }
 
-        private function calcXPoint(xPos as String) as Number {
+        private function calcXPoint(xPos as String) as Numeric {
             var deviceWidth = System.getDeviceSettings().screenWidth;
 
             return self.parseActualSize(xPos, deviceWidth);
         }
 
-        private function calcXShift(xShift as String) as Number {
+        private function calcXShift(xShift as String) as Numeric {
             var deviceWidth = System.getDeviceSettings().screenWidth;
 
             return self.parseActualSize(xShift, deviceWidth);
         }
 
-        private function calcYPoint(yPos as String) as Number {
+        private function calcYPoint(yPos as String) as Numeric {
             var screenHeight = System.getDeviceSettings().screenHeight;
 
             return self.parseActualSize(yPos, screenHeight);
         }
 
-        private function calcYShift(yShift as String) as Number {
+        private function calcYShift(yShift as String) as Numeric {
             var screenHeight = System.getDeviceSettings().screenHeight;
 
             return self.parseActualSize(yShift, screenHeight);
         }
 
-        private function calcHorizontalAlignment(params as BoxProps) as Number {
+        private function calcHorizontalAlignment(params as BoxProps) as Numeric {
             var horizontalAlignment = params.get(:horizontalAlignment);
             horizontalAlignment = horizontalAlignment ? horizontalAlignment : PositionUtils.ALIGN_START;
 
@@ -124,7 +124,7 @@ module Components {
             return position - PositionUtils.calcAlignmentShift(horizontalAlignment, width) + shift;
         }
 
-        private function calcVerticalAlignment(params as BoxProps) as Number {
+        private function calcVerticalAlignment(params as BoxProps) as Numeric {
             var verticalAlignment = params.get(:verticalAlignment);
             verticalAlignment = verticalAlignment ? verticalAlignment : PositionUtils.ALIGN_START;
 
@@ -142,7 +142,7 @@ module Components {
         }
 
         (:debug)
-        private function renderDebugArea(drawContext as Dc) {
+        private function renderDebugArea(drawContext as Dc) as Void {
             var debugPosX = self.getPosX() - self.DEBUG_LINE_SIZE;
             var debugPosY = self.getPosY() - self.DEBUG_LINE_SIZE;
             var debugBoxWidth = self.getWidth() + self.DEBUG_LINE_SIZE * 2;
@@ -158,7 +158,7 @@ module Components {
             drawContext.setClip(self.getPosX(), self.getPosY(), self.getWidth(), self.getHeight());
         }
 
-        protected function onRenderBefore(drawContext as Dc) {
+        protected function onRenderBefore(drawContext as Dc) as Void {
             if (!self.isVisible) {
                 return;
             }
@@ -170,7 +170,7 @@ module Components {
             self.clipRenderArea(drawContext);
         }
 
-        protected function render(drawContext as Dc) {
+        protected function render(drawContext as Dc) as Void {
             // Abstract
         }
 

@@ -3,7 +3,7 @@
         <drawable id="Background" class="BackgroundView"/>
         <drawable id="PrevHours" class="PhantomTimeView">
             <param name="boxWidth">"116"</param>
-            <param name="boxHeight">"93"</param>
+            <param name="boxHeight">"94"</param>
             <param name="xPos">"50%"</param>
             <param name="yPos">"27%"</param>
             <param name="xShift">"-4"</param>
@@ -28,7 +28,7 @@
         </drawable>
         <drawable id="Hours" class="Components.TimeView">
             <param name="boxWidth">"116"</param>
-            <param name="boxHeight">"93"</param>
+            <param name="boxHeight">"94"</param>
             <param name="xPos">"50%"</param>
             <param name="yPos">"50%"</param>
             <param name="xShift">"-4"</param>
@@ -40,11 +40,11 @@
         </drawable>
         <drawable id="NextHours" class="PhantomTimeView">
             <param name="boxWidth">"116"</param>
-            <param name="boxHeight">"93"</param>
+            <param name="boxHeight">"94"</param>
             <param name="xPos">"50%"</param>
             <param name="yPos">"74%"</param>
             <param name="xShift">"-4"</param>
-            <param name="yShift">"0"</param>
+            <param name="yShift">"-2"</param>
             <param name="horizontalAlignment">PositionUtils.ALIGN_END</param>
             <param name="verticalAlignment">PositionUtils.ALIGN_START</param>
             <param name="font">@Rez.Fonts.hours</param>
@@ -63,13 +63,14 @@
             <param name="verticalAlignment">PositionUtils.ALIGN_START</param>
             <param name="font">@Rez.Fonts.data</param>
             <param name="itemHeight">"17"</param>
-            <param name="iconSize">"17"</param>
+            <param name="iconSize">"18"</param>
         </drawable>
         <drawable id="InfoBar" class="InfoBarView">
-            <param name="boxWidth">"8"</param>
-            <param name="boxHeight">"91%"</param>
+            <param name="boxWidth">"7"</param>
+            <param name="boxHeight">"92%"</param>
             <param name="xPos">"50%"</param>
             <param name="yPos">"50%"</param>
+            <param name="xShift">"1"</param>
             <param name="horizontalAlignment">PositionUtils.ALIGN_CENTER</param>
             <param name="verticalAlignment">PositionUtils.ALIGN_CENTER</param>
         </drawable>
@@ -78,7 +79,7 @@
             <param name="boxHeight">"58"</param>
             <param name="xPos">"50%"</param>
             <param name="yPos">"50%"</param>
-            <param name="xShift">"8"</param>
+            <param name="xShift">"9"</param>
             <param name="yShift">"0"</param>
             <param name="horizontalAlignment">PositionUtils.ALIGN_START</param>
             <param name="verticalAlignment">PositionUtils.ALIGN_CENTER</param>
@@ -90,7 +91,8 @@
             <param name="boxHeight">"22"</param>
             <param name="xPos">"82%"</param>
             <param name="yPos">"45%"</param>
-            <param name="xShift">"-1"</param>
+            <param name="xShift">"0"</param>
+            <param name="yShift">"-1"</param>
             <param name="horizontalAlignment">PositionUtils.ALIGN_START</param>
             <param name="verticalAlignment">PositionUtils.ALIGN_END</param>
             <param name="font">@Rez.Fonts.data</param>
@@ -100,7 +102,7 @@
             <param name="boxHeight">"26"</param>
             <param name="xPos">"82%"</param>
             <param name="yPos">"52%"</param>
-            <param name="xShift">"-2"</param>
+            <param name="xShift">"0"</param>
             <param name="yShift">"0"</param>
             <param name="horizontalAlignment">PositionUtils.ALIGN_START</param>
             <param name="verticalAlignment">PositionUtils.ALIGN_START</param>
@@ -114,7 +116,7 @@
             <param name="xShift">"9"</param>
             <param name="yShift">"1"</param>
             <param name="itemHeight">"17"</param>
-            <param name="iconSize">"17"</param>
+            <param name="iconSize">"18"</param>
             <param name="horizontalAlignment">PositionUtils.ALIGN_START</param>
             <param name="verticalAlignment">PositionUtils.ALIGN_END</param>
             <param name="font">@Rez.Fonts.data</param>
@@ -128,7 +130,7 @@
             <param name="xShift">"9"</param>
             <param name="yShift">"0"</param>
             <param name="itemHeight">"17"</param>
-            <param name="iconSize">"17"</param>
+            <param name="iconSize">"18"</param>
             <param name="horizontalAlignment">PositionUtils.ALIGN_START</param>
             <param name="verticalAlignment">PositionUtils.ALIGN_START</param>
             <param name="font">@Rez.Fonts.data</param>

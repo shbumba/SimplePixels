@@ -19,7 +19,7 @@ class CustomColorMenuItem extends WatchUi.CustomMenuItem {
         self._label = params.get(:label);
     }
 
-    function draw(drawContext as Dc) {
+    function draw(drawContext as Dc) as Void {
         var iconWidth = 40;
         var textLeftMargin = 10;
         var font = Graphics.FONT_SMALL;

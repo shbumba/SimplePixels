@@ -7,9 +7,9 @@ module PositionUtils {
         ALIGN_END
     }
 
-    function parsePosition(position as String, size as Number) as Number {
+    function parsePosition(position as String, size as Number) as Numeric {
         var mode = position.find("%") ? "percent" : "regular";
-        var originalPosition = position.toNumber();
+        var originalPosition = position.toFloat();
 
         var result = 0;
 
@@ -17,8 +17,6 @@ module PositionUtils {
             case "percent":
                 result = originalPosition.toFloat() / 100;
                 result = size.toFloat() * result;
-
-                result = result.toNumber();
                 break;
             case "regular":
                 result = originalPosition;
@@ -28,7 +26,7 @@ module PositionUtils {
         return result;
     }
 
-    function calcAlignmentShift(alignment as AlignmentEnum, pointSize as Number) as Number {
+    function calcAlignmentShift(alignment as AlignmentEnum, pointSize as Number) as Numeric {
         var result = 0;
 
         switch (alignment) {
@@ -39,7 +37,7 @@ module PositionUtils {
                 result = pointSize;
                 break;
             case ALIGN_CENTER:
-                result = pointSize / 2;
+                result = pointSize.toFloat() / 2;
                 break;
         }
 

@@ -34,7 +34,7 @@ class SensorsInfoView extends Components.List {
         }
     }
 
-    function onSettingsChanged() {
+    function onSettingsChanged() as Void {
         Components.List.onSettingsChanged();
 
         self.updateSensors();

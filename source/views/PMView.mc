@@ -15,11 +15,11 @@ class PMView extends Components.Box {
         self.update24Hours();
     }
 
-    private function update24Hours() {
+    private function update24Hours() as Void {
         self._is24hour = System.getDeviceSettings().is24Hour;
     }
 
-    function onSettingsChanged() {
+    function onSettingsChanged() as Void {
         Components.Box.onSettingsChanged();
 
         self.update24Hours();

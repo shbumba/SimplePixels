@@ -4,7 +4,7 @@ import SettingsModule.SettingType;
 import SettingsMenuBuilder;
 import SensorsTexts;
 
-function RenderSettingsMenu(onBack, transition as WatchUi.SlideType, selectedSetting as SettingType.Enum?) {
+function RenderSettingsMenu(onBack, transition as WatchUi.SlideType, selectedSetting as SettingType.Enum?) as Void {
     var menu = SettingsMenu();
 
     if (selectedSetting != null) {

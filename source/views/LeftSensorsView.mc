@@ -34,7 +34,7 @@ class LeftSensorsView extends Components.List {
         self._displayIcons = SettingsModule.getValue(SettingType.DISPLAY_STATUS_ICONS) as Boolean;
     }
 
-    function onSettingsChanged() {
+    function onSettingsChanged() as Void {
         Components.List.onSettingsChanged();
 
         self.updateSensorType();

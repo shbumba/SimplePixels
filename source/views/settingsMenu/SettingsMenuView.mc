@@ -12,7 +12,7 @@ class SettingsMenuView extends WatchUi.View {
         self.onSettingsChanged = onSettingsChanged;
     }
 
-    function onLayout(drawContext as Dc) {
+    function onLayout(drawContext as Dc) as Void {
         RenderSettingsMenu(self.method(:onBack), WatchUi.SLIDE_IMMEDIATE, null);
     }
 

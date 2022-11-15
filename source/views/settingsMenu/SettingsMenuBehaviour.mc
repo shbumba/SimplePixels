@@ -199,7 +199,7 @@ class CustomMenuDelegate extends WatchUi.Menu2InputDelegate {
         self.onBackCallback = onBackCallback;
     }
 
-    function onSelect(item) {
+    function onSelect(item) as Void {
         if (self.clearPrevSensorCache) {
             var prevValue = SettingsModule.getValue(self.settingKey) as SensorTypes.Enum;
 
@@ -210,7 +210,7 @@ class CustomMenuDelegate extends WatchUi.Menu2InputDelegate {
         self.onBack();
     }
 
-    function onBack() {
+    function onBack() as Void {
         RenderSettingsMenu(self.onBackCallback, WatchUi.SLIDE_DOWN, self.settingKey);
     }
 }

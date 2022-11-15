@@ -10,7 +10,7 @@ class DrawableMenuTitle extends WatchUi.Drawable {
         self.title = title;
     }
 
-    function draw(drawContext as Dc) {
+    function draw(drawContext as Dc) as Void {
         var posX = drawContext.getWidth() / 2;
         var posY = drawContext.getHeight() / 2;
 

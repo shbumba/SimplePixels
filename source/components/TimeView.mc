@@ -22,8 +22,8 @@ module Components {
         protected var _is24hour as Boolean;
         protected var _textAligment as Graphics.TextJustification;
 
-        private var textPosY as Number? = null;
-        private var textPosX as Number? = null;
+        private var textPosY as Numeric? = null;
+        private var textPosX as Numeric? = null;
 
         function initialize(params as TimeViewProps) {
             Box.initialize(params);
@@ -64,7 +64,7 @@ module Components {
             }
         }
 
-        private function calcTextPosition() {
+        private function calcTextPosition() as Void {
             var posX = self.getPosX();
             var posY = self.getPosY();
             var width = self.getWidth();
@@ -75,11 +75,11 @@ module Components {
                     posX += width;
                     break;
                 case Graphics.TEXT_JUSTIFY_CENTER:
-                    posX += (width * 0.5).toNumber();
-                    posY += (height * 0.5).toNumber();
+                    posX += width * 0.5;
+                    posY += height * 0.5;
                     break;
                 case Graphics.TEXT_JUSTIFY_VCENTER:
-                    posY += (height * 0.5).toNumber();
+                    posY += height * 0.5;
                     break;
             }
 
