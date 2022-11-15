@@ -35,6 +35,8 @@ class InfoBarView extends Components.Box {
             SettingsModule.getValue(SettingType.SEPARATOR_COLOR) as ColorsTypes.Enum
         );
         self._sensorType = SettingsModule.getValue(SettingType.SEPARATOR_INFO) as SensorTypes.Enum;
+
+        DotPattern.update(DotPattern.INFO_BAR, self.getWidth(), self.getHeight(), self._barColor);
     }
 
     private function calculatePercente(curentValue as Number?, maxValue as Number?) as Float or Number {
@@ -60,6 +62,8 @@ class InfoBarView extends Components.Box {
     protected function render(drawContext as Dc) as Void {
         var width = self.getWidth();
         var height = self.getHeight();
+        var posX = self.getPosX();
+        var posY = self.getPosY();
 
         var sensorValue = Services.SensorInfo().getValue(self._sensorType);
         var maxValue = self.getGoal(self._sensorType);
@@ -67,13 +71,10 @@ class InfoBarView extends Components.Box {
 
         var barHeight = height.toFloat() * (percent / 100);
         var valueBarShift = height - barHeight.toNumber();
+        var pattern = DotPattern.get(DotPattern.INFO_BAR, width, height, self._barColor);
 
+        drawContext.drawBitmap(posX, posY, pattern);
         drawContext.setColor(self._barColor, Graphics.COLOR_TRANSPARENT);
-        drawContext.fillRectangle(
-            self.getPosX(),
-            self.getPosY() + valueBarShift,
-            self.getWidth(),
-            barHeight.toNumber()
-        );
+        drawContext.fillRectangle(posX, posY + valueBarShift, width, barHeight.toNumber());
     }
 }
