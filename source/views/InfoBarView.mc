@@ -14,7 +14,7 @@ class InfoBarView extends Component.Box {
         SensorType.BATTERY => SensorType.BATTERY_GOAL,
         SensorType.ACTIVE_MINUTES_WEEK => SensorType.ACTIVE_MINUTES_WEEK_GOAL,
         SensorType.FLOORS => SensorType.FLOORS_CLIMBED_GOAL,
-        SensorType.STEPS => SensorType.STEPS_GOAL,
+        SensorType.STEPS => SensorType.STEPS_GOAL
     };
 
     function initialize(params as Component.BoxProps) {
@@ -30,11 +30,13 @@ class InfoBarView extends Component.Box {
     }
 
     private function updateSettings() as Void {
-        self._barColor = ColorsModule.getColor(SettingsModule.getValue(SettingType.SEPARATOR_COLOR) as ColorsTypes.Enum);
+        self._barColor = ColorsModule.getColor(
+            SettingsModule.getValue(SettingType.SEPARATOR_COLOR) as ColorsTypes.Enum
+        );
         self._sensorType = SettingsModule.getValue(SettingType.SEPARATOR_INFO) as SensorType.Enum;
     }
 
-    private function calculatePercente(curentValue as Number or Null, maxValue as Number or Null) as Float or Number {
+    private function calculatePercente(curentValue as Number?, maxValue as Number?) as Float or Number {
         if (curentValue == 0 || curentValue == null || maxValue == 0 || maxValue == null) {
             return 0;
         }
@@ -44,7 +46,7 @@ class InfoBarView extends Component.Box {
         return result > 100 ? 100 : result;
     }
 
-    private function getGoal(sensorKey as SensorType.Enum) as Number or Null {
+    private function getGoal(sensorKey as SensorType.Enum) as Number? {
         var sensorGoal = self._sensorToGoalMap.get(sensorKey);
 
         if (sensorGoal == null) {
@@ -52,11 +54,9 @@ class InfoBarView extends Component.Box {
         }
 
         return Services.SensorInfo().getValue(sensorGoal);
-    }    
+    }
 
     protected function render(drawContext as Dc) as Void {
-        var posX = self.getPosX();
-        var posY = self.getPosY();
         var width = self.getWidth();
         var height = self.getHeight();
 
@@ -64,13 +64,15 @@ class InfoBarView extends Component.Box {
         var maxValue = self.getGoal(self._sensorType);
         var percent = self.calculatePercente(sensorValue, maxValue);
 
-        var backgroundColor = Graphics.COLOR_TRANSPARENT;
-        var foregroundColor = self._barColor;
-
         var barHeight = height.toFloat() * (percent / 100);
         var valueBarShift = height - barHeight.toNumber();
 
-        drawContext.setColor(foregroundColor, backgroundColor);
-        drawContext.fillRectangle(posX, posY + valueBarShift, width, barHeight.toNumber());
+        drawContext.setColor(self._barColor, Graphics.COLOR_TRANSPARENT);
+        drawContext.fillRectangle(
+            self.getPosX(),
+            self.getPosY() + valueBarShift,
+            self.getWidth(),
+            barHeight.toNumber()
+        );
     }
 }

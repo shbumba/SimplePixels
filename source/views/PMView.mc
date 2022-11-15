@@ -35,12 +35,7 @@ class PMView extends Component.Box {
             return;
         }
 
-        var pm = self.getPM();
-
-        var backgroundColor = Graphics.COLOR_TRANSPARENT;
-        var foregroundColor = self.foregroundColor;
-
-        drawContext.setColor(foregroundColor, backgroundColor);
-        drawContext.drawText(self.getPosX(), self.getPosY(), self.getFont(), pm, Graphics.TEXT_JUSTIFY_LEFT);
+        drawContext.setColor(self.foregroundColor, Graphics.COLOR_TRANSPARENT);
+        drawContext.drawText(self.getPosX(), self.getPosY(), self.getFont(), self.getPM(), Graphics.TEXT_JUSTIFY_LEFT);
     }
 }

@@ -3,7 +3,7 @@ import Toybox.Lang;
 module Services {
     enum ServiceType {
         SENSORS_INFO = 1,
-        WATHERS_STORE,
+        WATHERS_STORE
     }
 
     var _cachedServices = {} as Dictionary<ServiceType, Object>;

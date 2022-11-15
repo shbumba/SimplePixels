@@ -6,9 +6,7 @@ import SettingsModule;
 
 class DisplaySecondsWatcher extends WatcherModule.Watcher {
     public static var key as String = "DisplaySecondsWatcher";
-    public var scope as Array<Scope> = [
-        WatcherModule.ON_SETTINGS_CHANGED
-    ] as Array<Scope>;
+    public var scope as Array<Scope> = [WatcherModule.ON_SETTINGS_CHANGED] as Array<Scope>;
 
     private var _mainView as WatchUi.View;
 

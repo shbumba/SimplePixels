@@ -1,54 +1,69 @@
-
 import Toybox.Lang;
 import Toybox.Graphics;
 
 module DotPattern {
     var pattern as BufferedBitmap? = null;
     var PATTERN_SIZE = 2;
+    var PATTERN_HEIGHT = 8;
+    var IS_NEW_SDK = Graphics has :createBufferedBitmap;
 
     function _generateRow(width as Number, color as Number) as BufferedBitmap {
         var bitmap = createBitmap({
             :width => width,
-            :height => PATTERN_SIZE
+            :height => PATTERN_HEIGHT,
+            :colorDepth => 8
         });
         var dc = bitmap.getDc();
 
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);
 
-        for (var i = 1; i <= width; i++) {
-            var yPos = i % 2 == 0 ? 1 : 0;
+        for (var posX = 0; posX <= width; posX++) {
+            var shift = (posX + 1) % 2 == 0 ? 1 : 0;
 
-            dc.drawPoint(i, yPos);
+            for (var posY = 0; posY <= PATTERN_HEIGHT; posY += PATTERN_SIZE) {
+                dc.drawPoint(posX, posY + shift);
+            }
         }
 
         return bitmap;
     }
 
-    function _create(width as Number, height as Number, color as Number?) as BufferedBitmap {
+    function _create(width as Number, height as Number, color as Number) as BufferedBitmap {
         var bitmap = createBitmap({
             :width => width,
-            :height => height
+            :height => height,
+            :colorDepth => 8
         });
-
-        color = color != null ? color : Graphics.COLOR_TRANSPARENT;
-
-        var xPos = 0;
-        var yPos = 0;
-        var rows = height / PATTERN_SIZE;
 
         var rowPattern = self._generateRow(width, color);
         var dc = bitmap.getDc();
 
-        for (var i = 1; i <= rows; i++) {
-            var yShift = i == 1 ? yPos : yPos + PATTERN_SIZE * (i - 1);
+        var rows = Toybox.Math.ceil(height / PATTERN_HEIGHT);
 
-            dc.drawBitmap(xPos, yShift, rowPattern);
+        for (var i = 0; i <= rows; i++) {
+            var yShift = PATTERN_HEIGHT * i;
+
+            dc.drawBitmap(0, yShift, rowPattern);
         }
 
         return bitmap;
     }
 
     function update(width as Number, height as Number, color as Number?) as Void {
+        if (!IS_NEW_SDK) {
+            return;
+        }
+
         pattern = _create(width, height, color);
+    }
+
+    function get(width as Number, height as Number, color as Number?) as BufferedBitmap {
+        if (!IS_NEW_SDK) {
+            return _create(width, height, color);
+        } else if (pattern == null) {
+            update(width, height, color);
+        }
+
+        return pattern as BufferedBitmap;
     }
 }

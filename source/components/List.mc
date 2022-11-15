@@ -13,7 +13,7 @@ module Component {
     typedef ItemType as {
         :text as String?,
         :icon as FontResource?,
-        :icons as Array<FontResource>?,
+        :icons as Array<FontResource>?
     };
 
     typedef ItemsRenderProps as {
@@ -26,10 +26,11 @@ module Component {
         :item as ItemType,
         :derection as ListItemsDerection.Enum?,
         :posX as Number,
-        :posY as Number,
+        :posY as Number
     };
 
-    typedef ListProps as BoxProps | {
+    typedef ListProps as BoxProps or
+        {
         :itemHeight as String?,
         :iconSize as String?
     };
@@ -125,14 +126,14 @@ module Component {
                 var iconXPos = posX;
 
                 if (offset > 0) {
-                    switch(iconJustify) {
+                    switch (iconJustify) {
                         case Graphics.TEXT_JUSTIFY_LEFT:
                             iconXPos += offset;
-                        break;
+                            break;
 
                         case Graphics.TEXT_JUSTIFY_RIGHT:
                             iconXPos -= offset;
-                        break;
+                            break;
                     }
                 }
 
@@ -146,22 +147,21 @@ module Component {
             var direction = props.get(:direction);
             var posX = self.getPosX();
             var posY = self.getPosY();
-            var width = self.getWidth();
             direction = direction != null ? direction : ListItemsDerection.LEFT;
 
             if (direction == ListItemsDerection.RIGHT) {
-                posX = posX + width;
+                posX = posX + self.getWidth();
             }
 
             for (var i = 0; i < items.size(); i++) {
                 var item = items[i];
-                var itemYPos = i > 0 ? posY + (self._itemHeight * i) : posY;
+                var itemYPos = i > 0 ? posY + self._itemHeight * i : posY;
 
                 var renderProps = {
                     :item => item,
                     :direction => direction,
                     :posX => posX,
-                    :posY => itemYPos,
+                    :posY => itemYPos
                 };
 
                 self.renderText(renderProps, drawContext);

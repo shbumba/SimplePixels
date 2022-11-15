@@ -4,7 +4,7 @@ import Toybox.WatchUi;
 import SettingsModule.SettingType;
 
 class SettingsMenuView extends WatchUi.View {
-    private var onSettingsChanged as Method or Null;
+    private var onSettingsChanged as Method?;
 
     function initialize(onSettingsChanged as Method) {
         View.initialize();

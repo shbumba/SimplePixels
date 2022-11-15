@@ -15,17 +15,17 @@ module Component {
         :horizontalAlignment as PositionUtils.AlignmentEnum?,
         :verticalAlignment as PositionUtils.AlignmentEnum?,
         :font as Symbol?,
-        :debug as Boolean?,
+        :debug as Boolean?
     };
 
     class Box extends BaseDrawable {
         private var DEBUG_LINE_SIZE = 2;
-        private var _font as Symbol or Null;
-        private var _boxWidth as Number or Null = null;
-        private var _boxHeight as Number or Null = null;
-        private var _posY as Number or Null = null;
-        private var _posX as Number or Null = null;
-        
+        private var _font as Symbol?;
+        private var _boxWidth as Number? = null;
+        private var _boxHeight as Number? = null;
+        private var _posY as Number? = null;
+        private var _posX as Number? = null;
+
         protected var _debug as Boolean;
 
         function initialize(params as BoxProps) {
@@ -33,7 +33,7 @@ module Component {
             self.calcPosition(params);
 
             BaseDrawable.initialize(params);
-            
+
             var font = params.get(:font);
             self._font = font != null ? font : null;
 
@@ -96,7 +96,7 @@ module Component {
 
         private function calcYPoint(yPos as String) as Number {
             var screenHeight = System.getDeviceSettings().screenHeight;
-            
+
             return self.parseActualSize(yPos, screenHeight);
         }
 
@@ -144,14 +144,11 @@ module Component {
         private function renderDebugArea(drawContext as Dc) {
             var debugPosX = self.getPosX() - self.DEBUG_LINE_SIZE;
             var debugPosY = self.getPosY() - self.DEBUG_LINE_SIZE;
-            var debugBoxWidth = self.getWidth() + (self.DEBUG_LINE_SIZE * 2);
-            var debugBoxHeight = self.getHeight() + (self.DEBUG_LINE_SIZE * 2);
+            var debugBoxWidth = self.getWidth() + self.DEBUG_LINE_SIZE * 2;
+            var debugBoxHeight = self.getHeight() + self.DEBUG_LINE_SIZE * 2;
 
             drawContext.setClip(debugPosX, debugPosY, debugBoxWidth, debugBoxHeight);
-            drawContext.setColor(
-                Graphics.COLOR_RED,
-                Graphics.COLOR_GREEN
-            );
+            drawContext.setColor(Graphics.COLOR_RED, Graphics.COLOR_GREEN);
             drawContext.setPenWidth(self.DEBUG_LINE_SIZE);
             drawContext.fillRectangle(debugPosX, debugPosY, debugBoxWidth, debugBoxHeight);
         }
@@ -165,7 +162,7 @@ module Component {
                 return;
             }
 
-            if(drawContext has :setAntiAlias) {
+            if (drawContext has :setAntiAlias) {
                 drawContext.setAntiAlias(true);
             }
 

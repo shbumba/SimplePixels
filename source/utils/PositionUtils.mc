@@ -10,19 +10,19 @@ module PositionUtils {
     function parsePosition(position as String, size as Number) as Number {
         var mode = position.find("%") ? "percent" : "regular";
         var originalPosition = position.toNumber();
-        
+
         var result = 0;
 
-        switch(mode) {
+        switch (mode) {
             case "percent":
-                result = (originalPosition.toFloat() / 100);
+                result = originalPosition.toFloat() / 100;
                 result = size.toFloat() * result;
 
                 result = result.toNumber();
-            break;
+                break;
             case "regular":
                 result = originalPosition;
-            break;
+                break;
         }
 
         return result;
@@ -31,16 +31,16 @@ module PositionUtils {
     function calcAlignmentShift(alignment as AlignmentEnum, pointSize as Number) as Number {
         var result = 0;
 
-        switch(alignment) {
+        switch (alignment) {
             case ALIGN_START:
                 result = 0;
-            break;
+                break;
             case ALIGN_END:
                 result = pointSize;
-            break;
+                break;
             case ALIGN_CENTER:
                 result = pointSize / 2;
-            break;
+                break;
         }
 
         return result;

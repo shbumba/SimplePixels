@@ -9,7 +9,8 @@ class DateView extends Component.Box {
         Component.Box.initialize(params);
     }
 
-    protected function getDateMonth() as Array<String> { // [dayOfWeek, dayMonth]
+    protected function getDateMonth() as Array<String> {
+        // [dayOfWeek, dayMonth]
         var currentDate = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
 
         var month = currentDate.month;
@@ -26,26 +27,11 @@ class DateView extends Component.Box {
 
         var dateObj = self.getDateMonth();
 
-        var backgroundColor = Graphics.COLOR_TRANSPARENT;
-        var infoColor = self.infoColor;
-
         var font = self.getFont();
         var fontHeight = drawContext.getFontHeight(font);
 
-        drawContext.setColor(infoColor, backgroundColor);
-        drawContext.drawText(
-            posX + width,
-            posY,
-            font,
-            dateObj[0],
-            Graphics.TEXT_JUSTIFY_RIGHT
-        );
-        drawContext.drawText(
-            posX + width,
-            posY + fontHeight,
-            font,
-            dateObj[1],
-            Graphics.TEXT_JUSTIFY_RIGHT
-        );
+        drawContext.setColor(self.infoColor, Graphics.COLOR_TRANSPARENT);
+        drawContext.drawText(posX + width, posY, font, dateObj[0], Graphics.TEXT_JUSTIFY_RIGHT);
+        drawContext.drawText(posX + width, posY + fontHeight, font, dateObj[1], Graphics.TEXT_JUSTIFY_RIGHT);
     }
 }

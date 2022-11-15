@@ -10,7 +10,7 @@ module ResourcesCache {
             resource = Toybox.WatchUi.loadResource(resourceKey);
             _cache.put(resourceKey, resource);
         }
-        
+
         return resource;
     }
 

@@ -3,7 +3,7 @@ import Toybox.Graphics;
 import Toybox.WatchUi;
 
 class DrawableMenuTitle extends WatchUi.Drawable {
-    private var title;
+    private var title as String;
 
     function initialize(title) {
         Drawable.initialize({});

@@ -10,30 +10,29 @@ class SecondsView extends Component.Box {
         Component.Box.initialize(params);
     }
 
-    protected function getSeconds() as Number {
-        var seconds = System.getClockTime().sec;
-
-        return seconds;
+    protected function getSeconds() as String {
+        return System.getClockTime().sec.format("%02d");
     }
 
     function setViewProps(displaySecondsType as DisplaySecondsType.Enum, isAwake as Boolean) as Void {
         switch (displaySecondsType) {
             case DisplaySecondsType.NEVER:
                 self.setVisible(false);
-            break;
+                break;
             case DisplaySecondsType.ON_GESTURE:
                 self.setVisible(isAwake);
-            break;
+                break;
         }
     }
 
     protected function render(drawContext as Dc) as Void {
-        var seconds = self.getSeconds().format("%02d");
-
-        var backgroundColor = self.backgroundColor;
-        var foregroundColor = self.foregroundColor;
-
-        drawContext.setColor(foregroundColor, backgroundColor);
-        drawContext.drawText(self.getPosX(), self.getPosY(), self.getFont(), seconds, Graphics.TEXT_JUSTIFY_LEFT);
+        drawContext.setColor(self.foregroundColor, self.backgroundColor);
+        drawContext.drawText(
+            self.getPosX(),
+            self.getPosY(),
+            self.getFont(),
+            self.getSeconds(),
+            Graphics.TEXT_JUSTIFY_LEFT
+        );
     }
 }

@@ -25,7 +25,7 @@ class PhantomTimeView extends Component.TimeView {
     function onSettingsChanged() {
         Component.TimeView.onSettingsChanged();
 
-        updatePattern();
+        self.updatePattern();
     }
 
     private function shiftHours(time as Number) as Number {
@@ -69,8 +69,10 @@ class PhantomTimeView extends Component.TimeView {
 
         self.renderTime(time, drawContext);
 
-        if (DotPattern.pattern != null) {
-            drawContext.drawBitmap(self.getPosX(), self.getPosY(), DotPattern.pattern);
-        }
+        drawContext.drawBitmap(
+            self.getPosX(),
+            self.getPosY(),
+            DotPattern.get(self.getWidth(), self.getHeight(), self.backgroundColor)
+        );
     }
 }

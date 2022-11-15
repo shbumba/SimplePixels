@@ -7,11 +7,8 @@ import SettingsModule;
 
 class AwakeWatcher extends WatcherModule.Watcher {
     public static var key as String = "AwakeWatcher";
-    public var scope as Array<Scope> = [
-        WatcherModule.ON_UPDATE,
-        WatcherModule.ON_PARTIAL_UPDATE,
-        WatcherModule.ON_NIGHT_MODE_CHANGED,
-    ] as Array<Scope>;
+    public var scope as Array<Scope> =
+        [WatcherModule.ON_UPDATE, WatcherModule.ON_PARTIAL_UPDATE, WatcherModule.ON_NIGHT_MODE_CHANGED] as Array<Scope>;
 
     private var _isAwake as Boolean;
     private var _mainView as WatchUi.View;

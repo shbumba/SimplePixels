@@ -6,7 +6,8 @@ import SettingsModule;
 import SettingsModule.SettingType;
 import SensorInfoModule.SensorType;
 
-typedef SensorsInfoProps as Component.ListProps | {
+typedef SensorsInfoProps as Component.ListProps or
+    {
     :fields as Array<SettingType.Enum>?
 };
 
@@ -40,8 +41,7 @@ class SensorsInfoView extends Component.List {
 
     private function getSensorItem(sensorType as SensorType.Enum) as Component.ItemType {
         var sensorService = Services.SensorInfo();
-        
-        var text = sensorService.transformValue(sensorType);
+
         var icon = sensorService.getIcon(sensorType);
 
         if (sensorType == SensorType.BATTERY_IN_DAYS) {
@@ -49,8 +49,8 @@ class SensorsInfoView extends Component.List {
         }
 
         return {
-            :text => text,
-            :icon => icon,
+            :text => sensorService.transformValue(sensorType),
+            :icon => icon
         };
     }
 
@@ -71,15 +71,12 @@ class SensorsInfoView extends Component.List {
             }
         }
 
-        var backgroundColor = Graphics.COLOR_TRANSPARENT;
-        var infoColor = self.infoColor;
+        drawContext.setColor(self.infoColor, Graphics.COLOR_TRANSPARENT);
 
-        drawContext.setColor(infoColor, backgroundColor);
-        
         self.renderItems({
             :items => items,
             :direction => Component.ListItemsDerection.LEFT,
-            :drawContext => drawContext,
+            :drawContext => drawContext
         });
     }
 }

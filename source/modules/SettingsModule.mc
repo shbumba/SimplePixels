@@ -24,7 +24,7 @@ module SettingsModule {
     module DisplaySecondsType {
         enum Enum {
             NEVER = 0,
-            ON_GESTURE = 1,
+            ON_GESTURE = 1
         }
     }
 

@@ -5,7 +5,7 @@ import SettingsModule;
 import SettingsModule.SettingType;
 
 module Component {
-    class BaseDrawable extends WatchUi.Drawable {        
+    class BaseDrawable extends WatchUi.Drawable {
         protected var backgroundColor as Number = 0;
         protected var foregroundColor as Number = 0;
         protected var infoColor as Number = 0;

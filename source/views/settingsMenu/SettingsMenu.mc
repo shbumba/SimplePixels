@@ -42,7 +42,7 @@ function SettingsMenu() as WatchUi.Menu2 or WatchUi.CustomMenu {
                 :buider => SettingsMenuBuilder.ITEM,
                 :buiderProps => {
                     :identifier => SettingType.INFO_COLOR,
-                    :label => Rez.Strings.InforColorTitle,
+                    :label => Rez.Strings.InforColorTitle
                 }
             },
             // Main

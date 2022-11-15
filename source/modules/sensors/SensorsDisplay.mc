@@ -7,7 +7,7 @@ import SensorInfoModule.SensorType;
 import SensorsGetter;
 
 module SensorsDisplay {
-    typedef SensorDisplayItem as Array; // [transform as Method, title as Resource, icon as Method]
+    typedef SensorDisplayItem as Array; // [transform as Method, title as Resource or Null, icon as Method]
 
     var SensorsDictionary = {
         SensorType.NONE => [:transformToEmpty, Rez.Strings.None, null],
@@ -48,10 +48,10 @@ module SensorsDisplay {
         SensorType.MESSAGES => [:transformFullNumbers, Rez.Strings.Messages, Rez.Fonts.messages_icon],
         SensorType.ALARM_COUNT => [:transformFullNumbers, Rez.Strings.AlarmCount, Rez.Fonts.alarm_icon],
         SensorType.SOLAR_INTENSITY => [:transformPercent, Rez.Strings.SolarIntensity, Rez.Fonts.sun_icon],
-        SensorType.IS_CONNECTED => [:transformToEmpty, Rez.Strings.IsConnected, :isConnectedIcon],
-        SensorType.IS_DO_NOT_DISTURB => [:transformToEmpty, Rez.Strings.IsDoNotDisturb, :isDoNotDisturbIcon],
-        SensorType.IS_NIGHT_MODE_ENABLED => [:transformToEmpty, Rez.Strings.IsNightMode, :isNightModeIcon],
-        SensorType.IS_SLEEP_TIME => [:transformToEmpty, Rez.Strings.IsSleepTime, :isNightModeIcon],
+        SensorType.IS_CONNECTED => [:transformToEmpty, null, :isConnectedIcon],
+        SensorType.IS_DO_NOT_DISTURB => [:transformToEmpty, null, :isDoNotDisturbIcon],
+        SensorType.IS_NIGHT_MODE_ENABLED => [:transformToEmpty, null, :isNightModeIcon],
+        SensorType.IS_SLEEP_TIME => [:transformToEmpty, null, :isNightModeIcon],
         SensorType.MEMORY_USED => [:transformBytesToKb, Rez.Strings.Memory, Rez.Fonts.memory_icon]
     };
 
@@ -227,15 +227,15 @@ module SensorsDisplay {
         return method.invoke(value) as String;
     }
 
-    function getText(sensorType as SensorType.Enum) as Symbol {
-        return getItem(sensorType)[1] as Symbol;
+    function getText(sensorType as SensorType.Enum) as Symbol? {
+        return getItem(sensorType)[1];
     }
 
     function getIcon(sensorType as SensorType.Enum, value as SersorInfoGetterValue) as Symbol? {
         var iconFn = getItem(sensorType)[2];
 
         if (iconFn instanceof Lang.Number || iconFn == null) {
-            return iconFn as Symbol or Null;
+            return iconFn as Symbol?;
         }
 
         var method = new Lang.Method(Icons, iconFn);

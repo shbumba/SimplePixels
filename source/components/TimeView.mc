@@ -22,8 +22,8 @@ module Component {
         protected var _is24hour as Boolean;
         protected var _textAligment as Graphics.TextJustification;
 
-        private var textPosY as Number or Null = null;
-        private var textPosX as Number or Null = null;
+        private var textPosY as Number? = null;
+        private var textPosX as Number? = null;
 
         function initialize(params as TimeViewProps) {
             Box.initialize(params);
@@ -88,10 +88,7 @@ module Component {
         }
 
         protected function renderTime(time as Number, drawContext as Dc) as Void {
-            var backgroundColor = Graphics.COLOR_TRANSPARENT;
-            var foregroundColor = self.foregroundColor;
-
-            drawContext.setColor(foregroundColor, backgroundColor);
+            drawContext.setColor(self.foregroundColor, Graphics.COLOR_TRANSPARENT);
             drawContext.drawText(self.textPosX, self.textPosY, self.getFont(), time.format("%02d"), self._textAligment);
         }
 

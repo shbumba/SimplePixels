@@ -2,13 +2,6 @@
     <string id="AppName">Simple Pixels</string>
     <string id="SettingsMenu">Settings</string>
 
-    <string id="GroupColor">Colors</string>
-    <string id="GroupMain">Main</string>
-    <string id="GroupSeparator">Separator</string>
-    <string id="GroupLeftInfo">Left Sensor Info</string>
-    <string id="GroupTopFields">Top Sensor Fields</string>
-    <string id="GroupBottomFields">Bottom Sensor Fields</string>
-
     <string id="BackgroundColorTitle">Background color</string>
     <string id="ForegroundColorTitle">Foreground Color</string>
     <string id="InforColorTitle">Information color</string>
@@ -55,7 +48,6 @@
     <string id="Calories">Calories</string>
     <string id="Battery">Battery %</string>
     <string id="BatteryInDays">Battery d/left</string>
-    <string id="IsConnected">Is connected</string>
     <string id="HeartRate">Heart rate</string>
     <string id="Floors">Floors</string>
     <string id="Altitude">Altitude</string>
@@ -72,9 +64,6 @@
     <string id="TimeToRecovery">Recovery time</string>
     <string id="RespirationRate">Respiration rate</string>
     <string id="MetersClimbed">Meters climbed</string>
-    <string id="IsNightMode">Is night mode</string>
-    <string id="IsSleepTime">Is sleep time</string>
-    <string id="IsDoNotDisturb">Is DnD</string>
     <string id="Distance">Distance</string>
     <string id="ActiveMinutesDay">Active m/day</string>
     <string id="BodyBattery">Body battery</string>

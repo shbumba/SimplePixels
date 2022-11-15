@@ -6,7 +6,7 @@ module WatcherModule {
         ON_UPDATE,
         ON_PARTIAL_UPDATE,
         ON_SETTINGS_CHANGED,
-        ON_NIGHT_MODE_CHANGED,
+        ON_NIGHT_MODE_CHANGED
     }
 
     typedef InstanceKey as String;
@@ -33,7 +33,8 @@ module WatcherModule {
 
     class Store {
         private var _wathers as Array<Watcher> = [] as Array<Watcher>;
-        private var _cachedResults as Dictionary<InstanceKey, InstanceGetter> = {} as Dictionary<InstanceKey, InstanceGetter>;
+        private var _cachedResults as Dictionary<InstanceKey, InstanceGetter> =
+            {} as Dictionary<InstanceKey, InstanceGetter>;
 
         function setup(wathers as Array<Watcher>) as Void {
             self._wathers = wathers;
@@ -61,7 +62,8 @@ module WatcherModule {
             }
         }
 
-        private function processInstance(instance as Watcher, isInitial as Boolean) as Array or Null { // [value, prevValue]
+        private function processInstance(instance as Watcher, isInitial as Boolean) as Array? {
+            // [value, prevValue]
             var prevValue = self._cachedResults.get(instance.key);
             var currentValue = instance.get();
 

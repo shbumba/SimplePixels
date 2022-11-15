@@ -9,16 +9,15 @@ import SettingsModule.SettingType;
 class LeftSensorsView extends Component.List {
     private var _sensorType as SensorType.Enum = SensorType.NONE;
     private var _displayIcons as Boolean = false;
-    private var sleepSensors as Array<SensorType.Enum> = [
-        SensorType.IS_NIGHT_MODE_ENABLED,
-        SensorType.IS_SLEEP_TIME,
-    ] as Array<SensorType.Enum>;
-    private var iconSensors as Array<SensorType.Enum> = [
-        SensorType.IS_CONNECTED,
-        SensorType.IS_DO_NOT_DISTURB,
-        SensorType.IS_SLEEP_TIME,
-        SensorType.IS_NIGHT_MODE_ENABLED,
-    ] as Array<SensorType.Enum>;
+    private var sleepSensors as Array<SensorType.Enum> =
+        [SensorType.IS_NIGHT_MODE_ENABLED, SensorType.IS_SLEEP_TIME] as Array<SensorType.Enum>;
+    private var iconSensors as Array<SensorType.Enum> =
+        [
+            SensorType.IS_CONNECTED,
+            SensorType.IS_DO_NOT_DISTURB,
+            SensorType.IS_SLEEP_TIME,
+            SensorType.IS_NIGHT_MODE_ENABLED
+        ] as Array<SensorType.Enum>;
 
     function initialize(params as Component.ListProps) {
         List.initialize(params);
@@ -43,8 +42,7 @@ class LeftSensorsView extends Component.List {
 
     private function getSensorItem(sensorType as SensorType.Enum) as Component.ItemType {
         var sensorService = Services.SensorInfo();
-        
-        var text = sensorService.transformValue(sensorType);
+
         var icon = sensorService.getIcon(sensorType);
 
         if (sensorType == SensorType.BATTERY_IN_DAYS) {
@@ -52,7 +50,7 @@ class LeftSensorsView extends Component.List {
         }
 
         return {
-            :text => text,
+            :text => sensorService.transformValue(sensorType),
             :icon => icon
         };
     }
@@ -82,7 +80,7 @@ class LeftSensorsView extends Component.List {
         }
 
         return {
-            :icons => icons,
+            :icons => icons
         };
     }
 
@@ -97,15 +95,12 @@ class LeftSensorsView extends Component.List {
             items.add(self.getIconsItem());
         }
 
-        var backgroundColor = Graphics.COLOR_TRANSPARENT;
-        var infoColor = self.infoColor;
+        drawContext.setColor(self.infoColor, Graphics.COLOR_TRANSPARENT);
 
-        drawContext.setColor(infoColor, backgroundColor);
-        
         self.renderItems({
             :items => items,
             :direction => Component.ListItemsDerection.RIGHT,
-            :drawContext => drawContext,
+            :drawContext => drawContext
         });
     }
 }

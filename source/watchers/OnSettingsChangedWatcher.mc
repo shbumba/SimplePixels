@@ -4,9 +4,7 @@ import WatcherModule;
 
 class OnSettingsChangedWatcher extends WatcherModule.Watcher {
     public static var key as String = "OnSettingsChangedWatcher";
-    public var scope as Array<Scope> = [
-        WatcherModule.ON_SETTINGS_CHANGED
-    ] as Array<Scope>;
+    public var scope as Array<Scope> = [WatcherModule.ON_SETTINGS_CHANGED] as Array<Scope>;
 
     private var _mainView as WatchUi.View;
 
