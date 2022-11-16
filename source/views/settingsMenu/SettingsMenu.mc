@@ -8,7 +8,7 @@ function RenderSettingsMenu(onBack, transition as WatchUi.SlideType, selectedSet
     var menu = SettingsMenu();
 
     if (selectedSetting != null) {
-        menu.setFocus(menu.findItemById(selectedSetting));
+        menu.setFocus(menu.findItemById(selectedSetting as Object));
     }
 
     WatchUi.switchToView(menu, new SettingsMenuBehaviour(onBack as Method), transition);

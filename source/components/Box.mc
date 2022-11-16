@@ -109,7 +109,7 @@ module Components {
 
         private function calcHorizontalAlignment(params as BoxProps) as Numeric {
             var horizontalAlignment = params.get(:horizontalAlignment);
-            horizontalAlignment = horizontalAlignment ? horizontalAlignment : PositionUtils.ALIGN_START;
+            horizontalAlignment = horizontalAlignment != null ? horizontalAlignment : PositionUtils.ALIGN_START;
 
             var xPos = params.get(:xPos);
             xPos = xPos != null ? xPos : "0";
@@ -126,7 +126,7 @@ module Components {
 
         private function calcVerticalAlignment(params as BoxProps) as Numeric {
             var verticalAlignment = params.get(:verticalAlignment);
-            verticalAlignment = verticalAlignment ? verticalAlignment : PositionUtils.ALIGN_START;
+            verticalAlignment = verticalAlignment != null ? verticalAlignment : PositionUtils.ALIGN_START;
 
             var yPos = params.get(:yPos);
             yPos = yPos != null ? yPos : "0";

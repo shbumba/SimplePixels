@@ -3,11 +3,11 @@ import Toybox.Graphics;
 
 module DotPattern {
     enum Keys {
-        HOURS = 1,
+        HOURS = 2,
         INFO_BAR
     }
 
-    var patterns as Dictionary<Keys, BufferedBitmap> = {};
+    var patterns = {} as Dictionary<Keys, BufferedBitmap>;
     var PATTERN_SIZE = 2;
     var PATTERN_HEIGHT = 8;
     var IS_NEW_SDK = Graphics has :createBufferedBitmap;
@@ -15,11 +15,11 @@ module DotPattern {
     function _generateRow(width as Numeric, color as Numeric) as BufferedBitmap {
         var bitmap = createBitmap({
             :width => width,
-            :height => PATTERN_HEIGHT,
-            :colorDepth => 8
+            :height => PATTERN_HEIGHT
         });
         var dc = bitmap.getDc();
 
+        dc.clear();
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);
 
         var shiftY = 0;
@@ -38,12 +38,13 @@ module DotPattern {
     function _create(width as Numeric, height as Numeric, color as Number) as BufferedBitmap {
         var bitmap = createBitmap({
             :width => width,
-            :height => height,
-            :colorDepth => 8
+            :height => height
         });
 
         var rowPattern = self._generateRow(width, color);
         var dc = bitmap.getDc();
+        
+        dc.clear();
 
         var rows = Toybox.Math.ceil(height / PATTERN_HEIGHT);
 
@@ -68,7 +69,7 @@ module DotPattern {
         if (!IS_NEW_SDK) {
             return _create(width, height, color);
         }
-        
+
         if (!patterns.hasKey(key)) {
             update(key, width, height, color);
         }
