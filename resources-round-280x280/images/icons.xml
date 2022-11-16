@@ -1,0 +1,29 @@
+<resources>
+    <font id="activity_icon" filename="../../resources-round-260x260/images/icons/activity.fnt" antialias="true"/>
+    <font id="alarm_icon" filename="../../resources-round-260x260/images/icons/alarm.fnt" antialias="true"/>
+    <font id="altitude_icon" filename="../../resources-round-260x260/images/icons/altitude.fnt" antialias="true"/>
+    <font id="battery_0_icon" filename="../../resources-round-260x260/images/icons/battery_0.fnt" antialias="true"/>
+    <font id="battery_25_icon" filename="../../resources-round-260x260/images/icons/battery_25.fnt" antialias="true"/>
+    <font id="battery_50_icon" filename="../../resources-round-260x260/images/icons/battery_50.fnt" antialias="true"/>
+    <font id="battery_75_icon" filename="../../resources-round-260x260/images/icons/battery_75.fnt" antialias="true"/>
+    <font id="battery_100_icon" filename="../../resources-round-260x260/images/icons/battery_100.fnt" antialias="true"/>
+    <font id="calories_icon" filename="../../resources-round-260x260/images/icons/calories.fnt" antialias="true"/>
+    <font id="connection_icon" filename="../../resources-round-260x260/images/icons/connection.fnt" antialias="true"/>
+    <font id="distance_icon" filename="../../resources-round-260x260/images/icons/distance.fnt" antialias="true"/>
+    <font id="dnd_icon" filename="../../resources-round-260x260/images/icons/do-not-disturb.fnt" antialias="true"/>
+    <font id="energy_icon" filename="../../resources-round-260x260/images/icons/energy.fnt" antialias="true"/>
+    <font id="floors_icon" filename="../../resources-round-260x260/images/icons/floors.fnt" antialias="true"/>
+    <font id="heart_icon" filename="../../resources-round-260x260/images/icons/heart.fnt" antialias="true"/>
+    <font id="memory_icon" filename="../../resources-round-260x260/images/icons/memory.fnt" antialias="true"/>
+    <font id="messages_icon" filename="../../resources-round-260x260/images/icons/messages.fnt" antialias="true"/>
+    <font id="oxygen_icon" filename="../../resources-round-260x260/images/icons/oxygen.fnt" antialias="true"/>
+    <font id="preasure_icon" filename="../../resources-round-260x260/images/icons/preasure.fnt" antialias="true"/>
+    <font id="recovery_icon" filename="../../resources-round-260x260/images/icons/recovery.fnt" antialias="true"/>
+    <font id="sleep_icon" filename="../../resources-round-260x260/images/icons/sleep.fnt" antialias="true"/>
+    <font id="steps_icon" filename="../../resources-round-260x260/images/icons/steps.fnt" antialias="true"/>
+    <font id="stress_icon" filename="../../resources-round-260x260/images/icons/stress.fnt" antialias="true"/>
+    <font id="sun_icon" filename="../../resources-round-260x260/images/icons/sun.fnt" antialias="true"/>
+    <font id="sunrise_icon" filename="../../resources-round-260x260/images/icons/sunrise.fnt" antialias="true"/>
+    <font id="sunset_icon" filename="../../resources-round-260x260/images/icons/sunset.fnt" antialias="true"/>
+    <font id="weather_icon" filename="../../resources-round-260x260/images/icons/weather.fnt" antialias="true"/>
+</resources>
