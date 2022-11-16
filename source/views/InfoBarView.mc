@@ -68,12 +68,16 @@ class InfoBarView extends Components.Box {
         var sensorValue = Services.SensorInfo().getValue(self._sensorType);
         var maxValue = self.getGoal(self._sensorType);
         var percent = self.calculatePercente(sensorValue, maxValue);
+        var isCompleted = percent.toNumber() == 100;
 
         var barHeight = height.toFloat() * (percent / 100);
         var valueBarShift = height - barHeight;
-        var pattern = DotPattern.get(DotPattern.INFO_BAR, width, height, self._barColor);
+        
+        if (!isCompleted) {
+            var pattern = DotPattern.get(DotPattern.INFO_BAR, width, height, self._barColor);
+            drawContext.drawBitmap(posX, posY, pattern);
+        }
 
-        drawContext.drawBitmap(posX, posY, pattern);
         drawContext.setColor(self._barColor, Graphics.COLOR_TRANSPARENT);
         drawContext.fillRectangle(posX, posY + valueBarShift, width, barHeight);
     }
