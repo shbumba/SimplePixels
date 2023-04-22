@@ -17,7 +17,8 @@ module SettingsModule {
             BOTTOM_SENSOR_3 = "BottomSensor3",
             LEFT_SENSOR = "LeftSensor",
             DISPLAY_STATUS_ICONS = "DisplayStatusIcons",
-            DISPLAY_SECONDS = "DisplaySeconds"
+            DISPLAY_SECONDS = "DisplaySeconds",
+            SECOND_TIME_FORMAT = "SecondTimeFormat",
         }
     }
 

@@ -28,5 +28,7 @@ class OnSettingsChangedWatcher extends WatcherModule.Watcher {
 
             (view as Components.BaseDrawable).onSettingsChanged();
         }
+
+        WatchUi.requestUpdate();
     }
 }

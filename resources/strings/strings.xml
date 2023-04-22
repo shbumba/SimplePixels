@@ -42,6 +42,7 @@
     <string id="BottomSensor3">Bottom sensor 3</string>
     <string id="LeftSensor">Left sensor</string>
     <string id="DisplayStatusIcons">Show status icons</string>
+    <string id="SecondTimeFormat">Second Time Fromat</string>
 
     <string id="None">None</string>
     <string id="Steps">Steps</string>
@@ -70,6 +71,7 @@
     <string id="Stress">Stress</string>
     <string id="ActiveMinutesWeek">Active m/week</string>
     <string id="SolarIntensity">Solar intensity</string>
+    <string id="SecondTime">Second time</string>
 
     <string id="DisplaySeconds">Display seconds</string>
 

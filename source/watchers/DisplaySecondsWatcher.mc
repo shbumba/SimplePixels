@@ -27,6 +27,7 @@ class DisplaySecondsWatcher extends WatcherModule.Watcher {
         var isAwake = Services.WathersStore().getValue(AwakeWatcher) as Boolean;
 
         secondsView.setViewProps(displaySecondsType, isAwake);
+        WatchUi.requestUpdate();
     }
 
     function onValueInit(value as InstanceGetter) as Void {

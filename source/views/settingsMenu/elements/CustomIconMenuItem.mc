@@ -5,7 +5,7 @@ import Toybox.WatchUi;
 typedef CustomIconMenuItemProps as {
     :identifier as Object or Number or String,
     :icon as Symbol?,
-    :label as Symbol
+    :label as Symbol or String
 };
 
 class CustomIconMenuItem extends WatchUi.CustomMenuItem {
@@ -24,6 +24,7 @@ class CustomIconMenuItem extends WatchUi.CustomMenuItem {
         var font = Graphics.FONT_SMALL;
         var fontColor = Graphics.COLOR_DK_GRAY;
         var height = drawContext.getHeight();
+        var labelText = self._label instanceof Lang.String ? self._label : WatchUi.loadResource(self._label);
 
         if (isFocused()) {
             font = Graphics.FONT_MEDIUM;
@@ -35,7 +36,7 @@ class CustomIconMenuItem extends WatchUi.CustomMenuItem {
             iconWidth,
             height / 2,
             font,
-            WatchUi.loadResource(self._label),
+            labelText,
             Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
         );
 

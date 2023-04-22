@@ -7,6 +7,7 @@
     <property id="SeparatorInfo" type="number">1</property>
     <property id="LeftSensor" type="number">6</property>
     <property id="DisplayStatusIcons" type="boolean">true</property>
+    <property id="SecondTimeFormat" type="number">0</property>
     <property id="TopSensor1" type="number">4</property>
     <property id="TopSensor2" type="number">5</property>
     <property id="TopSensor3" type="number">12</property>

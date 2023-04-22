@@ -8,7 +8,7 @@ import SensorTypes;
 class AwakeWatcher extends WatcherModule.Watcher {
     public static var key as String = "AwakeWatcher";
     public var scope as Array<Scope> =
-        [WatcherModule.ON_UPDATE, WatcherModule.ON_PARTIAL_UPDATE, WatcherModule.ON_NIGHT_MODE_CHANGED] as Array<Scope>;
+        [WatcherModule.ON_UPDATE, WatcherModule.ON_PARTIAL_UPDATE, WatcherModule.ON_NIGHT_MODE_CHANGED, WatcherModule.ON_ENTER_SLEEP, WatcherModule.ON_EXIT_SLEEP] as Array<Scope>;
 
     private var _isAwake as Boolean;
     private var _mainView as WatchUi.View;
@@ -39,6 +39,7 @@ class AwakeWatcher extends WatcherModule.Watcher {
         var displaySecondsType = Services.WathersStore().getValue(DisplaySecondsWatcher) as DisplaySecondsType.Enum;
 
         secondsView.setViewProps(displaySecondsType, isAwake);
+        WatchUi.requestUpdate();
     }
 
     function onValueInit(value as InstanceGetter) as Void {

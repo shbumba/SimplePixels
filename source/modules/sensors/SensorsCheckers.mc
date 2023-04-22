@@ -34,6 +34,7 @@ module SensorsCheckers {
         SensorTypes.IS_DO_NOT_DISTURB => :checkDoNotDisturb,
         SensorTypes.IS_NIGHT_MODE_ENABLED => :checkIsNightMode,
         SensorTypes.IS_SLEEP_TIME => true,
+        SensorTypes.SECOND_TIME => true,
         SensorTypes.FLOORS_CLIMBED_GOAL => :checkFloorsClimbedGoal,
         SensorTypes.DISTANCE => true,
         SensorTypes.ACTIVE_MINUTES_DAY => true,

@@ -69,6 +69,14 @@ function SettingsMenu() as WatchUi.Menu2 or WatchUi.CustomMenu {
                     :subLabel => _getSubLabelValue(SettingType.SEPARATOR_INFO)
                 }
             },
+            // Second Time Format
+            {
+                :buider => SettingsMenuBuilder.ITEM,
+                :buiderProps => {
+                    :identifier => SettingType.SECOND_TIME_FORMAT,
+                    :label => Rez.Strings.SecondTimeFormat
+                }
+            },
             // Left Sensor Info
             {
                 :buider => SettingsMenuBuilder.ITEM,

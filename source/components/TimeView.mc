@@ -2,6 +2,7 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
 import Toybox.System;
+import TimeStackModule;
 
 module Components {
     module TimeViewType {
@@ -40,7 +41,7 @@ module Components {
         }
 
         private function getHours() as Number {
-            var hours = System.getClockTime().hour;
+            var hours = TimeStackModule.currentTime().hour;
 
             if (!self._is24hour && hours > 12) {
                 hours = hours - 12;
@@ -50,7 +51,7 @@ module Components {
         }
 
         private function getMinutes() as Number {
-            return System.getClockTime().min;
+            return TimeStackModule.currentTime().min;
         }
 
         protected function getTime() as Number {

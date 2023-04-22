@@ -29,6 +29,7 @@ module SensorsTexts {
         SensorTypes.MESSAGES => Rez.Strings.Messages,
         SensorTypes.ALARM_COUNT => Rez.Strings.AlarmCount,
         SensorTypes.SOLAR_INTENSITY => Rez.Strings.SolarIntensity,
+        SensorTypes.SECOND_TIME => Rez.Strings.SecondTime,
         SensorTypes.MEMORY_USED => Rez.Strings.Memory,
     };
 

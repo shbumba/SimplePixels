@@ -23,29 +23,35 @@ class SimplePixelsView extends WatchUi.WatchFace {
     }
 
     function onLayout(drawContext as Dc) as Void {
-        WatchFace.onLayout(drawContext);
-
         WatchFace.setLayout(Rez.Layouts.MainLayout(drawContext));
 
         self.setupStore(drawContext);
+
+        WatchFace.onLayout(drawContext);
     }
 
     function onUpdate(drawContext as Dc) as Void {
-        Services.WathersStore().runScope(WatcherModule.ON_UPDATE);
-
         drawContext.clearClip();
+
+        Services.WathersStore().runScope(WatcherModule.ON_UPDATE);
         
         WatchFace.onUpdate(drawContext);
     }
 
     function onPartialUpdate(drawContext as Dc) as Void {
-        Services.WathersStore().runScope(WatcherModule.ON_PARTIAL_UPDATE);
+        drawContext.clearClip();
+        
+        self.awakeWatcher.setIsAwake(false);
     
+        Services.WathersStore().runScope(WatcherModule.ON_PARTIAL_UPDATE);
+        
         WatchFace.onPartialUpdate(drawContext);
     }
 
     function onShow() as Void {
         self.awakeWatcher.setIsAwake(true);
+
+        Services.WathersStore().runScope(WatcherModule.ON_EXIT_SLEEP);
 
         WatchFace.onShow();
     }
@@ -53,27 +59,26 @@ class SimplePixelsView extends WatchUi.WatchFace {
     function onEnterSleep() as Void {
         self.awakeWatcher.setIsAwake(false);
 
+        Services.WathersStore().runScope(WatcherModule.ON_ENTER_SLEEP);
+
         WatchFace.onEnterSleep();
-        WatchUi.requestUpdate();
     }
 
     function onExitSleep() as Void {
         self.awakeWatcher.setIsAwake(true);
 
+        Services.WathersStore().runScope(WatcherModule.ON_EXIT_SLEEP);
+
         WatchFace.onExitSleep();
-        WatchUi.requestUpdate();
+    }
+
+    function onNightModeChanged() as Void {
+        self.awakeWatcher.setIsAwake(false);
+
+        Services.WathersStore().runScope(WatcherModule.ON_NIGHT_MODE_CHANGED);
     }
 
     function onSettingsChanged() as Void {
         Services.WathersStore().runScope(WatcherModule.ON_SETTINGS_CHANGED);
-
-        WatchUi.requestUpdate();
 	}
-
-    function onNightModeChanged() as Void {
-        self.awakeWatcher.setIsAwake(false);
-        Services.WathersStore().runScope(WatcherModule.ON_NIGHT_MODE_CHANGED);
-
-        WatchUi.requestUpdate();
-    }
 }

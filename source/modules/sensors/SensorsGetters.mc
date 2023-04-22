@@ -6,9 +6,11 @@ import Toybox.SensorHistory;
 import Toybox.Weather;
 import Toybox.UserProfile;
 import Toybox.Time;
+import Toybox.Time.Gregorian;
 import Toybox.Position;
 import SensorTypes;
 import SensorsCheckers;
+import TimeStackModule;
 
 module SensorsGetters {
     typedef SersorInfoGetterValue as Number or Float or Boolean or Time.Moment or Position.Info or Null;
@@ -45,6 +47,7 @@ module SensorsGetters {
             SensorTypes.IS_DO_NOT_DISTURB => :isDoNotDisturb,
             SensorTypes.IS_NIGHT_MODE_ENABLED => :isNightModeEnabled,
             SensorTypes.IS_SLEEP_TIME => :getSleepTime,
+            SensorTypes.SECOND_TIME => :getSecondTime,
             SensorTypes.MEMORY_USED => :getMemory,
             SensorTypes.STEPS_GOAL => :getStepGoal,
             SensorTypes.FLOORS_CLIMBED_GOAL => :getFloorsClimbedGoal,
@@ -179,6 +182,10 @@ module SensorsGetters {
             return System.getSystemStats().solarIntensity;
         }
 
+        function getSecondTime() as Gregorian.Info {
+            return TimeStackModule.secondTime();
+        }
+
         function isDoNotDisturb() as Boolean? {
             return System.getDeviceSettings().doNotDisturb;
         }
@@ -286,24 +293,24 @@ module SensorsGetters {
             return null;
         }
 
-        function getSunrise() as Time.Moment? {
+        function getSunrise() as Gregorian.Info? {
             var location = getCurrentLocation();
 
             if (location == null) {
                 return null;
             }
 
-            return Weather.getSunrise(location, Time.today());
+            return Gregorian.info(Weather.getSunrise(location, Time.today()), Time.FORMAT_SHORT);
         }
 
-        function getSunset() as Time.Moment? {
+        function getSunset() as Gregorian.Info? {
             var location = getCurrentLocation();
 
             if (location == null) {
                 return null;
             }
 
-            return Weather.getSunset(location, Time.today());
+            return Gregorian.info(Weather.getSunset(location, Time.today()), Time.FORMAT_SHORT);
         }
 
         function getBatteryGoal() as Number {

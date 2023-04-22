@@ -30,6 +30,7 @@ module SensorTypes {
         IS_DO_NOT_DISTURB = 101,
         IS_NIGHT_MODE_ENABLED = 102,
         IS_SLEEP_TIME = 103,
+        SECOND_TIME = 104,
         MEMORY_USED = 500,
         STEPS_GOAL = 502,
         FLOORS_CLIMBED_GOAL = 503,

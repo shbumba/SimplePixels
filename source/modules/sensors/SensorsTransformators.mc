@@ -39,6 +39,7 @@ module SensorsTransformators {
         SensorTypes.IS_DO_NOT_DISTURB => :_transformToEmpty,
         SensorTypes.IS_NIGHT_MODE_ENABLED => :_transformToEmpty,
         SensorTypes.IS_SLEEP_TIME => :_transformToEmpty,
+        SensorTypes.SECOND_TIME => :_transformTime,
         SensorTypes.MEMORY_USED => :_transformBytesToKb
     };
 
@@ -158,12 +159,11 @@ module SensorsTransformators {
             return _transformToThreeNumbers(value) + " m";
         }
 
-        function _transformTime(time as Time.Moment) as String {
-            var utcTime = Gregorian.info(time, Time.FORMAT_SHORT);
+        function _transformTime(timeInfo as Gregorian.Info) as String {
             var is24hour = System.getDeviceSettings().is24Hour;
 
-            var hour = utcTime.hour;
-            var min = utcTime.min;
+            var hour = timeInfo.hour;
+            var min = timeInfo.min;
 
             if (!is24hour && hour > 12) {
                 hour = hour - 12;
@@ -171,7 +171,7 @@ module SensorsTransformators {
 
             var formatedTime = Lang.format("$1$:$2$", [hour.format("%02u"), min.format("%02u")]);
 
-            var typeType = utcTime.hour >= 12 ? "pm" : "am";
+            var typeType = timeInfo.hour >= 12 ? "pm" : "am";
 
             return is24hour ? formatedTime : formatedTime + " " + typeType;
         }

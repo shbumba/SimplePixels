@@ -33,6 +33,7 @@ module SensorsIcons {
         SensorTypes.IS_DO_NOT_DISTURB => :isDoNotDisturbIcon,
         SensorTypes.IS_NIGHT_MODE_ENABLED => :isNightModeIcon,
         SensorTypes.IS_SLEEP_TIME => :isNightModeIcon,
+        SensorTypes.SECOND_TIME => Rez.Fonts.alarm_icon,
         SensorTypes.MEMORY_USED => Rez.Fonts.memory_icon
     };
 

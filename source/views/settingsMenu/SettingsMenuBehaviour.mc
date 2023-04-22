@@ -1,6 +1,7 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
+import Toybox.Time;
 import ColorsModule;
 import Services;
 import SettingsModule;
@@ -11,6 +12,7 @@ import SensorTypes;
 import SensorsTexts;
 import SensorsIcons;
 import ResourcesCache;
+import TimeStackModule;
 
 class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     private var onBackCallback as Lang.Method;
@@ -28,7 +30,8 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         SettingType.BOTTOM_SENSOR_3 => :sensorFieldHandler,
         SettingType.LEFT_SENSOR => :sensorFieldHandler,
         SettingType.DISPLAY_STATUS_ICONS => :toggleFieldHangler,
-        SettingType.DISPLAY_SECONDS => :displaySecondsHandler
+        SettingType.DISPLAY_SECONDS => :displaySecondsHandler,
+        SettingType.SECOND_TIME_FORMAT => :displaySecondTimeHandler
     };
 
     private var subMenuAwailableKeys = {
@@ -125,13 +128,9 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         return menuItems;
     }
 
-    private function generateSecondsFieldItems() as Array<GenerateItemProps> {
+    private function generateMapItems(mapFields as Dictionary) as Array<GenerateItemProps> {
         var menuItems = [] as Array<GenerateItemProps>;
-        var secondsFields = {
-            DisplaySecondsType.NEVER => Rez.Strings.Never,
-            DisplaySecondsType.ON_GESTURE => Rez.Strings.OnGesture
-        };
-        var keys = secondsFields.keys() as Array<DisplaySecondsType.Enum>;
+        var keys = mapFields.keys() as Array<Number>;
 
         for (var i = 0; i < keys.size(); i++) {
             var key = keys[i] as Number;
@@ -140,7 +139,29 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
                 :buider => SettingsMenuBuilder.CUSTOM_ICON_ITEM,
                 :buiderProps => {
                     :identifier => key,
-                    :label => secondsFields.get(key) as Symbol
+                    :label => mapFields.get(key) as Symbol
+                }
+            });
+        }
+
+        return menuItems;
+    }
+
+    private function generateTimeZones() as Array<GenerateItemProps> {
+        var menuItems = [] as Array<GenerateItemProps>;
+
+        for (var i = 0; i < TimeStackModule.TIME_ZONES.size(); i++) {
+            var timeZone = TimeStackModule.TIME_ZONES[i] as Number;
+            var positiveTimeZone = timeZone > 0 ? timeZone : (timeZone / -1);
+            var formatedTimeZone = Time.Gregorian.utcInfo(new Time.Moment(positiveTimeZone * 60 * 60), Time.FORMAT_SHORT);
+            var timeSymbol = timeZone > 0 ? "+" : timeZone < 0 ? "-" : "";
+            var formatedTime = Lang.format("$1$$2$:$3$", [timeSymbol, formatedTimeZone.hour.format("%02u"), formatedTimeZone.min.format("%02u")]);
+
+            menuItems.add({
+                :buider => SettingsMenuBuilder.CUSTOM_ICON_ITEM,
+                :buiderProps => {
+                    :identifier => timeZone,
+                    :label => formatedTime
                 }
             });
         }
@@ -157,11 +178,18 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     }
 
     public function displaySecondsHandler(item as WatchUi.ToggleMenuItem) as Void {
-        self.renderCustomMenu(item.getId(), item.getLabel(), self.generateSecondsFieldItems(), false);
+        self.renderCustomMenu(item.getId(), item.getLabel(), self.generateMapItems({
+            DisplaySecondsType.NEVER => Rez.Strings.Never,
+            DisplaySecondsType.ON_GESTURE => Rez.Strings.OnGesture
+        }), false);
     }
 
     public function toggleFieldHangler(item as WatchUi.ToggleMenuItem) as Void {
         SettingsModule.setValue(item.getId(), item.isEnabled());
+    }
+
+    public function displaySecondTimeHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
+        self.renderCustomMenu(item.getId(), item.getLabel(), self.generateTimeZones(), false);
     }
 
     function onSelect(item as WatchUi.MenuItem) as Void {

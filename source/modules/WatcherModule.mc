@@ -6,7 +6,9 @@ module WatcherModule {
         ON_UPDATE,
         ON_PARTIAL_UPDATE,
         ON_SETTINGS_CHANGED,
-        ON_NIGHT_MODE_CHANGED
+        ON_NIGHT_MODE_CHANGED,
+        ON_ENTER_SLEEP,
+        ON_EXIT_SLEEP,
     }
 
     typedef InstanceKey as String;
