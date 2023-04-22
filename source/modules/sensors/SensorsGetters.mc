@@ -283,11 +283,11 @@ module SensorsGetters {
             return [info[0].lowTemperature, info[0].highTemperature] as Array<Number?>;
         }
 
-        function getCurrentLocation() as Position.Info? {
+        function getCurrentLocation() as Position.Location? {
             var positionInfo = Position.getInfo();
 
             if (positionInfo has :position && positionInfo.position != null) {
-                return positionInfo.position as Position.Info;
+                return positionInfo.position as Position.Location;
             }
 
             return null;

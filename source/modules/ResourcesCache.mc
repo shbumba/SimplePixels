@@ -1,13 +1,14 @@
 import Toybox.Lang;
+import Toybox.WatchUi;
 
 module ResourcesCache {
-    var _cache = {};
+    var _cache = {} as Dictionary<Symbol, WatchUi.Resource>;
 
-    function get(resourceKey as Symbol) as Toybox.WatchUi.Resource {
+    function get(resourceKey as Symbol) as WatchUi.Resource {
         var resource = _cache.get(resourceKey);
 
         if (resource == null) {
-            resource = Toybox.WatchUi.loadResource(resourceKey);
+            resource = WatchUi.loadResource(resourceKey);
             _cache.put(resourceKey, resource);
         }
 

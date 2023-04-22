@@ -56,7 +56,6 @@ class SensorsInfoView extends Components.List {
     }
 
     protected function render(drawContext as Dc) as Void {
-        var sensorService = Services.SensorInfo();
         var items = [] as Array<Components.ItemType>;
 
         for (var i = 0; i < self._sensors.size(); i++) {
