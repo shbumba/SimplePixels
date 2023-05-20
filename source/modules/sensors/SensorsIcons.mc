@@ -51,11 +51,11 @@ module SensorsIcons {
 
     module Icons {
         function batteryIcon(value as SersorInfoGetterValue) as Symbol {
-            if (value == null || value == true || value >= 85) {
+            if (value == null || value == true || value >= 80) {
                 return Rez.Fonts.battery_100_icon; // 100%
-            } else if (value >= 65) {
+            } else if (value >= 60) {
                 return Rez.Fonts.battery_75_icon; // 75%
-            } else if (value >= 45) {
+            } else if (value >= 40) {
                 return Rez.Fonts.battery_50_icon; // 50%
             } else if (value >= 15) {
                 return Rez.Fonts.battery_25_icon; // 25%

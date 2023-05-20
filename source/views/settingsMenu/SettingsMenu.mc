@@ -19,10 +19,12 @@ function _getSubLabelValue(type as SettingType.Enum) as Symbol {
 }
 
 function SettingsMenu() as WatchUi.Menu2 or WatchUi.CustomMenu {
-    return SettingsMenuBuilder.generateMenu({
-        :buider => SettingsMenuBuilder.MENU,
-        :buiderProps => { :title => Rez.Strings.SettingsMenu },
-        :items => [
+    return SettingsMenuBuilder.generateMenu(
+        {
+            :buider => SettingsMenuBuilder.MENU,
+            :buiderProps => { :title => Rez.Strings.SettingsMenu }
+        },
+        [
             // Color
             {
                 :buider => SettingsMenuBuilder.ITEM,
@@ -148,5 +150,5 @@ function SettingsMenu() as WatchUi.Menu2 or WatchUi.CustomMenu {
                 }
             }
         ] as Array<GenerateItemProps>
-    });
+    );
 }

@@ -21,7 +21,7 @@
             <param name="xPos">"50%"</param>
             <param name="yPos">"29%"</param>
             <param name="xShift">"-12"</param>
-            <param name="yShift">"0"</param>
+            <param name="yShift">"-1"</param>
             <param name="horizontalAlignment">PositionUtils.ALIGN_END</param>
             <param name="verticalAlignment">PositionUtils.ALIGN_END</param>
             <param name="font">@Rez.Fonts.data</param>

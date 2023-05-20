@@ -9,8 +9,8 @@
     <property id="DisplayStatusIcons" type="boolean">true</property>
     <property id="TopSensor1" type="number">5</property>
     <property id="TopSensor2" type="number">4</property>
-    <property id="TopSensor3" type="number">3</property>
+    <property id="TopSensor3" type="number">12</property>
     <property id="BottomSensor1" type="number">2</property>
-    <property id="BottomSensor2" type="number">8</property>
-    <property id="BottomSensor3" type="number">7</property>
+    <property id="BottomSensor2" type="number">19</property>
+    <property id="BottomSensor3" type="number">20</property>
 </properties>

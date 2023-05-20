@@ -14,3 +14,4 @@ const VIEWS_LIST = {
 };
 
 const ICON_SYMBOL = " ";
+const IS_LOW_MEMORY = Toybox.System.getSystemStats().totalMemory < 95000;

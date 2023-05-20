@@ -12,15 +12,16 @@ module DotPattern {
     var PATTERN_HEIGHT = 8;
     var IS_NEW_SDK = Graphics has :createBufferedBitmap;
 
-    function _generateRow(width as Numeric, color as Numeric) as BufferedBitmap {
+    function _generateRow(width as Numeric, bgColor as Numeric, fgColor as Numeric) as BufferedBitmap {
         var bitmap = createBitmap({
             :width => width,
-            :height => PATTERN_HEIGHT
+            :height => PATTERN_HEIGHT,
+            :palette => [Graphics.COLOR_TRANSPARENT, bgColor, fgColor]
         });
         var dc = bitmap.getDc();
 
         dc.clear();
-        dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(bgColor, Graphics.COLOR_TRANSPARENT);
 
         var shiftY = 0;
 
@@ -35,16 +36,17 @@ module DotPattern {
         return bitmap;
     }
 
-    function _create(width as Numeric, height as Numeric, color as Number) as BufferedBitmap {
+    function _create(width as Numeric, height as Numeric, bgColor as Numeric, fgColor as Numeric) as BufferedBitmap {
         var bitmap = createBitmap({
             :width => width,
-            :height => height
+            :height => height,
+            :palette => [Graphics.COLOR_TRANSPARENT, bgColor, fgColor]
         });
-
-        var rowPattern = self._generateRow(width, color);
+        var rowPattern = self._generateRow(width, bgColor, fgColor);
         var dc = bitmap.getDc();
         
         dc.clear();
+        dc.setColor(bgColor, Graphics.COLOR_TRANSPARENT);
 
         var rows = Toybox.Math.ceil(height / PATTERN_HEIGHT);
 
@@ -57,21 +59,21 @@ module DotPattern {
         return bitmap;
     }
 
-    function update(key as Keys, width as Numeric, height as Numeric, color as Number?) as Void {
-        if (!IS_NEW_SDK) {
+    function update(key as Keys, width as Numeric, height as Numeric, bgColor as Numeric, fgColor as Numeric) as Void {
+        if (!IS_NEW_SDK || $.IS_LOW_MEMORY) {
             return;
         }
 
-        patterns.put(key, _create(width, height, color));
+        patterns.put(key, _create(width, height, bgColor, fgColor));
     }
 
-    function get(key as Keys, width as Numeric, height as Numeric, color as Number?) as BufferedBitmap {
-        if (!IS_NEW_SDK) {
-            return _create(width, height, color);
+    function get(key as Keys, width as Numeric, height as Numeric, bgColor as Numeric, fgColor as Numeric) as BufferedBitmap {
+        if (!IS_NEW_SDK || $.IS_LOW_MEMORY) {
+            return _create(width, height, bgColor, fgColor);
         }
 
         if (!patterns.hasKey(key)) {
-            update(key, width, height, color);
+            update(key, width, height, bgColor, fgColor);
         }
 
         return patterns.get(key) as BufferedBitmap;

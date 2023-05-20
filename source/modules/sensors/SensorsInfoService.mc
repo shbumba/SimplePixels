@@ -19,11 +19,11 @@ class SensorsInfoService {
     }
 
     private function checkAwailableSensors() as Array<SensorTypes.Enum> {
-        var keys = SensorsGetters.Map.keys();
+        var keys = SensorsGetters.Map.keys() as Array<SensorTypes.Enum>;
         var awailableSensors = [] as Array<SensorTypes.Enum>;
 
         for (var i = 0; i < keys.size(); i++) {
-            var key = keys[i] as SensorTypes.Enum;
+            var key = keys[i];
             var isAwailable = SensorsCheckers.check(key);
 
             if (isAwailable) {

@@ -117,19 +117,19 @@ module SensorsGetters {
         }
 
         function getBodyBattery() as Number? {
-            var sensorInfo = SensorHistory.getBodyBatteryHistory({}).next();
-            var value = sensorInfo != null ? sensorInfo.data : null;
+            var value = null as Number or Float or Null;
 
-            value = value as Number or Float or Null;
+            var sensorInfo = SensorHistory.getBodyBatteryHistory({}).next();
+            value = sensorInfo != null ? sensorInfo.data : value;
 
             return value != null ? value.toNumber() : value;
         }
 
         function getStress() as Number? {
-            var sensorInfo = SensorHistory.getStressHistory({}).next();
-            var value = sensorInfo != null ? sensorInfo.data : null;
+            var value = null as Number or Float or Null;
 
-            value = value as Number or Float or Null;
+            var sensorInfo = SensorHistory.getStressHistory({}).next();
+            value = sensorInfo != null ? sensorInfo.data : value;
 
             return value != null ? value.toNumber() : value;
         }
@@ -139,8 +139,13 @@ module SensorsGetters {
             var value = activityInfo != null ? activityInfo.currentOxygenSaturation : null;
 
             if (value == null && SensorsCheckers.Checkers.checkOxygenSaturationHistory()) {
-                var sensorInfo = SensorHistory.getOxygenSaturationHistory({}).next();
-                value = sensorInfo != null ? sensorInfo.data : null;
+                try {
+                    var history = SensorHistory.getOxygenSaturationHistory({}) as SensorHistory.SensorHistoryIterator or Null;
+                    var sensorInfo = history != null ? history.next() : null;
+                    value = sensorInfo != null ? sensorInfo.data : null;
+                } catch (e) {
+                    //
+                }
             }
 
             return value != null ? value.toNumber() : value;

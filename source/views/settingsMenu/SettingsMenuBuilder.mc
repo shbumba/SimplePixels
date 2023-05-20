@@ -48,7 +48,6 @@ module SettingsMenuBuilder {
         :buider as MenuBuilder,
         :buiderProps as MenuProps or CustomMenuProps,
         :valueKey as MenuValueKey?,
-        :items as Array<GenerateItemProps>
     };
 
     function generateMenuItem(props as GenerateItemProps) as WatchUi.MenuItem or WatchUi.CustomMenuItem {
@@ -65,12 +64,11 @@ module SettingsMenuBuilder {
         }
 
         var method = new Lang.Method(SettingsMenuBuilder, itemBuilder);
-        var item = method.invoke(props.get(:buiderProps), props.get(:valueKey));
 
-        return item;
+        return method.invoke(props.get(:buiderProps), props.get(:valueKey));
     }
 
-    function generateMenu(props as GenerateMenuProps) as WatchUi.Menu2 or WatchUi.CustomMenu {
+    function generateMenu(props as GenerateMenuProps, items as Array<GenerateItemProps>) as WatchUi.Menu2 or WatchUi.CustomMenu {
         var menuBuilder = props.get(:buider);
 
         if (menuBuilder == null) {
@@ -85,14 +83,13 @@ module SettingsMenuBuilder {
 
         var valueKey = props.get(:valueKey);
         var method = new Lang.Method(SettingsMenuBuilder, menuBuilder);
-        var methodProps = props.get(:buiderProps);
-        var menu = method.invoke(methodProps);
-        var items = props.get(:items);
+        var menu = method.invoke(props.get(:buiderProps));
 
-        for (var i = 0; i < items.size(); i++) {
-            var item = items[i];
+        $.clearDictionary(props);
 
-            menu.addItem(generateMenuItem(item));
+        while (items.size() > 0) {
+            menu.addItem(generateMenuItem(items[0]));
+            items.remove(items[0]);
         }
 
         if (valueKey != null) {

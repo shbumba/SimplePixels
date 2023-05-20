@@ -1,0 +1,6 @@
+<resources>
+    <font id="hours" filename="../../resources-round-240x240/fonts/blackout-big.fnt" antialias="true"/>
+    <font id="minutes" filename="../../resources-round-240x240/fonts/blackout-medium.fnt" antialias="true"/>
+    <font id="seconds" filename="../../resources-round-240x240/fonts/blackout-small.fnt" antialias="true"/>
+    <font id="data" filename="../../resources-round-240x240/fonts/cone-small.fnt" antialias="true"/>
+</resources>

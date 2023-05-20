@@ -24,7 +24,6 @@ class CustomColorMenuItem extends WatchUi.CustomMenuItem {
         var textLeftMargin = 10;
         var font = Graphics.FONT_SMALL;
         var fontColor = Graphics.COLOR_DK_GRAY;
-        var width = drawContext.getWidth();
         var height = drawContext.getHeight();
 
         if (isFocused()) {

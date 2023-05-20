@@ -56,11 +56,12 @@ module WatcherModule {
                 onValueInitQueue.add([instance, value]);
             }
 
-            for (var i = 0; i < onValueInitQueue.size(); i++) {
-                var instance = onValueInitQueue[i][0] as Watcher;
-                var value = onValueInitQueue[i][1] as InstanceGetter;
+            while (onValueInitQueue.size() > 0) {
+                var instance = onValueInitQueue[0][0] as Watcher;
+                var value = onValueInitQueue[0][1] as InstanceGetter;
 
                 instance.onValueInit(value);
+                onValueInitQueue.remove(onValueInitQueue[0]);
             }
         }
 
@@ -104,12 +105,13 @@ module WatcherModule {
                 onUpdateQueue.add([instance, currentValue, prevValue]);
             }
 
-            for (var i = 0; i < onUpdateQueue.size(); i++) {
-                var instance = onUpdateQueue[i][0] as Watcher;
-                var currentValue = onUpdateQueue[i][1] as InstanceGetter;
-                var prevValue = onUpdateQueue[i][2] as InstanceGetter;
+            while (onUpdateQueue.size() > 0) {
+                var instance = onUpdateQueue[0][0] as Watcher;
+                var currentValue = onUpdateQueue[0][1] as InstanceGetter;
+                var prevValue = onUpdateQueue[0][2] as InstanceGetter;
 
                 instance.onValueUpdated(currentValue, prevValue);
+                onUpdateQueue.remove(onUpdateQueue[0]);
             }
         }
     }

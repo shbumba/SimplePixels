@@ -66,8 +66,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
                 }
             },
             :valueKey => settingKey,
-            :items => menuItems
-        });
+        }, menuItems);
 
         WatchUi.switchToView(
             menu,
@@ -151,7 +150,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         var menuItems = [] as Array<GenerateItemProps>;
 
         for (var i = 0; i < TimeStackModule.TIME_ZONES.size(); i++) {
-            var timeZone = TimeStackModule.TIME_ZONES[i] as Number;
+            var timeZone = TimeStackModule.TIME_ZONES[i];
             var positiveTimeZone = timeZone > 0 ? timeZone : (timeZone / -1);
             var formatedTimeZone = Time.Gregorian.utcInfo(new Time.Moment(positiveTimeZone * 60 * 60), Time.FORMAT_SHORT);
             var timeSymbol = timeZone > 0 ? "+" : timeZone < 0 ? "-" : "";

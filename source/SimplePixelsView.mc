@@ -7,7 +7,10 @@ import WatcherModule;
 (:debug)
 function printCommonDebugInfo() {
     var deviceSettings = Toybox.System.getDeviceSettings();
+    var stats = Toybox.System.getSystemStats();
+
     Toybox.System.println([deviceSettings.screenShape, deviceSettings.screenWidth, deviceSettings.screenHeight]);
+    Toybox.System.println([stats.totalMemory, stats.usedMemory, stats.freeMemory]);
 }
 
 class SimplePixelsView extends WatchUi.WatchFace {
@@ -18,7 +21,6 @@ class SimplePixelsView extends WatchUi.WatchFace {
         Services.register();
 
         self.awakeWatcher = new AwakeWatcher(self, true);
-        printCommonDebugInfo();
     }
 
     private function setupStore(drawContext as Dc) as Void {

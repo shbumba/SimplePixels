@@ -9,6 +9,9 @@ module ResourcesCache {
 
         if (resource == null) {
             resource = WatchUi.loadResource(resourceKey);
+        }
+
+        if (!$.IS_LOW_MEMORY) {
             _cache.put(resourceKey, resource);
         }
 

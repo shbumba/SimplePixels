@@ -36,7 +36,7 @@ class InfoBarView extends Components.Box {
         );
         self._sensorType = SettingsModule.getValue(SettingType.SEPARATOR_INFO) as SensorTypes.Enum;
 
-        DotPattern.update(DotPattern.INFO_BAR, self.getWidth(), self.getHeight(), self._barColor);
+        DotPattern.update(DotPattern.INFO_BAR, self.getWidth(), self.getHeight(), self._barColor, self.backgroundColor);
     }
 
     private function calculatePercente(curentValue as Number?, maxValue as Number?) as Float or Number {
@@ -74,7 +74,7 @@ class InfoBarView extends Components.Box {
         var valueBarShift = height - barHeight;
         
         if (!isCompleted) {
-            var pattern = DotPattern.get(DotPattern.INFO_BAR, width, height, self._barColor);
+            var pattern = DotPattern.get(DotPattern.INFO_BAR, width, height, self._barColor, self.backgroundColor);
             drawContext.drawBitmap(posX, posY, pattern);
         }
 
