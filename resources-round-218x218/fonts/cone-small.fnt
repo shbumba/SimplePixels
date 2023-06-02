@@ -72,4 +72,4 @@ char id=119 x=39 y=87 width=12 height=10 xoffset=-1 yoffset=3 xadvance=12 page=0
 char id=120 x=52 y=87 width=9 height=10 xoffset=-1 yoffset=3 xadvance=8 page=0 chnl=15
 char id=121 x=8 y=31 width=9 height=13 xoffset=-1 yoffset=3 xadvance=8 page=0 chnl=15
 char id=122 x=62 y=87 width=9 height=10 xoffset=-1 yoffset=3 xadvance=8 page=0 chnl=15
-char id=176 x=95 y=73 width=7 height=7 xoffset=0 yoffset=0 xadvance=14 page=0 chnl=15
+char id=176 x=95 y=73 width=6 height=7 xoffset=0 yoffset=0 xadvance=6 page=0 chnl=15

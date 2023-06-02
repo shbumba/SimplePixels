@@ -298,24 +298,36 @@ module SensorsGetters {
             return null;
         }
 
-        function getSunrise() as Gregorian.Info? {
+        function __getSunPhaseTime(action) as Time.Moment or Null {
             var location = getCurrentLocation();
 
             if (location == null) {
                 return null;
             }
 
-            return Gregorian.info(Weather.getSunrise(location, Time.today()), Time.FORMAT_SHORT);
+            var method = new Lang.Method(Weather, action);
+
+            return method.invoke(location, Time.today());
+        }
+
+        function getSunrise() as Gregorian.Info? {
+            var time = __getSunPhaseTime(:getSunrise);
+
+            if (time == null) {
+                return null;
+            }
+
+            return Gregorian.info(time, Time.FORMAT_SHORT);
         }
 
         function getSunset() as Gregorian.Info? {
-            var location = getCurrentLocation();
+            var time = __getSunPhaseTime(:getSunset);
 
-            if (location == null) {
+            if (time == null) {
                 return null;
             }
 
-            return Gregorian.info(Weather.getSunset(location, Time.today()), Time.FORMAT_SHORT);
+            return Gregorian.info(time, Time.FORMAT_SHORT);
         }
 
         function getBatteryGoal() as Number {

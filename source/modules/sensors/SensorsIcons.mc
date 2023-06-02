@@ -55,9 +55,9 @@ module SensorsIcons {
                 return Rez.Fonts.battery_100_icon; // 100%
             } else if (value >= 60) {
                 return Rez.Fonts.battery_75_icon; // 75%
-            } else if (value >= 40) {
+            } else if (value >= 35) {
                 return Rez.Fonts.battery_50_icon; // 50%
-            } else if (value >= 15) {
+            } else if (value > 10) {
                 return Rez.Fonts.battery_25_icon; // 25%
             }
 
