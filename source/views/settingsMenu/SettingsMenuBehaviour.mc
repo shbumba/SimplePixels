@@ -135,14 +135,14 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         var menu = self._createCustomMenu(item.getLabel());
         self._addColorItems(menu);
 
-        self.openMenu(item.getId(), menu);
+        self.openMenu(item.getId(), menu, false);
     }
 
     public function sensorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
         self._addSensorItems(menu, null);
 
-        self.openMenu(item.getId(), menu);
+        self.openMenu(item.getId(), menu, true);
     }
 
     public function separatorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
@@ -154,7 +154,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             SensorTypes.STEPS
         ]);
 
-        self.openMenu(item.getId(), menu);
+        self.openMenu(item.getId(), menu, false);
     }
 
     public function displaySecondsHandler(item as WatchUi.ToggleMenuItem) as Void {
@@ -164,7 +164,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             DisplaySecondsType.ON_GESTURE => Rez.Strings.OnGesture
         });
 
-        self.openMenu(item.getId(), menu);
+        self.openMenu(item.getId(), menu, false);
     }
 
     public function toggleFieldHangler(item as WatchUi.ToggleMenuItem) as Void {
@@ -175,13 +175,13 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         var menu = self._createCustomMenu(item.getLabel());
         self._addTimeZones(menu);
 
-        self.openMenu(item.getId(), menu);
+        self.openMenu(item.getId(), menu, false);
     }
 
-    function openMenu(settingKey as SettingType.Enum, menu as WatchUi.Menu2 or WatchUi.CustomMenu) as Void {
+    function openMenu(settingKey as SettingType.Enum, menu as WatchUi.Menu2 or WatchUi.CustomMenu, clearPrevSensorCache as Boolean) as Void {
         SettingsMenuBuilder.setFocusOnMenuItem(menu, settingKey);
 
-        WatchUi.switchToView(menu, new CustomMenuDelegate(settingKey, true, self._onBackCallback), WatchUi.SLIDE_UP);
+        WatchUi.switchToView(menu, new CustomMenuDelegate(settingKey, clearPrevSensorCache, self._onBackCallback), WatchUi.SLIDE_UP);
     }
 
     function onSelect(item as WatchUi.MenuItem) as Void {
