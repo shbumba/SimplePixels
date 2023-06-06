@@ -3,11 +3,11 @@ import Toybox.Graphics;
 import Toybox.WatchUi;
 
 class DrawableMenuTitle extends WatchUi.Drawable {
-    private var title as String;
+    var _title as String;
 
     function initialize(title) {
         Drawable.initialize({});
-        self.title = title;
+        self._title = title;
     }
 
     function draw(drawContext as Dc) as Void {
@@ -22,7 +22,7 @@ class DrawableMenuTitle extends WatchUi.Drawable {
             posX,
             posY,
             Graphics.FONT_SMALL,
-            self.title,
+            self._title,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );
     }

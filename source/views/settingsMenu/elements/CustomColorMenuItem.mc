@@ -9,8 +9,8 @@ typedef CustomColorMenuItemProps as {
     };
 
 class CustomColorMenuItem extends WatchUi.CustomMenuItem {
-    private var _label as Symbol;
-    private var _color as Number;
+    var _label as Symbol;
+    var _color as Number;
 
     function initialize(params as CustomColorMenuItemProps) {
         WatchUi.CustomMenuItem.initialize(params.get(:identifier), {});

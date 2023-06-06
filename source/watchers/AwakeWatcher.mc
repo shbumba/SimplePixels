@@ -10,8 +10,8 @@ class AwakeWatcher extends WatcherModule.Watcher {
     public var scope as Array<Scope> =
         [WatcherModule.ON_UPDATE, WatcherModule.ON_PARTIAL_UPDATE, WatcherModule.ON_NIGHT_MODE_CHANGED, WatcherModule.ON_ENTER_SLEEP, WatcherModule.ON_EXIT_SLEEP] as Array<Scope>;
 
-    private var _isAwake as Boolean;
-    private var _mainView as WatchUi.View;
+    var _isAwake as Boolean;
+    var _mainView as WatchUi.View;
 
     function initialize(mainView as WatchUi.View, isAwake as Boolean) {
         WatcherModule.Watcher.initialize();
@@ -32,7 +32,7 @@ class AwakeWatcher extends WatcherModule.Watcher {
         return isNightMode == true || isSleepTime == true ? false : self._isAwake;
     }
 
-    private function updateViewProps(value as InstanceGetter) as Void {
+    function _updateViewProps(value as InstanceGetter) as Void {
         var isAwake = value as Boolean;
         var secondsViewID = $.VIEWS_LIST.get(:seconds);
         var secondsView = self._mainView.findDrawableById(secondsViewID) as SecondsView;
@@ -43,10 +43,10 @@ class AwakeWatcher extends WatcherModule.Watcher {
     }
 
     function onValueInit(value as InstanceGetter) as Void {
-        self.updateViewProps(value);
+        self._updateViewProps(value);
     }
 
     function onValueUpdated(value as InstanceGetter, prevValue as InstanceGetter) as Void {
-        self.updateViewProps(value);
+        self._updateViewProps(value);
     }
 }

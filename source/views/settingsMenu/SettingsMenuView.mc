@@ -4,12 +4,12 @@ import Toybox.WatchUi;
 import SettingsModule.SettingType;
 
 class SettingsMenuView extends WatchUi.View {
-    private var onSettingsChanged as Method?;
+    var _onSettingsChanged as Method?;
 
     function initialize(onSettingsChanged as Method) {
         View.initialize();
 
-        self.onSettingsChanged = onSettingsChanged;
+        self._onSettingsChanged = onSettingsChanged;
     }
 
     function onLayout(drawContext as Dc) as Void {
@@ -21,7 +21,7 @@ class SettingsMenuView extends WatchUi.View {
     }
 
     function onBack() as Void {
-        self.onSettingsChanged.invoke();
-        self.onSettingsChanged = null;
+        self._onSettingsChanged.invoke();
+        self._onSettingsChanged = null;
     }
 }

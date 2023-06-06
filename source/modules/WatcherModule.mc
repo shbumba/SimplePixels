@@ -34,8 +34,8 @@ module WatcherModule {
     }
 
     class Store {
-        private var _wathers as Array<Watcher> = [] as Array<Watcher>;
-        private var _cachedResults as Dictionary<InstanceKey, InstanceGetter> =
+        var _wathers as Array<Watcher> = [] as Array<Watcher>;
+        var _cachedResults as Dictionary<InstanceKey, InstanceGetter> =
             {} as Dictionary<InstanceKey, InstanceGetter>;
 
         function setup(wathers as Array<Watcher>) as Void {
@@ -45,7 +45,7 @@ module WatcherModule {
 
             for (var i = 0; i < wathers.size(); i++) {
                 var instance = wathers[i] as Watcher;
-                var processResult = self.processInstance(instance, true);
+                var processResult = self._processInstance(instance, true);
 
                 if (processResult == null) {
                     continue;
@@ -65,7 +65,7 @@ module WatcherModule {
             }
         }
 
-        private function processInstance(instance as Watcher, isInitial as Boolean) as Array? {
+        function _processInstance(instance as Watcher, isInitial as Boolean) as Array? {
             // [value, prevValue]
             var prevValue = self._cachedResults.get(instance.key);
             var currentValue = instance.get();
@@ -93,7 +93,7 @@ module WatcherModule {
                     continue;
                 }
 
-                var processResult = self.processInstance(instance, false);
+                var processResult = self._processInstance(instance, false);
 
                 if (processResult == null) {
                     continue;

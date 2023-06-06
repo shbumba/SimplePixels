@@ -20,6 +20,7 @@ module Components {
     };
 
     class Box extends BaseDrawable {
+        (:debug)
         private var DEBUG_LINE_SIZE = 2;
         private var _font as Symbol?;
         private var _boxWidth as Numeric? = null;

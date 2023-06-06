@@ -8,8 +8,8 @@ module DotPattern {
     }
 
     var patterns = {} as Dictionary<Keys, BufferedBitmap>;
-    var PATTERN_SIZE = 2;
-    var PATTERN_HEIGHT = 8;
+    const PATTERN_SIZE = 2;
+    const PATTERN_HEIGHT = 8;
 
     function _generateRow(width as Numeric, bgColor as Numeric, fgColor as Numeric) as BufferedBitmap {
         var bitmap = createBitmap({

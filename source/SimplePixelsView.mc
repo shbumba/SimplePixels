@@ -14,7 +14,7 @@ function printCommonDebugInfo() {
 }
 
 class SimplePixelsView extends WatchUi.WatchFace {
-    private var awakeWatcher as AwakeWatcher;
+    var awakeWatcher as AwakeWatcher;
 
     function initialize() {
         WatchFace.initialize();
@@ -23,7 +23,7 @@ class SimplePixelsView extends WatchUi.WatchFace {
         self.awakeWatcher = new AwakeWatcher(self, true);
     }
 
-    private function setupStore(drawContext as Dc) as Void {
+    function _setupStore(drawContext as Dc) as Void {
         Services.WathersStore().setup([
             self.awakeWatcher,
             new DisplaySecondsWatcher(self),
@@ -34,7 +34,7 @@ class SimplePixelsView extends WatchUi.WatchFace {
     function onLayout(drawContext as Dc) as Void {
         WatchFace.setLayout(Rez.Layouts.MainLayout(drawContext));
 
-        self.setupStore(drawContext);
+        self._setupStore(drawContext);
 
         WatchFace.onLayout(drawContext);
     }

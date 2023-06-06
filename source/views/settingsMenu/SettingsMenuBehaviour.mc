@@ -15,8 +15,8 @@ import ResourcesCache;
 import TimeStackModule;
 
 class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
-    private var onBackCallback as Lang.Method;
-    private var subMenuHandlers = {
+    var _onBackCallback as Lang.Method;
+    var _subMenuHandlers = {
         SettingType.BACKGROUND_COLOR => :colorHandler,
         SettingType.FOREGROUND_COLOR => :colorHandler,
         SettingType.INFO_COLOR => :colorHandler,
@@ -34,7 +34,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         SettingType.SECOND_TIME_FORMAT => :displaySecondTimeHandler
     };
 
-    private var subMenuAwailableKeys = {
+    var _subMenuAwailableKeys = {
         SettingType.SEPARATOR_INFO => [
             SensorTypes.BATTERY,
             SensorTypes.ACTIVE_MINUTES_WEEK,
@@ -45,10 +45,10 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
 
     function initialize(onBack as Lang.Method) {
         Menu2InputDelegate.initialize();
-        self.onBackCallback = onBack;
+        self._onBackCallback = onBack;
     }
 
-    private function renderCustomMenu(
+    function _renderCustomMenu(
         settingKey as SettingType.Enum,
         title as String,
         menuItems as Array<GenerateItemProps>,
@@ -70,12 +70,12 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
 
         WatchUi.switchToView(
             menu,
-            new CustomMenuDelegate(settingKey, clearPrevSensorCache, self.onBackCallback),
+            new CustomMenuDelegate(settingKey, clearPrevSensorCache, self._onBackCallback),
             WatchUi.SLIDE_UP
         );
     }
 
-    private function generateColorItems() as Array<GenerateItemProps> {
+    function _generateColorItems() as Array<GenerateItemProps> {
         var menuItems = [] as Array<GenerateItemProps>;
         var keys = ColorsModule.ColorsMap.keys() as Array<ColorsTypes.Enum>;
 
@@ -95,9 +95,9 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         return menuItems;
     }
 
-    private function generateSensorItems(settingKey as SensorTypes.Enum) as Array<GenerateItemProps> {
+    function _generateSensorItems(settingKey as SensorTypes.Enum) as Array<GenerateItemProps> {
         var menuItems = [] as Array<GenerateItemProps>;
-        var availableKeys = self.subMenuAwailableKeys.get(settingKey);
+        var availableKeys = self._subMenuAwailableKeys.get(settingKey);
         var sensorInfoService = Services.SensorInfo();
         var fields = SensorsTexts.Map.keys() as Array<SensorTypes.Enum>;
 
@@ -127,7 +127,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         return menuItems;
     }
 
-    private function generateMapItems(mapFields as Dictionary) as Array<GenerateItemProps> {
+    function _generateMapItems(mapFields as Dictionary) as Array<GenerateItemProps> {
         var menuItems = [] as Array<GenerateItemProps>;
         var keys = mapFields.keys() as Array<Number>;
 
@@ -146,11 +146,11 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         return menuItems;
     }
 
-    private function generateTimeZones() as Array<GenerateItemProps> {
+    function _generateTimeZones() as Array<GenerateItemProps> {
         var menuItems = [] as Array<GenerateItemProps>;
 
         for (var i = 0; i < TimeStackModule.TIME_ZONES.size(); i++) {
-            var timeZone = TimeStackModule.TIME_ZONES[i];
+            var timeZone = TimeStackModule.TIME_ZONES[i] as Numeric;
             var positiveTimeZone = timeZone > 0 ? timeZone : (timeZone / -1);
             var formatedTimeZone = Time.Gregorian.utcInfo(new Time.Moment(positiveTimeZone * 60 * 60), Time.FORMAT_SHORT);
             var timeSymbol = timeZone > 0 ? "+" : timeZone < 0 ? "-" : "";
@@ -169,15 +169,15 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     }
 
     public function colorHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
-        self.renderCustomMenu(item.getId(), item.getLabel(), self.generateColorItems(), false);
+        self._renderCustomMenu(item.getId(), item.getLabel(), self._generateColorItems(), false);
     }
 
     public function sensorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
-        self.renderCustomMenu(item.getId(), item.getLabel(), self.generateSensorItems(item.getId()), true);
+        self._renderCustomMenu(item.getId(), item.getLabel(), self._generateSensorItems(item.getId()), true);
     }
 
     public function displaySecondsHandler(item as WatchUi.ToggleMenuItem) as Void {
-        self.renderCustomMenu(item.getId(), item.getLabel(), self.generateMapItems({
+        self._renderCustomMenu(item.getId(), item.getLabel(), self._generateMapItems({
             DisplaySecondsType.NEVER => Rez.Strings.Never,
             DisplaySecondsType.ON_GESTURE => Rez.Strings.OnGesture
         }), false);
@@ -188,11 +188,11 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     }
 
     public function displaySecondTimeHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
-        self.renderCustomMenu(item.getId(), item.getLabel(), self.generateTimeZones(), false);
+        self._renderCustomMenu(item.getId(), item.getLabel(), self._generateTimeZones(), false);
     }
 
     function onSelect(item as WatchUi.MenuItem) as Void {
-        var handler = self.subMenuHandlers.get(item.getId());
+        var handler = self._subMenuHandlers.get(item.getId());
 
         if (handler == null) {
             throw new Toybox.Lang.InvalidValueException("Handler is not registered");
@@ -204,15 +204,15 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     }
 
     function onBack() as Void {
-        self.onBackCallback.invoke();
+        self._onBackCallback.invoke();
         WatchUi.Menu2InputDelegate.onBack();
     }
 }
 
 class CustomMenuDelegate extends WatchUi.Menu2InputDelegate {
-    private var settingKey as SettingType.Enum;
-    private var onBackCallback as Method;
-    private var clearPrevSensorCache as Boolean;
+    var _settingKey as SettingType.Enum;
+    var _onBackCallback as Method;
+    var _clearPrevSensorCache as Boolean;
 
     function initialize(
         settingKey as SettingType.Enum,
@@ -221,23 +221,23 @@ class CustomMenuDelegate extends WatchUi.Menu2InputDelegate {
     ) {
         Menu2InputDelegate.initialize();
 
-        self.settingKey = settingKey;
-        self.clearPrevSensorCache = clearPrevSensorCache;
-        self.onBackCallback = onBackCallback;
+        self._settingKey = settingKey;
+        self._clearPrevSensorCache = clearPrevSensorCache;
+        self._onBackCallback = onBackCallback;
     }
 
     function onSelect(item) as Void {
-        if (self.clearPrevSensorCache) {
-            var prevValue = SettingsModule.getValue(self.settingKey) as SensorTypes.Enum;
+        if (self._clearPrevSensorCache) {
+            var prevValue = SettingsModule.getValue(self._settingKey) as SensorTypes.Enum;
 
             ResourcesCache.remove(SensorsIcons.getIcon(prevValue, true));
         }
 
-        SettingsModule.setValue(self.settingKey, item.getId());
+        SettingsModule.setValue(self._settingKey, item.getId());
         self.onBack();
     }
 
     function onBack() as Void {
-        RenderSettingsMenu(self.onBackCallback, WatchUi.SLIDE_DOWN, self.settingKey);
+        RenderSettingsMenu(self._onBackCallback, WatchUi.SLIDE_DOWN, self._settingKey);
     }
 }

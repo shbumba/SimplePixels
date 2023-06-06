@@ -9,8 +9,8 @@ typedef CustomIconMenuItemProps as {
 };
 
 class CustomIconMenuItem extends WatchUi.CustomMenuItem {
-    private var _label as Symbol;
-    private var _icon as Symbol?;
+    var _label as Symbol;
+    var _icon as Symbol?;
 
     function initialize(params as CustomIconMenuItemProps) {
         WatchUi.CustomMenuItem.initialize(params.get(:identifier), {});

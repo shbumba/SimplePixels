@@ -13,18 +13,18 @@ typedef SensorsInfoProps as Components.ListProps or
 };
 
 class SensorsInfoView extends Components.List {
-    private var _sensors as Array<SensorTypes.Enum> = [] as Array<SensorTypes.Enum>;
-    private var _fields as Array<SettingType.Enum> = [] as Array<SettingType.Enum>;
+    var _sensors as Array<SensorTypes.Enum> = [] as Array<SensorTypes.Enum>;
+    var _fields as Array<SettingType.Enum> = [] as Array<SettingType.Enum>;
 
     function initialize(params as SensorsInfoProps) {
         var fields = params.get(:fields);
         self._fields = fields != null ? fields : [];
-        self.updateSensors();
+        self._updateSensors();
 
         List.initialize(params);
     }
 
-    private function updateSensors() as Void {
+    function _updateSensors() as Void {
         self._sensors = [] as Array<SensorTypes.Enum>;
 
         for (var i = 0; i < self._fields.size(); i++) {
@@ -37,7 +37,7 @@ class SensorsInfoView extends Components.List {
     function onSettingsChanged() as Void {
         Components.List.onSettingsChanged();
 
-        self.updateSensors();
+        self._updateSensors();
     }
 
     private function getSensorItem(sensorType as SensorTypes.Enum) as Components.ItemType {
