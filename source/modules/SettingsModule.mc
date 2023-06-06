@@ -19,6 +19,12 @@ module SettingsModule {
             DISPLAY_STATUS_ICONS = "DisplayStatusIcons",
             DISPLAY_SECONDS = "DisplaySeconds",
             SECOND_TIME_FORMAT = "SecondTimeFormat",
+            OPENWEATHER_API_KEY = "OpenWeatherAPIKey",
+            OPENWEATHER_INTERVAL = "OpenWeatherIntervalMinutes",
+            OPENWEATHER_ENABLED = "OpenWeatherEnabled",
+            OPENWEATHER_LAT = "OpenWeatherLat",
+            OPENWEATHER_LON = "OpenWeatherLon",
+            OPENWEATHER_DATA = "OpenWeatherData",
         }
     }
 
@@ -33,7 +39,11 @@ module SettingsModule {
         Properties.setValue(settingKey as String, value);
     }
 
-    function getValue(settingKey as SettingType.Enum) as String or Number or Boolean {
-        return Properties.getValue(settingKey as String) as String or Number or Boolean;
+    function getValue(settingKey as SettingType.Enum) as String or Number or Boolean or Dictionary or Null {
+        try {
+            return Properties.getValue(settingKey as String);
+        } catch (e) {
+            return null;
+        }
     }
 }

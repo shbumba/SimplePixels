@@ -79,4 +79,14 @@
     <string id="OnGesture">On Gesture</string>
 
     <string id="NA">---</string>
+
+    <string id="OpenWeather_Main_Title">OpenWeather Main</string>
+    <string id="OpenWeather_Main_Description">You'll need to input your API key for OpenWeather, as without it, the weather information won't be loaded</string>
+    <string id="OpenWeatherEnabled_Title">Is Enabled?</string>
+    <string id="OpenWeatherAPIKey__Title">API Key</string>
+    <string id="OpenWeatherIntervalMinutes__Title">Update intermal (minutes)</string>
+    <string id="OpenWeather_Location_Title">OpenWeather Location</string>
+    <string id="OpenWeather_Location_Description">If you leave these fields blank, your watch will determine your location</string>
+    <string id="OpenWeatherLat__Title">Latitude</string>
+    <string id="OpenWeatherLon__Title">Longitude</string>
 </strings>

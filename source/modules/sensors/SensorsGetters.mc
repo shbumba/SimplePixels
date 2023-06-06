@@ -11,9 +11,21 @@ import Toybox.Position;
 import SensorTypes;
 import SensorsCheckers;
 import TimeStackModule;
+import SettingsModule.SettingType;
 
 module SensorsGetters {
     typedef SersorInfoGetterValue as Number or Float or Boolean or Time.Moment or Position.Info or Null;
+    typedef WeatherData as {
+        "time" as Numeric?,
+        "max" as Numeric?,
+        "min" as Numeric?,
+        "current" as Numeric?,
+        "feels" as Numeric?,
+    };
+
+    typedef WeatherError as {
+        "httpError" as Number,
+    };
 
     var Map =
         {
@@ -266,19 +278,58 @@ module SensorsGetters {
             return value != null ? value.toLong() : value;
         }
 
-        function getCurrentWeather() as Number? {
+        function _getOWWeatherData() as Dictionary? {
+            var data = SettingsModule.getValue(SettingType.OPENWEATHER_DATA) as WeatherData or WeatherError or Null;
+            
+            if (data == null || data.hasKey("httpError")) {
+                return null;
+            }
+            
+            var weatherTime = new Time.Moment(data["time"] as Number);
+            var currentTime = Time.now();
+
+            if (currentTime.compare(weatherTime) >= (Gregorian.SECONDS_PER_HOUR * 2)) {
+                return null;
+            }
+
+            return data as Dictionary;
+        }
+
+        function _getCurrentOWWeather() as Number? {
+            var info = _getOWWeatherData();
+
+            return info != null ? info["current"] : null;
+        }
+
+        function _getWeatherOWFeels() as Number? {
+            var info = _getOWWeatherData();
+
+            return info != null ? info["feels"] : null;
+        }
+
+        function _getCurrentOWForecast() as Array<Number?>? {
+            var info = _getOWWeatherData();
+
+            if (info == null) {
+                return null;
+            }
+
+            return [info["max"], info["min"]] as Array<Number?>;
+        }
+
+        function _getCurrentGarminWeather() as Number? {
             var info = Weather.getCurrentConditions();
 
             return info != null ? info.temperature : null;
         }
 
-        function getWeatherFeels() as Number? {
+        function _getWeatherGarminFeels() as Number? {
             var info = Weather.getCurrentConditions();
 
             return info != null ? info.feelsLikeTemperature : null;
         }
 
-        function getCurrentForecast() as Array<Number?>? {
+        function _getCurrentGarminForecast() as Array<Number?>? {
             var info = Weather.getDailyForecast();
 
             if (info == null || info.size() == 0) {
@@ -286,6 +337,24 @@ module SensorsGetters {
             }
 
             return [info[0].lowTemperature, info[0].highTemperature] as Array<Number?>;
+        }
+
+        function getCurrentWeather() as Number? {
+            var isOWEnabled = SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
+
+            return isOWEnabled ? _getCurrentOWWeather() : _getCurrentGarminWeather();
+        }
+
+        function getWeatherFeels() as Number? {
+            var isOWEnabled = SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
+
+            return isOWEnabled ? _getWeatherOWFeels() : _getWeatherGarminFeels();
+        }
+
+        function getCurrentForecast() as Array<Number?>? {
+            var isOWEnabled = SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
+
+            return isOWEnabled ? _getCurrentOWForecast() : _getCurrentGarminForecast();
         }
 
         function getCurrentLocation() as Position.Location? {
@@ -298,7 +367,7 @@ module SensorsGetters {
             return null;
         }
 
-        function __getSunPhaseTime(action) as Time.Moment or Null {
+        function _getSunPhaseTime(action) as Time.Moment or Null {
             var location = getCurrentLocation();
 
             if (location == null) {
@@ -311,7 +380,7 @@ module SensorsGetters {
         }
 
         function getSunrise() as Gregorian.Info? {
-            var time = __getSunPhaseTime(:getSunrise);
+            var time = _getSunPhaseTime(:getSunrise);
 
             if (time == null) {
                 return null;
@@ -321,7 +390,7 @@ module SensorsGetters {
         }
 
         function getSunset() as Gregorian.Info? {
-            var time = __getSunPhaseTime(:getSunset);
+            var time = _getSunPhaseTime(:getSunset);
 
             if (time == null) {
                 return null;

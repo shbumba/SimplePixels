@@ -1,0 +1,26 @@
+<settings>
+    <group id="owMainSettings" title="@Strings.OpenWeather_Main_Title" description="@Strings.OpenWeather_Main_Description">
+        <setting propertyKey="@Properties.OpenWeatherEnabled" title="@Strings.OpenWeatherEnabled_Title">
+            <settingConfig type="boolean"/>
+        </setting>
+        <setting propertyKey="@Properties.OpenWeatherAPIKey" title="@Strings.OpenWeatherAPIKey__Title">
+            <settingConfig type="alphaNumeric" required="false"/>
+        </setting>
+        <setting propertyKey="@Properties.OpenWeatherIntervalMinutes" title="@Strings.OpenWeatherIntervalMinutes__Title">
+            <settingConfig type="list">
+                <listEntry value="30">30 minutes</listEntry>
+                <listEntry value="60">1 hour</listEntry>
+                <listEntry value="120">2 hours</listEntry>
+                <listEntry value="180">3 hours</listEntry>
+            </settingConfig>
+        </setting>
+    </group>
+    <group id="owLocation" title="@Strings.OpenWeather_Location_Title" description="@Strings.OpenWeather_Location_Description">
+        <setting propertyKey="@Properties.OpenWeatherLat" title="@Strings.OpenWeatherLat__Title">
+            <settingConfig type="alphaNumeric" required="false"/>
+        </setting>
+        <setting propertyKey="@Properties.OpenWeatherLon" title="@Strings.OpenWeatherLon__Title">
+            <settingConfig type="alphaNumeric" required="false"/>
+        </setting>
+    </group>
+</settings>

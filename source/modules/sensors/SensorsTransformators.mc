@@ -89,7 +89,7 @@ module SensorsTransformators {
                 value = Math.floor(value * 1.8 + 32).toNumber();
             }
 
-            return value.toString() + "°";
+            return value.format("%.0f").toString() + "°";
         }
 
         function _transformTemperatureForecast(forecast as Array<Number?>) as String {

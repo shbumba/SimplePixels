@@ -59,10 +59,18 @@ module DotPattern {
     }
 
     function update(key as Keys, width as Numeric, height as Numeric, bgColor as Numeric, fgColor as Numeric) as Void {
+        if ($.IS_LOW_MEMORY) {
+            return;
+        }
+        
         patterns.put(key, _create(width, height, bgColor, fgColor));
     }
 
     function get(key as Keys, width as Numeric, height as Numeric, bgColor as Numeric, fgColor as Numeric) as BufferedBitmap {
+        if ($.IS_LOW_MEMORY) {
+            return _create(width, height, bgColor, fgColor);
+        }
+
         if (!patterns.hasKey(key)) {
             update(key, width, height, bgColor, fgColor);
         }
