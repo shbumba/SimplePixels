@@ -21,7 +21,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         SettingType.FOREGROUND_COLOR => :colorHandler,
         SettingType.INFO_COLOR => :colorHandler,
         SettingType.SEPARATOR_COLOR => :colorHandler,
-        SettingType.SEPARATOR_INFO => :sensorFieldHandler,
+        SettingType.SEPARATOR_INFO => :separatorFieldHandler,
         SettingType.TOP_SENSOR_1 => :sensorFieldHandler,
         SettingType.TOP_SENSOR_2 => :sensorFieldHandler,
         SettingType.TOP_SENSOR_3 => :sensorFieldHandler,
@@ -34,153 +34,137 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         SettingType.SECOND_TIME_FORMAT => :displaySecondTimeHandler
     };
 
-    var _subMenuAwailableKeys = {
-        SettingType.SEPARATOR_INFO => [
-            SensorTypes.BATTERY,
-            SensorTypes.ACTIVE_MINUTES_WEEK,
-            SensorTypes.FLOORS,
-            SensorTypes.STEPS
-        ],
-    };
-
     function initialize(onBack as Lang.Method) {
         Menu2InputDelegate.initialize();
         self._onBackCallback = onBack;
     }
 
-    function _renderCustomMenu(
-        settingKey as SettingType.Enum,
-        title as String,
-        menuItems as Array<GenerateItemProps>,
-        clearPrevSensorCache as Boolean
-    ) as Void {
-        var menu = SettingsMenuBuilder.generateMenu({
-            :buider => SettingsMenuBuilder.CUSTOM_MENU,
-            :buiderProps => {
-                :itemHeight => 35,
-                :backgroundColor => Graphics.COLOR_WHITE,
-                :options => {
-                    :focusItemHeight => 45,
-                    :title => new DrawableMenuTitle(title),
-                    :footer => new DrawableMenuFooter()
-                }
-            },
-            :valueKey => settingKey,
-        }, menuItems);
-
-        WatchUi.switchToView(
-            menu,
-            new CustomMenuDelegate(settingKey, clearPrevSensorCache, self._onBackCallback),
-            WatchUi.SLIDE_UP
-        );
+    function _createCustomMenu(title as String) as WatchUi.Menu2 or WatchUi.CustomMenu {
+        return SettingsMenuBuilder.generateMenu(SettingsMenuBuilder.CUSTOM_MENU, {
+            :itemHeight => 35,
+            :backgroundColor => Graphics.COLOR_WHITE,
+            :options => {
+                :focusItemHeight => 45,
+                :title => new DrawableMenuTitle(title),
+                :footer => new DrawableMenuFooter()
+            }
+        });
     }
 
-    function _generateColorItems() as Array<GenerateItemProps> {
-        var menuItems = [] as Array<GenerateItemProps>;
+    function _addColorItems(menu as WatchUi.CustomMenu or WatchUi.Menu2) as Void {
         var keys = ColorsModule.ColorsMap.keys() as Array<ColorsTypes.Enum>;
 
         for (var i = 0; i < keys.size(); i++) {
             var colorKey = keys[i];
 
-            menuItems.add({
-                :buider => SettingsMenuBuilder.CUSTOM_COLOR_ITEM,
-                :buiderProps => {
+            menu.addItem(
+                SettingsMenuBuilder.generateMenuItem(SettingsMenuBuilder.CUSTOM_COLOR_ITEM, {
                     :identifier => colorKey as Number,
                     :color => ColorsModule.getColor(colorKey),
                     :label => ColorsModule.getColorName(colorKey)
-                }
-            });
+                })
+            );
         }
-
-        return menuItems;
     }
 
-    function _generateSensorItems(settingKey as SensorTypes.Enum) as Array<GenerateItemProps> {
-        var menuItems = [] as Array<GenerateItemProps>;
-        var availableKeys = self._subMenuAwailableKeys.get(settingKey);
+    function _addSensorItems(
+        menu as WatchUi.CustomMenu or WatchUi.Menu2,
+        availableFields as Array<SensorTypes.Enum>?
+    ) as Void {
         var sensorInfoService = Services.SensorInfo();
-        var fields = SensorsTexts.Map.keys() as Array<SensorTypes.Enum>;
+        var fields = availableFields != null ? availableFields : SensorsTexts.Map.keys() as Array<SensorTypes.Enum>;
 
         for (var i = 0; i < fields.size(); i++) {
             var sensorKey = fields[i];
-
-            if (!sensorInfoService.isAwailable(sensorKey)) {
-                continue;
-            }
-            
             var text = SensorsTexts.getText(sensorKey);
 
-            if (text == null || (availableKeys != null && availableKeys.indexOf(sensorKey) == -1)) {
+            if (text == null || !sensorInfoService.isAwailable(sensorKey)) {
                 continue;
             }
-            
-            menuItems.add({
-                :buider => SettingsMenuBuilder.CUSTOM_ICON_ITEM,
-                :buiderProps => {
+
+            menu.addItem(
+                SettingsMenuBuilder.generateMenuItem(SettingsMenuBuilder.CUSTOM_ICON_ITEM, {
                     :identifier => sensorKey as Number,
                     :label => text,
                     :icon => SensorsIcons.getIcon(sensorKey, true)
-                }
-            });
+                })
+            );
         }
-
-        return menuItems;
     }
 
-    function _generateMapItems(mapFields as Dictionary) as Array<GenerateItemProps> {
-        var menuItems = [] as Array<GenerateItemProps>;
+    function _addMapItems(menu as WatchUi.CustomMenu or WatchUi.Menu2, mapFields as Dictionary) as Void {
         var keys = mapFields.keys() as Array<Number>;
 
         for (var i = 0; i < keys.size(); i++) {
             var key = keys[i] as Number;
 
-            menuItems.add({
-                :buider => SettingsMenuBuilder.CUSTOM_ICON_ITEM,
-                :buiderProps => {
+            menu.addItem(
+                SettingsMenuBuilder.generateMenuItem(SettingsMenuBuilder.CUSTOM_ICON_ITEM, {
                     :identifier => key,
                     :label => mapFields.get(key) as Symbol
-                }
-            });
+                })
+            );
         }
-
-        return menuItems;
     }
 
-    function _generateTimeZones() as Array<GenerateItemProps> {
-        var menuItems = [] as Array<GenerateItemProps>;
-
+    function _addTimeZones(menu as WatchUi.CustomMenu or WatchUi.Menu2) as Void {
         for (var i = 0; i < TimeStackModule.TIME_ZONES.size(); i++) {
             var timeZone = TimeStackModule.TIME_ZONES[i] as Numeric;
-            var positiveTimeZone = timeZone > 0 ? timeZone : (timeZone / -1);
-            var formatedTimeZone = Time.Gregorian.utcInfo(new Time.Moment(positiveTimeZone * 60 * 60), Time.FORMAT_SHORT);
+            var positiveTimeZone = timeZone > 0 ? timeZone : timeZone / -1;
+            var formatedTimeZone = Time.Gregorian.utcInfo(
+                new Time.Moment(positiveTimeZone * 60 * 60),
+                Time.FORMAT_SHORT
+            );
             var timeSymbol = timeZone > 0 ? "+" : timeZone < 0 ? "-" : "";
-            var formatedTime = Lang.format("$1$$2$:$3$", [timeSymbol, formatedTimeZone.hour.format("%02u"), formatedTimeZone.min.format("%02u")]);
+            var formatedTime = Lang.format("$1$$2$:$3$", [
+                timeSymbol,
+                formatedTimeZone.hour.format("%02u"),
+                formatedTimeZone.min.format("%02u")
+            ]);
 
-            menuItems.add({
-                :buider => SettingsMenuBuilder.CUSTOM_ICON_ITEM,
-                :buiderProps => {
+            menu.addItem(
+                SettingsMenuBuilder.generateMenuItem(SettingsMenuBuilder.CUSTOM_ICON_ITEM, {
                     :identifier => timeZone,
                     :label => formatedTime
-                }
-            });
+                })
+            );
         }
-
-        return menuItems;
     }
 
     public function colorHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
-        self._renderCustomMenu(item.getId(), item.getLabel(), self._generateColorItems(), false);
+        var menu = self._createCustomMenu(item.getLabel());
+        self._addColorItems(menu);
+
+        self.openMenu(item.getId(), menu);
     }
 
     public function sensorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
-        self._renderCustomMenu(item.getId(), item.getLabel(), self._generateSensorItems(item.getId()), true);
+        var menu = self._createCustomMenu(item.getLabel());
+        self._addSensorItems(menu, null);
+
+        self.openMenu(item.getId(), menu);
+    }
+
+    public function separatorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
+        var menu = self._createCustomMenu(item.getLabel());
+        self._addSensorItems(menu, [
+            SensorTypes.BATTERY,
+            SensorTypes.ACTIVE_MINUTES_WEEK,
+            SensorTypes.FLOORS,
+            SensorTypes.STEPS
+        ]);
+
+        self.openMenu(item.getId(), menu);
     }
 
     public function displaySecondsHandler(item as WatchUi.ToggleMenuItem) as Void {
-        self._renderCustomMenu(item.getId(), item.getLabel(), self._generateMapItems({
+        var menu = self._createCustomMenu(item.getLabel());
+        self._addMapItems(menu, {
             DisplaySecondsType.NEVER => Rez.Strings.Never,
             DisplaySecondsType.ON_GESTURE => Rez.Strings.OnGesture
-        }), false);
+        });
+
+        self.openMenu(item.getId(), menu);
     }
 
     public function toggleFieldHangler(item as WatchUi.ToggleMenuItem) as Void {
@@ -188,7 +172,16 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     }
 
     public function displaySecondTimeHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
-        self._renderCustomMenu(item.getId(), item.getLabel(), self._generateTimeZones(), false);
+        var menu = self._createCustomMenu(item.getLabel());
+        self._addTimeZones(menu);
+
+        self.openMenu(item.getId(), menu);
+    }
+
+    function openMenu(settingKey as SettingType.Enum, menu as WatchUi.Menu2 or WatchUi.CustomMenu) as Void {
+        SettingsMenuBuilder.setFocusOnMenuItem(menu, settingKey);
+
+        WatchUi.switchToView(menu, new CustomMenuDelegate(settingKey, true, self._onBackCallback), WatchUi.SLIDE_UP);
     }
 
     function onSelect(item as WatchUi.MenuItem) as Void {

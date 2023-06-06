@@ -4,15 +4,6 @@ import Toybox.WatchUi;
 import Services;
 import WatcherModule;
 
-(:debug)
-function printCommonDebugInfo() {
-    var deviceSettings = Toybox.System.getDeviceSettings();
-    var stats = Toybox.System.getSystemStats();
-
-    Toybox.System.println([deviceSettings.screenShape, deviceSettings.screenWidth, deviceSettings.screenHeight]);
-    Toybox.System.println([stats.totalMemory, stats.usedMemory, stats.freeMemory]);
-}
-
 class SimplePixelsView extends WatchUi.WatchFace {
     var awakeWatcher as AwakeWatcher;
 

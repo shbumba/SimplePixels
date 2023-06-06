@@ -38,26 +38,18 @@ module SettingsMenuBuilder {
 
     typedef MenuValueKey as SettingType.Enum;
 
-    typedef GenerateItemProps as {
-        :buider as ItemBuilder,
-        :buiderProps as MenuItemProps or CustomColorMenuItemProps or CustomIconMenuItemProps or ToggleItemProps,
-        :valueKey as MenuValueKey?
-    };
+    typedef GenerateItemProps as MenuItemProps or
+        CustomColorMenuItemProps or
+        CustomIconMenuItemProps or
+        ToggleItemProps;
 
-    typedef GenerateMenuProps as {
-        :buider as MenuBuilder,
-        :buiderProps as MenuProps or CustomMenuProps,
-        :valueKey as MenuValueKey?,
-    };
+    typedef GenerateMenuProps as MenuProps or CustomMenuProps;
 
-    function generateMenuItem(props as GenerateItemProps) as WatchUi.MenuItem or WatchUi.CustomMenuItem {
-        var itemBuilder = props.get(:buider);
-
-        if (itemBuilder == null) {
-            throw new Toybox.Lang.InvalidValueException("the item buider prop is required");
-        }
-
-        itemBuilder = itemBuidersMap.get(itemBuilder);
+    function generateMenuItem(
+        builder as ItemBuilder,
+        props as GenerateItemProps
+    ) as WatchUi.MenuItem or WatchUi.CustomMenuItem {
+        var itemBuilder = itemBuidersMap.get(builder);
 
         if (itemBuilder == null) {
             throw new Toybox.Lang.InvalidValueException("the item buider prop has an incorrect value");
@@ -65,41 +57,28 @@ module SettingsMenuBuilder {
 
         var method = new Lang.Method(SettingsMenuBuilder, itemBuilder);
 
-        return method.invoke(props.get(:buiderProps), props.get(:valueKey));
+        return method.invoke(props);
     }
 
-    function generateMenu(props as GenerateMenuProps, items as Array<GenerateItemProps>) as WatchUi.Menu2 or WatchUi.CustomMenu {
-        var menuBuilder = props.get(:buider);
-
-        if (menuBuilder == null) {
-            throw new Toybox.Lang.InvalidValueException("the menu buider prop is required");
-        }
-
-        menuBuilder = menuBuidersMap.get(menuBuilder);
+    function generateMenu(buider as MenuBuilder, props as GenerateMenuProps) as WatchUi.Menu2 or WatchUi.CustomMenu {
+        var menuBuilder = menuBuidersMap.get(buider);
 
         if (menuBuilder == null) {
             throw new Toybox.Lang.InvalidValueException("the menu buider prop has an incorrect value");
         }
 
-        var valueKey = props.get(:valueKey);
         var method = new Lang.Method(SettingsMenuBuilder, menuBuilder);
-        var menu = method.invoke(props.get(:buiderProps));
 
-        $.clearDictionary(props);
+        return method.invoke(props);
+    }
 
-        while (items.size() > 0) {
-            menu.addItem(generateMenuItem(items[0]));
-            items.remove(items[0]);
-        }
-
+    function setFocusOnMenuItem(menu as WatchUi.CustomMenu or WatchUi.Menu2, valueKey as MenuValueKey?) as Void {
         if (valueKey != null) {
             var settingValue = SettingsModule.getValue(valueKey);
             var valueItem = menu.findItemById(settingValue);
 
             menu.setFocus(valueItem);
         }
-
-        return menu;
     }
 
     enum MenuBuilder {
@@ -134,7 +113,7 @@ module SettingsMenuBuilder {
         TOGGLE_ITEM => :BuildToggleMenuItem
     };
 
-    function BuildMenuItem(params as MenuItemProps, valueKey as MenuValueKey?) as WatchUi.MenuItem {
+    function BuildMenuItem(params as MenuItemProps) as WatchUi.MenuItem {
         return new WatchUi.MenuItem(
             params.get(:label),
             params.get(:subLabel),
@@ -143,25 +122,20 @@ module SettingsMenuBuilder {
         );
     }
 
-    function BuildCustomColorMenuItem(
-        params as CustomColorMenuItemProps,
-        valueKey as MenuValueKey?
-    ) as CustomColorMenuItem {
+    function BuildCustomColorMenuItem(params as CustomColorMenuItemProps) as CustomColorMenuItem {
         return new CustomColorMenuItem(params);
     }
 
-    function BuildCustomIconMenuItem(
-        params as CustomIconMenuItemProps,
-        valueKey as MenuValueKey?
-    ) as CustomIconMenuItem {
+    function BuildCustomIconMenuItem(params as CustomIconMenuItemProps) as CustomIconMenuItem {
         return new CustomIconMenuItem(params);
     }
 
-    function BuildToggleMenuItem(params as ToggleItemProps, valueKey as MenuValueKey?) as WatchUi.ToggleMenuItem {
+    function BuildToggleMenuItem(params as ToggleItemProps) as WatchUi.ToggleMenuItem {
         var isEnabled = params.get(:enabled);
+        var valueKey = params.get(:identifier);
 
         if (valueKey != null) {
-            isEnabled = SettingsModule.getValue(valueKey);
+            isEnabled = SettingsModule.getValue(valueKey as SettingType.Enum);
         }
 
         if (isEnabled == null) {
@@ -172,6 +146,6 @@ module SettingsMenuBuilder {
         var subLabel = params.get(:subLabel);
         subLabel = subLabel != null ? WatchUi.loadResource(subLabel) : null;
 
-        return new WatchUi.ToggleMenuItem(label, subLabel, params.get(:identifier), isEnabled, params.get(:options));
+        return new WatchUi.ToggleMenuItem(label, subLabel, valueKey, isEnabled, params.get(:options));
     }
 }
