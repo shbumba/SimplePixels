@@ -4,14 +4,10 @@ import Toybox.Time;
 import SettingsModule.SettingType;
 import SettingsModule;
 
-(:background)
 class BackgroundController {
-    (:background)
-    const BG_INTERVAL_LIMIT = 300; // 5 minutes
-    (:background)
+    const BG_INTERVAL_LIMIT = 300; // 5 minutes as seconds
     var isRunning = false;
 
-    (:background)
     function setup() as Void {
         var isEnabled = !!SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
 
@@ -22,19 +18,17 @@ class BackgroundController {
         }
     }
 
-    (:background)
     function next() as Void {
-        var interval = SettingsModule.getValue(SettingType.OPENWEATHER_INTERVAL);
-        interval = interval != null ? interval : 30;
+        var intervalMinutes = SettingsModule.getValue(SettingType.OPENWEATHER_INTERVAL);
+        intervalMinutes = intervalMinutes != null ? intervalMinutes : 30;
 
-        var intervalSeconds = interval * 60;
+        var intervalSeconds = intervalMinutes * 60;
         var nextTime = Time.now().add(new Time.Duration(intervalSeconds));
 
         self._remove();
         self._registerTask(nextTime);
     }
 
-    (:background)
     function _run() as Void {
         var lastTime = Background.getLastTemporalEventTime();
         var nextTime = Time.now();
@@ -48,14 +42,12 @@ class BackgroundController {
         self._registerTask(nextTime);
     }
 
-    (:background)
     function _registerTask(time as Time.Moment or Time.Duration) as Void {
         self.isRunning = true;
 
         Background.registerForTemporalEvent(time);
     }
 
-    (:background)
     function _remove() as Void {
         self.isRunning = false;
 

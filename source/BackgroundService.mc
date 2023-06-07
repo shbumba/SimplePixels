@@ -77,14 +77,14 @@ class BackgroundService extends System.ServiceDelegate {
     }
 
     (:background)
-    function onReceiveWeatherInfo(responseCode as Numeric, data as Lang.Dictionary or Lang.String or Null) as Void {
+    function onReceiveWeatherInfo(responseCode as Numeric, data as Dictionary or String or Null) as Void {
         self._isRunning = false;
 
         var result = {
             "httpError" => responseCode
         };
 
-        if (responseCode == 200 && data instanceof Lang.Dictionary) {
+        if (responseCode == 200 && data instanceof Dictionary) {
             result = {
                 "time" => Time.now().value(),
                 "max" => data["main"]["temp_max"],
@@ -100,7 +100,7 @@ class BackgroundService extends System.ServiceDelegate {
     }
 
     (:background)
-    function makeWebRequest(url, params, callback) as Void {
+    function makeWebRequest(url as String, params as Dictionary, callback) as Void {
         var options = {
             :method => Communications.HTTP_REQUEST_METHOD_GET,
             :headers => {

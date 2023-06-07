@@ -21,7 +21,7 @@ class PhantomTimeView extends Components.TimeView {
     }
 
     function updatePattern() as Void {
-        DotPattern.update(DotPattern.HOURS, self.getWidth(), self.getHeight(), self.backgroundColor, self.foregroundColor);
+        DotPattern.update(DotPattern.HOURS, self.getWidth(), self.getHeight(), self.backgroundColor);
     }
 
     function onSettingsChanged() as Void {
@@ -71,7 +71,7 @@ class PhantomTimeView extends Components.TimeView {
 
         self.renderTime(time, drawContext);
 
-        var pattern = DotPattern.get(DotPattern.HOURS, self.getWidth(), self.getHeight(), self.backgroundColor, self.foregroundColor);
+        var pattern = DotPattern.get(DotPattern.HOURS, self.getWidth(), self.getHeight(), self.backgroundColor);
 
         drawContext.drawBitmap(self.getPosX(), self.getPosY(), pattern);
     }

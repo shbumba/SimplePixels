@@ -11,11 +11,10 @@ module DotPattern {
     const PATTERN_SIZE = 2;
     const PATTERN_HEIGHT = 8;
 
-    function _generateRow(width as Numeric, bgColor as Numeric, fgColor as Numeric) as BufferedBitmap {
+    function _generateRow(width as Numeric, bgColor as Numeric) as BufferedBitmap {
         var bitmap = createBitmap({
             :width => width,
             :height => PATTERN_HEIGHT,
-            :palette => [Graphics.COLOR_TRANSPARENT, bgColor, fgColor]
         });
         var dc = bitmap.getDc();
 
@@ -35,13 +34,12 @@ module DotPattern {
         return bitmap;
     }
 
-    function _create(width as Numeric, height as Numeric, bgColor as Numeric, fgColor as Numeric) as BufferedBitmap {
+    function _create(width as Numeric, height as Numeric, bgColor as Numeric) as BufferedBitmap {
         var bitmap = createBitmap({
             :width => width,
             :height => height,
-            :palette => [Graphics.COLOR_TRANSPARENT, bgColor, fgColor]
         });
-        var rowPattern = self._generateRow(width, bgColor, fgColor);
+        var rowPattern = self._generateRow(width, bgColor);
         var dc = bitmap.getDc();
         
         dc.clear();
@@ -58,21 +56,21 @@ module DotPattern {
         return bitmap;
     }
 
-    function update(key as Keys, width as Numeric, height as Numeric, bgColor as Numeric, fgColor as Numeric) as Void {
+    function update(key as Keys, width as Numeric, height as Numeric, bgColor as Numeric) as Void {
         if ($.IS_LOW_MEMORY) {
             return;
         }
         
-        patterns.put(key, _create(width, height, bgColor, fgColor));
+        patterns.put(key, _create(width, height, bgColor));
     }
 
-    function get(key as Keys, width as Numeric, height as Numeric, bgColor as Numeric, fgColor as Numeric) as BufferedBitmap {
+    function get(key as Keys, width as Numeric, height as Numeric, bgColor as Numeric) as BufferedBitmap {
         if ($.IS_LOW_MEMORY) {
-            return _create(width, height, bgColor, fgColor);
+            return _create(width, height, bgColor);
         }
 
         if (!patterns.hasKey(key)) {
-            update(key, width, height, bgColor, fgColor);
+            update(key, width, height, bgColor);
         }
 
         return patterns.get(key) as BufferedBitmap;
