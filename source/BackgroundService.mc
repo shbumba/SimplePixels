@@ -9,6 +9,7 @@ import SettingsModule;
 
 (:background)
 class BackgroundService extends System.ServiceDelegate {
+    (:background)
     const _OW_URL = "https://api.openweathermap.org/data/2.5/weather";
     (:background)
     var _isRunning = false;
@@ -17,6 +18,7 @@ class BackgroundService extends System.ServiceDelegate {
         System.ServiceDelegate.initialize();
     }
 
+    (:background)
     function onTemporalEvent() as Void {
         if (self._isRunning) {
             return;
@@ -75,14 +77,14 @@ class BackgroundService extends System.ServiceDelegate {
     }
 
     (:background)
-    function onReceiveWeatherInfo(responseCode as Numeric, data) as Void {
+    function onReceiveWeatherInfo(responseCode as Numeric, data as Lang.Dictionary or Lang.String or Null) as Void {
         self._isRunning = false;
 
         var result = {
             "httpError" => responseCode
         };
 
-        if (responseCode == 200) {
+        if (responseCode == 200 && data instanceof Lang.Dictionary) {
             result = {
                 "time" => Time.now().value(),
                 "max" => data["main"]["temp_max"],

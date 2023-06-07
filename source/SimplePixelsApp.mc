@@ -14,6 +14,7 @@ class SimplePixelsApp extends Application.AppBase {
         AppBase.initialize();
     }
 
+    (:background)
     function getInitialView() as Array<Views or InputDelegates>? {
         self._bgController.setup();
 
@@ -30,9 +31,11 @@ class SimplePixelsApp extends Application.AppBase {
         return [new BackgroundService()];
     }
     
+    (:background)
     function onSettingsChanged() as Void {
+        self._bgController.setup();
+
         if (self._mainView != null) {
-            self._bgController.setup();
             self._mainView.onSettingsChanged();
         }
     }
@@ -43,6 +46,7 @@ class SimplePixelsApp extends Application.AppBase {
         }
     }
 
+    (:background)
     function onBackgroundData(data as Application.PersistableType) as Void {
         if ((data instanceof Dictionary) && data.hasKey(StoreKeys.OPENWEATHER_DATA)) {
             Storage.setValue(StoreKeys.OPENWEATHER_DATA, data[StoreKeys.OPENWEATHER_DATA]);
