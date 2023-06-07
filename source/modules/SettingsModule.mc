@@ -1,8 +1,11 @@
 import Toybox.Lang;
 import Toybox.Application.Properties;
 
+(:background)
 module SettingsModule {
+    (:background)
     module SettingType {
+        (:background)
         enum Enum {
             BACKGROUND_COLOR = "BackgroundColor",
             FOREGROUND_COLOR = "ForegroundColor",
@@ -24,7 +27,6 @@ module SettingsModule {
             OPENWEATHER_ENABLED = "OpenWeatherEnabled",
             OPENWEATHER_LAT = "OpenWeatherLat",
             OPENWEATHER_LON = "OpenWeatherLon",
-            OPENWEATHER_DATA = "OpenWeatherData",
         }
     }
 
@@ -39,6 +41,7 @@ module SettingsModule {
         Properties.setValue(settingKey as String, value);
     }
 
+    (:background)
     function getValue(settingKey as SettingType.Enum) as String or Number or Boolean or Dictionary or Null {
         try {
             return Properties.getValue(settingKey as String);

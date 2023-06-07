@@ -1,6 +1,7 @@
 import Toybox.Lang;
 import Toybox.System;
 import Toybox.ActivityMonitor;
+import Toybox.Application.Storage;
 import Toybox.Activity;
 import Toybox.SensorHistory;
 import Toybox.Weather;
@@ -9,6 +10,7 @@ import Toybox.Time;
 import Toybox.Time.Gregorian;
 import Toybox.Position;
 import SensorTypes;
+import StoreKeys;
 import SensorsCheckers;
 import TimeStackModule;
 import SettingsModule.SettingType;
@@ -279,7 +281,7 @@ module SensorsGetters {
         }
 
         function _getOWWeatherData() as Dictionary? {
-            var data = SettingsModule.getValue(SettingType.OPENWEATHER_DATA) as WeatherData or WeatherError or Null;
+            var data = Storage.getValue(StoreKeys.OPENWEATHER_DATA) as WeatherData or WeatherError or Null;
             
             if (data == null || data.hasKey("httpError")) {
                 return null;
@@ -340,19 +342,19 @@ module SensorsGetters {
         }
 
         function getCurrentWeather() as Number? {
-            var isOWEnabled = SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
+            var isOWEnabled = !!SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
 
             return isOWEnabled ? _getCurrentOWWeather() : _getCurrentGarminWeather();
         }
 
         function getWeatherFeels() as Number? {
-            var isOWEnabled = SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
+            var isOWEnabled = !!SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
 
             return isOWEnabled ? _getWeatherOWFeels() : _getWeatherGarminFeels();
         }
 
         function getCurrentForecast() as Array<Number?>? {
-            var isOWEnabled = SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
+            var isOWEnabled = !!SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
 
             return isOWEnabled ? _getCurrentOWForecast() : _getCurrentGarminForecast();
         }

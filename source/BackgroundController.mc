@@ -1,18 +1,19 @@
 import Toybox.Lang;
-import Toybox.Application.Properties;
 import Toybox.Background;
 import Toybox.Time;
 import SettingsModule.SettingType;
+import SettingsModule;
 
 (:background)
 class BackgroundController {
+    (:background)
     const BG_INTERVAL_LIMIT = 300; // 5 minutes
     (:background)
     var isRunning = false;
 
     (:background)
     function setup() as Void {
-        var isEnabled = Properties.getValue(SettingType.OPENWEATHER_ENABLED);
+        var isEnabled = !!SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
 
         if (isEnabled) {
             self._run();
@@ -23,7 +24,10 @@ class BackgroundController {
 
     (:background)
     function next() as Void {
-        var intervalSeconds = Properties.getValue(SettingType.OPENWEATHER_INTERVAL) * 60;
+        var interval = SettingsModule.getValue(SettingType.OPENWEATHER_INTERVAL);
+        interval = interval != null ? interval : 30;
+
+        var intervalSeconds = interval * 60;
         var nextTime = Time.now().add(new Time.Duration(intervalSeconds));
 
         self._remove();

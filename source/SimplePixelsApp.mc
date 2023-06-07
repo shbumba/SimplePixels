@@ -2,7 +2,7 @@ import Toybox.Lang;
 import Toybox.Application;
 import Toybox.WatchUi;
 import Toybox.System;
-import SettingsModule.SettingType;
+import StoreKeys;
 
 (:background)
 class SimplePixelsApp extends Application.AppBase {
@@ -31,8 +31,6 @@ class SimplePixelsApp extends Application.AppBase {
     }
     
     function onSettingsChanged() as Void {
-        AppBase.onSettingsChanged();
-
         if (self._mainView != null) {
             self._bgController.setup();
             self._mainView.onSettingsChanged();
@@ -46,8 +44,8 @@ class SimplePixelsApp extends Application.AppBase {
     }
 
     function onBackgroundData(data as Application.PersistableType) as Void {
-        if ((data instanceof Dictionary) && data.hasKey(SettingType.OPENWEATHER_DATA)) {
-            Properties.setValue(SettingType.OPENWEATHER_DATA, data[SettingType.OPENWEATHER_DATA]);
+        if ((data instanceof Dictionary) && data.hasKey(StoreKeys.OPENWEATHER_DATA)) {
+            Storage.setValue(StoreKeys.OPENWEATHER_DATA, data[StoreKeys.OPENWEATHER_DATA]);
         }
 
 

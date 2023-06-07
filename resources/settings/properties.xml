@@ -20,5 +20,4 @@
     <property id="OpenWeatherIntervalMinutes" type="number">30</property>
     <property id="OpenWeatherLat" type="string"></property>
     <property id="OpenWeatherLon" type="string"></property>
-    <property id="OpenWeatherData" type="array"></property>
 </properties>

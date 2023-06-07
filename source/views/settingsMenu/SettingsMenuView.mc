@@ -1,7 +1,6 @@
 import Toybox.Lang;
 import Toybox.Graphics;
 import Toybox.WatchUi;
-import SettingsModule.SettingType;
 
 class SettingsMenuView extends WatchUi.View {
     var _onSettingsChanged as Method?;

@@ -1,11 +1,11 @@
 import Toybox.Lang;
-import Toybox.Application.Properties;
 import Toybox.Background;
 import Toybox.System;
 import Toybox.Time;
-import SettingsModule.SettingType;
 import Toybox.Position;
 import Toybox.Communications;
+import SettingsModule.SettingType;
+import SettingsModule;
 
 (:background)
 class BackgroundService extends System.ServiceDelegate {
@@ -22,16 +22,16 @@ class BackgroundService extends System.ServiceDelegate {
             return;
         }
 
-        var apiKey = Properties.getValue(SettingType.OPENWEATHER_API_KEY);
+        var apiKey = SettingsModule.getValue(SettingType.OPENWEATHER_API_KEY);
 
-        if (apiKey == null) {
+        if (!isNotEmptyString(apiKey)) {
             return;
         }
 
-        var lat = Properties.getValue(SettingType.OPENWEATHER_LAT);
-        var lon = Properties.getValue(SettingType.OPENWEATHER_LON);
+        var lat = SettingsModule.getValue(SettingType.OPENWEATHER_LAT);
+        var lon = SettingsModule.getValue(SettingType.OPENWEATHER_LON);
 
-        if (lat == null || lon == null) {
+        if (!isNotEmptyString(lat) || !isNotEmptyString(lon)) {
             var position = self.getCurrentLocation();
 
             if (position == null) {
@@ -40,8 +40,8 @@ class BackgroundService extends System.ServiceDelegate {
 
             var degrees = position.toDegrees();
 
-            lat = degrees[0];
-            lon = degrees[1];
+            lat = degrees[0].toString();
+            lon = degrees[1].toString();
         }
 
         self.getWeatherInfo(apiKey, lat, lon);
@@ -59,7 +59,7 @@ class BackgroundService extends System.ServiceDelegate {
     }
 
     (:background)
-    function getWeatherInfo(apiKey as String, lat as Numeric, lon as Numeric) as Void {
+    function getWeatherInfo(apiKey as String, lat as String, lon as String) as Void {
         self._isRunning = true;
 
         self.makeWebRequest(
