@@ -29,7 +29,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         SettingType.BOTTOM_SENSOR_2 => :sensorFieldHandler,
         SettingType.BOTTOM_SENSOR_3 => :sensorFieldHandler,
         SettingType.LEFT_SENSOR => :sensorFieldHandler,
-        SettingType.DISPLAY_STATUS_ICONS => :toggleFieldHangler,
+        SettingType.SHOW_STATUS_ICONS => :toggleFieldHangler,
         SettingType.DISPLAY_SECONDS => :displaySecondsHandler,
         SettingType.SECOND_TIME_FORMAT => :displaySecondTimeHandler
     };

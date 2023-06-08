@@ -9,7 +9,7 @@ import Components;
 
 class LeftSensorsView extends Components.List {
     private var _sensorType as SensorTypes.Enum = SensorTypes.NONE;
-    private var _displayIcons as Boolean = false;
+    private var _areIconsVisible as Boolean = false;
     private var sleepSensors as Array<SensorTypes.Enum> =
         [SensorTypes.IS_NIGHT_MODE_ENABLED, SensorTypes.IS_SLEEP_TIME] as Array<SensorTypes.Enum>;
     private var iconSensors as Array<SensorTypes.Enum> =
@@ -31,7 +31,7 @@ class LeftSensorsView extends Components.List {
     }
 
     private function updateDisplayIcons() as Void {
-        self._displayIcons = SettingsModule.getValue(SettingType.DISPLAY_STATUS_ICONS) as Boolean;
+        self._areIconsVisible = SettingsModule.getValue(SettingType.SHOW_STATUS_ICONS) as Boolean;
     }
 
     function onSettingsChanged() as Void {
@@ -92,7 +92,7 @@ class LeftSensorsView extends Components.List {
             items.add(self.getSensorItem(self._sensorType));
         }
 
-        if (self._displayIcons == true) {
+        if (self._areIconsVisible == true) {
             items.add(self.getIconsItem());
         }
 

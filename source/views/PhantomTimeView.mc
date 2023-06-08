@@ -14,20 +14,16 @@ class PhantomTimeView extends Components.TimeView {
 
     function initialize(params as PhantomTimeViewProps) {
         Components.TimeView.initialize(params);
-        self.updatePattern();
+        DotPattern.createInNeeded(DotPattern.HOURS, self.getWidth(), self.getHeight(), self.backgroundColor, self.foregroundColor);
 
         var timeShift = params.get(:timeShift);
         self._timeShift = timeShift != null ? timeShift : 0;
     }
 
-    function updatePattern() as Void {
-        DotPattern.update(DotPattern.HOURS, self.getWidth(), self.getHeight(), self.backgroundColor);
-    }
-
     function onSettingsChanged() as Void {
         Components.TimeView.onSettingsChanged();
 
-        self.updatePattern();
+        DotPattern.create(DotPattern.HOURS, self.getWidth(), self.getHeight(), self.backgroundColor, self.foregroundColor);
     }
 
     private function shiftHours(time as Number) as Number {
@@ -71,7 +67,7 @@ class PhantomTimeView extends Components.TimeView {
 
         self.renderTime(time, drawContext);
 
-        var pattern = DotPattern.get(DotPattern.HOURS, self.getWidth(), self.getHeight(), self.backgroundColor);
+        var pattern = DotPattern.get(DotPattern.HOURS, self.getWidth(), self.getHeight(), self.backgroundColor, self.foregroundColor);
 
         drawContext.drawBitmap(self.getPosX(), self.getPosY(), pattern);
     }

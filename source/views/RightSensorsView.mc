@@ -12,7 +12,7 @@ typedef SensorsInfoProps as Components.ListProps or
     :fields as Array<SettingType.Enum>?
 };
 
-class SensorsInfoView extends Components.List {
+class RightSensorsView extends Components.List {
     var _sensors as Array<SensorTypes.Enum> = [] as Array<SensorTypes.Enum>;
     var _fields as Array<SettingType.Enum> = [] as Array<SettingType.Enum>;
 

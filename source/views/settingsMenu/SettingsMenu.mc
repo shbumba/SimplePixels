@@ -72,7 +72,7 @@ function SettingsMenu() as WatchUi.Menu2 or WatchUi.CustomMenu {
     );
     menu.addItem(
         SettingsMenuBuilder.generateMenuItem(SettingsMenuBuilder.TOGGLE_ITEM, {
-            :identifier => SettingType.DISPLAY_STATUS_ICONS,
+            :identifier => SettingType.SHOW_STATUS_ICONS,
             :label => Rez.Strings.DisplayStatusIcons,
             :options => {
                 :alignment => WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_RIGHT

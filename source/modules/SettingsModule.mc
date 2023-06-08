@@ -19,7 +19,7 @@ module SettingsModule {
             BOTTOM_SENSOR_2 = "BottomSensor2",
             BOTTOM_SENSOR_3 = "BottomSensor3",
             LEFT_SENSOR = "LeftSensor",
-            DISPLAY_STATUS_ICONS = "DisplayStatusIcons",
+            SHOW_STATUS_ICONS = "DisplayStatusIcons", // to migrate
             DISPLAY_SECONDS = "DisplaySeconds",
             SECOND_TIME_FORMAT = "SecondTimeFormat",
             OPENWEATHER_API_KEY = "OpenWeatherAPIKey",

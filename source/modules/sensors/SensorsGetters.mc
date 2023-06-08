@@ -49,7 +49,7 @@ module SensorsGetters {
             SensorTypes.TIME_TO_RECOVERY => :getTimeToRecovery,
             SensorTypes.FLOORS => :getFloors,
             SensorTypes.METERS_CLIMBED => :getMetersClimbed,
-            SensorTypes.DISTANCE => :getDistance,
+            SensorTypes.DISTANCE => :getDistanceMeters,
             SensorTypes.ALTITUDE => :getAltitude,
             SensorTypes.PRESSURE => :getPressure,
             SensorTypes.ACTIVE_MINUTES_DAY => :getActiveMinutesDay,
@@ -118,10 +118,10 @@ module SensorsGetters {
             return ActivityMonitor.getInfo().floorsClimbedGoal;
         }
 
-        function getDistance() as Number? {
-            var distance = ActivityMonitor.getInfo().distance;
+        function getDistanceMeters() as Float? {
+            var distanceCm = ActivityMonitor.getInfo().distance;
 
-            return distance != null ? distance / 1000 : null;
+            return distanceCm != null ? distanceCm.toFloat() / 100 : null;
         }
 
         function getActiveMinutesDay() as Number? {

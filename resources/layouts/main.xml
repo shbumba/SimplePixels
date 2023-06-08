@@ -104,7 +104,7 @@
             <param name="verticalAlignment">PositionUtils.ALIGN_START</param>
             <param name="font">@Rez.Fonts.seconds</param>
         </drawable>
-        <drawable id="TopSensors" class="SensorsInfoView">
+        <drawable id="TopSensors" class="RightSensorsView">
             <param name="boxWidth">"110"</param>
             <param name="boxHeight">"60"</param>
             <param name="xPos">"50%"</param>
@@ -118,7 +118,7 @@
             <param name="font">@Rez.Fonts.data</param>
             <param name="fields">[SettingsModule.SettingType.TOP_SENSOR_1, SettingsModule.SettingType.TOP_SENSOR_2, SettingsModule.SettingType.TOP_SENSOR_3]</param>
         </drawable>
-        <drawable id="BottomSensors" class="SensorsInfoView">
+        <drawable id="BottomSensors" class="RightSensorsView">
             <param name="boxWidth">"110"</param>
             <param name="boxHeight">"60"</param>
             <param name="xPos">"50%"</param>
