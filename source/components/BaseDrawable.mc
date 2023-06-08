@@ -26,7 +26,7 @@ module Components {
             self.infoColor = ColorsModule.getColor(infoColor);
         }
 
-        public function onSettingsChanged() as Void {
+        function onSettingsChanged() as Void {
             self.setColors();
         }
     }

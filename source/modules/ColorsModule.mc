@@ -57,7 +57,7 @@ module ColorsModule {
         ColorsTypes.DARK_RED => 0xaa0005,
         ColorsTypes.BROWN => 0x550000,
         ColorsTypes.LIGHT_BROWN => 0xaa5500
-    };
+    } as Dictionary<ColorsTypes.Enum, Number>;
 
     var TextsMap = {
         ColorsTypes.BLACK => Rez.Strings.ColorBlack,
@@ -85,7 +85,7 @@ module ColorsModule {
         ColorsTypes.DARK_RED => Rez.Strings.ColorDarkRed,
         ColorsTypes.BROWN => Rez.Strings.ColorBrown,
         ColorsTypes.LIGHT_BROWN => Rez.Strings.ColorLightBrown
-    };
+    } as Dictionary<ColorsTypes.Enum, Symbol>;
 
     function getColor(key as ColorsTypes.Enum) as Number {
         return ColorsMap.get(key) as Number;

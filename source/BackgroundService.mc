@@ -6,6 +6,7 @@ import Toybox.Position;
 import Toybox.Communications;
 import SettingsModule.SettingType;
 import SettingsModule;
+import StoreKeys;
 
 (:background)
 class BackgroundService extends System.ServiceDelegate {
@@ -76,6 +77,17 @@ class BackgroundService extends System.ServiceDelegate {
         );
     }
 
+    (:background:typecheck(false))
+    function prepareWeatherData(data as Dictionary) as SensorsGetters.WeatherData {
+        return {
+            "time" => Time.now().value(),
+            "max" => data["main"]["temp_max"],
+            "min" => data["main"]["temp_min"],
+            "current" => data["main"]["temp"],
+            "feels" => data["main"]["feels_like"]
+        };
+    }
+
     (:background)
     function onReceiveWeatherInfo(responseCode as Numeric, data as Dictionary or String or Null) as Void {
         self._isRunning = false;
@@ -85,17 +97,11 @@ class BackgroundService extends System.ServiceDelegate {
         };
 
         if (responseCode == 200 && data instanceof Dictionary) {
-            result = {
-                "time" => Time.now().value(),
-                "max" => data["main"]["temp_max"],
-                "min" => data["main"]["temp_min"],
-                "current" => data["main"]["temp"],
-                "feels" => data["main"]["feels_like"]
-            };
+            result = prepareWeatherData(data);
         }
 
         Background.exit({
-            "OpenWeatherData" => result as Dictionary
+            StoreKeys.OPENWEATHER_DATA => result as Dictionary
         });
     }
 

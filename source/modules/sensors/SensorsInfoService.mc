@@ -7,7 +7,7 @@ import SensorsCheckers;
 import ResourcesCache;
 
 class SensorsInfoService {
-    private var awailableSensors as Array<SensorTypes.Enum> = [] as Array<SensorTypes.Enum>;
+    private var awailableSensors as Array<SensorTypes.Enum> = [];
 
     function initialize() {
         self.awailableSensors = self.checkAwailableSensors();
@@ -15,7 +15,7 @@ class SensorsInfoService {
     }
 
     private function cleanChecker() as Void {
-        SensorsCheckers.Map = {} as Dictionary<SensorTypes.Enum, Symbol>;
+        SensorsCheckers.Map = {};
     }
 
     private function checkAwailableSensors() as Array<SensorTypes.Enum> {
@@ -34,11 +34,11 @@ class SensorsInfoService {
         return awailableSensors;
     }
 
-    public function isAwailable(sensorType as SensorTypes.Enum) as Boolean {
+    function isAwailable(sensorType as SensorTypes.Enum) as Boolean {
         return self.awailableSensors.indexOf(sensorType) > -1;
     }
 
-    public function getValue(sensorType as SensorTypes.Enum) as SensorsGetters.SersorInfoGetterValue {
+    function getValue(sensorType as SensorTypes.Enum) as SensorsGetters.SersorInfoGetterValue {
         if (!self.isAwailable(sensorType)) {
             return null;
         }
@@ -46,11 +46,11 @@ class SensorsInfoService {
         return SensorsGetters.getValue(sensorType);
     }
 
-    public function transformValue(sensorType as SensorTypes.Enum) as String {
+    function transformValue(sensorType as SensorTypes.Enum) as String {
         return SensorsTransformators.transformValue(sensorType, self.getValue(sensorType));
     }
 
-    public function getIcon(sensorType as SensorTypes.Enum) as Toybox.WatchUi.FontResource? {
+    function getIcon(sensorType as SensorTypes.Enum) as Toybox.WatchUi.FontResource? {
         var iconSymbol = SensorsIcons.getIcon(sensorType, self.getValue(sensorType));
 
         return iconSymbol != null ? ResourcesCache.get(iconSymbol) as Toybox.WatchUi.FontResource : null;

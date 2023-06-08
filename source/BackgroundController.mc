@@ -5,8 +5,8 @@ import SettingsModule.SettingType;
 import SettingsModule;
 
 class BackgroundController {
-    const BG_INTERVAL_LIMIT = 300; // 5 minutes as seconds
-    var isRunning = false;
+    const BG_INTERVAL_LIMIT as Number = 300; // 5 minutes as seconds
+    var isRunning as Boolean = false;
 
     function setup() as Void {
         var isEnabled = !!SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);

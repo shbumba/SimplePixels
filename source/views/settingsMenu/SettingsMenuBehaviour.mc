@@ -131,21 +131,21 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         }
     }
 
-    public function colorHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
+    function colorHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
         self._addColorItems(menu);
 
         self.openMenu(item.getId(), menu, false);
     }
 
-    public function sensorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
+    function sensorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
         self._addSensorItems(menu, null);
 
         self.openMenu(item.getId(), menu, true);
     }
 
-    public function separatorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
+    function separatorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
         self._addSensorItems(menu, [
             SensorTypes.BATTERY,
@@ -157,7 +157,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         self.openMenu(item.getId(), menu, false);
     }
 
-    public function displaySecondsHandler(item as WatchUi.ToggleMenuItem) as Void {
+    function displaySecondsHandler(item as WatchUi.ToggleMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
         self._addMapItems(menu, {
             DisplaySecondsType.NEVER => Rez.Strings.Never,
@@ -167,11 +167,11 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         self.openMenu(item.getId(), menu, false);
     }
 
-    public function toggleFieldHangler(item as WatchUi.ToggleMenuItem) as Void {
+    function toggleFieldHangler(item as WatchUi.ToggleMenuItem) as Void {
         SettingsModule.setValue(item.getId(), item.isEnabled());
     }
 
-    public function displaySecondTimeHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
+    function displaySecondTimeHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
         self._addTimeZones(menu);
 

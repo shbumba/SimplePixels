@@ -31,7 +31,7 @@ module SensorsTexts {
         SensorTypes.SOLAR_INTENSITY => Rez.Strings.SolarIntensity,
         SensorTypes.SECOND_TIME => Rez.Strings.SecondTime,
         SensorTypes.MEMORY_USED => Rez.Strings.Memory,
-    };
+    } as Dictionary<SensorTypes.Enum, Symbol>;
 
     function getText(sensorType as SensorTypes.Enum) as Symbol? {
         return Map.get(sensorType) as Symbol?;

@@ -41,10 +41,10 @@ module SensorsTransformators {
         SensorTypes.IS_SLEEP_TIME => :_transformToEmpty,
         SensorTypes.SECOND_TIME => :_transformTime,
         SensorTypes.MEMORY_USED => :_transformBytesToKb
-    };
+    } as Dictionary<SensorTypes.Enum, Symbol>;
 
     function transformValue(sensorType as SensorTypes.Enum, value as SersorInfoGetterValue) as String {
-        var handler = Map.get(sensorType);
+        var handler = Map.get(sensorType) as Symbol;
 
         if (value == null || handler == null) {
             return ResourcesCache.get(Rez.Strings.NA) as String;

@@ -35,7 +35,7 @@ module SensorsIcons {
         SensorTypes.IS_SLEEP_TIME => :isNightModeIcon,
         SensorTypes.SECOND_TIME => Rez.Fonts.alarm_icon,
         SensorTypes.MEMORY_USED => Rez.Fonts.memory_icon
-    };
+    } as Dictionary<SensorTypes.Enum, Symbol>;
 
     function getIcon(sensorType as SensorTypes.Enum, value as SersorInfoGetterValue) as Symbol? {
         var iconFn = Map.get(sensorType);

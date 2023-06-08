@@ -43,7 +43,7 @@ module SensorsCheckers {
         SensorTypes.BATTERY_GOAL => true,
         SensorTypes.ACTIVE_MINUTES_WEEK => true,
         SensorTypes.ACTIVE_MINUTES_WEEK_GOAL => true
-    };
+    } as Dictionary<SensorTypes.Enum, Symbol or Boolean>;
 
     function check(sensorType as SensorTypes.Enum) as Boolean {
         var sensorCkecker = Map.get(sensorType);
