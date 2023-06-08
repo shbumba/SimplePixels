@@ -11,7 +11,7 @@ import Toybox.Time.Gregorian;
 import Toybox.Position;
 import SensorTypes;
 import StoreKeys;
-import SensorsCheckers;
+import SensorsCheckers.Checkers;
 import TimeStackModule;
 import SettingsModule.SettingType;
 
@@ -22,11 +22,11 @@ module SensorsGetters {
         "max" as Numeric?,
         "min" as Numeric?,
         "current" as Numeric?,
-        "feels" as Numeric?,
+        "feels" as Numeric?
     };
 
     typedef WeatherError as {
-        "httpError" as Number,
+        "httpError" as Number
     };
 
     var Map =
@@ -152,9 +152,9 @@ module SensorsGetters {
             var activityInfo = Activity.getActivityInfo();
             var value = activityInfo != null ? activityInfo.currentOxygenSaturation : null;
 
-            if (value == null && SensorsCheckers.Checkers.checkOxygenSaturationHistory()) {
+            if (value == null && Checkers.checkOxygenSaturationHistory()) {
                 try {
-                    var history = SensorHistory.getOxygenSaturationHistory({}) as SensorHistory.SensorHistoryIterator or Null;
+                    var history = SensorHistory.getOxygenSaturationHistory({}) as SensorHistory.SensorHistoryIterator?;
                     var sensorInfo = history != null ? history.next() : null;
                     value = sensorInfo != null ? sensorInfo.data : null;
                 } catch (e) {
@@ -169,7 +169,7 @@ module SensorsGetters {
             var activityInfo = Activity.getActivityInfo();
             var value = activityInfo != null ? activityInfo.ambientPressure : null;
 
-            if (value == null && SensorsCheckers.Checkers.checkPressureHistory()) {
+            if (value == null && Checkers.checkPressureHistory()) {
                 var sensorInfo = SensorHistory.getPressureHistory({}).next();
                 value = sensorInfo != null ? sensorInfo.data : null;
             }
@@ -260,7 +260,7 @@ module SensorsGetters {
             var activityInfo = Activity.getActivityInfo();
             var value = activityInfo != null ? activityInfo.currentHeartRate : null;
 
-            if (value == null && SensorsCheckers.Checkers.checkHeartRateHistory()) {
+            if (value == null && Checkers.checkHeartRateHistory()) {
                 var sensorInfo = SensorHistory.getHeartRateHistory({}).next();
                 value = sensorInfo != null ? sensorInfo.data : value;
             }
@@ -272,7 +272,7 @@ module SensorsGetters {
             var activityInfo = Activity.getActivityInfo();
             var value = activityInfo != null ? activityInfo.altitude : null;
 
-            if (value == null && SensorsCheckers.Checkers.checkElevationHistory()) {
+            if (value == null && Checkers.checkElevationHistory()) {
                 var sensorInfo = SensorHistory.getElevationHistory({}).next();
                 value = sensorInfo != null ? sensorInfo.data : value;
             }
@@ -282,15 +282,15 @@ module SensorsGetters {
 
         function _getOWWeatherData() as Dictionary? {
             var data = Storage.getValue(StoreKeys.OPENWEATHER_DATA) as WeatherData or WeatherError or Null;
-            
+
             if (data == null || data.hasKey("httpError")) {
                 return null;
             }
-            
+
             var weatherTime = new Time.Moment(data["time"] as Number);
             var currentTime = Time.now();
 
-            if (currentTime.compare(weatherTime) >= (Gregorian.SECONDS_PER_HOUR * 2)) {
+            if (currentTime.compare(weatherTime) >= Gregorian.SECONDS_PER_HOUR * 2) {
                 return null;
             }
 
@@ -369,7 +369,7 @@ module SensorsGetters {
             return null;
         }
 
-        function _getSunPhaseTime(action) as Time.Moment or Null {
+        function _getSunPhaseTime(action) as Time.Moment? {
             var location = getCurrentLocation();
 
             if (location == null) {

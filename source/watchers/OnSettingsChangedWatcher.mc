@@ -4,8 +4,8 @@ import WatcherModule;
 import Components;
 
 class OnSettingsChangedWatcher extends WatcherModule.Watcher {
-    public static var key as String = "OnSettingsChangedWatcher";
-    public var scope as Array<Scope> = [WatcherModule.ON_SETTINGS_CHANGED] as Array<Scope>;
+    static var key as String = "OnSettingsChangedWatcher";
+    var scope as Array<Scope> = [WatcherModule.ON_SETTINGS_CHANGED];
 
     var _mainView as WatchUi.View;
 

@@ -8,20 +8,19 @@ module WatcherModule {
         ON_SETTINGS_CHANGED,
         ON_NIGHT_MODE_CHANGED,
         ON_ENTER_SLEEP,
-        ON_EXIT_SLEEP,
+        ON_EXIT_SLEEP
     }
 
     typedef InstanceKey as String;
     typedef InstanceGetter as Object?;
 
     class Watcher {
-        public static var key as String = "";
-
-        public var scope as Array<Scope> = [ON_UPDATE] as Array<Scope>;
+        static var key as String = "";
+        var scope as Array<Scope> = [ON_UPDATE];
 
         function get() as InstanceGetter {
-            return null;
             // Abstract
+            return null;
         }
 
         function onValueInit(value) as Void {
@@ -34,13 +33,11 @@ module WatcherModule {
     }
 
     class Store {
-        var _wathers as Array<Watcher> = [] as Array<Watcher>;
-        var _cachedResults as Dictionary<InstanceKey, InstanceGetter> =
-            {} as Dictionary<InstanceKey, InstanceGetter>;
+        var _wathers as Array<Watcher> = [];
+        var _cachedResults as Dictionary<InstanceKey, InstanceGetter> = {};
 
         function setup(wathers as Array<Watcher>) as Void {
             self._wathers = wathers;
-
             var onValueInitQueue = [] as Array;
 
             for (var i = 0; i < wathers.size(); i++) {
@@ -66,7 +63,6 @@ module WatcherModule {
         }
 
         function _processInstance(instance as Watcher, isInitial as Boolean) as Array? {
-            // [value, prevValue]
             var prevValue = self._cachedResults.get(instance.key);
             var currentValue = instance.get();
 
@@ -79,15 +75,15 @@ module WatcherModule {
             return [currentValue, prevValue];
         }
 
-        function getValue(instance as Watcher) as Lang.Object? {
-            return self._cachedResults.get(instance.key);
+        function getValue(instanceKey as String) as Lang.Object? {
+            return self._cachedResults.get(instanceKey);
         }
 
         function runScope(scope as Scope) as Void {
             var onUpdateQueue = [] as Array;
 
             for (var i = 0; i < self._wathers.size(); i++) {
-                var instance = self._wathers[i] as Watcher;
+                var instance = self._wathers[i];
 
                 if (instance.scope.indexOf(scope) == -1) {
                     continue;
@@ -106,12 +102,13 @@ module WatcherModule {
             }
 
             while (onUpdateQueue.size() > 0) {
-                var instance = onUpdateQueue[0][0] as Watcher;
-                var currentValue = onUpdateQueue[0][1] as InstanceGetter;
-                var prevValue = onUpdateQueue[0][2] as InstanceGetter;
+                var task = onUpdateQueue[0];
+                var instance = task[0] as Watcher;
+                var currentValue = task[1] as InstanceGetter;
+                var prevValue = task[2] as InstanceGetter;
 
                 instance.onValueUpdated(currentValue, prevValue);
-                onUpdateQueue.remove(onUpdateQueue[0]);
+                onUpdateQueue.remove(task);
             }
         }
     }

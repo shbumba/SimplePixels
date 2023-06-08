@@ -5,8 +5,8 @@ import Services;
 import SettingsModule;
 
 class DisplaySecondsWatcher extends WatcherModule.Watcher {
-    public static var key as String = "DisplaySecondsWatcher";
-    public var scope as Array<Scope> = [WatcherModule.ON_SETTINGS_CHANGED] as Array<Scope>;
+    static var key as String = "DisplaySecondsWatcher";
+    var scope as Array<Scope> = [WatcherModule.ON_SETTINGS_CHANGED];
 
     var _mainView as WatchUi.View;
 
@@ -24,7 +24,7 @@ class DisplaySecondsWatcher extends WatcherModule.Watcher {
         var displaySecondsType = value as DisplaySecondsType.Enum;
         var secondsViewID = $.VIEWS_LIST.get(:seconds);
         var secondsView = self._mainView.findDrawableById(secondsViewID) as SecondsView;
-        var isAwake = Services.WathersStore().getValue(AwakeWatcher) as Boolean;
+        var isAwake = Services.WathersStore().getValue(AwakeWatcher.key) as Boolean;
 
         secondsView.setViewProps(displaySecondsType, isAwake);
         WatchUi.requestUpdate();
