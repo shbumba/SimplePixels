@@ -16,7 +16,7 @@ module DotPattern {
         return $.createBitmap({
             :width => width,
             :height => height,
-            :palette => IS_NEW_SDK ? [] : [Graphics.COLOR_TRANSPARENT, bgColor, fgColor]
+            :palette => [Graphics.COLOR_TRANSPARENT, bgColor, fgColor]
         });
     }
 
@@ -84,8 +84,6 @@ module DotPattern {
         if ($.IS_LOW_MEMORY || !IS_NEW_SDK) {
             return;
         }
-        
-        patterns.remove(key);
 
         patterns.put(key, _create(width, height, bgColor, fgColor));
     }
