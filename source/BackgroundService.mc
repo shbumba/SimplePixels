@@ -77,7 +77,8 @@ class BackgroundService extends System.ServiceDelegate {
         );
     }
 
-    (:background:typecheck(false))
+    //(:background,:typecheck(false))
+    (:background)
     function prepareWeatherData(data as Dictionary) as SensorsGetters.WeatherData {
         return {
             "time" => Time.now().value(),
