@@ -9,39 +9,27 @@ module DotPattern {
     }
 
     var patterns = {} as Dictionary<Keys, BufferedBitmap>;
-    const PATTERN_WIDTH = 10;
-    const PATTERN_HEIGHT = 10;
+    const PATTERN_SIZE = 2;
+    const PATTERN_HEIGHT = 8;
     const isCacheEnabled = canUseCache();
-    const isNewSDK = Graphics has :createBufferedBitmap;
+    const IS_NEW_SDK = Graphics has :createBufferedBitmap;
 
-    function _createBitmap(width as Numeric, height as Numeric, bgColor as Numeric, fgColor as Numeric) as BufferedBitmap {
-        return createBitmap({
+    function _generateRow(width as Numeric, bgColor as Numeric, fgColor as Numeric) as BufferedBitmap {
+        var bitmap = createBitmap({
             :width => width,
-            :height => height,
-            :palette => isNewSDK ? [] : [Graphics.COLOR_TRANSPARENT, bgColor, fgColor]
+            :height => PATTERN_HEIGHT,
+            :palette => IS_NEW_SDK ? [] : [Graphics.COLOR_TRANSPARENT, bgColor, fgColor]
         });
-    }
+        var dc = bitmap.getDc();
 
-    function _getDrawContext(bitmap as BufferedBitmap) as Dc {
-        var drawContext = bitmap.getDc();
-
-        drawContext.setColor(Graphics.COLOR_TRANSPARENT, Graphics.COLOR_TRANSPARENT);
-        drawContext.clear();
-
-        return drawContext;
-    }
-
-    function _generatePattern(bgColor as Numeric, fgColor as Numeric) as BufferedBitmap {
-        var bitmap = _createBitmap(PATTERN_WIDTH, PATTERN_HEIGHT, bgColor, fgColor);
-        var drawContext = _getDrawContext(bitmap);
-
-        drawContext.setColor(bgColor, Graphics.COLOR_TRANSPARENT);
+        dc.clear();
+        dc.setColor(bgColor, Graphics.COLOR_TRANSPARENT);
 
         var shiftY = 0;
 
-        for (var posX = 0; posX <= PATTERN_WIDTH; posX++) {
-            for (var posY = shiftY; posY <= PATTERN_HEIGHT; posY += 2) {
-                drawContext.drawPoint(posX, posY);
+        for (var posX = 0; posX <= width; posX++) {
+            for (var posY = shiftY; posY <= PATTERN_HEIGHT; posY += PATTERN_SIZE) {
+                dc.drawPoint(posX, posY);
             }
 
             shiftY = shiftY == 0 ? 1 : 0;
@@ -50,33 +38,24 @@ module DotPattern {
         return bitmap;
     }
 
-    function _generateRow(width as Numeric, bgColor as Numeric, fgColor as Numeric) as BufferedBitmap {
-        var pattern = _generatePattern(bgColor, fgColor);
-        var bitmap = _createBitmap(width, PATTERN_HEIGHT, bgColor, fgColor);
-        var drawContext = _getDrawContext(bitmap);
-
-        var columns = Math.ceil(width / PATTERN_WIDTH).toNumber();
-
-        for (var i = 0; i <= columns; i++) {
-            var posX =  i * PATTERN_WIDTH;
-    
-            drawContext.drawBitmap(posX, 0, pattern);
-        }
-
-        return bitmap;
-    }
-
     function _create(width as Numeric, height as Numeric, bgColor as Numeric, fgColor as Numeric) as BufferedBitmap {
-        var rowPattern = _generateRow(width, bgColor, fgColor);
-        var bitmap = _createBitmap(width, height, bgColor, fgColor);
-        var drawContext = _getDrawContext(bitmap);
+        var bitmap = createBitmap({
+            :width => width,
+            :height => height,
+            :palette => IS_NEW_SDK ? [] : [Graphics.COLOR_TRANSPARENT, bgColor, fgColor]
+        });
+        var rowPattern = self._generateRow(width, bgColor, fgColor);
+        var dc = bitmap.getDc();
+        
+        dc.clear();
+        dc.setColor(bgColor, Graphics.COLOR_TRANSPARENT);
 
-        var rows = Math.ceil(height / PATTERN_HEIGHT).toNumber();
+        var rows = Toybox.Math.ceil(height / PATTERN_HEIGHT);
 
         for (var i = 0; i <= rows; i++) {
-            var posY =  i * PATTERN_HEIGHT;
+            var yShift = PATTERN_HEIGHT * i;
 
-            drawContext.drawBitmap(0, posY, rowPattern);
+            dc.drawBitmap(0, yShift, rowPattern);
         }
 
         return bitmap;
