@@ -135,14 +135,14 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         var menu = self._createCustomMenu(item.getLabel());
         self._addColorItems(menu);
 
-        self.openMenu(item.getId(), menu, false);
+        self.openMenu(item.getId() as SettingType.Enum, menu, false);
     }
 
     function sensorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
         self._addSensorItems(menu, null);
 
-        self.openMenu(item.getId(), menu, true);
+        self.openMenu(item.getId() as SettingType.Enum, menu, true);
     }
 
     function separatorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
@@ -154,7 +154,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             SensorTypes.STEPS
         ]);
 
-        self.openMenu(item.getId(), menu, false);
+        self.openMenu(item.getId() as SettingType.Enum, menu, false);
     }
 
     function displaySecondsHandler(item as WatchUi.ToggleMenuItem) as Void {
@@ -164,18 +164,18 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             DisplaySecondsType.ON_GESTURE => Rez.Strings.OnGesture
         });
 
-        self.openMenu(item.getId(), menu, false);
+        self.openMenu(item.getId() as SettingType.Enum, menu, false);
     }
 
     function toggleFieldHangler(item as WatchUi.ToggleMenuItem) as Void {
-        SettingsModule.setValue(item.getId(), item.isEnabled());
+        SettingsModule.setValue(item.getId() as SettingType.Enum, item.isEnabled());
     }
 
     function displaySecondTimeHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
         self._addTimeZones(menu);
 
-        self.openMenu(item.getId(), menu, false);
+        self.openMenu(item.getId() as SettingType.Enum, menu, false);
     }
 
     function openMenu(settingKey as SettingType.Enum, menu as WatchUi.Menu2 or WatchUi.CustomMenu, clearPrevSensorCache as Boolean) as Void {
@@ -185,7 +185,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     }
 
     function onSelect(item as WatchUi.MenuItem) as Void {
-        var handler = self._subMenuHandlers.get(item.getId());
+        var handler = self._subMenuHandlers.get(item.getId() as SettingType.Enum);
 
         if (handler == null) {
             throw new Toybox.Lang.InvalidValueException("Handler is not registered");
@@ -226,7 +226,7 @@ class CustomMenuDelegate extends WatchUi.Menu2InputDelegate {
             ResourcesCache.remove(SensorsIcons.getIcon(prevValue, true));
         }
 
-        SettingsModule.setValue(self._settingKey, item.getId());
+        SettingsModule.setValue(self._settingKey, item.getId() as SettingType.Enum);
         self.onBack();
     }
 
