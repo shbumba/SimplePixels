@@ -3,6 +3,7 @@ import Toybox.WatchUi;
 
 module ResourcesCache {
     var _cache = {} as Dictionary<Symbol, WatchUi.Resource>;
+    const isCacheEnabled = canUseCache();
 
     function get(resourceKey as Symbol) as WatchUi.Resource {
         var resource = _cache.get(resourceKey);
@@ -11,7 +12,7 @@ module ResourcesCache {
             resource = WatchUi.loadResource(resourceKey);
         }
 
-        if (!$.IS_LOW_MEMORY) {
+        if (isCacheEnabled) {
             _cache.put(resourceKey, resource);
         }
 

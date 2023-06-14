@@ -1,22 +1,24 @@
 import Toybox.Lang;
 import Toybox.Graphics;
+import Toybox.Math;
 
 module DotPattern {
     enum Keys {
-        HOURS = 2,
+        HOURS = 1,
         INFO_BAR
     }
 
     var patterns = {} as Dictionary<Keys, BufferedBitmap>;
-    var IS_NEW_SDK = Graphics has :createBufferedBitmap;
     const PATTERN_WIDTH = 10;
     const PATTERN_HEIGHT = 10;
+    const isCacheEnabled = canUseCache();
+    const isNewSDK = Graphics has :createBufferedBitmap;
 
     function _createBitmap(width as Numeric, height as Numeric, bgColor as Numeric, fgColor as Numeric) as BufferedBitmap {
-        return $.createBitmap({
+        return createBitmap({
             :width => width,
             :height => height,
-            :palette => [Graphics.COLOR_TRANSPARENT, bgColor, fgColor]
+            :palette => isNewSDK ? [] : [Graphics.COLOR_TRANSPARENT, bgColor, fgColor]
         });
     }
 
@@ -53,7 +55,7 @@ module DotPattern {
         var bitmap = _createBitmap(width, PATTERN_HEIGHT, bgColor, fgColor);
         var drawContext = _getDrawContext(bitmap);
 
-        var columns = Toybox.Math.ceil(width / PATTERN_WIDTH);
+        var columns = Math.ceil(width / PATTERN_WIDTH).toNumber();
 
         for (var i = 0; i <= columns; i++) {
             var posX =  i * PATTERN_WIDTH;
@@ -69,7 +71,7 @@ module DotPattern {
         var bitmap = _createBitmap(width, height, bgColor, fgColor);
         var drawContext = _getDrawContext(bitmap);
 
-        var rows = Toybox.Math.ceil(height / PATTERN_HEIGHT);
+        var rows = Math.ceil(height / PATTERN_HEIGHT).toNumber();
 
         for (var i = 0; i <= rows; i++) {
             var posY =  i * PATTERN_HEIGHT;
@@ -81,25 +83,21 @@ module DotPattern {
     }
 
     function create(key as Keys, width as Numeric, height as Numeric, bgColor as Numeric, fgColor as Numeric) as Void {
-        if ($.IS_LOW_MEMORY || !IS_NEW_SDK) {
+        if (!isCacheEnabled) {
             return;
         }
 
         patterns.put(key, _create(width, height, bgColor, fgColor));
     }
 
-    function createInNeeded(key as Keys, width as Numeric, height as Numeric, bgColor as Numeric, fgColor as Numeric) as Void {
-        if (!patterns.hasKey(key)) {
-            create(key, width, height, bgColor, fgColor);
-        }
-    }
-
     function get(key as Keys, width as Numeric, height as Numeric, bgColor as Numeric, fgColor as Numeric) as BufferedBitmap {
-        if ($.IS_LOW_MEMORY || !IS_NEW_SDK) {
+        if (!isCacheEnabled) {
             return _create(width, height, bgColor, fgColor);
         }
 
-        createInNeeded(key, width, height, bgColor, fgColor);
+        if (!patterns.hasKey(key)) {
+            create(key, width, height, bgColor, fgColor);
+        }
 
         return patterns.get(key) as BufferedBitmap;
     }

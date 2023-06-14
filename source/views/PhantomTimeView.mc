@@ -14,8 +14,7 @@ class PhantomTimeView extends Components.TimeView {
 
     function initialize(params as PhantomTimeViewProps) {
         Components.TimeView.initialize(params);
-        DotPattern.createInNeeded(DotPattern.HOURS, self.getWidth(), self.getHeight(), self.backgroundColor, self.foregroundColor);
-
+        
         var timeShift = params.get(:timeShift);
         self._timeShift = timeShift != null ? timeShift : 0;
     }
@@ -66,9 +65,8 @@ class PhantomTimeView extends Components.TimeView {
         var time = self.shiftTime(self.getTime());
 
         self.renderTime(time, drawContext);
-
+        
         var pattern = DotPattern.get(DotPattern.HOURS, self.getWidth(), self.getHeight(), self.backgroundColor, self.foregroundColor);
-
         drawContext.drawBitmap(self.getPosX(), self.getPosY(), pattern);
     }
 }
