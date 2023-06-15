@@ -4,6 +4,7 @@ import WatcherModule;
 import Services;
 import SettingsModule;
 import SensorTypes;
+import ViewsKeys;
 
 class AwakeWatcher extends WatcherModule.Watcher {
     static var key as String = "AwakeWatcher";
@@ -36,8 +37,7 @@ class AwakeWatcher extends WatcherModule.Watcher {
 
     function _updateViewProps(value as InstanceGetter) as Void {
         var isAwake = value as Boolean;
-        var secondsViewID = $.VIEWS_LIST.get(:seconds);
-        var secondsView = self._mainView.findDrawableById(secondsViewID) as SecondsView;
+        var secondsView = self._mainView.findDrawableById(ViewsKeys.SECONDS) as SecondsView;
         var displaySecondsType = Services.WathersStore().getValue(DisplaySecondsWatcher.key) as DisplaySecondsType.Enum;
 
         secondsView.setViewProps(displaySecondsType, isAwake);

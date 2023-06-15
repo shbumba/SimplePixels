@@ -3,6 +3,7 @@ import Toybox.WatchUi;
 import WatcherModule;
 import Services;
 import SettingsModule;
+import ViewsKeys;
 
 class DisplaySecondsWatcher extends WatcherModule.Watcher {
     static var key as String = "DisplaySecondsWatcher";
@@ -22,8 +23,7 @@ class DisplaySecondsWatcher extends WatcherModule.Watcher {
 
     function _updateViewProps(value as InstanceGetter) as Void {
         var displaySecondsType = value as DisplaySecondsType.Enum;
-        var secondsViewID = $.VIEWS_LIST.get(:seconds);
-        var secondsView = self._mainView.findDrawableById(secondsViewID) as SecondsView;
+        var secondsView = self._mainView.findDrawableById(ViewsKeys.SECONDS) as SecondsView;
         var isAwake = Services.WathersStore().getValue(AwakeWatcher.key) as Boolean;
 
         secondsView.setViewProps(displaySecondsType, isAwake);

@@ -7,35 +7,38 @@ import SensorsCheckers;
 import ResourcesCache;
 
 class SensorsInfoService {
-    private var awailableSensors as Array<SensorTypes.Enum> = [];
+    private var awailableSensors as Dictionary<SensorTypes.Enum, Boolean> = {};
+    var _isInited = false;
 
-    function initialize() {
-        self.awailableSensors = self.checkAwailableSensors();
+    function init() {
+        if (self._isInited) {
+            return;
+        }
+
+        self.fillAwailableSensors();
         self.cleanChecker();
+
+        self._isInited = true;
     }
 
     private function cleanChecker() as Void {
         SensorsCheckers.Map = {};
     }
 
-    private function checkAwailableSensors() as Array<SensorTypes.Enum> {
+    private function fillAwailableSensors() as Void {
         var keys = SensorsGetters.Map.keys() as Array<SensorTypes.Enum>;
-        var awailableSensors = [] as Array<SensorTypes.Enum>;
 
         for (var i = 0; i < keys.size(); i++) {
             var key = keys[i];
-            var isAwailable = SensorsCheckers.check(key);
 
-            if (isAwailable) {
-                awailableSensors.add(key);
+            if (SensorsCheckers.check(key)) {
+                self.awailableSensors.put(key, true);
             }
         }
-
-        return awailableSensors;
     }
 
     function isAwailable(sensorType as SensorTypes.Enum) as Boolean {
-        return self.awailableSensors.indexOf(sensorType) > -1;
+        return self.awailableSensors.hasKey(sensorType);
     }
 
     function getValue(sensorType as SensorTypes.Enum) as SensorsGetters.SersorInfoGetterValue {

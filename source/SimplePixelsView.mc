@@ -10,19 +10,21 @@ class SimplePixelsView extends WatchUi.WatchFace {
         Services.register();
     }
 
-    function _setupStore(drawContext as Dc) as Void {
+    function onInit(drawContext as Dc) as Void {
         Services.WathersStore().setup(
             [new AwakeWatcher(self, true), new DisplaySecondsWatcher(self), new OnSettingsChangedWatcher(self)] as
                 Array<Watcher>
         );
+
+        if (GlobalKeys.IS_NEW_SDK) {
+            Services.SensorInfo().init();
+        }
     }
 
     function onLayout(drawContext as Dc) as Void {
         WatchFace.setLayout(Rez.Layouts.MainLayout(drawContext));
 
-        self._setupStore(drawContext);
-
-        WatchFace.onLayout(drawContext);
+        self.onInit(drawContext);
     }
 
     function onUpdate(drawContext as Dc) as Void {
@@ -31,6 +33,10 @@ class SimplePixelsView extends WatchUi.WatchFace {
         Services.WathersStore().runScope(WatcherModule.ON_UPDATE);
 
         WatchFace.onUpdate(drawContext);
+
+        if (!GlobalKeys.IS_NEW_SDK) {
+            Services.SensorInfo().init();
+        }
     }
 
     function onPartialUpdate(drawContext as Dc) as Void {

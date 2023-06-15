@@ -4,6 +4,7 @@ import Toybox.Graphics;
 import Toybox.System;
 import PositionUtils;
 import ResourcesCache;
+import GlobalKeys;
 
 module Components {
     typedef BoxProps as {
@@ -44,15 +45,14 @@ module Components {
         }
 
         private function calcActualBoxSize(params as BoxProps) as Void {
-            var deviceSettings = System.getDeviceSettings();
             var boxWidth = params.get(:boxWidth);
             boxWidth = boxWidth != null ? boxWidth : "0";
 
             var boxHeight = params.get(:boxHeight);
             boxHeight = boxHeight != null ? boxHeight : "0";
 
-            self._boxWidth = self.parseActualSize(boxWidth, deviceSettings.screenWidth);
-            self._boxHeight = self.parseActualSize(boxHeight, deviceSettings.screenHeight);
+            self._boxWidth = self.parseActualSize(boxWidth, GlobalKeys.SCREEN_WIDTH);
+            self._boxHeight = self.parseActualSize(boxHeight, GlobalKeys.SCREEN_HEIGHT);
         }
 
         private function calcPosition(params as BoxProps) as Void {
@@ -85,27 +85,19 @@ module Components {
         }
 
         private function calcXPoint(xPos as String) as Numeric {
-            var deviceWidth = System.getDeviceSettings().screenWidth;
-
-            return self.parseActualSize(xPos, deviceWidth);
+            return self.parseActualSize(xPos, GlobalKeys.SCREEN_WIDTH);
         }
 
         private function calcXShift(xShift as String) as Numeric {
-            var deviceWidth = System.getDeviceSettings().screenWidth;
-
-            return self.parseActualSize(xShift, deviceWidth);
+            return self.parseActualSize(xShift, GlobalKeys.SCREEN_WIDTH);
         }
 
         private function calcYPoint(yPos as String) as Numeric {
-            var screenHeight = System.getDeviceSettings().screenHeight;
-
-            return self.parseActualSize(yPos, screenHeight);
+            return self.parseActualSize(yPos, GlobalKeys.SCREEN_HEIGHT);
         }
 
         private function calcYShift(yShift as String) as Numeric {
-            var screenHeight = System.getDeviceSettings().screenHeight;
-
-            return self.parseActualSize(yShift, screenHeight);
+            return self.parseActualSize(yShift, GlobalKeys.SCREEN_HEIGHT);
         }
 
         private function calcHorizontalAlignment(params as BoxProps) as Numeric {

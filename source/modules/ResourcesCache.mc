@@ -1,9 +1,9 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
+import GlobalKeys;
 
 module ResourcesCache {
     var _cache = {} as Dictionary<Symbol, WatchUi.Resource>;
-    const isCacheEnabled = canUseCache();
 
     function get(resourceKey as Symbol) as WatchUi.Resource {
         var resource = _cache.get(resourceKey);
@@ -12,7 +12,7 @@ module ResourcesCache {
             resource = WatchUi.loadResource(resourceKey);
         }
 
-        if (isCacheEnabled) {
+        if (GlobalKeys.IS_CACHE_ENABLED) {
             _cache.put(resourceKey, resource);
         }
 

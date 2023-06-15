@@ -1,6 +1,7 @@
 import Toybox.Lang;
 import Toybox.Graphics;
 import Toybox.WatchUi;
+import GlobalKeys;
 
 typedef CustomIconMenuItemProps as {
     :identifier as Object or Number or String,
@@ -46,7 +47,7 @@ class CustomIconMenuItem extends WatchUi.CustomMenuItem {
                 iconWidth / 2,
                 height / 2,
                 WatchUi.loadResource(self._icon),
-                $.ICON_SYMBOL,
+                GlobalKeys.ICON_SYMBOL,
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
             );
         }

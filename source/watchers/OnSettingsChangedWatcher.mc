@@ -2,6 +2,7 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 import WatcherModule;
 import Components;
+import ViewsKeys;
 
 class OnSettingsChangedWatcher extends WatcherModule.Watcher {
     static var key as String = "OnSettingsChangedWatcher";
@@ -20,7 +21,7 @@ class OnSettingsChangedWatcher extends WatcherModule.Watcher {
     }
 
     function onValueUpdated(value as InstanceGetter, prevValue as InstanceGetter) as Void {
-        var viewValues = $.VIEWS_LIST.values();
+        var viewValues = ViewsKeys.VALUES;
 
         for (var i = 0; i < viewValues.size(); i++) {
             var id = viewValues[i] as String;

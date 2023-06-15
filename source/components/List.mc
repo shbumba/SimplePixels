@@ -1,6 +1,7 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
+import GlobalKeys;
 
 module Components {
     module ListItemsDerection {
@@ -42,13 +43,11 @@ module Components {
         function initialize(params as ListProps) {
             Box.initialize(params);
 
-            var screenHeight = System.getDeviceSettings().screenHeight;
-
             var itemHeight = params.get(:itemHeight);
-            self._itemHeight = itemHeight != null ? self.parseActualSize(itemHeight, screenHeight) : 10;
+            self._itemHeight = itemHeight != null ? self.parseActualSize(itemHeight, GlobalKeys.SCREEN_HEIGHT) : 10;
 
             var iconSize = params.get(:iconSize);
-            self._iconSize = iconSize != null ? self.parseActualSize(iconSize, screenHeight) : 10;
+            self._iconSize = iconSize != null ? self.parseActualSize(iconSize, GlobalKeys.SCREEN_HEIGHT) : 10;
         }
 
         private function setupItemHeight(drawContext as Dc) as Void {
@@ -103,7 +102,7 @@ module Components {
             var iconDerection = props.get(:direction);
             var iconJustify = self.getJustify(iconDerection);
 
-            drawContext.drawText(posX, posY, icon, $.ICON_SYMBOL, iconJustify);
+            drawContext.drawText(posX, posY, icon, GlobalKeys.ICON_SYMBOL, iconJustify);
         }
 
         private function renderIcons(props as ElementRenderProps, drawContext as Dc) as Void {
@@ -137,7 +136,7 @@ module Components {
                     }
                 }
 
-                drawContext.drawText(iconXPos, posY, icon, $.ICON_SYMBOL, iconJustify);
+                drawContext.drawText(iconXPos, posY, icon, GlobalKeys.ICON_SYMBOL, iconJustify);
             }
         }
 
