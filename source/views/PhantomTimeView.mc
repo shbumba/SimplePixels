@@ -3,6 +3,7 @@ import Toybox.WatchUi;
 import Toybox.Graphics;
 import DotPattern;
 import Components;
+import GlobalKeys;
 
 typedef PhantomTimeViewProps as Components.TimeViewProps or
     {
@@ -27,7 +28,7 @@ class PhantomTimeView extends Components.TimeView {
 
     private function shiftHours(time as Number) as Number {
         var hours = time + self._timeShift;
-        var timeFormat = self._is24hour ? 24 : 12;
+        var timeFormat = GlobalKeys.IS_24_HOUR ? 24 : 12;
 
         if (hours > timeFormat) {
             hours -= timeFormat;

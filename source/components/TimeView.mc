@@ -3,6 +3,7 @@ import Toybox.WatchUi;
 import Toybox.Graphics;
 import Toybox.System;
 import TimeStackModule;
+import GlobalKeys;
 
 module Components {
     module TimeViewType {
@@ -20,7 +21,6 @@ module Components {
 
     class TimeView extends Box {
         protected var _timeType as TimeViewType.Enum;
-        protected var _is24hour as Boolean;
         protected var _textAligment as Graphics.TextJustification;
 
         private var textPosY as Numeric? = null;
@@ -35,15 +35,13 @@ module Components {
             var textAligment = params.get(:textAligment);
             self._textAligment = textAligment != null ? textAligment : Graphics.TEXT_JUSTIFY_LEFT;
 
-            self._is24hour = System.getDeviceSettings().is24Hour;
-
             self.calcTextPosition();
         }
 
         private function getHours() as Number {
             var hours = TimeStackModule.currentTime().hour;
 
-            if (!self._is24hour && hours > 12) {
+            if (!GlobalKeys.IS_24_HOUR && hours > 12) {
                 hours = hours - 12;
             }
 

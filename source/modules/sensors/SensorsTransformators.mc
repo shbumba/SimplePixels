@@ -6,6 +6,7 @@ import Toybox.Time.Gregorian;
 import SensorsGetters;
 import SensorTypes;
 import ResourcesCache;
+import GlobalKeys;
 
 module SensorsTransformators {
     var Map = {
@@ -83,7 +84,7 @@ module SensorsTransformators {
         }
 
         function _transformTemperature(value as Number) as String {
-            var tempUnits = System.getDeviceSettings().temperatureUnits;
+            var tempUnits = GlobalKeys.TEMPERATURE_UNITS;
 
             if (tempUnits == System.UNIT_STATUTE) {
                 value = Math.floor(value * 1.8 + 32).toNumber();
@@ -136,7 +137,7 @@ module SensorsTransformators {
         }
 
         function _transformMeters(value as Float or Number) as String {
-            var distanceUnits = System.getDeviceSettings().distanceUnits;
+            var distanceUnits = GlobalKeys.DISTANCE_UNITS;
 
             var unitText = "";
             var isKilometr = value >= 1000;
@@ -160,12 +161,10 @@ module SensorsTransformators {
         }
 
         function _transformTime(timeInfo as Gregorian.Info) as String {
-            var is24hour = System.getDeviceSettings().is24Hour;
-
             var hour = timeInfo.hour;
             var min = timeInfo.min;
 
-            if (!is24hour && hour > 12) {
+            if (!GlobalKeys.IS_24_HOUR && hour > 12) {
                 hour = hour - 12;
             }
 
@@ -173,7 +172,7 @@ module SensorsTransformators {
 
             var typeType = timeInfo.hour >= 12 ? "pm" : "am";
 
-            return is24hour ? formatedTime : formatedTime + " " + typeType;
+            return GlobalKeys.IS_24_HOUR ? formatedTime : formatedTime + " " + typeType;
         }
     }
 }

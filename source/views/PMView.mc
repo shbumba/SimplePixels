@@ -7,22 +7,8 @@ import Toybox.Time.Gregorian;
 import Components;
 
 class PMView extends Components.Box {
-    protected var _is24hour as Boolean = false;
-
     function initialize(params as Components.BoxProps) {
         Components.Box.initialize(params);
-
-        self._update24Hours();
-    }
-
-    function _update24Hours() as Void {
-        self._is24hour = System.getDeviceSettings().is24Hour;
-    }
-
-    function onSettingsChanged() as Void {
-        Components.Box.onSettingsChanged();
-
-        self._update24Hours();
     }
 
     protected function getPM() as String {
@@ -32,7 +18,7 @@ class PMView extends Components.Box {
     }
 
     protected function render(drawContext as Dc) as Void {
-        if (self._is24hour) {
+        if (GlobalKeys.IS_24_HOUR) {
             return;
         }
 

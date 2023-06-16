@@ -3,14 +3,16 @@ import Toybox.Graphics;
 import Toybox.WatchUi;
 import Services;
 import WatcherModule;
+import GlobalKeys;
 
 class SimplePixelsView extends WatchUi.WatchFace {
     function initialize() {
         WatchFace.initialize();
         Services.register();
+        GlobalKeys.initSettings();
     }
 
-    function onInit(drawContext as Dc) as Void {
+    function onInit(drawContext as Dc) as Void {    
         Services.WathersStore().setup(
             [new AwakeWatcher(self, true), new DisplaySecondsWatcher(self), new OnSettingsChangedWatcher(self)] as
                 Array<Watcher>
