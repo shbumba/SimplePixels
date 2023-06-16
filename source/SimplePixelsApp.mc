@@ -3,6 +3,7 @@ import Toybox.Application;
 import Toybox.WatchUi;
 import Toybox.System;
 import StoreKeys;
+import GlobalKeys;
 
 (:background)
 class SimplePixelsApp extends Application.AppBase {
@@ -28,6 +29,10 @@ class SimplePixelsApp extends Application.AppBase {
 
     function getServiceDelegate() as Array<System.ServiceDelegate> {
         return [new BackgroundService()];
+    }
+
+    function onStart(state as Lang.Dictionary or Null) as Void {
+        GlobalKeys.initSettings();
     }
     
     function onSettingsChanged() as Void {

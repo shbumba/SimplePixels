@@ -9,7 +9,6 @@ class SimplePixelsView extends WatchUi.WatchFace {
     function initialize() {
         WatchFace.initialize();
         Services.register();
-        GlobalKeys.initSettings();
     }
 
     function onInit(drawContext as Dc) as Void {    

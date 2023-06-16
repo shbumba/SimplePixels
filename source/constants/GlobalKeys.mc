@@ -12,7 +12,8 @@ module GlobalKeys {
     const ICON_SYMBOL = " ";
     const IS_NEW_SDK = Graphics has :createBufferedBitmap;
     const IS_CACHE_ENABLED = System.getSystemStats().totalMemory >= 105000;
-
+    
+    // Some king of optimisation for older devices, because it has to call the getDeviceSettings as few times as possible
     function initSettings() as Void {
         var settings = System.getDeviceSettings();
 

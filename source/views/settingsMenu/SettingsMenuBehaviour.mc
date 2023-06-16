@@ -36,6 +36,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
 
     function initialize(onBack as Lang.Method) {
         Menu2InputDelegate.initialize();
+        Services.SensorInfo().init();
         self._onBackCallback = onBack;
     }
 
