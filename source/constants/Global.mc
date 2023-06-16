@@ -7,5 +7,5 @@ module GlobalKeys {
     const SCREEN_WIDTH = System.getDeviceSettings().screenWidth;
     const SCREEN_HEIGHT = System.getDeviceSettings().screenHeight;
     const IS_NEW_SDK = Graphics has :createBufferedBitmap;
-    const IS_CACHE_ENABLED = System.getSystemStats().totalMemory >= 10500;
+    const IS_CACHE_ENABLED = System.getSystemStats().totalMemory >= 105000;
 }
