@@ -3,7 +3,6 @@ import Toybox.Application;
 import Toybox.WatchUi;
 import Toybox.System;
 import StoreKeys;
-import GlobalKeys;
 
 (:background)
 class SimplePixelsApp extends Application.AppBase {
@@ -30,10 +29,6 @@ class SimplePixelsApp extends Application.AppBase {
     function getServiceDelegate() as Array<System.ServiceDelegate> {
         return [new BackgroundService()];
     }
-
-    function onStart(state as Lang.Dictionary or Null) as Void {
-        GlobalKeys.initSettings();
-    }
     
     function onSettingsChanged() as Void {
         if (self._mainView != null) {
@@ -52,12 +47,24 @@ class SimplePixelsApp extends Application.AppBase {
     }
 
     function onBackgroundData(data as Application.PersistableType) as Void {
+        var needToRerun = false;
+        
         if ((data instanceof Dictionary) && data.hasKey(StoreKeys.OPENWEATHER_DATA)) {
-            Storage.setValue(StoreKeys.OPENWEATHER_DATA, data[StoreKeys.OPENWEATHER_DATA]);
+            var OWData = data[StoreKeys.OPENWEATHER_DATA] as Dictionary<Application.PropertyKeyType, Application.PropertyValueType>;
+
+            Storage.setValue(StoreKeys.OPENWEATHER_DATA, OWData);
+
+            needToRerun = OWData.hasKey("httpError");
         }
 
-        if (self._bgController != null) {
-            self._bgController.next();
+        if (self._bgController == null) {
+            return;
+        }
+
+        if (needToRerun) {
+            self._bgController.runNow();
+        } else {
+            self._bgController.scheduleNext();
         }
 	}
 }

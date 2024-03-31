@@ -6,8 +6,11 @@ import WatcherModule;
 import GlobalKeys;
 
 class SimplePixelsView extends WatchUi.WatchFace {
+    private var _wasShowed = false;
+
     function initialize() {
         WatchFace.initialize();
+        GlobalKeys.initSettings();
         Services.register();
     }
 
@@ -50,6 +53,13 @@ class SimplePixelsView extends WatchUi.WatchFace {
     }
 
     function onShow() as Void {
+        if (!self._wasShowed) {
+            self._wasShowed = true;
+        } else {
+            // need to skip the initial rendering but update global attributes next time
+            GlobalKeys.initSettings();
+        }
+
         AwakeWatcher.isAwake = true;
         Services.WathersStore().runScope(WatcherModule.ON_EXIT_SLEEP);
 

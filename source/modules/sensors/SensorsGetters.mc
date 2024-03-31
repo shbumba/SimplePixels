@@ -9,6 +9,7 @@ import Toybox.UserProfile;
 import Toybox.Time;
 import Toybox.Time.Gregorian;
 import Toybox.Position;
+import Toybox.Math;
 import SensorTypes;
 import StoreKeys;
 import SensorsCheckers.Checkers;
@@ -68,6 +69,8 @@ module SensorsGetters {
             SensorTypes.BATTERY_GOAL => :getBatteryGoal,
             SensorTypes.ACTIVE_MINUTES_WEEK_GOAL => :getActiveMinutesWeekGoal
         } as Dictionary<SensorTypes.Enum, Symbol>;
+
+    const MAX_WEATHER_INTERVAL = Math.ceil(Gregorian.SECONDS_PER_HOUR * 3.2);
 
     function getValue(sensorType as SensorTypes.Enum) as SersorInfoGetterValue {
         var sensorFn = Map.get(sensorType);
@@ -290,7 +293,7 @@ module SensorsGetters {
             var weatherTime = new Time.Moment(data["time"] as Number);
             var currentTime = Time.now();
 
-            if (currentTime.compare(weatherTime) >= Gregorian.SECONDS_PER_HOUR * 2) {
+            if (currentTime.compare(weatherTime) > MAX_WEATHER_INTERVAL) {
                 return null;
             }
 

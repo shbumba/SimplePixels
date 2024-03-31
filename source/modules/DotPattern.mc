@@ -76,7 +76,7 @@ module DotPattern {
 
         drawContext.setColor(bgColor, Graphics.COLOR_TRANSPARENT);
 
-        var rows = Toybox.Math.ceil(height / PATTERN_HEIGHT);
+        var rows = Math.ceil(height / PATTERN_HEIGHT);
 
         for (var i = 0; i <= rows; i++) {
             var yShift = PATTERN_HEIGHT * i;

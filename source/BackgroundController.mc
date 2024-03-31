@@ -12,24 +12,23 @@ class BackgroundController {
         var isEnabled = !!SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
 
         if (isEnabled) {
-            self._run();
+            self.runNow();
         } else if (!isEnabled && self.isRunning) {
             self._remove();
         }
     }
 
-    function next() as Void {
+    function scheduleNext() as Void {
         var intervalMinutes = SettingsModule.getValue(SettingType.OPENWEATHER_INTERVAL);
         intervalMinutes = intervalMinutes != null ? intervalMinutes : 30;
 
         var intervalSeconds = intervalMinutes * 60;
         var nextTime = Time.now().add(new Time.Duration(intervalSeconds));
 
-        self._remove();
-        self._registerTask(nextTime);
+        self._run(nextTime);
     }
 
-    function _run() as Void {
+    function runNow() as Void {
         var lastTime = Background.getLastTemporalEventTime();
         var nextTime = Time.now();
 
@@ -38,8 +37,12 @@ class BackgroundController {
             nextTime = lastTime.add(new Time.Duration(self.BG_INTERVAL_LIMIT));
         }
 
+        self._run(nextTime);
+    }
+
+    function _run(time as Time.Moment or Time.Duration) as Void {
         self._remove();
-        self._registerTask(nextTime);
+        self._registerTask(time);
     }
 
     function _registerTask(time as Time.Moment or Time.Duration) as Void {
