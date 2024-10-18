@@ -4,7 +4,7 @@ import Toybox.Graphics;
 import SettingsModule;
 
 module SettingsMenuBuilder {
-    typedef MenuProps as { :title as Symbol, :focus as Number? };
+    typedef MenuProps as { :title as String or ResourceId, :focus as Number };
 
     typedef CustomMenuProps as {
         :itemHeight as Number,
@@ -22,15 +22,15 @@ module SettingsMenuBuilder {
     };
 
     typedef MenuItemProps as {
-        :label as Symbol,
-        :subLabel as Symbol?,
+        :label as ResourceId or String,
+        :subLabel as ResourceId?,
         :identifier as Object or Number or String,
         :options as { :alignment as MenuItem.Alignment }?
     };
 
     typedef ToggleItemProps as {
-        :label as Symbol,
-        :subLabel as Symbol?,
+        :label as ResourceId,
+        :subLabel as ResourceId?,
         :identifier as Object or Number or String,
         :enabled as Boolean?,
         :options as { :alignment as MenuItem.Alignment }?

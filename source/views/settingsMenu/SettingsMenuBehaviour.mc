@@ -102,7 +102,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             menu.addItem(
                 SettingsMenuBuilder.generateMenuItem(SettingsMenuBuilder.CUSTOM_ICON_ITEM, {
                     :identifier => key,
-                    :label => mapFields.get(key) as Symbol
+                    :label => mapFields.get(key) as ResourceId
                 })
             );
         }

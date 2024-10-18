@@ -13,20 +13,20 @@ class SimplePixelsApp extends Application.AppBase {
         AppBase.initialize();
     }
 
-    function getInitialView() as Array<Views or InputDelegates>? {
+    function getInitialView() as [ Views ] or [ Views, InputDelegates ] {
         self._bgController = new BackgroundController();
         self._mainView = new SimplePixelsView();
 
         self._bgController.setup();
 
-        return [self._mainView] as Array<Views or InputDelegates>;
+        return [self._mainView];
     }
 
-    function getSettingsView() as Array<Views or InputDelegates>? {
-        return [new SettingsMenuView(self.method(:onSettingsChanged) as Method)] as Array<Views or InputDelegates>;
+    function getSettingsView() as [ Views ] or [ Views, InputDelegates ] or Null  {
+        return [new SettingsMenuView(self.method(:onSettingsChanged) as Method)];
     }
 
-    function getServiceDelegate() as Array<System.ServiceDelegate> {
+    function getServiceDelegate() as [ System.ServiceDelegate ] {
         return [new BackgroundService()];
     }
     

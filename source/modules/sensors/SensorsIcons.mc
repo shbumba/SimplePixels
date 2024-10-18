@@ -35,22 +35,22 @@ module SensorsIcons {
         SensorTypes.IS_SLEEP_TIME => :isNightModeIcon,
         SensorTypes.SECOND_TIME => Rez.Fonts.alarm_icon,
         SensorTypes.MEMORY_USED => Rez.Fonts.memory_icon
-    } as Dictionary<SensorTypes.Enum, Symbol>;
+    } as Dictionary<SensorTypes.Enum, Symbol or ResourceId>;
 
-    function getIcon(sensorType as SensorTypes.Enum, value as SersorInfoGetterValue) as Symbol? {
+    function getIcon(sensorType as SensorTypes.Enum, value as SersorInfoGetterValue) as ResourceId? {
         var iconFn = Map.get(sensorType);
 
-        if (iconFn instanceof Lang.Number || iconFn == null) {
-            return iconFn as Symbol?;
+        if (iconFn instanceof Lang.ResourceId || iconFn == null) {
+            return iconFn as ResourceId?;
         }
 
         var method = new Lang.Method(Icons, iconFn);
 
-        return method.invoke(value) as Symbol?;
+        return method.invoke(value) as ResourceId?;
     }
 
     module Icons {
-        function batteryIcon(value as SersorInfoGetterValue) as Symbol {
+        function batteryIcon(value as SersorInfoGetterValue) as ResourceId {
             if (value == null || value == true || value >= 80) {
                 return Rez.Fonts.battery_100_icon; // 100%
             } else if (value >= 60) {
@@ -64,15 +64,15 @@ module SensorsIcons {
             return Rez.Fonts.battery_0_icon; // 0%
         }
 
-        function isConnectedIcon(value as SersorInfoGetterValue) as Symbol? {
+        function isConnectedIcon(value as SersorInfoGetterValue) as ResourceId? {
             return value == true ? Rez.Fonts.connection_icon : null;
         }
 
-        function isNightModeIcon(value as SersorInfoGetterValue) as Symbol? {
+        function isNightModeIcon(value as SersorInfoGetterValue) as ResourceId? {
             return value == true ? Rez.Fonts.sleep_icon : null;
         }
 
-        function isDoNotDisturbIcon(value as SersorInfoGetterValue) as Symbol? {
+        function isDoNotDisturbIcon(value as SersorInfoGetterValue) as ResourceId? {
             return value == true ? Rez.Fonts.dnd_icon : null;
         }
     }

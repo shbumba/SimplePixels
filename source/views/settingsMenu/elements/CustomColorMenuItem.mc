@@ -5,11 +5,11 @@ import Toybox.WatchUi;
 typedef CustomColorMenuItemProps as {
         :identifier as Object or Number or String,
         :color as Number,
-        :label as Symbol
+        :label as ResourceId
     };
 
 class CustomColorMenuItem extends WatchUi.CustomMenuItem {
-    var _label as Symbol;
+    var _label as ResourceId;
     var _color as Number;
 
     function initialize(params as CustomColorMenuItemProps) {

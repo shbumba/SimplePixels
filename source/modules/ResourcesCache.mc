@@ -3,9 +3,9 @@ import Toybox.WatchUi;
 import GlobalKeys;
 
 module ResourcesCache {
-    var _cache = {} as Dictionary<Symbol, WatchUi.Resource>;
+    var _cache = {} as Dictionary<ResourceId, WatchUi.Resource>;
 
-    function get(resourceKey as Symbol) as WatchUi.Resource {
+    function get(resourceKey as ResourceId) as WatchUi.Resource {
         var resource = _cache.get(resourceKey);
 
         if (resource == null) {
@@ -19,7 +19,7 @@ module ResourcesCache {
         return resource;
     }
 
-    function remove(resourceKey as Symbol) as Void {
+    function remove(resourceKey as ResourceId) as Void {
         _cache.remove(resourceKey);
     }
 }

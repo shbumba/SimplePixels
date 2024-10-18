@@ -14,7 +14,7 @@ function RenderSettingsMenu(onBack, transition as WatchUi.SlideType, selectedSet
     WatchUi.switchToView(menu, new SettingsMenuBehaviour(onBack as Method), transition);
 }
 
-function _getSubLabelValue(type as SettingType.Enum) as Symbol {
+function _getSubLabelValue(type as SettingType.Enum) as ResourceId {
     return SensorsTexts.getText(SettingsModule.getValue(type) as SensorTypes.Enum);
 }
 

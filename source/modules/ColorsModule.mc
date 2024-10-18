@@ -85,13 +85,13 @@ module ColorsModule {
         ColorsTypes.DARK_RED => Rez.Strings.ColorDarkRed,
         ColorsTypes.BROWN => Rez.Strings.ColorBrown,
         ColorsTypes.LIGHT_BROWN => Rez.Strings.ColorLightBrown
-    } as Dictionary<ColorsTypes.Enum, Symbol>;
+    } as Dictionary<ColorsTypes.Enum, ResourceId>;
 
     function getColor(key as ColorsTypes.Enum) as Number {
         return ColorsMap.get(key) as Number;
     }
 
-    function getColorName(key as ColorsTypes.Enum) as Symbol {
-        return TextsMap.get(key) as Symbol;
+    function getColorName(key as ColorsTypes.Enum) as ResourceId {
+        return TextsMap.get(key) as ResourceId;
     }
 }

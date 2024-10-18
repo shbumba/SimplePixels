@@ -16,14 +16,14 @@ module Components {
         :yShift as String?,
         :horizontalAlignment as PositionUtils.AlignmentEnum?,
         :verticalAlignment as PositionUtils.AlignmentEnum?,
-        :font as Symbol?,
+        :font as ResourceId?,
         :debug as Boolean?
     };
 
     class Box extends BaseDrawable {
         (:debug)
         private var DEBUG_LINE_SIZE = 2;
-        private var _font as Symbol?;
+        private var _font as ResourceId?;
         private var _boxWidth as Numeric? = null;
         private var _boxHeight as Numeric? = null;
         private var _posY as Numeric? = null;

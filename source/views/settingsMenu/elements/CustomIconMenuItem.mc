@@ -5,13 +5,13 @@ import GlobalKeys;
 
 typedef CustomIconMenuItemProps as {
     :identifier as Object or Number or String,
-    :icon as Symbol?,
-    :label as Symbol or String
+    :icon as ResourceId?,
+    :label as ResourceId or String
 };
 
 class CustomIconMenuItem extends WatchUi.CustomMenuItem {
-    var _label as Symbol;
-    var _icon as Symbol?;
+    var _label as ResourceId;
+    var _icon as ResourceId?;
 
     function initialize(params as CustomIconMenuItemProps) {
         WatchUi.CustomMenuItem.initialize(params.get(:identifier), {});
