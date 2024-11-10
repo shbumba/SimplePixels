@@ -17,13 +17,14 @@ import TimeStackModule;
 import SettingsModule.SettingType;
 
 module SensorsGetters {
-    typedef SersorInfoGetterValue as Number or Float or Boolean or Time.Moment or Position.Info or Null;
+    typedef SersorInfoGetterValue as Number or Float or Boolean or Time.Moment or Position.Info or Null or Array<Number>;
     typedef WeatherData as {
         "time" as Numeric?,
         "max" as Numeric?,
         "min" as Numeric?,
         "current" as Numeric?,
-        "feels" as Numeric?
+        "feels" as Numeric?,
+        "icon" as Numeric?
     };
 
     typedef WeatherError as {
@@ -300,10 +301,12 @@ module SensorsGetters {
             return data as Dictionary;
         }
 
-        function _getCurrentOWWeather() as Number? {
+        function _getCurrentOWWeather() as Array<Number?>? {
             var info = _getOWWeatherData();
-
-            return info != null ? info["current"] : null;
+            if (info == null) {
+                return null;
+            }
+            return [info["current"], info["icon"]] as Array<Number?>;
         }
 
         function _getWeatherOWFeels() as Number? {
@@ -322,10 +325,12 @@ module SensorsGetters {
             return [info["max"], info["min"]] as Array<Number?>;
         }
 
-        function _getCurrentGarminWeather() as Number? {
+        function _getCurrentGarminWeather() as Array<Number?>? {
             var info = Weather.getCurrentConditions();
-
-            return info != null ? info.temperature : null;
+            if (info == null) {
+                return null;
+            }
+            return [info.temperature, info.condition] as Array<Number?>;
         }
 
         function _getWeatherGarminFeels() as Number? {
@@ -344,7 +349,7 @@ module SensorsGetters {
             return [info[0].lowTemperature, info[0].highTemperature] as Array<Number?>;
         }
 
-        function getCurrentWeather() as Number? {
+        function getCurrentWeather() as Array<Number?>? {
             var isOWEnabled = !!SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
 
             return isOWEnabled ? _getCurrentOWWeather() : _getCurrentGarminWeather();

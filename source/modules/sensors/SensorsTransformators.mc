@@ -13,7 +13,7 @@ module SensorsTransformators {
         SensorTypes.NONE => :_transformToEmpty,
         SensorTypes.BATTERY => :_transformPercent,
         SensorTypes.BATTERY_IN_DAYS => :_transformBatteryInDays,
-        SensorTypes.CURRENT_WEATHER => :_transformTemperature,
+        SensorTypes.CURRENT_WEATHER => :_transformReTemperature,
         SensorTypes.WEATHER_FEELS => :_transformTemperature,
         SensorTypes.WEATHER_FORECAST => :_transformTemperatureForecast,
         SensorTypes.SUNRISE => :_transformTime,
@@ -91,6 +91,12 @@ module SensorsTransformators {
             }
 
             return value.format("%.0f").toString() + "°";
+        }
+
+        function _transformReTemperature(value as Array<Number?>) as String{
+            var temp = value[0];
+            temp = temp != null ? _transformTemperature(temp) : temp;
+            return temp;
         }
 
         function _transformTemperatureForecast(forecast as Array<Number?>) as String {

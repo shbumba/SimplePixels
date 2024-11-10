@@ -84,7 +84,8 @@ class BackgroundService extends System.ServiceDelegate {
             "max" => data["main"]["temp_max"],
             "min" => data["main"]["temp_min"],
             "current" => data["main"]["temp"],
-            "feels" => data["main"]["feels_like"]
+            "feels" => data["main"]["feels_like"],
+            "icon" => data["weather"]["id"]
         };
     }
 
