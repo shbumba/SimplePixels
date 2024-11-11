@@ -1,7 +1,6 @@
 import Toybox.Lang;
 import SensorsGetters;
 import SensorTypes;
-import Toybox.System;
 
 module SensorsIcons {
     var Map =
@@ -9,8 +8,8 @@ module SensorsIcons {
             SensorTypes.BATTERY => :batteryIcon,
             SensorTypes.BATTERY_IN_DAYS => :batteryIcon,
             SensorTypes.CURRENT_WEATHER => :weatherIcon,
-            SensorTypes.WEATHER_FEELS => :weatherIcon,
-            SensorTypes.WEATHER_FORECAST => :weatherIcon,
+            SensorTypes.WEATHER_FEELS => Rez.Fonts.weather_icon,
+            SensorTypes.WEATHER_FORECAST => Rez.Fonts.weather_icon,
             SensorTypes.SUNRISE => Rez.Fonts.sunrise_icon,
             SensorTypes.SUNSET => Rez.Fonts.sunset_icon,
             SensorTypes.STEPS => Rez.Fonts.steps_icon,
@@ -194,11 +193,11 @@ module SensorsIcons {
             return value == true ? Rez.Fonts.dnd_icon : null;
         }
 
-        function weatherIcon(value as Array<Number?>?) as ResourceId? {
-            if (value == null || value[1] == null) {
+        function weatherIcon(value as SersorInfoGetterValue) as ResourceId? {
+            if (value == null || value == true) {
                 return Rez.Fonts.sun_icon;
             } else {
-                return WeatherIconsMap.get(value[1]);
+                return WeatherIconsMap.get(value[1] == null ? 0 : value[1]);
             }
         }
     }

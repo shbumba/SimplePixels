@@ -17,7 +17,7 @@ import TimeStackModule;
 import SettingsModule.SettingType;
 
 module SensorsGetters {
-    typedef SersorInfoGetterValue as Number or Float or Boolean or Time.Moment or Position.Info or Null or Array<Number>;
+    typedef SersorInfoGetterValue as Number or Float or Boolean or Time.Moment or Position.Info or Array<Number> or Null ;
     typedef WeatherData as {
         "time" as Numeric?,
         "max" as Numeric?,

@@ -25,6 +25,7 @@
     <font id="sun_icon" filename="../../resources-round-260x260/images/icons/sun.fnt" antialias="true"/>
     <font id="sunrise_icon" filename="../../resources-round-260x260/images/icons/sunrise.fnt" antialias="true"/>
     <font id="sunset_icon" filename="../../resources-round-260x260/images/icons/sunset.fnt" antialias="true"/>
+    <font id="weather_icon" filename="../../resources-round-260x260/images/icons/weather.fnt" antialias="true"/>
     <font id="snow_icon" filename="../../resources-round-260x260/images/icons/snow.fnt" antialias="true"/>
     <font id="clouds_icon" filename="../../resources-round-260x260/images/icons/clouds.fnt" antialias="true"/>
     <font id="fog_icon" filename="../../resources-round-260x260/images/icons/fog.fnt" antialias="true"/>

@@ -25,6 +25,7 @@
     <font id="sun_icon" filename="./icons/sun.fnt" antialias="true"/>
     <font id="sunrise_icon" filename="./icons/sunrise.fnt" antialias="true"/>
     <font id="sunset_icon" filename="./icons/sunset.fnt" antialias="true"/>
+    <font id="weather_icon" filename="./icons/weather.fnt" antialias="true"/>
     <font id="snow_icon" filename="./icons/snow.fnt" antialias="true"/>
     <font id="clouds_icon" filename="./icons/clouds.fnt" antialias="true"/>
     <font id="fog_icon" filename="./icons/fog.fnt" antialias="true"/>
