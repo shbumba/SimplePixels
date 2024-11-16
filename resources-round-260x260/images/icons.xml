@@ -26,4 +26,11 @@
     <font id="sunrise_icon" filename="./icons/sunrise.fnt" antialias="true"/>
     <font id="sunset_icon" filename="./icons/sunset.fnt" antialias="true"/>
     <font id="weather_icon" filename="./icons/weather.fnt" antialias="true"/>
+    <font id="snow_icon" filename="./icons/snow.fnt" antialias="true"/>
+    <font id="clouds_icon" filename="./icons/clouds.fnt" antialias="true"/>
+    <font id="fog_icon" filename="./icons/fog.fnt" antialias="true"/>
+    <font id="hail_icon" filename="./icons/hail.fnt" antialias="true"/>
+    <font id="rain_icon" filename="./icons/rain.fnt" antialias="true"/>
+    <font id="thunderstorm_icon" filename="./icons/thunderstorm.fnt" antialias="true"/>
+    <font id="hurricane_icon" filename="./icons/hurricane.fnt" antialias="true"/>
 </resources>

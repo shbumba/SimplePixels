@@ -26,4 +26,11 @@
     <font id="sunrise_icon" filename="../../resources-round-240x240/images/icons/sunrise.fnt" antialias="true"/>
     <font id="sunset_icon" filename="../../resources-round-240x240/images/icons/sunset.fnt" antialias="true"/>
     <font id="weather_icon" filename="../../resources-round-240x240/images/icons/weather.fnt" antialias="true"/>
+    <font id="snow_icon" filename="../../resources-round-240x240/images/icons/snow.fnt" antialias="true"/>
+    <font id="clouds_icon" filename="../../resources-round-240x240/images/icons/clouds.fnt" antialias="true"/>
+    <font id="fog_icon" filename="../../resources-round-240x240/images/icons/fog.fnt" antialias="true"/>
+    <font id="hail_icon" filename="../../resources-round-240x240/images/icons/hail.fnt" antialias="true"/>
+    <font id="rain_icon" filename="../../resources-round-240x240/images/icons/rain.fnt" antialias="true"/>
+    <font id="thunderstorm_icon" filename="../../resources-round-240x240/images/icons/thunderstorm.fnt" antialias="true"/>
+    <font id="hurricane_icon" filename="../../resources-round-240x240/images/icons/hurricane.fnt" antialias="true"/>
 </resources>
