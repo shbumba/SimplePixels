@@ -195,9 +195,9 @@ module SensorsIcons {
 
         function weatherIcon(value as SersorInfoGetterValue) as ResourceId? {
             if (value == null || value == true) {
-                return Rez.Fonts.sun_icon;
+                return Rez.Fonts.weather_icon;
             } else {
-                return WeatherIconsMap.get(value[1] == null ? 0 : value[1]);
+                return value[1] == null ? Rez.Fonts.weather_icon : WeatherIconsMap.get(value[1]);
             }
         }
     }
