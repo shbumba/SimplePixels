@@ -78,6 +78,10 @@
     <string id="Never">Never</string>
     <string id="OnGesture">On Gesture</string>
 
+    <string id="DateFormat">Date Format</string>
+    <string id="DateFormatEng">dd MM(English)</string>
+    <string id="DateFormatMMdd">MM/dd</string>
+
     <string id="NA">---</string>
 
     <string id="OpenWeatherEnabledTitle">OpenWeather: Is Enabled</string>
