@@ -61,6 +61,7 @@
     <string id="OxygenSaturation">Oxygen saturation</string>
     <string id="Sunrise">Sunrise</string>
     <string id="Sunset">Sunset</string>
+    <string id="SunRiseOrSet">Sunrise/Sunset</string>
     <string id="Pressure">Pressure</string>
     <string id="TimeToRecovery">Recovery time</string>
     <string id="RespirationRate">Respiration rate</string>
