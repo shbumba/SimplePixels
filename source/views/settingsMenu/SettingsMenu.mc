@@ -122,5 +122,12 @@ function SettingsMenu() as WatchUi.Menu2 or WatchUi.CustomMenu {
         })
     );
 
+    menu.addItem(
+        SettingsMenuBuilder.generateMenuItem(SettingsMenuBuilder.ITEM, {
+            :identifier => SettingType.DOT_HOUR_TRANS,
+            :label => Rez.Strings.DotHourTransparency
+        })
+    );
+
     return menu;
 }
