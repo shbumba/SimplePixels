@@ -74,6 +74,7 @@
     <string id="SecondTime">Second time</string>
 
     <string id="DisplaySeconds">Display seconds</string>
+    <string id="DotHourTransparency">Pattern transparency</string>
 
     <string id="Never">Never</string>
     <string id="OnGesture">On Gesture</string>

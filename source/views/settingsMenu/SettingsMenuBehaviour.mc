@@ -31,7 +31,8 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         SettingType.LEFT_SENSOR => :sensorFieldHandler,
         SettingType.SHOW_STATUS_ICONS => :toggleFieldHangler,
         SettingType.DISPLAY_SECONDS => :displaySecondsHandler,
-        SettingType.SECOND_TIME_FORMAT => :displaySecondTimeHandler
+        SettingType.SECOND_TIME_FORMAT => :displaySecondTimeHandler,
+        SettingType.DOT_HOUR_TRANS => :displayPatternTransHandler
     };
 
     function initialize(onBack as Lang.Method) {
@@ -179,10 +180,31 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         self.openMenu(item.getId() as SettingType.Enum, menu, false);
     }
 
+    function displayPatternTransHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
+        var menu = self._createCustomMenu(item.getLabel());
+
+        if (GlobalKeys.CAN_CREATE_COLOR) {
+            self._addMapItems(menu, {
+                0 => "0%",
+                25 => "25%",
+                50 => "50%",
+                75 => "75%",
+                100 => "100%",
+            });
+        } else {
+            self._addMapItems(menu, {
+                0 => "0%",
+                100 => "100%",
+            });
+        }
+
+        self.openMenu(item.getId() as SettingType.Enum, menu, false);
+    }
+
     function openMenu(settingKey as SettingType.Enum, menu as WatchUi.Menu2 or WatchUi.CustomMenu, clearPrevSensorCache as Boolean) as Void {
         SettingsMenuBuilder.setFocusOnMenuItem(menu, settingKey);
 
-        WatchUi.switchToView(menu, new CustomMenuDelegate(settingKey, clearPrevSensorCache, self._onBackCallback), WatchUi.SLIDE_UP);
+        WatchUi.switchToView(menu, new CustomMenuDelegate(settingKey, clearPrevSensorCache, self._onBackCallback), WatchUi.SLIDE_IMMEDIATE);
     }
 
     function onSelect(item as WatchUi.MenuItem) as Void {

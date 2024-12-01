@@ -4,6 +4,8 @@ import Toybox.Graphics;
 import DotPattern;
 import Components;
 import GlobalKeys;
+import SettingsModule;
+import SettingsModule.SettingType;
 
 typedef PhantomTimeViewProps as Components.TimeViewProps or
     {
@@ -12,10 +14,12 @@ typedef PhantomTimeViewProps as Components.TimeViewProps or
 
 class PhantomTimeView extends Components.TimeView {
     private var _timeShift as Number;
+    private var _patternTrans as Number? = null;
 
     function initialize(params as PhantomTimeViewProps) {
         Components.TimeView.initialize(params);
-        
+
+        self.updatePatterntTrans();
         var timeShift = params.get(:timeShift);
         self._timeShift = timeShift != null ? timeShift : 0;
     }
@@ -23,7 +27,24 @@ class PhantomTimeView extends Components.TimeView {
     function onSettingsChanged() as Void {
         Components.TimeView.onSettingsChanged();
 
-        DotPattern.create(DotPattern.HOURS, self.getWidth(), self.getHeight(), self.backgroundColor, self.foregroundColor);
+        self.updatePatterntTrans();
+
+        if (self._patternTrans != null && self._patternTrans == 100) {
+            return;
+        }
+
+        DotPattern.create(
+            DotPattern.HOURS,
+            self.getWidth(),
+            self.getHeight(),
+            self.backgroundColor,
+            self.foregroundColor,
+            self._patternTrans
+        );
+    }
+
+    private function updatePatterntTrans() as Void {
+        self._patternTrans = SettingsModule.getValue(SettingType.DOT_HOUR_TRANS);
     }
 
     private function shiftHours(time as Number) as Number {
@@ -63,11 +84,23 @@ class PhantomTimeView extends Components.TimeView {
     }
 
     protected function render(drawContext as Dc) as Void {
+        if (self._patternTrans != null && self._patternTrans == 100) {
+            return;
+        }
+
         var time = self.shiftTime(self.getTime());
 
         self.renderTime(time, drawContext);
-        
-        var pattern = DotPattern.get(DotPattern.HOURS, self.getWidth(), self.getHeight(), self.backgroundColor, self.foregroundColor);
+
+        var pattern = DotPattern.get(
+            DotPattern.HOURS,
+            self.getWidth(),
+            self.getHeight(),
+            self.backgroundColor,
+            self.foregroundColor,
+            self._patternTrans
+        );
+
         drawContext.drawBitmap(self.getPosX(), self.getPosY(), pattern);
     }
 }
