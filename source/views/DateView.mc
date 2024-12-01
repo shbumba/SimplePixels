@@ -13,7 +13,7 @@ class DateView extends Components.Box {
         var posY = self.getPosY();
         var width = self.getWidth();
 
-        var dateObj = formatDateToEng(Time.now());
+        var dateObj = formatDate(Time.now());
 
         var font = self.getFont();
         var fontHeight = drawContext.getFontHeight(font);

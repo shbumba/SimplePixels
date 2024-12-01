@@ -65,6 +65,12 @@ function SettingsMenu() as WatchUi.Menu2 or WatchUi.CustomMenu {
     );
     menu.addItem(
         SettingsMenuBuilder.generateMenuItem(SettingsMenuBuilder.ITEM, {
+            :identifier => SettingType.DATE_FORMAT,
+            :label => Rez.Strings.DateFormat
+        })
+    );
+    menu.addItem(
+        SettingsMenuBuilder.generateMenuItem(SettingsMenuBuilder.ITEM, {
             :identifier => SettingType.LEFT_SENSOR,
             :label => Rez.Strings.LeftSensor,
             :subLabel => _getSubLabelValue(SettingType.LEFT_SENSOR)
