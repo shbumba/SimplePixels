@@ -2,7 +2,6 @@ import Toybox.Lang;
 import Toybox.Graphics;
 import Toybox.Time;
 import Components;
-import SettingsModule;
 
 class DateView extends Components.Box {
     function initialize(params as Components.BoxProps) {
@@ -14,8 +13,7 @@ class DateView extends Components.Box {
         var posY = self.getPosY();
         var width = self.getWidth();
 
-        var getDateFormat = SettingsModule.getValue(SettingsModule.SettingType.DATE_FORMAT);
-        var dateObj = getDateFormat == 0 ? formatDateToEng(Time.now()) : formatDateToMMdd(Time.now());
+        var dateObj = formatDateToEng(Time.now());
 
         var font = self.getFont();
         var fontHeight = drawContext.getFontHeight(font);

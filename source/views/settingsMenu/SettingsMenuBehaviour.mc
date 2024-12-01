@@ -31,8 +31,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         SettingType.LEFT_SENSOR => :sensorFieldHandler,
         SettingType.SHOW_STATUS_ICONS => :toggleFieldHangler,
         SettingType.DISPLAY_SECONDS => :displaySecondsHandler,
-        SettingType.SECOND_TIME_FORMAT => :displaySecondTimeHandler,
-        SettingType.DATE_FORMAT => :displayDateFormatHandler
+        SettingType.SECOND_TIME_FORMAT => :displaySecondTimeHandler
     };
 
     function initialize(onBack as Lang.Method) {
@@ -180,28 +179,10 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         self.openMenu(item.getId() as SettingType.Enum, menu, false);
     }
 
-    function displayDateFormatHandler(item as WatchUi.ToggleMenuItem) as Void {
-        var menu = self._createCustomMenu(item.getLabel());
-        self._addMapItems(menu, {
-            DisplayDateFormatType.DDMM => Rez.Strings.DateFormatEng,
-            DisplayDateFormatType.MMDD => Rez.Strings.DateFormatMMdd
-        });
-
-        self.openMenu(item.getId() as SettingType.Enum, menu, false);
-    }
-
-    function openMenu(
-        settingKey as SettingType.Enum,
-        menu as WatchUi.Menu2 or WatchUi.CustomMenu,
-        clearPrevSensorCache as Boolean
-    ) as Void {
+    function openMenu(settingKey as SettingType.Enum, menu as WatchUi.Menu2 or WatchUi.CustomMenu, clearPrevSensorCache as Boolean) as Void {
         SettingsMenuBuilder.setFocusOnMenuItem(menu, settingKey);
 
-        WatchUi.switchToView(
-            menu,
-            new CustomMenuDelegate(settingKey, clearPrevSensorCache, self._onBackCallback),
-            WatchUi.SLIDE_UP
-        );
+        WatchUi.switchToView(menu, new CustomMenuDelegate(settingKey, clearPrevSensorCache, self._onBackCallback), WatchUi.SLIDE_UP);
     }
 
     function onSelect(item as WatchUi.MenuItem) as Void {

@@ -14,7 +14,6 @@
     <property id="BottomSensor1" type="number">1</property>
     <property id="BottomSensor2" type="number">19</property>
     <property id="BottomSensor3" type="number">20</property>
-    <property id="DateFormat" type="number">0</property>
     <property id="OpenWeatherEnabled" type="boolean">false</property>
     <property id="OpenWeatherAPIKey" type="string"></property>
     <property id="OpenWeatherIntervalMinutes" type="number">30</property>
