@@ -39,13 +39,6 @@ module SettingsModule {
         }
     }
 
-    module DisplayDateFormatType {
-        enum Enum {
-            DDMM = 0,
-            MMDD = 1
-        }
-    }
-
     function setValue(settingKey as SettingType.Enum, value as String or Boolean or Number) as Void {
         Properties.setValue(settingKey as String, value);
     }

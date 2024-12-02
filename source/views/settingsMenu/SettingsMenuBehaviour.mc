@@ -205,8 +205,8 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     function displayDateFormatHandler(item as WatchUi.ToggleMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
         self._addMapItems(menu, {
-            DisplayDateFormatType.DDMM => Rez.Strings.DateFormatEng,
-            DisplayDateFormatType.MMDD => Rez.Strings.DateFormatMMdd
+            FormatDate.DisplayDateFormatType.DDMM => Rez.Strings.DateFormatEng,
+            FormatDate.DisplayDateFormatType.MMDD => Rez.Strings.DateFormatMMdd
         });
 
         self.openMenu(item.getId() as SettingType.Enum, menu, false);
