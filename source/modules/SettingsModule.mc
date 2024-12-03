@@ -28,6 +28,7 @@ module SettingsModule {
             OPENWEATHER_LAT = "OpenWeatherLat",
             OPENWEATHER_LON = "OpenWeatherLon",
             DOT_HOUR_TRANS = "DotHourTransparency",
+            DATE_FORMAT = "DateFormat"
         }
     }
 

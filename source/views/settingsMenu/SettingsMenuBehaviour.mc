@@ -32,7 +32,8 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         SettingType.SHOW_STATUS_ICONS => :toggleFieldHangler,
         SettingType.DISPLAY_SECONDS => :displaySecondsHandler,
         SettingType.SECOND_TIME_FORMAT => :displaySecondTimeHandler,
-        SettingType.DOT_HOUR_TRANS => :displayPatternTransHandler
+        SettingType.DOT_HOUR_TRANS => :displayPatternTransHandler,
+        SettingType.DATE_FORMAT => :displayDateFormatHandler
     };
 
     function initialize(onBack as Lang.Method) {
@@ -189,22 +190,40 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
                 25 => "25%",
                 50 => "50%",
                 75 => "75%",
-                100 => "100%",
+                100 => "100%"
             });
         } else {
             self._addMapItems(menu, {
                 0 => "0%",
-                100 => "100%",
+                100 => "100%"
             });
         }
 
         self.openMenu(item.getId() as SettingType.Enum, menu, false);
     }
 
-    function openMenu(settingKey as SettingType.Enum, menu as WatchUi.Menu2 or WatchUi.CustomMenu, clearPrevSensorCache as Boolean) as Void {
+    function displayDateFormatHandler(item as WatchUi.ToggleMenuItem) as Void {
+        var menu = self._createCustomMenu(item.getLabel());
+        self._addMapItems(menu, {
+            FormatDate.DisplayDateFormatType.DDMM => Rez.Strings.DateFormatEng,
+            FormatDate.DisplayDateFormatType.MMDD => Rez.Strings.DateFormatMMdd
+        });
+
+        self.openMenu(item.getId() as SettingType.Enum, menu, false);
+    }
+
+    function openMenu(
+        settingKey as SettingType.Enum,
+        menu as WatchUi.Menu2 or WatchUi.CustomMenu,
+        clearPrevSensorCache as Boolean
+    ) as Void {
         SettingsMenuBuilder.setFocusOnMenuItem(menu, settingKey);
 
-        WatchUi.switchToView(menu, new CustomMenuDelegate(settingKey, clearPrevSensorCache, self._onBackCallback), WatchUi.SLIDE_IMMEDIATE);
+        WatchUi.switchToView(
+            menu,
+            new CustomMenuDelegate(settingKey, clearPrevSensorCache, self._onBackCallback),
+            WatchUi.SLIDE_IMMEDIATE
+        );
     }
 
     function onSelect(item as WatchUi.MenuItem) as Void {
