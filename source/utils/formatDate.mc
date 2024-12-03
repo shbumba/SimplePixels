@@ -43,7 +43,7 @@ module FormatDate {
                 return (
                     [
                         formatedDate.get(:dayName),
-                        formatedDate.get(:month) + "/" + formatedDate.get(:day).toString()
+                        formatedDate.get(:month).toString() + "/" + formatedDate.get(:day).toString()
                     ] as Array<String>
                 );
             default:
