@@ -45,6 +45,9 @@ class PhantomTimeView extends Components.TimeView {
 
     private function updatePatterntTrans() as Void {
         self._patternTrans = SettingsModule.getValue(SettingType.DOT_HOUR_TRANS);
+        if (!GlobalKeys.CAN_CREATE_COLOR && self._patternTrans > 0) {
+            self._patternTrans = 100;
+        }
     }
 
     private function shiftHours(time as Number) as Number {
