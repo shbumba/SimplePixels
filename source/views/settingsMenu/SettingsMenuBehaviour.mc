@@ -30,10 +30,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         SettingType.BOTTOM_SENSOR_3 => :sensorFieldHandler,
         SettingType.LEFT_SENSOR => :sensorFieldHandler,
         SettingType.SHOW_STATUS_ICONS => :toggleFieldHangler,
-        SettingType.DISPLAY_SECONDS => :displaySecondsHandler,
-        SettingType.SECOND_TIME_FORMAT => :displaySecondTimeHandler,
-        SettingType.DOT_HOUR_TRANS => :displayPatternTransHandler,
-        SettingType.DATE_FORMAT => :displayDateFormatHandler
+        SettingType.DISPLAY_SECONDS => :displaySecondsHandler
     };
 
     function initialize(onBack as Lang.Method) {
@@ -110,30 +107,6 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         }
     }
 
-    function _addTimeZones(menu as WatchUi.CustomMenu or WatchUi.Menu2) as Void {
-        for (var i = 0; i < TimeStackModule.TIME_ZONES.size(); i++) {
-            var timeZone = TimeStackModule.TIME_ZONES[i] as Numeric;
-            var positiveTimeZone = timeZone > 0 ? timeZone : timeZone / -1;
-            var formatedTimeZone = Time.Gregorian.utcInfo(
-                new Time.Moment(positiveTimeZone * 60 * 60),
-                Time.FORMAT_SHORT
-            );
-            var timeSymbol = timeZone > 0 ? "+" : timeZone < 0 ? "-" : "";
-            var formatedTime = Lang.format("$1$$2$:$3$", [
-                timeSymbol,
-                formatedTimeZone.hour.format("%02u"),
-                formatedTimeZone.min.format("%02u")
-            ]);
-
-            menu.addItem(
-                SettingsMenuBuilder.generateMenuItem(SettingsMenuBuilder.CUSTOM_ICON_ITEM, {
-                    :identifier => timeZone,
-                    :label => formatedTime
-                })
-            );
-        }
-    }
-
     function colorHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
         self._addColorItems(menu);
@@ -172,44 +145,6 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
 
     function toggleFieldHangler(item as WatchUi.ToggleMenuItem) as Void {
         SettingsModule.setValue(item.getId() as SettingType.Enum, item.isEnabled());
-    }
-
-    function displaySecondTimeHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
-        var menu = self._createCustomMenu(item.getLabel());
-        self._addTimeZones(menu);
-
-        self.openMenu(item.getId() as SettingType.Enum, menu, false);
-    }
-
-    function displayPatternTransHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
-        var menu = self._createCustomMenu(item.getLabel());
-
-        if (GlobalKeys.CAN_CREATE_COLOR) {
-            self._addMapItems(menu, {
-                0 => "0%",
-                25 => "25%",
-                50 => "50%",
-                75 => "75%",
-                100 => "100%"
-            });
-        } else {
-            self._addMapItems(menu, {
-                0 => "0%",
-                100 => "100%"
-            });
-        }
-
-        self.openMenu(item.getId() as SettingType.Enum, menu, false);
-    }
-
-    function displayDateFormatHandler(item as WatchUi.ToggleMenuItem) as Void {
-        var menu = self._createCustomMenu(item.getLabel());
-        self._addMapItems(menu, {
-            FormatDate.DisplayDateFormatType.DDMM => Rez.Strings.DateFormatEng,
-            FormatDate.DisplayDateFormatType.MMDD => Rez.Strings.DateFormatMMdd
-        });
-
-        self.openMenu(item.getId() as SettingType.Enum, menu, false);
     }
 
     function openMenu(
