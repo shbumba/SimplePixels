@@ -42,7 +42,6 @@
     <string id="BottomSensor3">Bottom sensor 3</string>
     <string id="LeftSensor">Left sensor</string>
     <string id="DisplayStatusIcons">Show status icons</string>
-    <string id="SecondTimeFormat">Second Time Fromat</string>
 
     <string id="None">None</string>
     <string id="Steps">Steps</string>
@@ -74,14 +73,9 @@
     <string id="SecondTime">Second time</string>
 
     <string id="DisplaySeconds">Display seconds</string>
-    <string id="DotHourTransparency">Pattern transparency</string>
 
     <string id="Never">Never</string>
     <string id="OnGesture">On Gesture</string>
-
-    <string id="DateFormat">Date Format</string>
-    <string id="DateFormatEng">dd MM(English)</string>
-    <string id="DateFormatMMdd">MM/dd</string>
 
     <string id="NA">---</string>
 
@@ -90,4 +84,7 @@
     <string id="OpenWeatherIntervalMinutesTitle">OpenWeather: Update interval</string>
     <string id="OpenWeatherLatTitle">OpenWeather: Latitude (optional)</string>
     <string id="OpenWeatherLonTitle">OpenWeather: Longitude (optional)</string>
+    <string id="DateFormatTitle">Date Format</string>
+    <string id="SecondTimeFormatTitle">Second Time Fromat</string>
+    <string id="DotHourTransparencyTitle">Pattern transparency(Older devices[eg.fr245/745/945] cannot support 50% and 75%. Even if you set it to 50% or 75%, it will be used as 100%.)</string>
 </strings>
