@@ -81,6 +81,14 @@ module DotPattern {
         fgColor as Numeric,
         alphaPercent as Number?
     ) as BufferedBitmap {
+        if (alphaPercent != null && (alphaPercent == 100 || (!GlobalKeys.CAN_CREATE_COLOR && alphaPercent > 0))) {
+            var bitmap = _createBitmap(width, height, bgColor, fgColor);
+            var drawContext = bitmap.getDc();
+            drawContext.setColor(bgColor, bgColor);
+            drawContext.clear(); 
+            return bitmap;
+        }
+
         var rowPattern = _generateRow(width, bgColor, fgColor);
         var bitmap = _createBitmap(width, height, bgColor, fgColor);
         var drawContext = bitmap.getDc();
@@ -95,7 +103,10 @@ module DotPattern {
             drawContext.drawBitmap(0, yShift, rowPattern);
         }
 
-        _drawAlphaBackground(bitmap, width, height, bgColor, alphaPercent);
+        if (GlobalKeys.CAN_CREATE_COLOR && alphaPercent != null && alphaPercent > 0) {
+            _drawAlphaBackground(bitmap, width, height, bgColor, alphaPercent);
+        }
+
 
         return bitmap;
     }
@@ -105,12 +116,8 @@ module DotPattern {
         width as Numeric,
         height as Numeric,
         bgColor as Numeric,
-        alphaPercent as Number?
+        alphaPercent as Number
     ) as Void {
-        if (!GlobalKeys.CAN_CREATE_COLOR || alphaPercent == null || alphaPercent == 0) {
-            return;
-        }
-
         var rgb = colorNumberToRgb(bgColor);
 
         var drawContext = bitmap.getDc();

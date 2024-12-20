@@ -29,10 +29,6 @@ class PhantomTimeView extends Components.TimeView {
 
         self.updatePatterntTrans();
 
-        if (self._patternTrans != null && self._patternTrans == 100) {
-            return;
-        }
-
         DotPattern.create(
             DotPattern.HOURS,
             self.getWidth(),
@@ -45,9 +41,6 @@ class PhantomTimeView extends Components.TimeView {
 
     private function updatePatterntTrans() as Void {
         self._patternTrans = SettingsModule.getValue(SettingType.DOT_HOUR_TRANS);
-        if (!GlobalKeys.CAN_CREATE_COLOR && self._patternTrans > 0) {
-            self._patternTrans = 100;
-        }
     }
 
     private function shiftHours(time as Number) as Number {
@@ -87,10 +80,6 @@ class PhantomTimeView extends Components.TimeView {
     }
 
     protected function render(drawContext as Dc) as Void {
-        if (self._patternTrans != null && self._patternTrans == 100) {
-            return;
-        }
-
         var time = self.shiftTime(self.getTime());
 
         self.renderTime(time, drawContext);

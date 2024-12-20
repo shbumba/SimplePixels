@@ -85,6 +85,6 @@
     <string id="OpenWeatherLatTitle">OpenWeather: Latitude (optional)</string>
     <string id="OpenWeatherLonTitle">OpenWeather: Longitude (optional)</string>
     <string id="DateFormatTitle">Date Format</string>
-    <string id="SecondTimeFormatTitle">Second Time Fromat</string>
+    <string id="SecondTimeFormatTitle">Second Time Fromat (e.g. -4:30 have to be written as -4.5)</string>
     <string id="DotHourTransparencyTitle">Pattern transparency(Older devices[eg.fr245/745/945] cannot support 50% and 75%. Even if you set it to 50% or 75%, it will be used as 100%.)</string>
 </strings>

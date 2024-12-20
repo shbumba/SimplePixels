@@ -25,48 +25,8 @@
             <listEntry value="1">MM/dd</listEntry>
         </settingConfig>
     </setting>
-    <setting propertyKey="@Properties.SecondTimeFormat" title="@Strings.SecondTimeFormatTitle">
-        <settingConfig type="list" required="true">
-            <listEntry value="0">-12:00</listEntry>
-            <listEntry value="1">-11:00</listEntry>
-            <listEntry value="2">-10:00</listEntry>
-            <listEntry value="3">-9:00</listEntry>
-            <listEntry value="4">-8:00</listEntry>
-            <listEntry value="5">-7:00</listEntry>
-            <listEntry value="6">-6:00</listEntry>
-            <listEntry value="7">-5:00</listEntry>
-            <listEntry value="8">-4:30</listEntry>
-            <listEntry value="9">-4:00</listEntry>
-            <listEntry value="10">-3:30</listEntry>
-            <listEntry value="11">-3:00</listEntry>
-            <listEntry value="12">-2:00</listEntry>
-            <listEntry value="13">-1:00</listEntry>
-            <listEntry value="14">0:00</listEntry>
-            <listEntry value="15">+1:00</listEntry>
-            <listEntry value="16">+2:00</listEntry>
-            <listEntry value="17">+3:00</listEntry>
-            <listEntry value="18">+3:30</listEntry>
-            <listEntry value="19">+4:00</listEntry>
-            <listEntry value="20">+4:30</listEntry>
-            <listEntry value="21">+5:00</listEntry>
-            <listEntry value="22">+5:30</listEntry>
-            <listEntry value="23">+5:45</listEntry>
-            <listEntry value="24">+6:00</listEntry>
-            <listEntry value="25">+6:30</listEntry>
-            <listEntry value="26">+7:00</listEntry>
-            <listEntry value="27">+8:00</listEntry>
-            <listEntry value="28">+8:45</listEntry>
-            <listEntry value="29">+9:00</listEntry>
-            <listEntry value="30">+9:30</listEntry>
-            <listEntry value="31">+10:00</listEntry>
-            <listEntry value="32">+10:30</listEntry>
-            <listEntry value="33">+11:00</listEntry>
-            <listEntry value="34">+11:30</listEntry>
-            <listEntry value="35">+12:00</listEntry>
-            <listEntry value="36">+12:45</listEntry>
-            <listEntry value="37">+13:00</listEntry>
-            <listEntry value="38">+14:00</listEntry>
-        </settingConfig>
+    <setting propertyKey="@Properties.SecondTimeFormat" title="@Strings.SecondTimeFormatTitle" prompt="12.75 (as +12:45 e.g. -4:30 have to be written as -4.5)">
+        <settingConfig type="numeric" min="-12" max="14" required="true" />
     </setting>
     <setting propertyKey="@Properties.DotHourTransparency" title="@Strings.DotHourTransparencyTitle">
         <settingConfig type="list" required="true">
