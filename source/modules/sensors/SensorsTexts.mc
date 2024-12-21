@@ -11,6 +11,7 @@ module SensorsTexts {
         SensorTypes.WEATHER_FORECAST => Rez.Strings.WeatherForecast,
         SensorTypes.SUNRISE => Rez.Strings.Sunrise,
         SensorTypes.SUNSET => Rez.Strings.Sunset,
+        SensorTypes.SUN_RISE_SET => Rez.Strings.SunRiseOrSet,
         SensorTypes.STEPS => Rez.Strings.Steps,
         SensorTypes.CALORIES => Rez.Strings.Calories,
         SensorTypes.HEART_RATE => Rez.Strings.HeartRate,
