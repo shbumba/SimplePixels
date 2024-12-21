@@ -39,8 +39,9 @@ module SensorsGetters {
             SensorTypes.CURRENT_WEATHER => :getCurrentWeather,
             SensorTypes.WEATHER_FEELS => :getWeatherFeels,
             SensorTypes.WEATHER_FORECAST => :getCurrentForecast,
-            SensorTypes.SUNRISE => :getSunrise,
-            SensorTypes.SUNSET => :getSunset,
+            SensorTypes.SUNRISE => :getTodaySunrise,
+            SensorTypes.SUNSET => :getTodaySunset,
+            SensorTypes.SUN_RISE_SET => :getSunRiseSet,
             SensorTypes.STEPS => :getSteps,
             SensorTypes.CALORIES => :getCalories,
             SensorTypes.HEART_RATE => :getHR,
@@ -377,7 +378,7 @@ module SensorsGetters {
             return null;
         }
 
-        function _getSunPhaseTime(action) as Time.Moment? {
+        function _getSunPhaseTime(action, time as Time.Moment) as Time.Moment? {
             var location = getCurrentLocation();
 
             if (location == null) {
@@ -386,11 +387,11 @@ module SensorsGetters {
 
             var method = new Lang.Method(Weather, action);
 
-            return method.invoke(location, Time.today());
+            return method.invoke(location, time);
         }
 
-        function getSunrise() as Gregorian.Info? {
-            var time = _getSunPhaseTime(:getSunrise);
+        function getTodaySunrise() as Gregorian.Info? {
+            var time = _getSunPhaseTime(:getSunrise, Time.today());
 
             if (time == null) {
                 return null;
@@ -399,8 +400,8 @@ module SensorsGetters {
             return Gregorian.info(time, Time.FORMAT_SHORT);
         }
 
-        function getSunset() as Gregorian.Info? {
-            var time = _getSunPhaseTime(:getSunset);
+        function getTodaySunset() as Gregorian.Info? {
+            var time = _getSunPhaseTime(:getSunset, Time.today());
 
             if (time == null) {
                 return null;
@@ -421,6 +422,43 @@ module SensorsGetters {
 
         function getActiveMinutesWeekGoal() as Number? {
             return ActivityMonitor.getInfo().activeMinutesWeekGoal;
+        }
+
+        function getSunRiseSet() as Array<Object?>? {
+            var today_sunRise = _getSunPhaseTime(:getSunrise, Time.today());
+            var today_sunSet = _getSunPhaseTime(:getSunset, Time.today());
+
+            var today_sunRiseTimestamp = today_sunRise == null ? 0 : today_sunRise.value();
+            var today_sunSetTimestamp = today_sunSet == null ? 0 : today_sunSet.value();
+
+            var currentTimestamp = Time.now().value();
+
+            if (today_sunRiseTimestamp < today_sunSetTimestamp) {
+                if (currentTimestamp > today_sunRiseTimestamp && currentTimestamp < today_sunSetTimestamp) {
+                    return [1, Gregorian.info(today_sunSet, Time.FORMAT_SHORT)];
+                } else if (currentTimestamp > today_sunSetTimestamp) {
+                    var oneDay = new Time.Duration(Gregorian.SECONDS_PER_DAY);
+                    var today = new Time.Moment(Time.today().value());
+                    var tomorrowSunrise = _getSunPhaseTime(:getSunrise, today.add(oneDay));
+
+                    return [0, Gregorian.info(tomorrowSunrise, Time.FORMAT_SHORT)];
+                } else {
+                    return [0, Gregorian.info(today_sunRise, Time.FORMAT_SHORT)];
+                }
+            } else if (today_sunRiseTimestamp > today_sunSetTimestamp) {
+                if (currentTimestamp > today_sunSetTimestamp && currentTimestamp < today_sunRiseTimestamp) {
+                    return [0, Gregorian.info(today_sunRise, Time.FORMAT_SHORT)];
+                } else if (currentTimestamp > today_sunRiseTimestamp) {
+                    var oneDay = new Time.Duration(Gregorian.SECONDS_PER_DAY);
+                    var today = new Time.Moment(Time.today().value());
+                    var tomorrowSunset = _getSunPhaseTime(:getSunset, today.add(oneDay));
+
+                    return [1, Gregorian.info(tomorrowSunset, Time.FORMAT_SHORT)];
+                } else {
+                    return [1, Gregorian.info(today_sunSet, Time.FORMAT_SHORT)];
+                }
+            }
+            return null;
         }
     }
 }

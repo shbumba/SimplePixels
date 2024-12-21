@@ -12,6 +12,7 @@ module SensorsIcons {
             SensorTypes.WEATHER_FORECAST => Rez.Fonts.weather_icon,
             SensorTypes.SUNRISE => Rez.Fonts.sunrise_icon,
             SensorTypes.SUNSET => Rez.Fonts.sunset_icon,
+            SensorTypes.SUN_RISE_SET => :sunRiseOrSetIcon,
             SensorTypes.STEPS => Rez.Fonts.steps_icon,
             SensorTypes.CALORIES => Rez.Fonts.calories_icon,
             SensorTypes.HEART_RATE => Rez.Fonts.heart_icon,
@@ -198,6 +199,17 @@ module SensorsIcons {
                 return Rez.Fonts.weather_icon;
             } else {
                 return value[1] == null ? Rez.Fonts.weather_icon : WeatherIconsMap.get(value[1]);
+            }
+        }
+        function sunRiseOrSetIcon(value as SersorInfoGetterValue) as ResourceId? {
+            if (value == null || value == true) {
+                return Rez.Fonts.sunrise_or_set_icon;
+            } else {
+                return value[0] == null
+                    ? Rez.Fonts.sunrise_or_set_icon
+                    : value[0] == 0
+                    ? Rez.Fonts.sunrise_icon
+                    : Rez.Fonts.sunset_icon;
             }
         }
     }
