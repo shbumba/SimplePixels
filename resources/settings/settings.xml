@@ -30,11 +30,17 @@
     </setting>
     <setting propertyKey="@Properties.DotHourTransparency" title="@Strings.DotHourTransparencyTitle">
         <settingConfig type="list" required="true">
-            <listEntry value="0">0%</listEntry>
-            <listEntry value="25">25%</listEntry>
+            <listEntry value="0">Pattern enabled</listEntry>
+            <listEntry value="10">10%</listEntry>
+            <listEntry value="20">20%</listEntry>
+            <listEntry value="30">30%</listEntry>
+            <listEntry value="40">40%</listEntry>
             <listEntry value="50">50%</listEntry>
-            <listEntry value="75">75%</listEntry>
-            <listEntry value="100">100%</listEntry>
+            <listEntry value="60">60%</listEntry>
+            <listEntry value="70">70%</listEntry>
+            <listEntry value="80">80%</listEntry>
+            <listEntry value="90">90%</listEntry>
+            <listEntry value="100">Pattern disabled</listEntry>
         </settingConfig>
     </setting>
 </settings>

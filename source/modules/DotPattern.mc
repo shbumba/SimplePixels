@@ -81,17 +81,19 @@ module DotPattern {
         fgColor as Numeric,
         alphaPercent as Number?
     ) as BufferedBitmap {
-        if (alphaPercent != null && (alphaPercent == 100 || (!GlobalKeys.CAN_CREATE_COLOR && alphaPercent > 0))) {
-            var bitmap = _createBitmap(width, height, bgColor, fgColor);
-            var drawContext = bitmap.getDc();
+        var bitmap = _createBitmap(width, height, bgColor, fgColor);
+        var drawContext = bitmap.getDc();
+        var isPatternDisabled = alphaPercent != null && alphaPercent == 100;
+        var shouldApplyAlphaColor = !isPatternDisabled && alphaPercent != null && alphaPercent > 0;
+        var canApplyAlphaColor = GlobalKeys.CAN_CREATE_COLOR;
+
+        if (isPatternDisabled || (!canApplyAlphaColor && shouldApplyAlphaColor)) {
             drawContext.setColor(bgColor, bgColor);
             drawContext.clear(); 
             return bitmap;
         }
 
         var rowPattern = _generateRow(width, bgColor, fgColor);
-        var bitmap = _createBitmap(width, height, bgColor, fgColor);
-        var drawContext = bitmap.getDc();
 
         drawContext.setColor(bgColor, Graphics.COLOR_TRANSPARENT);
 
@@ -103,10 +105,9 @@ module DotPattern {
             drawContext.drawBitmap(0, yShift, rowPattern);
         }
 
-        if (GlobalKeys.CAN_CREATE_COLOR && alphaPercent != null && alphaPercent > 0) {
+        if (canApplyAlphaColor && shouldApplyAlphaColor) {
             _drawAlphaBackground(bitmap, width, height, bgColor, alphaPercent);
         }
-
 
         return bitmap;
     }
@@ -119,10 +120,10 @@ module DotPattern {
         alphaPercent as Number
     ) as Void {
         var rgb = colorNumberToRgb(bgColor);
+        var alphaConverted = percentToAlpha(alphaPercent);
+        var color = Graphics.createColor(alphaConverted, rgb[0], rgb[1], rgb[2]);
 
         var drawContext = bitmap.getDc();
-        var color = Graphics.createColor(percentToAlpha(alphaPercent), rgb[0], rgb[1], rgb[2]);
-
         drawContext.setFill(color);
         drawContext.fillRectangle(0, 0, width, height);
     }
