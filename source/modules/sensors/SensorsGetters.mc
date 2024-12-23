@@ -23,6 +23,7 @@ module SensorsGetters {
         Time.Moment or
         Position.Info or
         Array<Number> or
+        Array<Object> or
         Null;
     typedef WeatherData as {
         "time" as Numeric?,
