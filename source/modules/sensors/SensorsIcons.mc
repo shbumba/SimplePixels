@@ -202,12 +202,10 @@ module SensorsIcons {
             }
         }
         function sunRiseOrSetIcon(value as SersorInfoGetterValue) as ResourceId? {
-            if (value == null || value == true) {
+            if (value == null || value == true || value[0] == null) {
                 return Rez.Fonts.sunrise_or_set_icon;
             } else {
-                return value[0] == null
-                    ? Rez.Fonts.sunrise_or_set_icon
-                    : value[0] == 0
+                return value[0] == 0
                     ? Rez.Fonts.sunrise_icon
                     : Rez.Fonts.sunset_icon;
             }
