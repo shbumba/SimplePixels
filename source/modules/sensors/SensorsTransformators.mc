@@ -182,7 +182,7 @@ module SensorsTransformators {
             return GlobalKeys.IS_24_HOUR ? formatedTime : formatedTime + " " + typeType;
         }
 
-        function _reTransformTime(timeInfos as Array<Object?>) as String {
+        function _transformSunRiseSet(timeInfos as Array<Object?>) as String {
             var info = timeInfos[1] as Gregorian.Info;
             return _transformTime(info);
         }
