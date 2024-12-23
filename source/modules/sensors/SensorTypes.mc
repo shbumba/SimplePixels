@@ -26,6 +26,7 @@ module SensorTypes {
         WEATHER_FORECAST = 24,
         SUNRISE = 25,
         SUNSET = 26,
+        SUN_RISE_SET = 27,
         IS_CONNECTED = 100,
         IS_DO_NOT_DISTURB = 101,
         IS_NIGHT_MODE_ENABLED = 102,

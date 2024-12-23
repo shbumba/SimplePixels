@@ -18,6 +18,7 @@ module SensorsTransformators {
         SensorTypes.WEATHER_FORECAST => :_transformTemperatureForecast,
         SensorTypes.SUNRISE => :_transformTime,
         SensorTypes.SUNSET => :_transformTime,
+        SensorTypes.SUN_RISE_SET => :_transformSunRiseSet,
         SensorTypes.STEPS => :_transformToFourNumbers,
         SensorTypes.CALORIES => :_transformToFourNumbers,
         SensorTypes.HEART_RATE => :_transformToThreeNumbers,
@@ -179,6 +180,11 @@ module SensorsTransformators {
             var typeType = timeInfo.hour >= 12 ? "pm" : "am";
 
             return GlobalKeys.IS_24_HOUR ? formatedTime : formatedTime + " " + typeType;
+        }
+
+        function _transformSunRiseSet(timeInfos as Array<Object?>) as String {
+            var info = timeInfos[1] as Gregorian.Info;
+            return _transformTime(info);
         }
     }
 }
