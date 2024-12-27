@@ -33,4 +33,5 @@
     <font id="rain_icon" filename="../../resources-round-260x260/images/icons/rain.fnt" antialias="true"/>
     <font id="thunderstorm_icon" filename="../../resources-round-260x260/images/icons/thunderstorm.fnt" antialias="true"/>
     <font id="hurricane_icon" filename="../../resources-round-260x260/images/icons/hurricane.fnt" antialias="true"/>
+    <font id="sunrise_or_set_icon" filename="../../resources-round-260x260/images/icons/sunrise_sunset.fnt" antialias="true"/>
 </resources>

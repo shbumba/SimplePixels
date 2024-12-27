@@ -25,6 +25,7 @@ module SensorsCheckers {
         SensorTypes.WEATHER_FORECAST => true,
         SensorTypes.SUNRISE => true,
         SensorTypes.SUNSET => true,
+        SensorTypes.SUN_RISE_SET => true,
         SensorTypes.OXYGEN_SATURATION => :checkOxygenSaturation,
         SensorTypes.PRESSURE => :checkPressure,
         SensorTypes.TIME_TO_RECOVERY => :checkTimeToRecovery,
