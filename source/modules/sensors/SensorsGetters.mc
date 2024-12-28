@@ -375,18 +375,38 @@ module SensorsGetters {
             return isOWEnabled ? _getCurrentOWForecast() : _getCurrentGarminForecast();
         }
 
-        function getCurrentLocation() as Position.Location? {
-            var positionInfo = Position.getInfo();
+        function getLastLocation() as Position.Location? {
+            var activityInfo = Activity.getActivityInfo();
 
-            if (positionInfo has :position && positionInfo.position != null) {
-                return positionInfo.position as Position.Location;
+            if (activityInfo has :currentLocation) {
+                return activityInfo.currentLocation;
             }
 
             return null;
         }
 
-        function _getSunPhaseTime(action, time as Time.Moment) as Time.Moment? {
+        function getCurrentLocation() as Position.Location? {
+            var positionInfo = Position.getInfo();
+
+            if (positionInfo has :position) {
+                return positionInfo.position;
+            }
+
+            return null;
+        }
+
+        function getLocation() as Position.Location? {
             var location = getCurrentLocation();
+
+            if (location == null) {
+                location = getLastLocation();
+            }
+            
+            return location;
+        }
+
+        function _getSunPhaseTime(action, time as Time.Moment) as Time.Moment? {
+            var location = getLocation();
 
             if (location == null) {
                 return null;
