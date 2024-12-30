@@ -22,4 +22,8 @@ module ResourcesCache {
     function remove(resourceKey as ResourceId) as Void {
         _cache.remove(resourceKey);
     }
+
+    function clear() as Void {
+        _cache = {};
+    }
 }
