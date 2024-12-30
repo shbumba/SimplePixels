@@ -385,26 +385,6 @@ module SensorsGetters {
             return null;
         }
 
-        function getCurrentLocation() as Position.Location? {
-            var positionInfo = Position.getInfo();
-
-            if (positionInfo has :position) {
-                return positionInfo.position;
-            }
-
-            return null;
-        }
-
-        function getLocation() as Position.Location? {
-            var location = getCurrentLocation();
-
-            if (location == null) {
-                location = getLastLocation();
-            }
-            
-            return location;
-        }
-
         function _getSunPhaseTime(action, time as Time.Moment) as Time.Moment? {
             var location = getLocation();
 

@@ -35,7 +35,7 @@ class BackgroundService extends System.ServiceDelegate {
         var lon = SettingsModule.getValue(SettingType.OPENWEATHER_LON);
 
         if (!isNotEmptyString(lat) || !isNotEmptyString(lon)) {
-            var position = self.getLocation();
+            var position = getLocation();
 
             if (position == null) {
                 return;
@@ -48,23 +48,6 @@ class BackgroundService extends System.ServiceDelegate {
         }
 
         self.getWeatherInfo(apiKey, lat, lon);
-    }
-
-    (:background)
-    function getLocation() as Position.Location? {
-        var positionInfo = Position.getInfo();
-
-        if (positionInfo has :position) {
-            return positionInfo.position;
-        }
-
-        var activityInfo = Activity.getActivityInfo();
-
-        if (activityInfo has :currentLocation) {
-            return activityInfo.currentLocation;
-        }
-
-        return null;
     }
 
     (:background)
