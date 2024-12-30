@@ -14,6 +14,7 @@
     <font id="energy_icon" filename="./icons/energy.fnt" antialias="true"/>
     <font id="floors_icon" filename="./icons/floors.fnt" antialias="true"/>
     <font id="heart_icon" filename="./icons/heart.fnt" antialias="true"/>
+    <font id="heart_working_icon" filename="./icons/heart_working.fnt" antialias="true"/>
     <font id="memory_icon" filename="./icons/memory.fnt" antialias="true"/>
     <font id="messages_icon" filename="./icons/messages.fnt" antialias="true"/>
     <font id="oxygen_icon" filename="./icons/oxygen.fnt" antialias="true"/>
@@ -33,4 +34,5 @@
     <font id="rain_icon" filename="./icons/rain.fnt" antialias="true"/>
     <font id="thunderstorm_icon" filename="./icons/thunderstorm.fnt" antialias="true"/>
     <font id="hurricane_icon" filename="./icons/hurricane.fnt" antialias="true"/>
+    <font id="sunrise_or_set_icon" filename="./icons/sunrise_sunset.fnt" antialias="true"/>
 </resources>

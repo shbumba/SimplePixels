@@ -15,7 +15,7 @@ module SensorsIcons {
             SensorTypes.SUN_RISE_SET => :sunRiseOrSetIcon,
             SensorTypes.STEPS => Rez.Fonts.steps_icon,
             SensorTypes.CALORIES => Rez.Fonts.calories_icon,
-            SensorTypes.HEART_RATE => Rez.Fonts.heart_icon,
+            SensorTypes.HEART_RATE => :heartIcon,
             SensorTypes.STRESS => Rez.Fonts.stress_icon,
             SensorTypes.BODY_BATTERY => Rez.Fonts.energy_icon,
             SensorTypes.OXYGEN_SATURATION => Rez.Fonts.oxygen_icon,
@@ -208,6 +208,18 @@ module SensorsIcons {
                 return value[0] == 0
                     ? Rez.Fonts.sunrise_icon
                     : Rez.Fonts.sunset_icon;
+            }
+        }
+
+        function heartIcon(value as SersorInfoGetterValue) as ResourceId? {
+            if (value == null || value == true) {
+                return Rez.Fonts.heart_icon;
+            } else {
+                return value[1] == null
+                    ? Rez.Fonts.heart_icon
+                    : value[1] == 0
+                    ? Rez.Fonts.heart_working_icon
+                    : Rez.Fonts.heart_icon;
             }
         }
     }
