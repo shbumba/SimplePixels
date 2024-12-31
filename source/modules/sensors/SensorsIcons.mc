@@ -211,7 +211,7 @@ module SensorsIcons {
             }
         }
 
-        function heartIcon(value as SersorInfoGetterValue) as ResourceId? {
+        function heartIcon(value as SensorInfoGetterValue) as ResourceId? {
             if (value == null || value == true || value[1] == null || value[1] == 0) {
                 return Rez.Fonts.heart_icon;
             } else {
