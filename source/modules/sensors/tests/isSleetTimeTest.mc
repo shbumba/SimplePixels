@@ -50,26 +50,26 @@ function isSleepTimeTest(logger as Test.Logger) as Boolean {
                 midnight
             );
 
-            var sleetTimeFormated = Time.Gregorian.info(midnight.add(sleetTime), Time.FORMAT_SHORT);
-            var currentTimeFormated = Time.Gregorian.info(currentTime, Time.FORMAT_SHORT);
-            var wakeTimeFormated = Time.Gregorian.info(midnight.add(wakeTime), Time.FORMAT_SHORT);
+            var sleetTimeFormatted = Time.Gregorian.info(midnight.add(sleetTime), Time.FORMAT_SHORT);
+            var currentTimeFormatted = Time.Gregorian.info(currentTime, Time.FORMAT_SHORT);
+            var wakeTimeFormatted = Time.Gregorian.info(midnight.add(wakeTime), Time.FORMAT_SHORT);
 
-            var formatedResult = Lang.format("$1$:$2$ -> $3$:$4$ -> $5$:$6$ => $7$ == $8$", [
-                sleetTimeFormated.hour.format("%02u"),
-                sleetTimeFormated.min.format("%02u"),
-                currentTimeFormated.hour.format("%02u"),
-                currentTimeFormated.min.format("%02u"),
-                wakeTimeFormated.hour.format("%02u"),
-                wakeTimeFormated.min.format("%02u"),
+            var formattedResult = Lang.format("$1$:$2$ -> $3$:$4$ -> $5$:$6$ => $7$ == $8$", [
+                sleetTimeFormatted.hour.format("%02u"),
+                sleetTimeFormatted.min.format("%02u"),
+                currentTimeFormatted.hour.format("%02u"),
+                currentTimeFormatted.min.format("%02u"),
+                wakeTimeFormatted.hour.format("%02u"),
+                wakeTimeFormatted.min.format("%02u"),
                 expectResults[result] ? "true" : "false",
                 isSleep ? "true" : "false"
             ]);
 
-            logger.debug(formatedResult);
+            logger.debug(formattedResult);
             Test.assertEqualMessage(
                 expectResults[result],
                 isSleep,
-                "indexResult: [" + result + "] is not equal! " + formatedResult
+                "indexResult: [" + result + "] is not equal! " + formattedResult
             );
             result++;
         }

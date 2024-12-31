@@ -17,7 +17,7 @@ import TimeStackModule;
 import SettingsModule.SettingType;
 
 module SensorsGetters {
-    typedef SersorInfoGetterValue as Number or
+    typedef SensorInfoGetterValue as Number or
         Float or
         Boolean or
         Time.Moment or
@@ -81,7 +81,7 @@ module SensorsGetters {
 
     const MAX_WEATHER_INTERVAL = Math.ceil(Gregorian.SECONDS_PER_HOUR * 3);
 
-    function getValue(sensorType as SensorTypes.Enum) as SersorInfoGetterValue {
+    function getValue(sensorType as SensorTypes.Enum) as SensorInfoGetterValue {
         var sensorFn = Map.get(sensorType);
 
         if (sensorFn == null) {
@@ -90,7 +90,7 @@ module SensorsGetters {
 
         var method = new Lang.Method(Getters, sensorFn);
 
-        return method.invoke() as SersorInfoGetterValue;
+        return method.invoke() as SensorInfoGetterValue;
     }
 
     module Getters {
@@ -301,7 +301,7 @@ module SensorsGetters {
         }
 
         function _getOWWeatherData() as Dictionary? {
-            var data = Storage.getValue(StoreKeys.OPENWEATHER_DATA) as WeatherData or WeatherError or Null;
+            var data = Storage.getValue(StoreKeys.OW_DATA) as WeatherData or WeatherError or Null;
 
             if (data == null || !data.hasKey("time")) {
                 return null;
@@ -366,19 +366,19 @@ module SensorsGetters {
         }
 
         function getCurrentWeather() as Array<Number?>? {
-            var isOWEnabled = !!SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
+            var isOWEnabled = !!SettingsModule.getValue(SettingType.OW_ENABLED);
 
             return isOWEnabled ? _getCurrentOWWeather() : _getCurrentGarminWeather();
         }
 
         function getWeatherFeels() as Number? {
-            var isOWEnabled = !!SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
+            var isOWEnabled = !!SettingsModule.getValue(SettingType.OW_ENABLED);
 
             return isOWEnabled ? _getWeatherOWFeels() : _getWeatherGarminFeels();
         }
 
         function getCurrentForecast() as Array<Number?>? {
-            var isOWEnabled = !!SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
+            var isOWEnabled = !!SettingsModule.getValue(SettingType.OW_ENABLED);
 
             return isOWEnabled ? _getCurrentOWForecast() : _getCurrentGarminForecast();
         }

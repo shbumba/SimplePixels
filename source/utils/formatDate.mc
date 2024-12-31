@@ -10,14 +10,14 @@ module FormatDate {
         }
     }
 
-    typedef FromatDateResult as {
+    typedef FormatDateResult as {
         :month as Lang.Number,
         :day as Lang.Number,
         :enMonthName as Lang.String,
         :dayName as Lang.String
     };
 
-    function formatDate(time as Time.Moment, format as Time.DateFormat?) as FromatDateResult {
+    function formatDate(time as Time.Moment, format as Time.DateFormat?) as FormatDateResult {
         var englishDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
         var englishMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         var date = Gregorian.info(time, format);
@@ -36,21 +36,21 @@ module FormatDate {
     }
 
     function formatDateByType(time as Time.Moment, type as DisplayDateFormatType.Enum) as Array<String> {
-        var formatedDate = formatDate(time, Time.FORMAT_SHORT);
+        var formattedDate = formatDate(time, Time.FORMAT_SHORT);
 
         switch (type) {
             case DisplayDateFormatType.MMDD:
                 return (
                     [
-                        formatedDate.get(:dayName),
-                        formatedDate.get(:month).toString() + "/" + formatedDate.get(:day).toString()
+                        formattedDate.get(:dayName),
+                        formattedDate.get(:month).toString() + "/" + formattedDate.get(:day).toString()
                     ] as Array<String>
                 );
             default:
                 return (
                     [
-                        formatedDate.get(:dayName),
-                        formatedDate.get(:day).toString() + " " + formatedDate.get(:enMonthName)
+                        formattedDate.get(:dayName),
+                        formattedDate.get(:day).toString() + " " + formattedDate.get(:enMonthName)
                     ] as Array<String>
                 );
         }

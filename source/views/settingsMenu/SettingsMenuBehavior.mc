@@ -14,7 +14,7 @@ import SensorsIcons;
 import ResourcesCache;
 import TimeStackModule;
 
-class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
+class SettingsMenuBehavior extends WatchUi.Menu2InputDelegate {
     var _onBackCallback as Lang.Method;
     var _subMenuHandlers = {
         SettingType.BACKGROUND_COLOR => :colorHandler,
@@ -29,7 +29,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         SettingType.BOTTOM_SENSOR_2 => :sensorFieldHandler,
         SettingType.BOTTOM_SENSOR_3 => :sensorFieldHandler,
         SettingType.LEFT_SENSOR => :sensorFieldHandler,
-        SettingType.SHOW_STATUS_ICONS => :toggleFieldHangler,
+        SettingType.SHOW_STATUS_ICONS => :toggleFieldHandler,
         SettingType.DISPLAY_SECONDS => :displaySecondsHandler
     };
 
@@ -75,7 +75,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             var sensorKey = fields[i];
             var text = SensorsTexts.getText(sensorKey);
 
-            if (text == null || !sensorInfoService.isAwailable(sensorKey)) {
+            if (text == null || !sensorInfoService.isAvailable(sensorKey)) {
                 continue;
             }
 
@@ -140,7 +140,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
         });
     }
 
-    function toggleFieldHangler(item as WatchUi.ToggleMenuItem) as Void {
+    function toggleFieldHandler(item as WatchUi.ToggleMenuItem) as Void {
         SettingsModule.setValue(item.getId() as SettingType.Enum, item.isEnabled());
     }
 

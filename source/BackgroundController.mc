@@ -9,7 +9,7 @@ class BackgroundController {
     var isRunning as Boolean = false;
 
     function setup() as Void {
-        var isEnabled = !!SettingsModule.getValue(SettingType.OPENWEATHER_ENABLED);
+        var isEnabled = !!SettingsModule.getValue(SettingType.OW_ENABLED);
 
         if (isEnabled) {
             self.runNow();
@@ -19,7 +19,7 @@ class BackgroundController {
     }
 
     function scheduleNext() as Void {
-        var intervalMinutes = SettingsModule.getValue(SettingType.OPENWEATHER_INTERVAL);
+        var intervalMinutes = SettingsModule.getValue(SettingType.OW_INTERVAL);
         intervalMinutes = intervalMinutes != null ? intervalMinutes : 30;
 
         var intervalSeconds = intervalMinutes * 60;

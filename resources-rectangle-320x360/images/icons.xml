@@ -18,7 +18,7 @@
     <font id="memory_icon" filename="./icons/memory.fnt" antialias="true"/>
     <font id="messages_icon" filename="./icons/messages.fnt" antialias="true"/>
     <font id="oxygen_icon" filename="./icons/oxygen.fnt" antialias="true"/>
-    <font id="preasure_icon" filename="./icons/preasure.fnt" antialias="true"/>
+    <font id="pressure_icon" filename="./icons/pressure.fnt" antialias="true"/>
     <font id="recovery_icon" filename="./icons/recovery.fnt" antialias="true"/>
     <font id="sleep_icon" filename="./icons/sleep.fnt" antialias="true"/>
     <font id="steps_icon" filename="./icons/steps.fnt" antialias="true"/>

@@ -11,7 +11,7 @@ function RenderSettingsMenu(onBack, transition as WatchUi.SlideType, selectedSet
         menu.setFocus(menu.findItemById(selectedSetting as Object));
     }
 
-    WatchUi.switchToView(menu, new SettingsMenuBehaviour(onBack as Method), transition);
+    WatchUi.switchToView(menu, new SettingsMenuBehavior(onBack as Method), transition);
 }
 
 function _getSubLabelValue(type as SettingType.Enum) as ResourceId {
@@ -35,7 +35,7 @@ function SettingsMenu() as WatchUi.Menu2 or WatchUi.CustomMenu {
     menu.addItem(
         SettingsMenuBuilder.BuildMenuItem({
             :identifier => SettingType.INFO_COLOR,
-            :label => Rez.Strings.InforColorTitle
+            :label => Rez.Strings.InfoColorTitle
         })
     );
     menu.addItem(

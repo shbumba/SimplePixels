@@ -49,15 +49,15 @@ class SimplePixelsApp extends Application.AppBase {
     function onBackgroundData(data as Application.PersistableType) as Void {
         var needToRerun = false;
         
-        if ((data instanceof Dictionary) && data.hasKey(StoreKeys.OPENWEATHER_DATA)) {
-            var prevData = Storage.getValue(StoreKeys.OPENWEATHER_DATA) as Dictionary<PropertyKeyType, PropertyValueType> or Null;
-            var newData = data[StoreKeys.OPENWEATHER_DATA] as Dictionary<PropertyKeyType, PropertyValueType>;
+        if ((data instanceof Dictionary) && data.hasKey(StoreKeys.OW_DATA)) {
+            var prevData = Storage.getValue(StoreKeys.OW_DATA) as Dictionary<PropertyKeyType, PropertyValueType> or Null;
+            var newData = data[StoreKeys.OW_DATA] as Dictionary<PropertyKeyType, PropertyValueType>;
 
             if (prevData != null) {
                 newData = combineDictionaries(prevData, newData);
             }
 
-            Storage.setValue(StoreKeys.OPENWEATHER_DATA, newData);
+            Storage.setValue(StoreKeys.OW_DATA, newData);
 
             needToRerun = !!newData.get("hasError");
         }
