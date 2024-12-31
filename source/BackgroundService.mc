@@ -25,14 +25,14 @@ class BackgroundService extends System.ServiceDelegate {
             return;
         }
 
-        var apiKey = SettingsModule.getValue(SettingType.OPENWEATHER_API_KEY);
+        var apiKey = SettingsModule.getValue(SettingType.OW_API_KEY);
 
         if (!isNotEmptyString(apiKey)) {
             return;
         }
 
-        var lat = SettingsModule.getValue(SettingType.OPENWEATHER_LAT);
-        var lon = SettingsModule.getValue(SettingType.OPENWEATHER_LON);
+        var lat = SettingsModule.getValue(SettingType.OW_LAT);
+        var lon = SettingsModule.getValue(SettingType.OW_LON);
 
         if (!isNotEmptyString(lat) || !isNotEmptyString(lon)) {
             var position = getLocation();
@@ -92,7 +92,7 @@ class BackgroundService extends System.ServiceDelegate {
         }
 
         Background.exit({
-            StoreKeys.OPENWEATHER_DATA => result as Dictionary
+            StoreKeys.OW_DATA => result as Dictionary
         });
     }
 

@@ -25,7 +25,7 @@ module SensorsIcons {
             SensorTypes.METERS_CLIMBED => Rez.Fonts.floors_icon,
             SensorTypes.DISTANCE => Rez.Fonts.distance_icon,
             SensorTypes.ALTITUDE => Rez.Fonts.altitude_icon,
-            SensorTypes.PRESSURE => Rez.Fonts.preasure_icon,
+            SensorTypes.PRESSURE => Rez.Fonts.pressure_icon,
             SensorTypes.ACTIVE_MINUTES_DAY => Rez.Fonts.activity_icon,
             SensorTypes.ACTIVE_MINUTES_WEEK => Rez.Fonts.activity_icon,
             SensorTypes.MESSAGES => Rez.Fonts.messages_icon,
@@ -155,7 +155,7 @@ module SensorsIcons {
             804 => Rez.Fonts.clouds_icon //overcast clouds: 85-100%
         }) as Dictionary<Number, Symbol or ResourceId>;
 
-    function getIcon(sensorType as SensorTypes.Enum, value as SersorInfoGetterValue) as ResourceId? {
+    function getIcon(sensorType as SensorTypes.Enum, value as SensorInfoGetterValue) as ResourceId? {
         var iconFn = Map.get(sensorType);
 
         if (iconFn instanceof Lang.ResourceId || iconFn == null) {
@@ -168,7 +168,7 @@ module SensorsIcons {
     }
 
     module Icons {
-        function batteryIcon(value as SersorInfoGetterValue) as ResourceId {
+        function batteryIcon(value as SensorInfoGetterValue) as ResourceId {
             if (value == null || value == true || value >= 80) {
                 return Rez.Fonts.battery_100_icon; // 100%
             } else if (value >= 60) {
@@ -182,26 +182,26 @@ module SensorsIcons {
             return Rez.Fonts.battery_0_icon; // 0%
         }
 
-        function isConnectedIcon(value as SersorInfoGetterValue) as ResourceId? {
+        function isConnectedIcon(value as SensorInfoGetterValue) as ResourceId? {
             return value == true ? Rez.Fonts.connection_icon : null;
         }
 
-        function isNightModeIcon(value as SersorInfoGetterValue) as ResourceId? {
+        function isNightModeIcon(value as SensorInfoGetterValue) as ResourceId? {
             return value == true ? Rez.Fonts.sleep_icon : null;
         }
 
-        function isDoNotDisturbIcon(value as SersorInfoGetterValue) as ResourceId? {
+        function isDoNotDisturbIcon(value as SensorInfoGetterValue) as ResourceId? {
             return value == true ? Rez.Fonts.dnd_icon : null;
         }
 
-        function weatherIcon(value as SersorInfoGetterValue) as ResourceId? {
+        function weatherIcon(value as SensorInfoGetterValue) as ResourceId? {
             if (value == null || value == true) {
                 return Rez.Fonts.weather_icon;
             } else {
                 return value[1] == null ? Rez.Fonts.weather_icon : WeatherIconsMap.get(value[1]);
             }
         }
-        function sunRiseOrSetIcon(value as SersorInfoGetterValue) as ResourceId? {
+        function sunRiseOrSetIcon(value as SensorInfoGetterValue) as ResourceId? {
             if (value == null || value == true || value[0] == null) {
                 return Rez.Fonts.sunrise_or_set_icon;
             } else {

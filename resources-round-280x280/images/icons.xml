@@ -17,7 +17,7 @@
     <font id="memory_icon" filename="../../resources-round-260x260/images/icons/memory.fnt" antialias="true"/>
     <font id="messages_icon" filename="../../resources-round-260x260/images/icons/messages.fnt" antialias="true"/>
     <font id="oxygen_icon" filename="../../resources-round-260x260/images/icons/oxygen.fnt" antialias="true"/>
-    <font id="preasure_icon" filename="../../resources-round-260x260/images/icons/preasure.fnt" antialias="true"/>
+    <font id="pressure_icon" filename="../../resources-round-260x260/images/icons/pressure.fnt" antialias="true"/>
     <font id="recovery_icon" filename="../../resources-round-260x260/images/icons/recovery.fnt" antialias="true"/>
     <font id="sleep_icon" filename="../../resources-round-260x260/images/icons/sleep.fnt" antialias="true"/>
     <font id="steps_icon" filename="../../resources-round-260x260/images/icons/steps.fnt" antialias="true"/>

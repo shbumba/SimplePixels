@@ -45,7 +45,7 @@ module SensorsTransformators {
         SensorTypes.MEMORY_USED => :_transformBytesToKb
     } as Dictionary<SensorTypes.Enum, Symbol>;
 
-    function transformValue(sensorType as SensorTypes.Enum, value as SersorInfoGetterValue) as String {
+    function transformValue(sensorType as SensorTypes.Enum, value as SensorInfoGetterValue) as String {
         var handler = Map.get(sensorType) as Symbol;
 
         if (value == null || handler == null) {
@@ -175,11 +175,11 @@ module SensorsTransformators {
                 hour = hour - 12;
             }
 
-            var formatedTime = Lang.format("$1$:$2$", [hour.format("%02u"), min.format("%02u")]);
+            var formattedTime = Lang.format("$1$:$2$", [hour.format("%02u"), min.format("%02u")]);
 
             var typeType = timeInfo.hour >= 12 ? "pm" : "am";
 
-            return GlobalKeys.IS_24_HOUR ? formatedTime : formatedTime + " " + typeType;
+            return GlobalKeys.IS_24_HOUR ? formattedTime : formattedTime + " " + typeType;
         }
 
         function _transformSunRiseSet(timeInfos as Array<Object?>) as String {

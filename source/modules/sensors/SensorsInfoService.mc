@@ -15,7 +15,7 @@ class SensorsInfoService {
             return;
         }
 
-        self.fillAwailableSensors();
+        self.fillAvailableSensors();
         self.cleanChecker();
 
         self._isInited = true;
@@ -25,7 +25,7 @@ class SensorsInfoService {
         SensorsCheckers.Map = {};
     }
 
-    private function fillAwailableSensors() as Void {
+    private function fillAvailableSensors() as Void {
         var keys = SensorsGetters.Map.keys() as Array<SensorTypes.Enum>;
 
         for (var i = 0; i < keys.size(); i++) {
@@ -37,12 +37,12 @@ class SensorsInfoService {
         }
     }
 
-    function isAwailable(sensorType as SensorTypes.Enum) as Boolean {
+    function isAvailable(sensorType as SensorTypes.Enum) as Boolean {
         return self.awailableSensors.hasKey(sensorType);
     }
 
-    function getValue(sensorType as SensorTypes.Enum) as SensorsGetters.SersorInfoGetterValue {
-        if (!self.isAwailable(sensorType)) {
+    function getValue(sensorType as SensorTypes.Enum) as SensorsGetters.SensorInfoGetterValue {
+        if (!self.isAvailable(sensorType)) {
             return null;
         }
 

@@ -12,7 +12,7 @@ module SensorsCheckers {
         SensorTypes.CALORIES => true,
         SensorTypes.BATTERY => true,
         SensorTypes.BATTERY_IN_DAYS => :checkBatteryInDays,
-        SensorTypes.SOLAR_INTENSITY => :checkSolarIntensivity,
+        SensorTypes.SOLAR_INTENSITY => :checkSolarIntensity,
         SensorTypes.IS_CONNECTED => true,
         SensorTypes.HEART_RATE => true,
         SensorTypes.FLOORS => :checkFloors,
@@ -47,15 +47,15 @@ module SensorsCheckers {
     } as Dictionary<SensorTypes.Enum, Symbol or Boolean>;
 
     function check(sensorType as SensorTypes.Enum) as Boolean {
-        var sensorCkecker = Map.get(sensorType);
+        var sensorChecker = Map.get(sensorType);
 
-        if (sensorCkecker == null) {
+        if (sensorChecker == null) {
             throw new Toybox.Lang.InvalidValueException("the item sensor prop has an incorrect value");
-        } else if (sensorCkecker instanceof Lang.Boolean) {
-            return sensorCkecker;
+        } else if (sensorChecker instanceof Lang.Boolean) {
+            return sensorChecker;
         }
 
-        var method = new Lang.Method(Checkers, sensorCkecker);
+        var method = new Lang.Method(Checkers, sensorChecker);
 
         return method.invoke() as Boolean;
     }
@@ -89,7 +89,7 @@ module SensorsCheckers {
             return Activity.getActivityInfo() has :ambientPressure;
         }
 
-        function checkSolarIntensivity() as Boolean {
+        function checkSolarIntensity() as Boolean {
             return System.getSystemStats() has :solarIntensity;
         }
 

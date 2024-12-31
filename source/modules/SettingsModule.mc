@@ -22,11 +22,11 @@ module SettingsModule {
             SHOW_STATUS_ICONS = "DisplayStatusIcons", // to migrate
             DISPLAY_SECONDS = "DisplaySeconds",
             SECOND_TIME_FORMAT = "SecondTimeFormat",
-            OPENWEATHER_API_KEY = "OpenWeatherAPIKey",
-            OPENWEATHER_INTERVAL = "OpenWeatherIntervalMinutes",
-            OPENWEATHER_ENABLED = "OpenWeatherEnabled",
-            OPENWEATHER_LAT = "OpenWeatherLat",
-            OPENWEATHER_LON = "OpenWeatherLon",
+            OW_API_KEY = "OpenWeatherAPIKey",
+            OW_INTERVAL = "OpenWeatherIntervalMinutes",
+            OW_ENABLED = "OpenWeatherEnabled",
+            OW_LAT = "OpenWeatherLat",
+            OW_LON = "OpenWeatherLon",
             DOT_HOUR_TRANS = "DotHourTransparency",
             DATE_FORMAT = "DateFormat"
         }

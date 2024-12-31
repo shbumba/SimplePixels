@@ -32,7 +32,7 @@ module DotPattern {
         var drawContext = bitmap.getDc();
 
         drawContext.setColor(bgColor, Graphics.COLOR_TRANSPARENT);
-        drawContext.clear();// it doen't work because I clear the dc after the colors are set o_0
+        drawContext.clear();// it doesn't work because I clear the dc after the colors are set o_0
 
         return drawContext;
     }*/

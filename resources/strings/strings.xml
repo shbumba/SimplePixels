@@ -4,7 +4,7 @@
 
     <string id="BackgroundColorTitle">Background color</string>
     <string id="ForegroundColorTitle">Foreground Color</string>
-    <string id="InforColorTitle">Information color</string>
+    <string id="InfoColorTitle">Infomation color</string>
     <string id="SeparatorColorTitle">Separator Color</string>
     <string id="SeparatorInfoTitle">Separator Data</string>
 
