@@ -268,16 +268,24 @@ module SensorsGetters {
             return System.getDeviceSettings().phoneConnected;
         }
 
-        function getHR() as Number? {
+        function getHR() as Array<Number?>? {
             var activityInfo = Activity.getActivityInfo();
             var value = activityInfo != null ? activityInfo.currentHeartRate : null;
-
+            var isHeartWorking = true;
             if (value == null && Checkers.checkHeartRateHistory()) {
                 var sensorInfo = SensorHistory.getHeartRateHistory({}).next();
                 value = sensorInfo != null ? sensorInfo.data : value;
+                if (value != null) {
+                    isHeartWorking = false;
+                }
             }
-
-            return value != null && value < ActivityMonitor.INVALID_HR_SAMPLE ? value.toNumber() : null;
+            if (value == null) {
+                isHeartWorking = false;
+            }
+            return [
+                value != null && value < ActivityMonitor.INVALID_HR_SAMPLE ? value.toNumber() : null,
+                isHeartWorking == true ? 1 : 0
+            ];
         }
 
         function getAltitude() as Long? {

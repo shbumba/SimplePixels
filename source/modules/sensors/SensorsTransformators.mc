@@ -21,7 +21,7 @@ module SensorsTransformators {
         SensorTypes.SUN_RISE_SET => :_transformSunRiseSet,
         SensorTypes.STEPS => :_transformToFourNumbers,
         SensorTypes.CALORIES => :_transformToFourNumbers,
-        SensorTypes.HEART_RATE => :_transformToThreeNumbers,
+            SensorTypes.HEART_RATE => :_transformToHeartRate,
         SensorTypes.STRESS => :_transformPercent,
         SensorTypes.BODY_BATTERY => :_transformPercent,
         SensorTypes.OXYGEN_SATURATION => :_transformPercent,
@@ -78,6 +78,12 @@ module SensorsTransformators {
 
         function _transformToThreeNumbers(value as Float or Number) as String {
             return value.format("%03d");
+        }
+
+        function _transformToHeartRate(value as Array<Number?>) as String {
+            var heartValue = value[0];
+            heartValue = heartValue != null ? _transformToThreeNumbers(heartValue) : heartValue;
+            return heartValue;
         }
 
         function _transformToFourNumbers(value as Float or Number) as String {
