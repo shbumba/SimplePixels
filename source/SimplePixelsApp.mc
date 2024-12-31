@@ -50,11 +50,16 @@ class SimplePixelsApp extends Application.AppBase {
         var needToRerun = false;
         
         if ((data instanceof Dictionary) && data.hasKey(StoreKeys.OPENWEATHER_DATA)) {
-            var OWData = data[StoreKeys.OPENWEATHER_DATA] as Dictionary<Application.PropertyKeyType, Application.PropertyValueType>;
+            var prevData = Storage.getValue(StoreKeys.OPENWEATHER_DATA) as Dictionary<PropertyKeyType, PropertyValueType> or Null;
+            var newData = data[StoreKeys.OPENWEATHER_DATA] as Dictionary<PropertyKeyType, PropertyValueType>;
 
-            Storage.setValue(StoreKeys.OPENWEATHER_DATA, OWData);
+            if (prevData != null) {
+                newData = combineDictionaries(prevData, newData);
+            }
 
-            needToRerun = OWData.hasKey("httpError");
+            Storage.setValue(StoreKeys.OPENWEATHER_DATA, newData);
+
+            needToRerun = !!newData.get("hasError");
         }
 
         if (self._bgController == null) {

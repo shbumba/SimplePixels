@@ -36,19 +36,16 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
     function initialize(onBack as Lang.Method) {
         Menu2InputDelegate.initialize();
         Services.SensorInfo().init();
+        ResourcesCache.clear();
         self._onBackCallback = onBack;
     }
 
     function _createCustomMenu(title as String) as WatchUi.Menu2 or WatchUi.CustomMenu {
-        return SettingsMenuBuilder.generateMenu(SettingsMenuBuilder.CUSTOM_MENU, {
-            :itemHeight => 35,
-            :backgroundColor => Graphics.COLOR_WHITE,
-            :options => {
+        return new WatchUi.CustomMenu(35, Graphics.COLOR_WHITE, {
                 :focusItemHeight => 45,
                 :title => new DrawableMenuTitle(title),
                 :footer => new DrawableMenuFooter()
-            }
-        });
+            });
     }
 
     function _addColorItems(menu as WatchUi.CustomMenu or WatchUi.Menu2) as Void {
@@ -58,7 +55,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             var colorKey = keys[i];
 
             menu.addItem(
-                SettingsMenuBuilder.generateMenuItem(SettingsMenuBuilder.CUSTOM_COLOR_ITEM, {
+                SettingsMenuBuilder.BuildCustomColorMenuItem({
                     :identifier => colorKey as Number,
                     :color => ColorsModule.getColor(colorKey),
                     :label => ColorsModule.getColorName(colorKey)
@@ -83,7 +80,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             }
 
             menu.addItem(
-                SettingsMenuBuilder.generateMenuItem(SettingsMenuBuilder.CUSTOM_ICON_ITEM, {
+                SettingsMenuBuilder.BuildCustomIconMenuItem({
                     :identifier => sensorKey as Number,
                     :label => text,
                     :icon => SensorsIcons.getIcon(sensorKey, true)
@@ -99,7 +96,7 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
             var key = keys[i] as Number;
 
             menu.addItem(
-                SettingsMenuBuilder.generateMenuItem(SettingsMenuBuilder.CUSTOM_ICON_ITEM, {
+                SettingsMenuBuilder.BuildCustomIconMenuItem({
                     :identifier => key,
                     :label => mapFields.get(key) as ResourceId
                 })
@@ -109,38 +106,38 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
 
     function colorHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
-        self._addColorItems(menu);
 
-        self.openMenu(item.getId() as SettingType.Enum, menu, false);
+        self.openMenu(item.getId() as SettingType.Enum, menu);
+        self._addColorItems(menu);
     }
 
     function sensorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
-        self._addSensorItems(menu, null);
 
-        self.openMenu(item.getId() as SettingType.Enum, menu, true);
+        self.openMenu(item.getId() as SettingType.Enum, menu);
+        self._addSensorItems(menu, null);
     }
 
     function separatorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
+        
+        self.openMenu(item.getId() as SettingType.Enum, menu);
         self._addSensorItems(menu, [
             SensorTypes.BATTERY,
             SensorTypes.ACTIVE_MINUTES_WEEK,
             SensorTypes.FLOORS,
             SensorTypes.STEPS
         ]);
-
-        self.openMenu(item.getId() as SettingType.Enum, menu, false);
     }
 
     function displaySecondsHandler(item as WatchUi.ToggleMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
+        
+        self.openMenu(item.getId() as SettingType.Enum, menu);
         self._addMapItems(menu, {
             DisplaySecondsType.NEVER => Rez.Strings.Never,
             DisplaySecondsType.ON_GESTURE => Rez.Strings.OnGesture
         });
-
-        self.openMenu(item.getId() as SettingType.Enum, menu, false);
     }
 
     function toggleFieldHangler(item as WatchUi.ToggleMenuItem) as Void {
@@ -149,19 +146,20 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
 
     function openMenu(
         settingKey as SettingType.Enum,
-        menu as WatchUi.Menu2 or WatchUi.CustomMenu,
-        clearPrevSensorCache as Boolean
+        menu as WatchUi.Menu2 or WatchUi.CustomMenu
     ) as Void {
         SettingsMenuBuilder.setFocusOnMenuItem(menu, settingKey);
 
         WatchUi.switchToView(
             menu,
-            new CustomMenuDelegate(settingKey, clearPrevSensorCache, self._onBackCallback),
+            new CustomMenuDelegate(settingKey, self._onBackCallback),
             WatchUi.SLIDE_IMMEDIATE
         );
     }
 
     function onSelect(item as WatchUi.MenuItem) as Void {
+        ResourcesCache.clear();
+
         var handler = self._subMenuHandlers.get(item.getId() as SettingType.Enum);
 
         if (handler == null) {
@@ -182,27 +180,19 @@ class SettingsMenuBehaviour extends WatchUi.Menu2InputDelegate {
 class CustomMenuDelegate extends WatchUi.Menu2InputDelegate {
     var _settingKey as SettingType.Enum;
     var _onBackCallback as Method;
-    var _clearPrevSensorCache as Boolean;
 
     function initialize(
         settingKey as SettingType.Enum,
-        clearPrevSensorCache as Boolean,
         onBackCallback as Lang.Method
     ) {
         Menu2InputDelegate.initialize();
+        ResourcesCache.clear();
 
         self._settingKey = settingKey;
-        self._clearPrevSensorCache = clearPrevSensorCache;
         self._onBackCallback = onBackCallback;
     }
 
     function onSelect(item) as Void {
-        if (self._clearPrevSensorCache) {
-            var prevValue = SettingsModule.getValue(self._settingKey) as SensorTypes.Enum;
-
-            ResourcesCache.remove(SensorsIcons.getIcon(prevValue, true));
-        }
-
         SettingsModule.setValue(self._settingKey, item.getId() as SettingType.Enum);
         self.onBack();
     }
