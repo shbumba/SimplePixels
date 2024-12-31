@@ -284,7 +284,7 @@ module SensorsGetters {
             }
             return [
                 value != null && value < ActivityMonitor.INVALID_HR_SAMPLE ? value.toNumber() : null,
-                isHeartWorking == true ? 0 : 1
+                value == null ? 0 : 1
             ];
         }
 
