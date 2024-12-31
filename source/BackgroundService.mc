@@ -83,11 +83,12 @@ class BackgroundService extends System.ServiceDelegate {
         self._isRunning = false;
 
         var result = {
-            "httpError" => responseCode
+            "hasError" => responseCode != 200
         };
 
         if (responseCode == 200 && data instanceof Dictionary) {
-            result = prepareWeatherData(data);
+            var preparedData = prepareWeatherData(data);
+            result = combineDictionaries(result, preparedData);
         }
 
         Background.exit({

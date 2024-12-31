@@ -35,7 +35,7 @@ module SensorsGetters {
     };
 
     typedef WeatherError as {
-        "httpError" as Number
+        "hasError" as Number
     };
 
     var Map =
@@ -79,7 +79,7 @@ module SensorsGetters {
             SensorTypes.ACTIVE_MINUTES_WEEK_GOAL => :getActiveMinutesWeekGoal
         }) as Dictionary<SensorTypes.Enum, Symbol>;
 
-    const MAX_WEATHER_INTERVAL = Math.ceil(Gregorian.SECONDS_PER_HOUR * 3.2);
+    const MAX_WEATHER_INTERVAL = Math.ceil(Gregorian.SECONDS_PER_HOUR * 3);
 
     function getValue(sensorType as SensorTypes.Enum) as SersorInfoGetterValue {
         var sensorFn = Map.get(sensorType);
@@ -295,7 +295,7 @@ module SensorsGetters {
         function _getOWWeatherData() as Dictionary? {
             var data = Storage.getValue(StoreKeys.OPENWEATHER_DATA) as WeatherData or WeatherError or Null;
 
-            if (data == null || data.hasKey("httpError")) {
+            if (data == null || !data.hasKey("time")) {
                 return null;
             }
 
