@@ -212,14 +212,10 @@ module SensorsIcons {
         }
 
         function heartIcon(value as SersorInfoGetterValue) as ResourceId? {
-            if (value == null || value == true) {
+            if (value == null || value == true || value[1] == null || value[1] == 0) {
                 return Rez.Fonts.heart_icon;
             } else {
-                return value[1] == null
-                    ? Rez.Fonts.heart_icon
-                    : value[1] == 0
-                    ? Rez.Fonts.heart_working_icon
-                    : Rez.Fonts.heart_icon;
+                return Rez.Fonts.heart_working_icon;
             }
         }
     }
