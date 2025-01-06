@@ -87,5 +87,5 @@
     <string id="OpenWeatherLonTitle">OpenWeather: Longitude (optional)</string>
     <string id="DateFormatTitle">Date Format</string>
     <string id="SecondTimeFormatTitle">Second Time Format (e.g. -4:30 have to be written as -4.5)</string>
-    <string id="DotHourTransparencyTitle">Pattern transparency (some older devices don't support transparency. So if you set it to any % the patter will be disabled)</string>
+    <string id="DotHourTransparencyTitle">Pattern transparency</string>
 </strings>

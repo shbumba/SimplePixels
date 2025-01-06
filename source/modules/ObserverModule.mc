@@ -1,6 +1,6 @@
 import Toybox.Lang;
 
-module WatcherModule {
+module ObserverModule {
     enum Scope {
         ON_LAYOUT = 1,
         ON_UPDATE,
@@ -11,37 +11,49 @@ module WatcherModule {
         ON_EXIT_SLEEP
     }
 
-    typedef InstanceKey as String;
+    typedef InstanceKey as Symbol;
     typedef InstanceGetter as Object?;
 
-    class Watcher {
-        static var key as String = "";
+    class ValueObserver {
+        static var key as InstanceKey = :valueObserver;
         var scope as Array<Scope> = [ON_UPDATE];
 
-        function get() as InstanceGetter {
+        private var _onValueUpdatedCallback as Method? = null;
+
+        function initialize(onValueUpdated as Method?) {
+            self._onValueUpdatedCallback = onValueUpdated;
+        }
+
+        function getObservedValue() as InstanceGetter {
             // Abstract
             return null;
         }
 
-        function onValueInit(value) as Void {
-            // Abstract
+        private function _callValueCallback(value, prevValue as Null) as Void {
+            if (self._onValueUpdatedCallback != null) {
+                self._onValueUpdatedCallback.invoke(value, prevValue);
+            }
+        }
+
+        function onValueInit(value, prevValue as Null) as Void {
+            self._callValueCallback(value, prevValue);
         }
 
         function onValueUpdated(value, prevValue) as Void {
-            // Abstract
+            self._callValueCallback(value, prevValue);
         }
     }
 
-    class Store {
-        var _wathers as Array<Watcher> = [];
+    class ObserverStore {
+        var _observers as Array<ValueObserver> = [];
         var _cachedResults as Dictionary<InstanceKey, InstanceGetter> = {};
 
-        function setup(wathers as Array<Watcher>) as Void {
-            self._wathers = wathers;
+        function setup(observers as Array<ValueObserver>) as Void {
+            self._observers = observers;
             var onValueInitQueue = [] as Array;
 
-            for (var i = 0; i < wathers.size(); i++) {
-                var instance = wathers[i] as Watcher;
+            for (var i = 0; i < observers.size(); i++) {
+                var instance = observers[i] as ValueObserver;
                 var processResult = self._processInstance(instance, true);
 
                 if (processResult == null) {
@@ -54,17 +66,17 @@ module WatcherModule {
             }
 
             while (onValueInitQueue.size() > 0) {
-                var instance = onValueInitQueue[0][0] as Watcher;
+                var instance = onValueInitQueue[0][0] as ValueObserver;
                 var value = onValueInitQueue[0][1] as InstanceGetter;
 
-                instance.onValueInit(value);
+                instance.onValueInit(value, null);
                 onValueInitQueue.remove(onValueInitQueue[0]);
             }
         }
 
-        function _processInstance(instance as Watcher, isInitial as Boolean) as Array? {
+        function _processInstance(instance as ValueObserver, isInitial as Boolean) as Array? {
             var prevValue = self._cachedResults.get(instance.key);
-            var currentValue = instance.get();
+            var currentValue = instance.getObservedValue();
 
             if (prevValue == currentValue && !isInitial) {
                 return null;
@@ -75,15 +87,15 @@ module WatcherModule {
             return [currentValue, prevValue];
         }
 
-        function getValue(instanceKey as String) as Lang.Object? {
+        function getValue(instanceKey as InstanceKey) as Lang.Object? {
             return self._cachedResults.get(instanceKey);
         }
 
         function runScope(scope as Scope) as Void {
             var onUpdateQueue = [] as Array;
 
-            for (var i = 0; i < self._wathers.size(); i++) {
-                var instance = self._wathers[i];
+            for (var i = 0; i < self._observers.size(); i++) {
+                var instance = self._observers[i];
 
                 if (instance.scope.indexOf(scope) == -1) {
                     continue;
@@ -103,7 +115,7 @@ module WatcherModule {
 
             while (onUpdateQueue.size() > 0) {
                 var task = onUpdateQueue[0];
-                var instance = task[0] as Watcher;
+                var instance = task[0] as ValueObserver;
                 var currentValue = task[1] as InstanceGetter;
                 var prevValue = task[2] as InstanceGetter;
 

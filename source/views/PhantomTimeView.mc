@@ -14,12 +14,12 @@ typedef PhantomTimeViewProps as Components.TimeViewProps or
 
 class PhantomTimeView extends Components.TimeView {
     private var _timeShift as Number;
-    private var _patternTrans as Number? = null;
+    private var _isPatternEnabled as Boolean = true;
 
     function initialize(params as PhantomTimeViewProps) {
         Components.TimeView.initialize(params);
 
-        self.updatePatterntTrans();
+        self.updatePatternTrans();
         var timeShift = params.get(:timeShift);
         self._timeShift = timeShift != null ? timeShift : 0;
     }
@@ -27,20 +27,31 @@ class PhantomTimeView extends Components.TimeView {
     function onSettingsChanged() as Void {
         Components.TimeView.onSettingsChanged();
 
-        self.updatePatterntTrans();
+        self.updatePatternTrans();
 
-        DotPattern.create(
-            DotPattern.HOURS,
-            self.getWidth(),
-            self.getHeight(),
-            self.backgroundColor,
-            self.foregroundColor,
-            self._patternTrans
-        );
+        if (self._isPatternEnabled) {
+            DotPattern.create(
+                DotPattern.HOURS,
+                self.getWidth(),
+                self.getHeight(),
+                self.backgroundColor,
+                self.foregroundColor
+            );
+        }
     }
 
-    private function updatePatterntTrans() as Void {
-        self._patternTrans = SettingsModule.getValue(SettingType.DOT_HOUR_TRANS);
+    private function updatePatternTrans() as Void {
+        var alphaColor = SettingsModule.getValue(SettingType.DOT_HOUR_TRANS);
+        var shouldApplyAlphaColor = alphaColor != null && alphaColor > 0 && alphaColor < 100;
+
+        self._isPatternEnabled = alphaColor != null && alphaColor != 100;
+
+        if (shouldApplyAlphaColor) {
+            var fgColor = getSettingColor(SettingType.FOREGROUND_COLOR);
+            self.foregroundColor = blendColors(fgColor, self.backgroundColor, alphaColor);
+        } else {
+            self.setColors();
+        }
     }
 
     private function shiftHours(time as Number) as Number {
@@ -80,6 +91,10 @@ class PhantomTimeView extends Components.TimeView {
     }
 
     protected function render(drawContext as Dc) as Void {
+        if (self._isPatternEnabled == false) {
+            return;
+        }
+
         var time = self.shiftTime(self.getTime());
 
         self.renderTime(time, drawContext);
@@ -89,8 +104,7 @@ class PhantomTimeView extends Components.TimeView {
             self.getWidth(),
             self.getHeight(),
             self.backgroundColor,
-            self.foregroundColor,
-            self._patternTrans
+            self.foregroundColor
         );
 
         drawContext.drawBitmap(self.getPosX(), self.getPosY(), pattern);

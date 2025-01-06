@@ -41,8 +41,7 @@ class InfoBarView extends Components.Box {
             self.getWidth(),
             self.getHeight(),
             self._barColor,
-            self.backgroundColor,
-            null
+            self.backgroundColor
         );
     }
 
@@ -86,8 +85,7 @@ class InfoBarView extends Components.Box {
                 width,
                 height,
                 self._barColor,
-                self.backgroundColor,
-                null
+                self.backgroundColor
             );
             drawContext.drawBitmap(posX, posY, pattern);
         }

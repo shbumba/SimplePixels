@@ -1,6 +1,5 @@
 import Toybox.Lang;
 import Toybox.Background;
-import Toybox.System;
 import Toybox.Time;
 import Toybox.Position;
 import Toybox.Communications;
@@ -9,15 +8,11 @@ import SettingsModule;
 import StoreKeys;
 
 (:background)
-class BackgroundService extends System.ServiceDelegate {
+class OWBackgroundServiceDelegate {
     (:background)
     const _OW_URL = "https://api.openweathermap.org/data/2.5/weather";
     (:background)
     var _isRunning = false;
-
-    function initialize() {
-        System.ServiceDelegate.initialize();
-    }
 
     (:background)
     function onTemporalEvent() as Void {

@@ -79,8 +79,6 @@ module SensorsGetters {
             SensorTypes.ACTIVE_MINUTES_WEEK_GOAL => :getActiveMinutesWeekGoal
         }) as Dictionary<SensorTypes.Enum, Symbol>;
 
-    const MAX_WEATHER_INTERVAL = Math.ceil(Gregorian.SECONDS_PER_HOUR * 3);
-
     function getValue(sensorType as SensorTypes.Enum) as SensorInfoGetterValue {
         var sensorFn = Map.get(sensorType);
 
@@ -299,10 +297,21 @@ module SensorsGetters {
                 return null;
             }
 
+            return data as Dictionary;
+        }
+
+        function _getCurrentOWWeatherData() as Dictionary? {
+            var data = _getOWWeatherData();
+
+            if (data == null) {
+                return null;
+            }
+
             var weatherTime = new Time.Moment(data["time"] as Number);
             var currentTime = Time.now();
+            var maxInterval = Math.ceil(Gregorian.SECONDS_PER_HOUR * 3);
 
-            if (currentTime.compare(weatherTime) > MAX_WEATHER_INTERVAL) {
+            if (currentTime.compare(weatherTime) > maxInterval) {
                 return null;
             }
 
@@ -310,27 +319,37 @@ module SensorsGetters {
         }
 
         function _getCurrentOWWeather() as Array<Number?>? {
-            var info = _getOWWeatherData();
+            var info = _getCurrentOWWeatherData();
+
             if (info == null) {
                 return null;
             }
+
             return [info["current"], info["icon"]] as Array<Number?>;
         }
 
         function _getWeatherOWFeels() as Number? {
-            var info = _getOWWeatherData();
+            var data = _getCurrentOWWeatherData();
 
-            return info != null ? info["feels"] : null;
+            return data != null ? data["feels"] : null;
         }
 
         function _getCurrentOWForecast() as Array<Number?>? {
-            var info = _getOWWeatherData();
+            var data = _getOWWeatherData();
 
-            if (info == null) {
+            if (data == null) {
                 return null;
             }
 
-            return [info["max"], info["min"]] as Array<Number?>;
+            var weatherTime = new Time.Moment(data["time"] as Number);
+            var midnightTime = Time.today();
+            var maxInterval = Gregorian.SECONDS_PER_DAY;
+
+            if (weatherTime.compare(midnightTime) > maxInterval) {
+                return null;
+            }
+
+            return [data["max"], data["min"]] as Array<Number?>;
         }
 
         function _getCurrentGarminWeather() as Array<Number?>? {

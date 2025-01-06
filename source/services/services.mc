@@ -1,10 +1,10 @@
 import Toybox.Lang;
-import WatcherModule;
+import ObserverModule;
 
 module Services {
     enum ServiceType {
         SENSORS_INFO = 1,
-        WATHERS_STORE
+        OBSERVER_STORE
     }
 
     var _cachedServices = {} as Dictionary<ServiceType, Object>;
@@ -15,14 +15,14 @@ module Services {
         }
 
         _cachedServices.put(SENSORS_INFO, new SensorsInfoService());
-        _cachedServices.put(WATHERS_STORE, new WatcherModule.Store());
+        _cachedServices.put(OBSERVER_STORE, new ObserverModule.ObserverStore());
     }
 
     function SensorInfo() as SensorsInfoService {
         return _cachedServices.get(SENSORS_INFO);
     }
 
-    function WathersStore() as WatcherModule.Store {
-        return _cachedServices.get(WATHERS_STORE);
+    function ObserverStore() as ObserverModule.ObserverStore {
+        return _cachedServices.get(OBSERVER_STORE);
     }
 }

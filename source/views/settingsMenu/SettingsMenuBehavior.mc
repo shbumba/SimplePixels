@@ -109,6 +109,7 @@ class SettingsMenuBehavior extends WatchUi.Menu2InputDelegate {
 
         self.openMenu(item.getId() as SettingType.Enum, menu);
         self._addColorItems(menu);
+        self.setFocusOnItem(item.getId() as SettingType.Enum, menu);
     }
 
     function sensorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
@@ -116,6 +117,7 @@ class SettingsMenuBehavior extends WatchUi.Menu2InputDelegate {
 
         self.openMenu(item.getId() as SettingType.Enum, menu);
         self._addSensorItems(menu, null);
+        self.setFocusOnItem(item.getId() as SettingType.Enum, menu);
     }
 
     function separatorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
@@ -128,6 +130,7 @@ class SettingsMenuBehavior extends WatchUi.Menu2InputDelegate {
             SensorTypes.FLOORS,
             SensorTypes.STEPS
         ]);
+        self.setFocusOnItem(item.getId() as SettingType.Enum, menu);
     }
 
     function displaySecondsHandler(item as WatchUi.ToggleMenuItem) as Void {
@@ -138,18 +141,24 @@ class SettingsMenuBehavior extends WatchUi.Menu2InputDelegate {
             DisplaySecondsType.NEVER => Rez.Strings.Never,
             DisplaySecondsType.ON_GESTURE => Rez.Strings.OnGesture
         });
+        self.setFocusOnItem(item.getId() as SettingType.Enum, menu);
     }
 
     function toggleFieldHandler(item as WatchUi.ToggleMenuItem) as Void {
         SettingsModule.setValue(item.getId() as SettingType.Enum, item.isEnabled());
     }
 
-    function openMenu(
+    function setFocusOnItem(
         settingKey as SettingType.Enum,
         menu as WatchUi.Menu2 or WatchUi.CustomMenu
     ) as Void {
         SettingsMenuBuilder.setFocusOnMenuItem(menu, settingKey);
+    }
 
+    function openMenu(
+        settingKey as SettingType.Enum,
+        menu as WatchUi.Menu2 or WatchUi.CustomMenu
+    ) as Void {
         WatchUi.switchToView(
             menu,
             new CustomMenuDelegate(settingKey, self._onBackCallback),

@@ -78,21 +78,10 @@ module DotPattern {
         width as Numeric,
         height as Numeric,
         bgColor as Numeric,
-        fgColor as Numeric,
-        alphaPercent as Number?
+        fgColor as Numeric
     ) as BufferedBitmap {
         var bitmap = _createBitmap(width, height, bgColor, fgColor);
         var drawContext = bitmap.getDc();
-        var isPatternDisabled = alphaPercent != null && alphaPercent == 100;
-        var shouldApplyAlphaColor = !isPatternDisabled && alphaPercent != null && alphaPercent > 0;
-        var canApplyAlphaColor = GlobalKeys.CAN_CREATE_COLOR;
-
-        if (isPatternDisabled || (!canApplyAlphaColor && shouldApplyAlphaColor)) {
-            drawContext.setColor(bgColor, bgColor);
-            drawContext.clear(); 
-            return bitmap;
-        }
-
         var rowPattern = _generateRow(width, bgColor, fgColor);
 
         drawContext.setColor(bgColor, Graphics.COLOR_TRANSPARENT);
@@ -105,27 +94,7 @@ module DotPattern {
             drawContext.drawBitmap(0, yShift, rowPattern);
         }
 
-        if (canApplyAlphaColor && shouldApplyAlphaColor) {
-            _drawAlphaBackground(bitmap, width, height, bgColor, alphaPercent);
-        }
-
         return bitmap;
-    }
-
-    function _drawAlphaBackground(
-        bitmap as BufferedBitmap,
-        width as Numeric,
-        height as Numeric,
-        bgColor as Numeric,
-        alphaPercent as Number
-    ) as Void {
-        var rgb = colorNumberToRgb(bgColor);
-        var alphaConverted = percentToAlpha(alphaPercent);
-        var color = Graphics.createColor(alphaConverted, rgb[0], rgb[1], rgb[2]);
-
-        var drawContext = bitmap.getDc();
-        drawContext.setFill(color);
-        drawContext.fillRectangle(0, 0, width, height);
     }
 
     function create(
@@ -133,14 +102,13 @@ module DotPattern {
         width as Numeric,
         height as Numeric,
         bgColor as Numeric,
-        fgColor as Numeric,
-        alphaPercent as Number?
+        fgColor as Numeric
     ) as Void {
         if (!GlobalKeys.IS_CACHE_ENABLED) {
             return;
         }
 
-        patterns.put(key, _create(width, height, bgColor, fgColor, alphaPercent));
+        patterns.put(key, _create(width, height, bgColor, fgColor));
     }
 
     function get(
@@ -148,15 +116,14 @@ module DotPattern {
         width as Numeric,
         height as Numeric,
         bgColor as Numeric,
-        fgColor as Numeric,
-        alphaPercent as Number?
+        fgColor as Numeric
     ) as BufferedBitmap {
         if (!GlobalKeys.IS_CACHE_ENABLED) {
-            return _create(width, height, bgColor, fgColor, alphaPercent);
+            return _create(width, height, bgColor, fgColor);
         }
 
         if (!patterns.hasKey(key)) {
-            create(key, width, height, bgColor, fgColor, alphaPercent);
+            create(key, width, height, bgColor, fgColor);
         }
 
         return patterns.get(key) as BufferedBitmap;

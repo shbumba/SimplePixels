@@ -24,3 +24,12 @@ function combineDictionaries(
 
     return d1;
 }
+
+function clamp(value as Number, minValue as Number, maxValue as Number) as Number {
+    if (value < minValue) {
+        return minValue;
+    } else if (value > maxValue) {
+        return maxValue;
+    }
+    return value;
+}

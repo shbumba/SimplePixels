@@ -17,13 +17,9 @@ module Components {
         }
 
         function setColors() as Void {
-            var backgroundColor = SettingsModule.getValue(SettingType.BACKGROUND_COLOR) as ColorsTypes.Enum;
-            var foregroundColor = SettingsModule.getValue(SettingType.FOREGROUND_COLOR) as ColorsTypes.Enum;
-            var infoColor = SettingsModule.getValue(SettingType.INFO_COLOR) as ColorsTypes.Enum;
-
-            self.backgroundColor = ColorsModule.getColor(backgroundColor);
-            self.foregroundColor = ColorsModule.getColor(foregroundColor);
-            self.infoColor = ColorsModule.getColor(infoColor);
+            self.backgroundColor = getSettingColor(SettingType.BACKGROUND_COLOR);
+            self.foregroundColor = getSettingColor(SettingType.FOREGROUND_COLOR);
+            self.infoColor = getSettingColor(SettingType.INFO_COLOR);
         }
 
         function onSettingsChanged() as Void {
