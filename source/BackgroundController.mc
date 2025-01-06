@@ -1,28 +1,34 @@
 import Toybox.Lang;
 import Toybox.Background;
 import Toybox.Time;
-import SettingsModule.SettingType;
-import SettingsModule;
 
+(:background)
 class BackgroundController {
     const BG_INTERVAL_LIMIT as Number = 300; // 5 minutes as seconds
     var isRunning as Boolean = false;
 
-    function setup() as Void {
-        var isEnabled = !!SettingsModule.getValue(SettingType.OW_ENABLED);
+    protected function getInterval() as Number {
+        return BG_INTERVAL_LIMIT; // Abstract
+    }
 
-        if (isEnabled) {
+    protected function isEnabled() as Boolean {
+        return false; // Abstract
+    }
+
+    function shouldRemoveEvent() as Boolean {
+        return !self.isEnabled() && (self.isRunning || Background.getTemporalEventRegisteredTime() != null);
+    }
+
+    function setup() as Void {
+        if (self.isEnabled()) {
             self.runNow();
-        } else if (!isEnabled && self.isRunning) {
+        } else if (self.shouldRemoveEvent()) {
             self._remove();
         }
     }
 
     function scheduleNext() as Void {
-        var intervalMinutes = SettingsModule.getValue(SettingType.OW_INTERVAL);
-        intervalMinutes = intervalMinutes != null ? intervalMinutes : 30;
-
-        var intervalSeconds = intervalMinutes * 60;
+        var intervalSeconds = self.getInterval() * 60;
         var nextTime = Time.now().add(new Time.Duration(intervalSeconds));
 
         self._run(nextTime);
@@ -46,6 +52,10 @@ class BackgroundController {
     }
 
     function _registerTask(time as Time.Moment or Time.Duration) as Void {
+        if (!self.isEnabled() || self.shouldRemoveEvent()) {
+            return;
+        }
+
         self.isRunning = true;
 
         Background.registerForTemporalEvent(time);

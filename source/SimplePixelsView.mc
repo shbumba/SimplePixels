@@ -2,8 +2,9 @@ import Toybox.Lang;
 import Toybox.Graphics;
 import Toybox.WatchUi;
 import Services;
-import WatcherModule;
+import ObserverModule;
 import GlobalKeys;
+import SettingsModule;
 
 class SimplePixelsView extends WatchUi.WatchFace {
     private var _wasShowed = false;
@@ -14,11 +15,39 @@ class SimplePixelsView extends WatchUi.WatchFace {
         Services.register();
     }
 
+    function _onConnectionChanged(value as ObserverModule.InstanceGetter, prevValue as ObserverModule.InstanceGetter) as Void {
+        OWBackgroundController.setup();
+    }
+
+    function _onSettingsChanged(value as ObserverModule.InstanceGetter, prevValue as ObserverModule.InstanceGetter) as Void {
+        var viewValues = ViewsKeys.VALUES;
+
+        for (var i = 0; i < viewValues.size(); i++) {
+            var id = viewValues[i] as String;
+            var view = self.findDrawableById(id);
+
+            (view as Components.BaseDrawable).onSettingsChanged();
+        }
+
+        WatchUi.requestUpdate();
+    }
+
+    function _updateSecondsViewProps(value as ObserverModule.InstanceGetter, prevValue as ObserverModule.InstanceGetter) as Void {
+        var secondsView = self.findDrawableById(ViewsKeys.SECONDS) as SecondsView;
+        var displaySecondsType = Services.ObserverStore().getValue(DisplaySecondsObserver.key) as DisplaySecondsType.Enum;
+        var isAwake = Services.ObserverStore().getValue(AwakeObserver.key) as Boolean;
+
+        secondsView.setViewProps(displaySecondsType, isAwake);
+        WatchUi.requestUpdate();
+    }
+
     function onInit(drawContext as Dc) as Void {    
-        Services.WathersStore().setup(
-            [new AwakeWatcher(self, true), new DisplaySecondsWatcher(self), new OnSettingsChangedWatcher(self)] as
-                Array<Watcher>
-        );
+        Services.ObserverStore().setup([
+            new AwakeObserver(self.method(:_updateSecondsViewProps), true),
+            new DisplaySecondsObserver(self.method(:_updateSecondsViewProps)),
+            new OnSettingsChangedObserver(self.method(:_onSettingsChanged)),
+            new ConnectionObserverObserver(self.method(:_onConnectionChanged)),
+        ] as Array<ValueObserver>);
 
         if (GlobalKeys.IS_NEW_SDK) {
             Services.SensorInfo().init();
@@ -34,7 +63,7 @@ class SimplePixelsView extends WatchUi.WatchFace {
     function onUpdate(drawContext as Dc) as Void {
         drawContext.clearClip();
 
-        Services.WathersStore().runScope(WatcherModule.ON_UPDATE);
+        Services.ObserverStore().runScope(ObserverModule.ON_UPDATE);
 
         WatchFace.onUpdate(drawContext);
 
@@ -46,8 +75,8 @@ class SimplePixelsView extends WatchUi.WatchFace {
     function onPartialUpdate(drawContext as Dc) as Void {
         drawContext.clearClip();
 
-        AwakeWatcher.isAwake = false;
-        Services.WathersStore().runScope(WatcherModule.ON_PARTIAL_UPDATE);
+        AwakeObserver.isAwake = false;
+        Services.ObserverStore().runScope(ObserverModule.ON_PARTIAL_UPDATE);
 
         WatchFace.onPartialUpdate(drawContext);
     }
@@ -60,32 +89,32 @@ class SimplePixelsView extends WatchUi.WatchFace {
             GlobalKeys.initSettings();
         }
 
-        AwakeWatcher.isAwake = true;
-        Services.WathersStore().runScope(WatcherModule.ON_EXIT_SLEEP);
+        AwakeObserver.isAwake = true;
+        Services.ObserverStore().runScope(ObserverModule.ON_EXIT_SLEEP);
 
         WatchFace.onShow();
     }
 
     function onEnterSleep() as Void {
-        AwakeWatcher.isAwake = false;
-        Services.WathersStore().runScope(WatcherModule.ON_ENTER_SLEEP);
+        AwakeObserver.isAwake = false;
+        Services.ObserverStore().runScope(ObserverModule.ON_ENTER_SLEEP);
 
         WatchFace.onEnterSleep();
     }
 
     function onExitSleep() as Void {
-        AwakeWatcher.isAwake = true;
-        Services.WathersStore().runScope(WatcherModule.ON_EXIT_SLEEP);
+        AwakeObserver.isAwake = true;
+        Services.ObserverStore().runScope(ObserverModule.ON_EXIT_SLEEP);
 
         WatchFace.onExitSleep();
     }
 
     function onNightModeChanged() as Void {
-        AwakeWatcher.isAwake = false;
-        Services.WathersStore().runScope(WatcherModule.ON_NIGHT_MODE_CHANGED);
+        AwakeObserver.isAwake = false;
+        Services.ObserverStore().runScope(ObserverModule.ON_NIGHT_MODE_CHANGED);
     }
 
     function onSettingsChanged() as Void {
-        Services.WathersStore().runScope(WatcherModule.ON_SETTINGS_CHANGED);
+        Services.ObserverStore().runScope(ObserverModule.ON_SETTINGS_CHANGED);
     }
 }

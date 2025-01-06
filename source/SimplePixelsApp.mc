@@ -7,17 +7,15 @@ import StoreKeys;
 (:background)
 class SimplePixelsApp extends Application.AppBase {
     var _mainView as SimplePixelsView or Null = null;
-    var _bgController as BackgroundController or Null = null;
 
     function initialize() {
         AppBase.initialize();
     }
 
     function getInitialView() as [ Views ] or [ Views, InputDelegates ] {
-        self._bgController = new BackgroundController();
         self._mainView = new SimplePixelsView();
 
-        self._bgController.setup();
+        OWBackgroundController.setup();
 
         return [self._mainView];
     }
@@ -27,7 +25,7 @@ class SimplePixelsApp extends Application.AppBase {
     }
 
     function getServiceDelegate() as [ System.ServiceDelegate ] {
-        return [new BackgroundService()];
+        return [new BackgroundServiceDelegate()];
     }
     
     function onSettingsChanged() as Void {
@@ -35,9 +33,7 @@ class SimplePixelsApp extends Application.AppBase {
             self._mainView.onSettingsChanged();
         }
 
-        if (self._bgController != null) {
-            self._bgController.setup();
-        }
+        OWBackgroundController.setup();
     }
 
     function onNightModeChanged() as Void {
@@ -62,14 +58,10 @@ class SimplePixelsApp extends Application.AppBase {
             needToRerun = !!newData.get("hasError");
         }
 
-        if (self._bgController == null) {
-            return;
-        }
-
         if (needToRerun) {
-            self._bgController.runNow();
+            OWBackgroundController.runNow();
         } else {
-            self._bgController.scheduleNext();
+            OWBackgroundController.scheduleNext();
         }
 	}
 }
