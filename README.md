@@ -45,6 +45,25 @@ I wanted to add more screens and AMOLED support, but the resource management and
 
 ## Changelog
 
+### v1.2.8
+
+* Improved the way to change the transparency of the pattern color
+* Stopping OW service when there is no connection
+* Different intervals for displaying current and forecast weather
+* Optimization and fixes
+
+### v1.2.7
+
+* Show OW temperature even if could not get the latest info
+* Getting the last known location info as positioning data
+* Added ability to change dot pattern visibility and transparency
+* [[kuzan](https://github.com/langeyouxiang)] Display sunrise and sunset in one line
+* [[kuzan](https://github.com/langeyouxiang)] Date Format, Second Time Format, Pattern Transparency settings have been moved to the phone settings
+
+### v1.2.6
+
+* [[kuzan](https://github.com/langeyouxiang)] Dynamic weather icons for current weather (Garmin / OW)
+
 ### v1.2.5
 
 * Updated SDK to version 7.3.1.

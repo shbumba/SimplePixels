@@ -3,7 +3,7 @@ import Toybox.WatchUi;
 import Toybox.Graphics;
 import SettingsModule;
 
-module SettingsMenuBuilder {
+module SettingsMenuHelper {
     typedef MenuItemProps as {
         :label as ResourceId or String,
         :subLabel as ResourceId?,
@@ -37,14 +37,6 @@ module SettingsMenuBuilder {
             params.get(:identifier),
             params.get(:options)
         );
-    }
-
-    function BuildCustomColorMenuItem(params as CustomColorMenuItemProps) as CustomColorMenuItem {
-        return new CustomColorMenuItem(params);
-    }
-
-    function BuildCustomIconMenuItem(params as CustomIconMenuItemProps) as CustomIconMenuItem {
-        return new CustomIconMenuItem(params);
     }
 
     function BuildToggleMenuItem(params as ToggleItemProps) as WatchUi.ToggleMenuItem {

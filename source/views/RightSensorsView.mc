@@ -36,7 +36,6 @@ class RightSensorsView extends Components.List {
 
     function onSettingsChanged() as Void {
         Components.List.onSettingsChanged();
-
         self._updateSensors();
     }
 

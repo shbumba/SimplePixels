@@ -19,33 +19,16 @@ class SimplePixelsView extends WatchUi.WatchFace {
         OWBackgroundController.setup();
     }
 
-    function _onSettingsChanged(value as ObserverModule.InstanceGetter, prevValue as ObserverModule.InstanceGetter) as Void {
-        var viewValues = ViewsKeys.VALUES;
-
-        for (var i = 0; i < viewValues.size(); i++) {
-            var id = viewValues[i] as String;
-            var view = self.findDrawableById(id);
-
-            (view as Components.BaseDrawable).onSettingsChanged();
-        }
-
-        WatchUi.requestUpdate();
-    }
-
-    function _updateSecondsViewProps(value as ObserverModule.InstanceGetter, prevValue as ObserverModule.InstanceGetter) as Void {
+    function _onAwakeChanged(value as ObserverModule.InstanceGetter, prevValue as ObserverModule.InstanceGetter) as Void {
         var secondsView = self.findDrawableById(ViewsKeys.SECONDS) as SecondsView;
-        var displaySecondsType = Services.ObserverStore().getValue(DisplaySecondsObserver.key) as DisplaySecondsType.Enum;
-        var isAwake = Services.ObserverStore().getValue(AwakeObserver.key) as Boolean;
-
-        secondsView.setViewProps(displaySecondsType, isAwake);
+        
+        secondsView.setViewProps(value as Boolean);
         WatchUi.requestUpdate();
     }
 
     function onInit(drawContext as Dc) as Void {    
         Services.ObserverStore().setup([
-            new AwakeObserver(self.method(:_updateSecondsViewProps), true),
-            new DisplaySecondsObserver(self.method(:_updateSecondsViewProps)),
-            new OnSettingsChangedObserver(self.method(:_onSettingsChanged)),
+            new AwakeObserver(self.method(:_onAwakeChanged), true),
             new ConnectionObserverObserver(self.method(:_onConnectionChanged)),
         ] as Array<ValueObserver>);
 
@@ -116,5 +99,16 @@ class SimplePixelsView extends WatchUi.WatchFace {
 
     function onSettingsChanged() as Void {
         Services.ObserverStore().runScope(ObserverModule.ON_SETTINGS_CHANGED);
+
+        var viewValues = ViewsKeys.VALUES;
+
+        for (var i = 0; i < viewValues.size(); i++) {
+            var id = viewValues[i] as String;
+            var view = self.findDrawableById(id);
+
+            (view as Components.BaseDrawable).onSettingsChanged();
+        }
+
+        WatchUi.requestUpdate();
     }
 }

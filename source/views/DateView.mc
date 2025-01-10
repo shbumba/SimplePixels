@@ -7,9 +7,20 @@ import SettingsModule.SettingType;
 
 class DateView extends Components.Box {
     private var _dateFormatType as FormatDate.DisplayDateFormatType.Enum = FormatDate.DisplayDateFormatType.DDMM;
+    
     function initialize(params as Components.BoxProps) {
         Components.Box.initialize(params);
         self.updateDateFormatType();
+    }
+
+    function onSettingsChanged() as Void {
+        Components.Box.onSettingsChanged();
+        self.updateDateFormatType();
+    }
+    
+    private function updateDateFormatType() as Void {
+        self._dateFormatType =
+            SettingsModule.getValue(SettingType.DATE_FORMAT) as FormatDate.DisplayDateFormatType.Enum;
     }
 
     protected function render(drawContext as Dc) as Void {
@@ -25,15 +36,5 @@ class DateView extends Components.Box {
         drawContext.setColor(self.infoColor, Graphics.COLOR_TRANSPARENT);
         drawContext.drawText(posX + width, posY, font, dateObj[0], Graphics.TEXT_JUSTIFY_RIGHT);
         drawContext.drawText(posX + width, posY + fontHeight, font, dateObj[1], Graphics.TEXT_JUSTIFY_RIGHT);
-    }
-
-    function onSettingsChanged() as Void {
-        Components.Box.onSettingsChanged();
-
-        self.updateDateFormatType();
-    }
-    private function updateDateFormatType() as Void {
-        self._dateFormatType =
-            SettingsModule.getValue(SettingType.DATE_FORMAT) as FormatDate.DisplayDateFormatType.Enum;
     }
 }
