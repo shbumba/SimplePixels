@@ -1,7 +1,7 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
 import SettingsModule.SettingType;
-import SettingsMenuBuilder;
+import SettingsMenuHelper;
 import SensorsTexts;
 
 function RenderSettingsMenu(onBack, transition as WatchUi.SlideType, selectedSetting as SettingType.Enum?) as Void {
@@ -21,51 +21,51 @@ function _getSubLabelValue(type as SettingType.Enum) as ResourceId {
 function SettingsMenu() as WatchUi.Menu2 or WatchUi.CustomMenu {
     var menu = new WatchUi.Menu2({ :title => Rez.Strings.SettingsMenu });
     menu.addItem(
-        SettingsMenuBuilder.BuildMenuItem({
+        SettingsMenuHelper.BuildMenuItem({
             :identifier => SettingType.BACKGROUND_COLOR,
             :label => Rez.Strings.BackgroundColorTitle
         })
     );
     menu.addItem(
-        SettingsMenuBuilder.BuildMenuItem({
+        SettingsMenuHelper.BuildMenuItem({
             :identifier => SettingType.FOREGROUND_COLOR,
             :label => Rez.Strings.ForegroundColorTitle
         })
     );
     menu.addItem(
-        SettingsMenuBuilder.BuildMenuItem({
+        SettingsMenuHelper.BuildMenuItem({
             :identifier => SettingType.INFO_COLOR,
             :label => Rez.Strings.InfoColorTitle
         })
     );
     menu.addItem(
-        SettingsMenuBuilder.BuildMenuItem({
+        SettingsMenuHelper.BuildMenuItem({
             :identifier => SettingType.DISPLAY_SECONDS,
             :label => Rez.Strings.DisplaySeconds
         })
     );
     menu.addItem(
-        SettingsMenuBuilder.BuildMenuItem({
+        SettingsMenuHelper.BuildMenuItem({
             :identifier => SettingType.SEPARATOR_COLOR,
             :label => Rez.Strings.SeparatorColorTitle
         })
     );
     menu.addItem(
-        SettingsMenuBuilder.BuildMenuItem({
+        SettingsMenuHelper.BuildMenuItem({
             :identifier => SettingType.SEPARATOR_INFO,
             :label => Rez.Strings.SeparatorInfoTitle,
             :subLabel => _getSubLabelValue(SettingType.SEPARATOR_INFO)
         })
     );
     menu.addItem(
-        SettingsMenuBuilder.BuildMenuItem({
+        SettingsMenuHelper.BuildMenuItem({
             :identifier => SettingType.LEFT_SENSOR,
             :label => Rez.Strings.LeftSensor,
             :subLabel => _getSubLabelValue(SettingType.LEFT_SENSOR)
         })
     );
     menu.addItem(
-        SettingsMenuBuilder.BuildToggleMenuItem({
+        SettingsMenuHelper.BuildToggleMenuItem({
             :identifier => SettingType.SHOW_STATUS_ICONS,
             :label => Rez.Strings.DisplayStatusIcons,
             :options => {
@@ -74,42 +74,42 @@ function SettingsMenu() as WatchUi.Menu2 or WatchUi.CustomMenu {
         })
     );
     menu.addItem(
-        SettingsMenuBuilder.BuildMenuItem({
+        SettingsMenuHelper.BuildMenuItem({
             :identifier => SettingType.TOP_SENSOR_1,
             :label => Rez.Strings.TopSensor1,
             :subLabel => _getSubLabelValue(SettingType.TOP_SENSOR_1)
         })
     );
     menu.addItem(
-        SettingsMenuBuilder.BuildMenuItem({
+        SettingsMenuHelper.BuildMenuItem({
             :identifier => SettingType.TOP_SENSOR_2,
             :label => Rez.Strings.TopSensor2,
             :subLabel => _getSubLabelValue(SettingType.TOP_SENSOR_2)
         })
     );
     menu.addItem(
-        SettingsMenuBuilder.BuildMenuItem({
+        SettingsMenuHelper.BuildMenuItem({
             :identifier => SettingType.TOP_SENSOR_3,
             :label => Rez.Strings.TopSensor3,
             :subLabel => _getSubLabelValue(SettingType.TOP_SENSOR_3)
         })
     );
     menu.addItem(
-        SettingsMenuBuilder.BuildMenuItem({
+        SettingsMenuHelper.BuildMenuItem({
             :identifier => SettingType.BOTTOM_SENSOR_1,
             :label => Rez.Strings.BottomSensor1,
             :subLabel => _getSubLabelValue(SettingType.BOTTOM_SENSOR_1)
         })
     );
     menu.addItem(
-        SettingsMenuBuilder.BuildMenuItem({
+        SettingsMenuHelper.BuildMenuItem({
             :identifier => SettingType.BOTTOM_SENSOR_2,
             :label => Rez.Strings.BottomSensor2,
             :subLabel => _getSubLabelValue(SettingType.BOTTOM_SENSOR_2)
         })
     );
     menu.addItem(
-        SettingsMenuBuilder.BuildMenuItem({
+        SettingsMenuHelper.BuildMenuItem({
             :identifier => SettingType.BOTTOM_SENSOR_3,
             :label => Rez.Strings.BottomSensor3,
             :subLabel => _getSubLabelValue(SettingType.BOTTOM_SENSOR_3)

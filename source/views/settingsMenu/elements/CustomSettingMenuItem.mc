@@ -9,15 +9,23 @@ typedef CustomIconMenuItemProps as {
     :label as ResourceId or String
 };
 
-class CustomIconMenuItem extends WatchUi.CustomMenuItem {
+typedef CustomColorMenuItemProps as {
+    :identifier as Object or Number or String,
+    :color as Number,
+    :label as ResourceId or String
+};
+
+class CustomSettingMenuItem extends WatchUi.CustomMenuItem {
     var _label as ResourceId;
     var _icon as ResourceId?;
+    var _color as Number?;
 
-    function initialize(params as CustomIconMenuItemProps) {
+    function initialize(params as CustomIconMenuItemProps or CustomColorMenuItemProps) {
         WatchUi.CustomMenuItem.initialize(params.get(:identifier), {});
 
-        self._icon = params.get(:icon);
         self._label = params.get(:label);
+        self._icon = params.get(:icon);
+        self._color = params.get(:color);
     }
 
     function draw(drawContext as Dc) as Void {
@@ -40,6 +48,11 @@ class CustomIconMenuItem extends WatchUi.CustomMenuItem {
             labelText,
             Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
         );
+
+        if (self._color != null) {
+            drawContext.setColor(self._color, Graphics.COLOR_BLACK);
+            drawContext.fillRectangle(0, 0, height, height);
+        }
 
         if (self._icon != null) {
             drawContext.setColor(fontColor, Graphics.COLOR_TRANSPARENT);
