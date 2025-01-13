@@ -19,7 +19,7 @@
             <param name="boxWidth">"80"</param>
             <param name="boxHeight">"58"</param>
             <param name="xPos">"50%"</param>
-            <param name="yPos">"26%"</param>
+            <param name="yPos">"30%"</param>
             <param name="xShift">"-18"</param>
             <param name="yShift">"1"</param>
             <param name="horizontalAlignment">PositionUtils.ALIGN_END</param>
@@ -56,7 +56,7 @@
             <param name="boxWidth">"110"</param>
             <param name="boxHeight">"54"</param>
             <param name="xPos">"50%"</param>
-            <param name="yPos">"74%"</param>
+            <param name="yPos">"70%"</param>
             <param name="xShift">"-17"</param>
             <param name="yShift">"3"</param>
             <param name="horizontalAlignment">PositionUtils.ALIGN_END</param>
@@ -96,9 +96,9 @@
         </drawable>
         <drawable id="Seconds" class="SecondsView">
             <param name="boxWidth">"32"</param>
-            <param name="boxHeight">"29"</param>
+            <param name="boxHeight">"33"</param>
             <param name="xPos">"75%"</param>
-            <param name="yPos">"52%"</param>
+            <param name="yPos">"50%"</param>
             <param name="xShift">"1"</param>
             <param name="yShift">"2"</param>
             <param name="horizontalAlignment">PositionUtils.ALIGN_START</param>
@@ -107,7 +107,7 @@
         </drawable>
         <drawable id="TopSensors" class="RightSensorsView">
             <param name="boxWidth">"110"</param>
-            <param name="boxHeight">"60"</param>
+            <param name="boxHeight">"65"</param>
             <param name="xPos">"50%"</param>
             <param name="yPos">"34%"</param>
             <param name="xShift">"14"</param>
@@ -121,7 +121,7 @@
         </drawable>
         <drawable id="BottomSensors" class="RightSensorsView">
             <param name="boxWidth">"110"</param>
-            <param name="boxHeight">"60"</param>
+            <param name="boxHeight">"65"</param>
             <param name="xPos">"50%"</param>
             <param name="yPos">"66%"</param>
             <param name="xShift">"14"</param>
