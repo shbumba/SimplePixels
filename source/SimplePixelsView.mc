@@ -37,6 +37,7 @@ class SimplePixelsView extends WatchUi.WatchFace {
         var hoursView = self.findDrawableById(ViewsKeys.HOURS) as Components.TimeView;
         var minutesView = self.findDrawableById(ViewsKeys.MINUTES) as Components.TimeView;
         var pmView = self.findDrawableById(ViewsKeys.PM) as PMView;
+        var backgroundView = self.findDrawableById(ViewsKeys.BACKGROUND) as BackgroundView;
 
         secondsView.setViewProps(value as Boolean);
         topSensorView.setViewProps(value as Boolean);
@@ -49,6 +50,7 @@ class SimplePixelsView extends WatchUi.WatchFace {
         hoursView.setViewProps(value as Boolean);
         minutesView.setViewProps(value as Boolean);
         pmView.setViewProps(value as Boolean);
+        backgroundView.setViewProps(value as Boolean);
 
         WatchUi.requestUpdate();
     }
