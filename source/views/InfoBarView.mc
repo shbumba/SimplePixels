@@ -9,6 +9,7 @@ import SensorTypes;
 import Components;
 
 class InfoBarView extends Components.Box {
+    var _isAwake as Boolean = AwakeObserver.isAwake;
     private var _sensorType as SensorTypes.Enum = SensorTypes.NONE;
     private var _barColor as Number = 0;
     private var _sensorToGoalMap = {
@@ -35,14 +36,8 @@ class InfoBarView extends Components.Box {
             SettingsModule.getValue(SettingType.SEPARATOR_COLOR) as ColorsTypes.Enum
         );
         self._sensorType = SettingsModule.getValue(SettingType.SEPARATOR_INFO) as SensorTypes.Enum;
-        
-        DotPattern.create(
-            DotPattern.INFO_BAR,
-            self.getWidth(),
-            self.getHeight(),
-            self._barColor,
-            self.backgroundColor
-        );
+
+        DotPattern.create(DotPattern.INFO_BAR, self.getWidth(), self.getHeight(), self._barColor, self.backgroundColor);
     }
 
     private function calculatePercente(curentValue as Number?, maxValue as Number?) as Float or Number {
@@ -70,27 +65,45 @@ class InfoBarView extends Components.Box {
         var height = self.getHeight();
         var posX = self.getPosX();
         var posY = self.getPosY();
-
-        var sensorValue = Services.SensorInfo().getValue(self._sensorType);
-        var maxValue = self.getGoal(self._sensorType);
-        var percent = self.calculatePercente(sensorValue, maxValue);
-        var isCompleted = percent.toNumber() == 100;
-
-        var barHeight = height.toFloat() * (percent / 100);
-        var valueBarShift = height - barHeight;
-
-        if (!isCompleted) {
-            var pattern = DotPattern.get(
-                DotPattern.INFO_BAR,
-                width,
-                height,
-                self._barColor,
-                self.backgroundColor
-            );
+        if (!_isAwake) {
+            var pattern = DotPattern.get(DotPattern.INFO_BAR, 2, height, Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
             drawContext.drawBitmap(posX, posY, pattern);
-        }
+        } else {
+            var sensorValue = Services.SensorInfo().getValue(self._sensorType);
+            var maxValue = self.getGoal(self._sensorType);
+            var percent = self.calculatePercente(sensorValue, maxValue);
+            var isCompleted = percent.toNumber() == 100;
 
-        drawContext.setColor(self._barColor, Graphics.COLOR_TRANSPARENT);
-        drawContext.fillRectangle(posX, posY + valueBarShift, width, barHeight);
+            var barHeight = height.toFloat() * (percent / 100);
+            var valueBarShift = height - barHeight;
+
+            if (!isCompleted) {
+                var pattern = DotPattern.get(DotPattern.INFO_BAR, width, height, self._barColor, self.backgroundColor);
+                drawContext.drawBitmap(posX, posY, pattern);
+            }
+
+            drawContext.setColor(self._barColor, Graphics.COLOR_TRANSPARENT);
+            drawContext.fillRectangle(posX, posY + valueBarShift, width, barHeight);
+        }
+    }
+
+    function setViewProps(isAwake as Boolean) as Void {
+        self._isAwake = isAwake;
+        self.setVisibility();
+    }
+
+    function setVisibility() as Void {
+        // self.setVisible(self._isAwake);
+        if (!self._isAwake) {
+            DotPattern.create(
+                DotPattern.INFO_BAR,
+                2,
+                self.getHeight(),
+                Graphics.COLOR_DK_GRAY,
+                Graphics.COLOR_TRANSPARENT
+            );
+        } else {
+            self.updateProps();
+        }
     }
 }

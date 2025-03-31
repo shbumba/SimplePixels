@@ -75,7 +75,7 @@ module Components {
             }
 
             var posX = props.get(:posX);
-            var textYPos = props.get(:posY);
+            var textYPos = GlobalKeys.IS_AMOLED ? props.get(:posY) - GlobalKeys.AMOLED_Y_OFFSET : props.get(:posY);
             var textDerection = props.get(:direction);
 
             var textXPos = posX + self._iconSize;

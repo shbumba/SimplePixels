@@ -8,6 +8,7 @@ import SensorTypes;
 import Components;
 
 class LeftSensorsView extends Components.List {
+    var _isAwake as Boolean = AwakeObserver.isAwake;
     private var _sensorType as SensorTypes.Enum = SensorTypes.NONE;
     private var _areIconsVisible as Boolean = false;
     private var sleepSensors as Array<SensorTypes.Enum> =
@@ -103,5 +104,14 @@ class LeftSensorsView extends Components.List {
             :direction => Components.ListItemsDerection.RIGHT,
             :drawContext => drawContext
         });
+    }
+
+    function setViewProps(isAwake as Boolean) as Void {
+        self._isAwake = isAwake;
+        self.setVisibility();
+    }
+
+    function setVisibility() as Void {
+        self.setVisible(self._isAwake);
     }
 }

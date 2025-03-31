@@ -15,22 +15,51 @@ class SimplePixelsView extends WatchUi.WatchFace {
         Services.register();
     }
 
-    function _onConnectionChanged(value as ObserverModule.InstanceGetter, prevValue as ObserverModule.InstanceGetter) as Void {
+    function _onConnectionChanged(
+        value as ObserverModule.InstanceGetter,
+        prevValue as ObserverModule.InstanceGetter
+    ) as Void {
         OWBackgroundController.setup();
     }
 
-    function _onAwakeChanged(value as ObserverModule.InstanceGetter, prevValue as ObserverModule.InstanceGetter) as Void {
+    function _onAwakeChanged(
+        value as ObserverModule.InstanceGetter,
+        prevValue as ObserverModule.InstanceGetter
+    ) as Void {
         var secondsView = self.findDrawableById(ViewsKeys.SECONDS) as SecondsView;
-        
+        var topSensorView = self.findDrawableById(ViewsKeys.TOP_SENSORS) as RightSensorsView;
+        var bottomSensorView = self.findDrawableById(ViewsKeys.BOTTOM_SENSORS) as RightSensorsView;
+        var prevHoursView = self.findDrawableById(ViewsKeys.PREV_HOURS) as PhantomTimeView;
+        var nextHoursView = self.findDrawableById(ViewsKeys.NEXT_HOURS) as PhantomTimeView;
+        var leftSensorsView = self.findDrawableById(ViewsKeys.LEFT_SENSORS) as LeftSensorsView;
+        var infoBarView = self.findDrawableById(ViewsKeys.INFO_BAR) as InfoBarView;
+        var dateView = self.findDrawableById(ViewsKeys.DATE) as DateView;
+        var hoursView = self.findDrawableById(ViewsKeys.HOURS) as Components.TimeView;
+        var minutesView = self.findDrawableById(ViewsKeys.MINUTES) as Components.TimeView;
+        var pmView = self.findDrawableById(ViewsKeys.PM) as PMView;
+
         secondsView.setViewProps(value as Boolean);
+        topSensorView.setViewProps(value as Boolean);
+        bottomSensorView.setViewProps(value as Boolean);
+        prevHoursView.setViewProps(value as Boolean);
+        nextHoursView.setViewProps(value as Boolean);
+        leftSensorsView.setViewProps(value as Boolean);
+        infoBarView.setViewProps(value as Boolean);
+        dateView.setViewProps(value as Boolean);
+        hoursView.setViewProps(value as Boolean);
+        minutesView.setViewProps(value as Boolean);
+        pmView.setViewProps(value as Boolean);
+
         WatchUi.requestUpdate();
     }
 
-    function onInit(drawContext as Dc) as Void {    
-        Services.ObserverStore().setup([
-            new AwakeObserver(self.method(:_onAwakeChanged), true),
-            new ConnectionObserverObserver(self.method(:_onConnectionChanged)),
-        ] as Array<ValueObserver>);
+    function onInit(drawContext as Dc) as Void {
+        Services.ObserverStore().setup(
+            [
+                new AwakeObserver(self.method(:_onAwakeChanged), true),
+                new ConnectionObserverObserver(self.method(:_onConnectionChanged))
+            ] as Array<ValueObserver>
+        );
 
         if (GlobalKeys.IS_NEW_SDK) {
             Services.SensorInfo().init();
