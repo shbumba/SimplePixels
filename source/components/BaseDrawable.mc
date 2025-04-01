@@ -9,6 +9,7 @@ module Components {
         protected var backgroundColor as Number = 0;
         protected var foregroundColor as Number = 0;
         protected var infoColor as Number = 0;
+        protected var aodColor as Number = 0;
 
         function initialize(params) {
             self.setColors();
@@ -20,6 +21,7 @@ module Components {
             self.backgroundColor = getSettingColor(SettingType.BACKGROUND_COLOR);
             self.foregroundColor = getSettingColor(SettingType.FOREGROUND_COLOR);
             self.infoColor = getSettingColor(SettingType.INFO_COLOR);
+            self.aodColor = Graphics.COLOR_DK_GRAY;
         }
 
         function onSettingsChanged() as Void {

@@ -34,7 +34,7 @@ class DateView extends Components.Box {
         var font = self.getFont();
         var fontHeight = drawContext.getFontHeight(font);
         if (!self._isAwake) {
-            drawContext.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
+            drawContext.setColor(self.aodColor, Graphics.COLOR_TRANSPARENT);
         } else {
             drawContext.setColor(self.infoColor, Graphics.COLOR_TRANSPARENT);
         }
@@ -69,7 +69,7 @@ class DateView extends Components.Box {
                 DotPattern.DATE,
                 self.getWidth(),
                 self.getHeight(),
-                Graphics.COLOR_DK_GRAY,
+                self.aodColor,
                 Graphics.COLOR_TRANSPARENT
             );
         } else {

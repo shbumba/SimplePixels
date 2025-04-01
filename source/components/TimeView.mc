@@ -89,7 +89,7 @@ module Components {
 
         protected function renderTime(time as Number, drawContext as Dc) as Void {
             if (!self._isAwake) {
-                drawContext.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
+                drawContext.setColor(self.aodColor, Graphics.COLOR_TRANSPARENT);
             } else {
                 drawContext.setColor(self.foregroundColor, Graphics.COLOR_TRANSPARENT);
             }

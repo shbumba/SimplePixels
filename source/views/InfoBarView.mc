@@ -66,7 +66,7 @@ class InfoBarView extends Components.Box {
         var posX = self.getPosX();
         var posY = self.getPosY();
         if (!_isAwake) {
-            var pattern = DotPattern.get(DotPattern.INFO_BAR, 2, height, Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
+            var pattern = DotPattern.get(DotPattern.INFO_BAR, 2, height, self.aodColor, Graphics.COLOR_BLACK);
             drawContext.drawBitmap(posX, posY, pattern);
         } else {
             var sensorValue = Services.SensorInfo().getValue(self._sensorType);
@@ -95,13 +95,7 @@ class InfoBarView extends Components.Box {
     function setVisibility() as Void {
         // self.setVisible(self._isAwake);
         if (!self._isAwake) {
-            DotPattern.create(
-                DotPattern.INFO_BAR,
-                2,
-                self.getHeight(),
-                Graphics.COLOR_DK_GRAY,
-                Graphics.COLOR_TRANSPARENT
-            );
+            DotPattern.create(DotPattern.INFO_BAR, 2, self.getHeight(), self.aodColor, Graphics.COLOR_TRANSPARENT);
         } else {
             self.updateProps();
         }
