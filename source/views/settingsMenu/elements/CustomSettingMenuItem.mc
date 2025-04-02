@@ -29,6 +29,8 @@ class CustomSettingMenuItem extends WatchUi.CustomMenuItem {
     }
 
     function draw(drawContext as Dc) as Void {
+        drawContext.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_WHITE);
+        drawContext.fillRectangle(0, 0, drawContext.getWidth(), drawContext.getHeight());
         var iconWidth = 40;
         var font = Graphics.FONT_SMALL;
         var fontColor = Graphics.COLOR_DK_GRAY;
