@@ -44,13 +44,7 @@ class DateView extends Components.Box {
         //     var pattern = DotPattern.get(DotPattern.DATE, width, height, Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
         //     drawContext.drawBitmap(posX + width, posY, pattern);
         // }
-        drawContext.drawText(
-            posX + width,
-            posY + fontHeight - GlobalKeys.AMOLED_Y_OFFSET,
-            font,
-            dateObj[1],
-            Graphics.TEXT_JUSTIFY_RIGHT
-        );
+        drawContext.drawText(posX + width, posY + fontHeight, font, dateObj[1], Graphics.TEXT_JUSTIFY_RIGHT);
         // if (!self._isAwake) {
         //     var pattern = DotPattern.get(DotPattern.DATE, width, height, Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
         //     drawContext.drawBitmap(posX + width, posY + fontHeight - GlobalKeys.AMOLED_Y_OFFSET, pattern);

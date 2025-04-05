@@ -10,7 +10,6 @@ module GlobalKeys {
     var TEMPERATURE_UNITS = System.UNIT_METRIC;
     var IS_AMOLED = false;
     var DISPLAY_MODEL = null;
-    var AMOLED_Y_OFFSET = 0.0;
 
     const ICON_SYMBOL = " ";
     const IS_NEW_SDK = Graphics has :createBufferedBitmap;
@@ -27,6 +26,5 @@ module GlobalKeys {
         DISTANCE_UNITS = settings.distanceUnits;
         TEMPERATURE_UNITS = settings.temperatureUnits;
         DISPLAY_MODEL = System has :getDisplayMode ? System.getDisplayMode() : null;
-        AMOLED_Y_OFFSET = SCREEN_HEIGHT > 280.0 ? SCREEN_HEIGHT * (10.0 / 360.0) : 0.0;
     }
 }
