@@ -10,7 +10,7 @@ class BackgroundView extends Components.BaseDrawable {
     }
 
     function draw(dc as Dc) as Void {
-        if (self._isAwake) {
+        if (!self._isAwake) {
             dc.setColor(Graphics.COLOR_TRANSPARENT, Graphics.COLOR_BLACK);
         } else {
             dc.setColor(Graphics.COLOR_TRANSPARENT, self.backgroundColor);
