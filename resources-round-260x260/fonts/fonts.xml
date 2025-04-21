@@ -3,4 +3,6 @@
     <font id="minutes" filename="./blackout-medium.fnt" antialias="true"/>
     <font id="seconds" filename="./blackout-small.fnt" antialias="true"/>
     <font id="data" filename="./cone-small.fnt" antialias="true"/>
+        <font id="hours_aod" filename="../../resources-round-360x360/fonts/blackout-light-big.fnt" antialias="true"/>
+    <font id="minutes_aod" filename="../../resources-round-360x360/fonts/blackout-light-medium.fnt" antialias="true"/>
 </resources>

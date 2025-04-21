@@ -88,7 +88,7 @@ module Components {
         }
 
         protected function renderTime(time as Number, drawContext as Dc) as Void {
-            if (!self._isAwake) {
+            if (!self._isAwake && GlobalKeys.IS_AMOLED) {
                 drawContext.setColor(self.aodColor, Graphics.COLOR_TRANSPARENT);
                 if (self._timeType == TimeViewType.HOURS) {
                     drawContext.drawText(
