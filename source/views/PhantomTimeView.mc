@@ -15,7 +15,6 @@ typedef PhantomTimeViewProps as Components.TimeViewProps or
 class PhantomTimeView extends Components.TimeView {
     private var _timeShift as Number;
     private var _isPatternEnabled as Boolean = true;
-    var _isAwake as Boolean = AwakeObserver.isAwake;
 
     function initialize(params as PhantomTimeViewProps) {
         Components.TimeView.initialize(params);
@@ -111,12 +110,12 @@ class PhantomTimeView extends Components.TimeView {
         drawContext.drawBitmap(self.getPosX(), self.getPosY(), pattern);
     }
 
-    function setViewProps(isAwake as Boolean) as Void {
-        self._isAwake = isAwake;
+    function setAodMode(isAod as Boolean) as Void {
+        self.isAod = isAod;
         self.setVisibility();
     }
 
     function setVisibility() as Void {
-        self.setVisible(self._isAwake);
+        self.setVisible(!self.isAod);
     }
 }

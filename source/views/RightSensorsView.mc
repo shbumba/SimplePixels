@@ -13,7 +13,6 @@ typedef SensorsInfoProps as Components.ListProps or
 };
 
 class RightSensorsView extends Components.List {
-    var _isAwake as Boolean = AwakeObserver.isAwake;
     var _sensors as Array<SensorTypes.Enum> = [] as Array<SensorTypes.Enum>;
     var _fields as Array<SettingType.Enum> = [] as Array<SettingType.Enum>;
 
@@ -80,12 +79,12 @@ class RightSensorsView extends Components.List {
         });
     }
 
-    function setViewProps(isAwake as Boolean) as Void {
-        self._isAwake = isAwake;
+    function setAodMode(isAod as Boolean) as Void {
+        self.isAod = isAod;
         self.setVisibility();
     }
 
     function setVisibility() as Void {
-        self.setVisible(self._isAwake);
+        self.setVisible(!self.isAod);
     }
 }

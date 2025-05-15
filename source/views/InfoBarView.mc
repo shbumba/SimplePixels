@@ -9,7 +9,6 @@ import SensorTypes;
 import Components;
 
 class InfoBarView extends Components.Box {
-    var _isAwake as Boolean = AwakeObserver.isAwake;
     private var _sensorType as SensorTypes.Enum = SensorTypes.NONE;
     private var _barColor as Number = 0;
     private var _sensorToGoalMap = {
@@ -65,7 +64,8 @@ class InfoBarView extends Components.Box {
         var height = self.getHeight();
         var posX = self.getPosX();
         var posY = self.getPosY();
-        if (!_isAwake) {
+        if (self.isAod) {
+            drawContext.clear();
             var pattern = DotPattern.get(DotPattern.INFO_BAR, 2, height, self.aodColor, Graphics.COLOR_BLACK);
             drawContext.drawBitmap(posX, posY, pattern);
         } else {
@@ -87,14 +87,13 @@ class InfoBarView extends Components.Box {
         }
     }
 
-    function setViewProps(isAwake as Boolean) as Void {
-        self._isAwake = isAwake;
+    function setAodMode(isAod as Boolean) as Void {
+        self.isAod = isAod;
         self.setVisibility();
     }
 
     function setVisibility() as Void {
-        // self.setVisible(self._isAwake);
-        if (!self._isAwake) {
+        if (self.isAod) {
             DotPattern.create(DotPattern.INFO_BAR, 2, self.getHeight(), self.aodColor, Graphics.COLOR_TRANSPARENT);
         } else {
             self.updateProps();

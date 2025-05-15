@@ -9,7 +9,6 @@ module GlobalKeys {
     var DISTANCE_UNITS = System.UNIT_METRIC;
     var TEMPERATURE_UNITS = System.UNIT_METRIC;
     var IS_AMOLED = false;
-    var DISPLAY_MODEL = null;
 
     const ICON_SYMBOL = " ";
     const IS_NEW_SDK = Graphics has :createBufferedBitmap;
@@ -21,10 +20,9 @@ module GlobalKeys {
 
         SCREEN_WIDTH = settings.screenWidth;
         SCREEN_HEIGHT = settings.screenHeight;
-        IS_AMOLED = SCREEN_WIDTH >= 320;
+        IS_AMOLED = settings.requiresBurnInProtection;
         IS_24_HOUR = settings.is24Hour;
         DISTANCE_UNITS = settings.distanceUnits;
         TEMPERATURE_UNITS = settings.temperatureUnits;
-        DISPLAY_MODEL = System has :getDisplayMode ? System.getDisplayMode() : null;
     }
 }

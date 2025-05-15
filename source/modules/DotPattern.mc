@@ -6,9 +6,7 @@ import GlobalKeys;
 module DotPattern {
     enum Keys {
         HOURS = 1,
-        INFO_BAR,
-        DATE,
-        TIME
+        INFO_BAR
     }
 
     var patterns = ({}) as Dictionary<Keys, BufferedBitmap>;

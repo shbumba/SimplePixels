@@ -20,7 +20,6 @@ module Components {
     };
 
     class TimeView extends Box {
-        var _isAwake as Boolean = AwakeObserver.isAwake;
         protected var _timeType as TimeViewType.Enum;
         protected var _textAligment as Graphics.TextJustification;
 
@@ -88,7 +87,7 @@ module Components {
         }
 
         protected function renderTime(time as Number, drawContext as Dc) as Void {
-            if (!self._isAwake && GlobalKeys.IS_AMOLED) {
+            if (self.isAod && GlobalKeys.IS_AMOLED) {
                 drawContext.setColor(self.aodColor, Graphics.COLOR_TRANSPARENT);
                 if (self._timeType == TimeViewType.HOURS) {
                     drawContext.drawText(
@@ -121,11 +120,6 @@ module Components {
 
         protected function render(drawContext as Dc) as Void {
             self.renderTime(self.getTime(), drawContext);
-        }
-
-        function setViewProps(isAwake as Boolean) as Void {
-            self._isAwake = isAwake;
-            // self.setVisibility();
         }
     }
 }

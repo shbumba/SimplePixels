@@ -10,6 +10,7 @@ module Components {
         protected var foregroundColor as Number = 0;
         protected var infoColor as Number = 0;
         protected var aodColor as Number = 0;
+        protected var isAod as Boolean = false;
 
         function initialize(params) {
             self.setColors();
@@ -26,6 +27,10 @@ module Components {
 
         function onSettingsChanged() as Void {
             self.setColors();
+        }
+
+        function setAodMode(isAod as Boolean) as Void {
+            self.isAod = isAod;
         }
     }
 }

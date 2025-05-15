@@ -8,7 +8,6 @@ import SensorTypes;
 import Components;
 
 class LeftSensorsView extends Components.List {
-    var _isAwake as Boolean = AwakeObserver.isAwake;
     private var _sensorType as SensorTypes.Enum = SensorTypes.NONE;
     private var _areIconsVisible as Boolean = false;
     private var sleepSensors as Array<SensorTypes.Enum> =
@@ -106,12 +105,12 @@ class LeftSensorsView extends Components.List {
         });
     }
 
-    function setViewProps(isAwake as Boolean) as Void {
-        self._isAwake = isAwake;
+    function setAodMode(isAod as Boolean) as Void {
+        self.isAod = isAod;
         self.setVisibility();
     }
 
     function setVisibility() as Void {
-        self.setVisible(self._isAwake);
+        self.setVisible(!self.isAod);
     }
 }

@@ -7,7 +7,6 @@ import Toybox.Time.Gregorian;
 import Components;
 
 class PMView extends Components.Box {
-    var _isAwake as Boolean = AwakeObserver.isAwake;
     function initialize(params as Components.BoxProps) {
         Components.Box.initialize(params);
     }
@@ -22,17 +21,12 @@ class PMView extends Components.Box {
         if (GlobalKeys.IS_24_HOUR) {
             return;
         }
-        if (!self._isAwake) {
+        if (self.isAod) {
             drawContext.setColor(self.aodColor, Graphics.COLOR_TRANSPARENT);
         } else {
             drawContext.setColor(self.foregroundColor, Graphics.COLOR_TRANSPARENT);
         }
 
         drawContext.drawText(self.getPosX(), self.getPosY(), self.getFont(), self.getPM(), Graphics.TEXT_JUSTIFY_LEFT);
-    }
-
-    function setViewProps(isAwake as Boolean) as Void {
-        self._isAwake = isAwake;
-        // self.setVisibility();
     }
 }

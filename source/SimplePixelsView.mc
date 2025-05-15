@@ -22,6 +22,15 @@ class SimplePixelsView extends WatchUi.WatchFace {
         OWBackgroundController.setup();
     }
 
+    function _onAODChanged(
+        value as ObserverModule.InstanceGetter,
+        prevValue as ObserverModule.InstanceGetter
+    ) as Void {
+        if (GlobalKeys.IS_AMOLED) {
+            aodMode(value as Boolean);
+        }
+    }
+
     function _onAwakeChanged(
         value as ObserverModule.InstanceGetter,
         prevValue as ObserverModule.InstanceGetter
@@ -33,31 +42,14 @@ class SimplePixelsView extends WatchUi.WatchFace {
     }
 
     function aodMode(isAod as Boolean) {
-        var secondsView = self.findDrawableById(ViewsKeys.SECONDS) as SecondsView;
-        var topSensorView = self.findDrawableById(ViewsKeys.TOP_SENSORS) as RightSensorsView;
-        var bottomSensorView = self.findDrawableById(ViewsKeys.BOTTOM_SENSORS) as RightSensorsView;
-        var prevHoursView = self.findDrawableById(ViewsKeys.PREV_HOURS) as PhantomTimeView;
-        var nextHoursView = self.findDrawableById(ViewsKeys.NEXT_HOURS) as PhantomTimeView;
-        var leftSensorsView = self.findDrawableById(ViewsKeys.LEFT_SENSORS) as LeftSensorsView;
-        var infoBarView = self.findDrawableById(ViewsKeys.INFO_BAR) as InfoBarView;
-        var dateView = self.findDrawableById(ViewsKeys.DATE) as DateView;
-        var hoursView = self.findDrawableById(ViewsKeys.HOURS) as Components.TimeView;
-        var minutesView = self.findDrawableById(ViewsKeys.MINUTES) as Components.TimeView;
-        var pmView = self.findDrawableById(ViewsKeys.PM) as PMView;
-        var backgroundView = self.findDrawableById(ViewsKeys.BACKGROUND) as BackgroundView;
+        var viewValues = ViewsKeys.VALUES;
 
-        secondsView.setViewProps(!isAod);
-        topSensorView.setViewProps(!isAod);
-        bottomSensorView.setViewProps(!isAod);
-        prevHoursView.setViewProps(!isAod);
-        nextHoursView.setViewProps(!isAod);
-        leftSensorsView.setViewProps(!isAod);
-        infoBarView.setViewProps(!isAod);
-        dateView.setViewProps(!isAod);
-        hoursView.setViewProps(!isAod);
-        minutesView.setViewProps(!isAod);
-        pmView.setViewProps(!isAod);
-        backgroundView.setViewProps(!isAod);
+        for (var i = 0; i < viewValues.size(); i++) {
+            var id = viewValues[i] as String;
+            var view = self.findDrawableById(id);
+
+            (view as Components.BaseDrawable).setAodMode(isAod);
+        }
         WatchUi.requestUpdate();
     }
 
@@ -65,7 +57,8 @@ class SimplePixelsView extends WatchUi.WatchFace {
         Services.ObserverStore().setup(
             [
                 new AwakeObserver(self.method(:_onAwakeChanged), true),
-                new ConnectionObserverObserver(self.method(:_onConnectionChanged))
+                new ConnectionObserverObserver(self.method(:_onConnectionChanged)),
+                new AODObserver(self.method(:_onAODChanged))
             ] as Array<ValueObserver>
         );
 
@@ -118,9 +111,6 @@ class SimplePixelsView extends WatchUi.WatchFace {
     function onEnterSleep() as Void {
         AwakeObserver.isAwake = false;
         Services.ObserverStore().runScope(ObserverModule.ON_ENTER_SLEEP);
-        if (GlobalKeys.IS_AMOLED) {
-            aodMode(true);
-        }
 
         WatchFace.onEnterSleep();
     }
@@ -128,9 +118,6 @@ class SimplePixelsView extends WatchUi.WatchFace {
     function onExitSleep() as Void {
         AwakeObserver.isAwake = true;
         Services.ObserverStore().runScope(ObserverModule.ON_EXIT_SLEEP);
-        if (GlobalKeys.IS_AMOLED) {
-            aodMode(false);
-        }
 
         WatchFace.onExitSleep();
     }
