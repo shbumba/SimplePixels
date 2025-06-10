@@ -1,0 +1,15 @@
+info face="BlackoutMedium" size=108 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=0,0,0,2 spacing=0,0
+common lineHeight=114 base=100 scaleW=199 scaleH=187 pages=1 packed=0
+page id=0 file="blackout-medium_0.png"
+chars count=11
+char id=32 x=0 y=0 width=0 height=0 xoffset=0 yoffset=0 xadvance=22 page=0 chnl=15
+char id=48 x=160 y=94 width=39 height=93 xoffset=-1 yoffset=0 xadvance=44 page=0 chnl=15
+char id=49 x=0 y=0 width=39 height=93 xoffset=-1 yoffset=0 xadvance=44 page=0 chnl=15
+char id=50 x=40 y=0 width=39 height=93 xoffset=-1 yoffset=0 xadvance=44 page=0 chnl=15
+char id=51 x=80 y=0 width=39 height=93 xoffset=-1 yoffset=0 xadvance=44 page=0 chnl=15
+char id=52 x=120 y=0 width=39 height=93 xoffset=-1 yoffset=0 xadvance=44 page=0 chnl=15
+char id=53 x=160 y=0 width=39 height=93 xoffset=-1 yoffset=0 xadvance=44 page=0 chnl=15
+char id=54 x=0 y=94 width=39 height=93 xoffset=-1 yoffset=0 xadvance=44 page=0 chnl=15
+char id=55 x=40 y=94 width=39 height=93 xoffset=-1 yoffset=0 xadvance=44 page=0 chnl=15
+char id=56 x=80 y=94 width=39 height=93 xoffset=-1 yoffset=0 xadvance=44 page=0 chnl=15
+char id=57 x=120 y=94 width=39 height=93 xoffset=-1 yoffset=0 xadvance=44 page=0 chnl=15

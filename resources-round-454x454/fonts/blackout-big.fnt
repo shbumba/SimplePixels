@@ -1,0 +1,15 @@
+info face="BlackoutBig" size=199 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=0,0,0,3 spacing=0,0
+common lineHeight=170 base=170 scaleW=349 scaleH=339 pages=1 packed=0
+page id=0 file="blackout-big_0.png"
+chars count=11
+char id=32 x=0 y=0 width=0 height=0 xoffset=0 yoffset=0 xadvance=40 page=0 chnl=15
+char id=48 x=280 y=170 width=69 height=169 xoffset=-1 yoffset=1 xadvance=80 page=0 chnl=15
+char id=49 x=0 y=0 width=69 height=169 xoffset=-1 yoffset=1 xadvance=80 page=0 chnl=15
+char id=50 x=70 y=0 width=69 height=169 xoffset=-1 yoffset=1 xadvance=80 page=0 chnl=15
+char id=51 x=140 y=0 width=69 height=169 xoffset=-1 yoffset=1 xadvance=80 page=0 chnl=15
+char id=52 x=210 y=0 width=69 height=169 xoffset=-1 yoffset=1 xadvance=80 page=0 chnl=15
+char id=53 x=280 y=0 width=69 height=169 xoffset=-1 yoffset=1 xadvance=80 page=0 chnl=15
+char id=54 x=0 y=170 width=69 height=169 xoffset=-1 yoffset=1 xadvance=80 page=0 chnl=15
+char id=55 x=70 y=170 width=69 height=169 xoffset=-1 yoffset=1 xadvance=80 page=0 chnl=15
+char id=56 x=140 y=170 width=69 height=169 xoffset=-1 yoffset=1 xadvance=80 page=0 chnl=15
+char id=57 x=210 y=170 width=69 height=169 xoffset=-1 yoffset=1 xadvance=80 page=0 chnl=15
