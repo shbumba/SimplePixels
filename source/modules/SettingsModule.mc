@@ -21,7 +21,7 @@ module SettingsModule {
             LEFT_SENSOR = "LeftSensor",
             SHOW_STATUS_ICONS = "DisplayStatusIcons", // to migrate
             DISPLAY_SECONDS = "DisplaySeconds",
-            SECOND_TIME_FORMAT = "SecondTimeFormat",
+            SECOND_TIME_FORMAT = "SecondTimeFormat2",
             OW_API_KEY = "OpenWeatherAPIKey",
             OW_INTERVAL = "OpenWeatherIntervalMinutes",
             OW_ENABLED = "OpenWeatherEnabled",

@@ -86,6 +86,6 @@
     <string id="OpenWeatherLatTitle">OpenWeather: Latitude (optional)</string>
     <string id="OpenWeatherLonTitle">OpenWeather: Longitude (optional)</string>
     <string id="DateFormatTitle">Date Format</string>
-    <string id="SecondTimeFormatTitle">Second Time Format (e.g. -4:30 have to be written as -4.5)</string>
+    <string id="SecondTimeFormatTitle">Second Time Timezone</string>
     <string id="DotHourTransparencyTitle">Pattern transparency</string>
 </strings>
