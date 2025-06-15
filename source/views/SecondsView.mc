@@ -7,7 +7,7 @@ import SettingsModule.DisplaySecondsType;
 import Components;
 
 class SecondsView extends Components.Box {
-    var _displaySecondsType as DisplaySecondsType.Enum = DisplaySecondsType.NEVER;
+    var _displaySecondsType as DisplaySecondsTypeEnum = DisplaySecondsType.NEVER;
     var _isAwake as Boolean = AwakeObserver.isAwake;
 
     function initialize(params as Components.BoxProps) {
@@ -30,7 +30,7 @@ class SecondsView extends Components.Box {
 
     private function updateSettings() as Void {
         self._displaySecondsType =
-            SettingsModule.getValue(SettingsModule.SettingType.DISPLAY_SECONDS) as DisplaySecondsType.Enum;
+            SettingsModule.getValue(SettingsModule.SettingType.DISPLAY_SECONDS) as DisplaySecondsTypeEnum;
     }
 
     function setViewProps(isAwake as Boolean) as Void {

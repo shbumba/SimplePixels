@@ -22,8 +22,8 @@ module SensorsGetters {
         Boolean or
         Time.Moment or
         Position.Info or
-        Array<Number> or
-        Array<Object> or
+        Array<Number?> or
+        Array<Object?> or
         Null;
     typedef WeatherData as {
         "time" as Numeric?,
@@ -77,9 +77,9 @@ module SensorsGetters {
             SensorTypes.FLOORS_CLIMBED_GOAL => :getFloorsClimbedGoal,
             SensorTypes.BATTERY_GOAL => :getBatteryGoal,
             SensorTypes.ACTIVE_MINUTES_WEEK_GOAL => :getActiveMinutesWeekGoal
-        }) as Dictionary<SensorTypes.Enum, Symbol>;
+        }) as Dictionary<SensorTypesEnum, Symbol>;
 
-    function getValue(sensorType as SensorTypes.Enum) as SensorInfoGetterValue {
+    function getValue(sensorType as SensorTypesEnum) as SensorInfoGetterValue {
         var sensorFn = Map.get(sensorType);
 
         if (sensorFn == null) {
@@ -88,7 +88,7 @@ module SensorsGetters {
 
         var method = new Lang.Method(Getters, sensorFn);
 
-        return method.invoke() as SensorInfoGetterValue;
+        return method.invoke();
     }
 
     module Getters {
@@ -467,30 +467,30 @@ module SensorsGetters {
                 //The current time is past sunrise time,switch to sunset time
                 if (currentTimestamp > today_sunRiseTimestamp && currentTimestamp < today_sunSetTimestamp) {
                     return [1, Gregorian.info(today_sunSet, Time.FORMAT_SHORT)];
-                //The current time is past sunset time,switch to the next day's sunrise time
+                    //The current time is past sunset time,switch to the next day's sunrise time
                 } else if (currentTimestamp > today_sunSetTimestamp) {
                     var oneDay = new Time.Duration(Gregorian.SECONDS_PER_DAY);
                     var today = new Time.Moment(Time.today().value());
                     var tomorrowSunrise = _getSunPhaseTime(:getSunrise, today.add(oneDay));
 
                     return [0, Gregorian.info(tomorrowSunrise, Time.FORMAT_SHORT)];
-                //The current time is less than the sunrise time(eg. current time is 1:00 am, ↑7:00 ↓16:00)
+                    //The current time is less than the sunrise time(eg. current time is 1:00 am, ↑7:00 ↓16:00)
                 } else {
                     return [0, Gregorian.info(today_sunRise, Time.FORMAT_SHORT)];
                 }
-            //Sunset time is less than Sunrise time(eg. ↑16:00 ↓7:00)
+                //Sunset time is less than Sunrise time(eg. ↑16:00 ↓7:00)
             } else if (today_sunRiseTimestamp > today_sunSetTimestamp) {
                 //The current time is past sunset time,switch to sunrise time
                 if (currentTimestamp > today_sunSetTimestamp && currentTimestamp < today_sunRiseTimestamp) {
                     return [0, Gregorian.info(today_sunRise, Time.FORMAT_SHORT)];
-                //The current time is past sunrise time,switch to the next day's sunset time
+                    //The current time is past sunrise time,switch to the next day's sunset time
                 } else if (currentTimestamp > today_sunRiseTimestamp) {
                     var oneDay = new Time.Duration(Gregorian.SECONDS_PER_DAY);
                     var today = new Time.Moment(Time.today().value());
                     var tomorrowSunset = _getSunPhaseTime(:getSunset, today.add(oneDay));
 
                     return [1, Gregorian.info(tomorrowSunset, Time.FORMAT_SHORT)];
-                //The current time is less than the sunset time(eg. current time is 1:00 am, ↑16:00 ↓7:00)
+                    //The current time is less than the sunset time(eg. current time is 1:00 am, ↑16:00 ↓7:00)
                 } else {
                     return [1, Gregorian.info(today_sunSet, Time.FORMAT_SHORT)];
                 }

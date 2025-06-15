@@ -4,7 +4,7 @@ import Toybox.Time.Gregorian;
 
 module FormatDate {
     module DisplayDateFormatType {
-        enum Enum {
+        enum DisplayDateFormatTypeEnum {
             DDMM = 0,
             MMDD = 1
         }
@@ -35,7 +35,10 @@ module FormatDate {
         };
     }
 
-    function formatDateByType(time as Time.Moment, type as DisplayDateFormatType.Enum) as Array<String> {
+    function formatDateByType(
+        time as Time.Moment,
+        type as DisplayDateFormatType.DisplayDateFormatTypeEnum
+    ) as Array<String> {
         var formattedDate = formatDate(time, Time.FORMAT_SHORT);
 
         switch (type) {

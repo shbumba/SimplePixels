@@ -13,7 +13,7 @@
             <param name="font">@Rez.Fonts.hours</param>
             <param name="timeShift">-1</param>
             <param name="type">Components.TimeViewType.HOURS</param>
-            <param name="textAligment">Graphics.TEXT_JUSTIFY_RIGHT</param>
+            <param name="textAlignment">Graphics.TEXT_JUSTIFY_RIGHT</param>
         </drawable>
         <drawable id="Date" class="DateView">
             <param name="boxWidth">"80"</param>
@@ -37,7 +37,7 @@
             <param name="font">@Rez.Fonts.hours</param>
             <param name="aodFont">@Rez.Fonts.hours_aod</param>
             <param name="type">Components.TimeViewType.HOURS</param>
-            <param name="textAligment">Graphics.TEXT_JUSTIFY_RIGHT</param>
+            <param name="textAlignment">Graphics.TEXT_JUSTIFY_RIGHT</param>
         </drawable>
         <drawable id="NextHours" class="PhantomTimeView">
             <param name="boxWidth">"116"</param>
@@ -51,7 +51,7 @@
             <param name="font">@Rez.Fonts.hours</param>
             <param name="timeShift">1</param>
             <param name="type">Components.TimeViewType.HOURS</param>
-            <param name="textAligment">Graphics.TEXT_JUSTIFY_RIGHT</param>
+            <param name="textAlignment">Graphics.TEXT_JUSTIFY_RIGHT</param>
         </drawable>
         <drawable id="LeftSensors" class="LeftSensorsView">
             <param name="boxWidth">"110"</param>

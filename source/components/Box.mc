@@ -14,8 +14,8 @@ module Components {
         :yPos as String?,
         :xShift as String?,
         :yShift as String?,
-        :horizontalAlignment as PositionUtils.AlignmentEnum?,
-        :verticalAlignment as PositionUtils.AlignmentEnum?,
+        :horizontalAlignment as AlignmentEnum?,
+        :verticalAlignment as AlignmentEnum?,
         :font as ResourceId?,
         :debug as Boolean?
     };

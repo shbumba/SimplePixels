@@ -37,7 +37,7 @@ module SensorsIcons {
             SensorTypes.IS_SLEEP_TIME => :isNightModeIcon,
             SensorTypes.SECOND_TIME => Rez.Fonts.alarm_icon,
             SensorTypes.MEMORY_USED => Rez.Fonts.memory_icon
-        }) as Dictionary<SensorTypes.Enum, Symbol or ResourceId>;
+        }) as Dictionary<SensorTypesEnum, Symbol or ResourceId>;
 
     var WeatherIconsMap =
         ({
@@ -114,7 +114,7 @@ module SensorsIcons {
             310 => Rez.Fonts.rain_icon, //light intensity drizzle rain
             311 => Rez.Fonts.rain_icon, //drizzle rain
             312 => Rez.Fonts.rain_icon, //heavy intensity drizzle rain
-            313 => Rez.Fonts.rain_icon, //Cleanshower rain and drizzle
+            313 => Rez.Fonts.rain_icon, //Clean shower rain and drizzle
             314 => Rez.Fonts.rain_icon, //heavy shower rain and drizzle
             321 => Rez.Fonts.rain_icon, //shower drizzle
             500 => Rez.Fonts.rain_icon, //light rain
@@ -155,7 +155,7 @@ module SensorsIcons {
             804 => Rez.Fonts.clouds_icon //overcast clouds: 85-100%
         }) as Dictionary<Number, Symbol or ResourceId>;
 
-    function getIcon(sensorType as SensorTypes.Enum, value as SensorInfoGetterValue) as ResourceId? {
+    function getIcon(sensorType as SensorTypesEnum, value as SensorInfoGetterValue) as ResourceId? {
         var iconFn = Map.get(sensorType);
 
         if (iconFn instanceof Lang.ResourceId || iconFn == null) {
@@ -195,20 +195,18 @@ module SensorsIcons {
         }
 
         function weatherIcon(value as SensorInfoGetterValue) as ResourceId? {
-            if (value == null || value == true) {
+            if (value == null || value == true || !(value instanceof Array)) {
                 return Rez.Fonts.weather_icon;
-            } else {
-                return value[1] == null ? Rez.Fonts.weather_icon : WeatherIconsMap.get(value[1]);
             }
+            
+            return value[1] == null ? Rez.Fonts.weather_icon : WeatherIconsMap.get(value[1]);
         }
         function sunRiseOrSetIcon(value as SensorInfoGetterValue) as ResourceId? {
-            if (value == null || value == true || value[0] == null) {
+            if (value == null || value == true || !(value instanceof Array) || value[0] == null) {
                 return Rez.Fonts.sunrise_or_set_icon;
-            } else {
-                return value[0] == 0
-                    ? Rez.Fonts.sunrise_icon
-                    : Rez.Fonts.sunset_icon;
             }
+            
+            return value[0] == 0 ? Rez.Fonts.sunrise_icon : Rez.Fonts.sunset_icon;
         }
     }
 }

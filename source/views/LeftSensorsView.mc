@@ -8,17 +8,17 @@ import SensorTypes;
 import Components;
 
 class LeftSensorsView extends Components.List {
-    private var _sensorType as SensorTypes.Enum = SensorTypes.NONE;
+    private var _sensorType as SensorTypesEnum = SensorTypes.NONE;
     private var _areIconsVisible as Boolean = false;
-    private var sleepSensors as Array<SensorTypes.Enum> =
-        [SensorTypes.IS_NIGHT_MODE_ENABLED, SensorTypes.IS_SLEEP_TIME] as Array<SensorTypes.Enum>;
-    private var iconSensors as Array<SensorTypes.Enum> =
+    private var sleepSensors as Array<SensorTypesEnum> =
+        [SensorTypes.IS_NIGHT_MODE_ENABLED, SensorTypes.IS_SLEEP_TIME] as Array<SensorTypesEnum>;
+    private var iconSensors as Array<SensorTypesEnum> =
         [
             SensorTypes.IS_CONNECTED,
             SensorTypes.IS_DO_NOT_DISTURB,
             SensorTypes.IS_SLEEP_TIME,
             SensorTypes.IS_NIGHT_MODE_ENABLED
-        ] as Array<SensorTypes.Enum>;
+        ] as Array<SensorTypesEnum>;
 
     function initialize(params as Components.ListProps) {
         List.initialize(params);
@@ -27,7 +27,7 @@ class LeftSensorsView extends Components.List {
     }
 
     private function updateSensorType() as Void {
-        self._sensorType = SettingsModule.getValue(SettingType.LEFT_SENSOR) as SensorTypes.Enum;
+        self._sensorType = SettingsModule.getValue(SettingType.LEFT_SENSOR) as SensorTypesEnum;
     }
 
     private function updateDisplayIcons() as Void {
@@ -41,7 +41,7 @@ class LeftSensorsView extends Components.List {
         self.updateDisplayIcons();
     }
 
-    private function getSensorItem(sensorType as SensorTypes.Enum) as Components.ItemType {
+    private function getSensorItem(sensorType as SensorTypesEnum) as Components.ItemType {
         var sensorService = Services.SensorInfo();
 
         var icon = sensorService.getIcon(sensorType);
@@ -100,7 +100,7 @@ class LeftSensorsView extends Components.List {
 
         self.renderItems({
             :items => items,
-            :direction => Components.ListItemsDerection.RIGHT,
+            :direction => Components.ListItemsDirection.RIGHT,
             :drawContext => drawContext
         });
     }

@@ -5,7 +5,13 @@ import Toybox.Weather;
 import Toybox.Position;
 
 (:background)
-function isValidCoordinates(coords as [Lang.Double or Lang.Float, Lang.Double or Lang.Float]) as Boolean {
+function isValidCoordinates(
+    coords as
+        [
+            Lang.Double or Lang.Float or Lang.UnexpectedTypeException,
+            Lang.Double or Lang.Float or Lang.UnexpectedTypeException
+        ]
+) as Boolean {
     if (coords.size() != 2) {
         return false;
     }
@@ -13,7 +19,10 @@ function isValidCoordinates(coords as [Lang.Double or Lang.Float, Lang.Double or
     var latitude = coords[0];
     var longitude = coords[1];
 
-    if (!(latitude instanceof Lang.Double || latitude instanceof Lang.Float) || !(longitude instanceof Lang.Double || longitude instanceof Lang.Float)) {
+    if (
+        !(latitude instanceof Lang.Double || latitude instanceof Lang.Float) ||
+        !(longitude instanceof Lang.Double || longitude instanceof Lang.Float)
+    ) {
         return false;
     }
 

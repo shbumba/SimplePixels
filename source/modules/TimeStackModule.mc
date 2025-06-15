@@ -6,7 +6,7 @@ import SettingsModule;
 import SettingsModule.SettingType;
 
 module TimeStackModule {
-    enum Enum {
+    enum TimeStackModuleEnum {
         MAIN = 1,
         OFFSET
     }
@@ -20,7 +20,7 @@ module TimeStackModule {
         ({
             MAIN => :_getMainTime,
             OFFSET => :_getOffsetTime
-        }) as Dictionary<Enum, Symbol>;
+        }) as Dictionary<TimeStackModuleEnum, Symbol>;
 
     function _getMainTime() {
         return Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
@@ -43,7 +43,7 @@ module TimeStackModule {
         return get(OFFSET);
     }
 
-    function get(timeType as TimeStackModule.Enum) as Gregorian.Info {
+    function get(timeType as TimeStackModuleEnum) as Gregorian.Info {
         var timeFn = Map.get(timeType);
 
         var method = new Lang.Method(self, timeFn);

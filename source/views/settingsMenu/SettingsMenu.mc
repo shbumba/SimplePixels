@@ -3,8 +3,13 @@ import Toybox.WatchUi;
 import SettingsModule.SettingType;
 import SettingsMenuHelper;
 import SensorsTexts;
+import SensorTypes;
 
-function RenderSettingsMenu(onBack, transition as WatchUi.SlideType, selectedSetting as SettingType.Enum?) as Void {
+function RenderSettingsMenu(
+    onBack,
+    transition as WatchUi.SlideType,
+    selectedSetting as SettingTypeEnum?
+) as Void {
     var menu = SettingsMenu();
 
     if (selectedSetting != null) {
@@ -14,8 +19,8 @@ function RenderSettingsMenu(onBack, transition as WatchUi.SlideType, selectedSet
     WatchUi.switchToView(menu, new SettingsMenuBehavior(onBack as Method), transition);
 }
 
-function _getSubLabelValue(type as SettingType.Enum) as ResourceId {
-    return SensorsTexts.getText(SettingsModule.getValue(type) as SensorTypes.Enum);
+function _getSubLabelValue(type as SettingTypeEnum) as ResourceId {
+    return SensorsTexts.getText(SettingsModule.getValue(type) as SensorTypesEnum);
 }
 
 function SettingsMenu() as WatchUi.Menu2 or WatchUi.CustomMenu {

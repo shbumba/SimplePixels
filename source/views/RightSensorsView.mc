@@ -9,28 +9,28 @@ import Components;
 
 typedef SensorsInfoProps as Components.ListProps or
     {
-    :fields as Array<SettingType.Enum>?
+    :fields as Array<SettingTypeEnum>?
 };
 
 class RightSensorsView extends Components.List {
-    var _sensors as Array<SensorTypes.Enum> = [] as Array<SensorTypes.Enum>;
-    var _fields as Array<SettingType.Enum> = [] as Array<SettingType.Enum>;
+    var _sensors as Array<SensorTypesEnum> = [] as Array<SensorTypesEnum>;
+    var _fields as Array<SettingTypeEnum> = [] as Array<SettingTypeEnum>;
 
     function initialize(params as SensorsInfoProps) {
-        var fields = params.get(:fields);
-        self._fields = fields != null ? fields : [];
+        var fields = params.get(:fields) as Array<SettingTypeEnum>?;
+        self._fields = fields != null ? fields : [] as Array<SettingTypeEnum>;
         self._updateSensors();
 
         List.initialize(params);
     }
 
     function _updateSensors() as Void {
-        self._sensors = [] as Array<SensorTypes.Enum>;
+        self._sensors = [] as Array<SensorTypesEnum>;
 
         for (var i = 0; i < self._fields.size(); i++) {
             var fieldType = self._fields[i];
 
-            self._sensors.add(SettingsModule.getValue(fieldType) as SensorTypes.Enum);
+            self._sensors.add(SettingsModule.getValue(fieldType) as SensorTypesEnum);
         }
     }
 
@@ -39,7 +39,7 @@ class RightSensorsView extends Components.List {
         self._updateSensors();
     }
 
-    private function getSensorItem(sensorType as SensorTypes.Enum) as Components.ItemType {
+    private function getSensorItem(sensorType as SensorTypesEnum) as Components.ItemType {
         var sensorService = Services.SensorInfo();
 
         var icon = sensorService.getIcon(sensorType);
@@ -58,7 +58,7 @@ class RightSensorsView extends Components.List {
         var items = [] as Array<Components.ItemType>;
 
         for (var i = 0; i < self._sensors.size(); i++) {
-            var sensorType = self._sensors[i] as SensorTypes.Enum;
+            var sensorType = self._sensors[i] as SensorTypesEnum;
 
             if (sensorType == SensorTypes.NONE) {
                 items.add({
@@ -74,7 +74,7 @@ class RightSensorsView extends Components.List {
 
         self.renderItems({
             :items => items,
-            :direction => Components.ListItemsDerection.LEFT,
+            :direction => Components.ListItemsDirection.LEFT,
             :drawContext => drawContext
         });
     }

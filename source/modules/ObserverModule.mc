@@ -50,7 +50,7 @@ module ObserverModule {
 
         function setup(observers as Array<ValueObserver>) as Void {
             self._observers = observers;
-            var onValueInitQueue = [] as Array;
+            var onValueInitQueue = [] as Array<[ValueObserver, InstanceGetter]>;
 
             for (var i = 0; i < observers.size(); i++) {
                 var instance = observers[i] as ValueObserver;
@@ -92,7 +92,7 @@ module ObserverModule {
         }
 
         function runScope(scope as Scope) as Void {
-            var onUpdateQueue = [] as Array;
+            var onUpdateQueue = [] as Array<[ValueObserver, InstanceGetter, InstanceGetter]>;
 
             for (var i = 0; i < self._observers.size(); i++) {
                 var instance = self._observers[i];

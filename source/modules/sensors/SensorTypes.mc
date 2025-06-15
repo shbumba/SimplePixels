@@ -1,5 +1,5 @@
 module SensorTypes {
-    enum Enum {
+    enum SensorTypesEnum {
         NONE = 0,
         BATTERY = 1,
         BATTERY_IN_DAYS = 2,

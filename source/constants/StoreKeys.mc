@@ -1,7 +1,7 @@
 import Toybox.Lang;
 
 module StoreKeys {
-    enum Enum {
-        OW_DATA = "OpenWeatherData",
+    enum StoreKeysEnum {
+        OW_DATA = "OpenWeatherData"
     }
 }

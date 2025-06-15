@@ -2,6 +2,7 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
 import ColorsModule;
+import ColorsModule.ColorsTypes;
 import Services;
 import SettingsModule;
 import SettingsModule.SettingType;
@@ -47,7 +48,7 @@ class SettingsMenuBehavior extends WatchUi.Menu2InputDelegate {
     }
 
     function _addColorItems(menu as WatchUi.CustomMenu or WatchUi.Menu2) as Void {
-        var keys = ColorsModule.ColorsMap.keys() as Array<ColorsTypes.Enum>;
+        var keys = ColorsModule.ColorsMap.keys() as Array<ColorsTypesEnum>;
 
         for (var i = 0; i < keys.size(); i++) {
             var colorKey = keys[i];
@@ -64,10 +65,11 @@ class SettingsMenuBehavior extends WatchUi.Menu2InputDelegate {
 
     function _addSensorItems(
         menu as WatchUi.CustomMenu or WatchUi.Menu2,
-        availableFields as Array<SensorTypes.Enum>?
+        availableFields as Array<SensorTypesEnum>?
     ) as Void {
         var sensorInfoService = Services.SensorInfo();
-        var fields = availableFields != null ? availableFields : SensorsTexts.Map.keys() as Array<SensorTypes.Enum>;
+        var fields =
+            availableFields != null ? availableFields : SensorsTexts.Map.keys() as Array<SensorTypesEnum>;
 
         for (var i = 0; i < fields.size(); i++) {
             var sensorKey = fields[i];
@@ -105,59 +107,62 @@ class SettingsMenuBehavior extends WatchUi.Menu2InputDelegate {
     function colorHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
 
-        self.openMenu(item.getId() as SettingType.Enum, menu);
+        self.openMenu(item.getId() as SettingTypeEnum, menu);
         self._addColorItems(menu);
-        self.setFocusOnItem(item.getId() as SettingType.Enum, menu);
+        self.setFocusOnItem(item.getId() as SettingTypeEnum, menu);
     }
 
     function sensorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
 
-        self.openMenu(item.getId() as SettingType.Enum, menu);
+        self.openMenu(item.getId() as SettingTypeEnum, menu);
         self._addSensorItems(menu, null);
-        self.setFocusOnItem(item.getId() as SettingType.Enum, menu);
+        self.setFocusOnItem(item.getId() as SettingTypeEnum, menu);
     }
 
     function separatorFieldHandler(item as WatchUi.MenuItem or WatchUi.CustomMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
 
-        self.openMenu(item.getId() as SettingType.Enum, menu);
+        self.openMenu(item.getId() as SettingTypeEnum, menu);
         self._addSensorItems(menu, [
             SensorTypes.BATTERY,
             SensorTypes.ACTIVE_MINUTES_WEEK,
             SensorTypes.FLOORS,
             SensorTypes.STEPS
         ]);
-        self.setFocusOnItem(item.getId() as SettingType.Enum, menu);
+        self.setFocusOnItem(item.getId() as SettingTypeEnum, menu);
     }
 
     function displaySecondsHandler(item as WatchUi.ToggleMenuItem) as Void {
         var menu = self._createCustomMenu(item.getLabel());
 
-        self.openMenu(item.getId() as SettingType.Enum, menu);
+        self.openMenu(item.getId() as SettingTypeEnum, menu);
         self._addMapItems(menu, {
             DisplaySecondsType.NEVER => Rez.Strings.Never,
             DisplaySecondsType.ON_GESTURE => Rez.Strings.OnGesture
         });
-        self.setFocusOnItem(item.getId() as SettingType.Enum, menu);
+        self.setFocusOnItem(item.getId() as SettingTypeEnum, menu);
     }
 
     function toggleFieldHandler(item as WatchUi.ToggleMenuItem) as Void {
-        SettingsModule.setValue(item.getId() as SettingType.Enum, item.isEnabled());
+        SettingsModule.setValue(item.getId() as SettingTypeEnum, item.isEnabled());
     }
 
-    function setFocusOnItem(settingKey as SettingType.Enum, menu as WatchUi.Menu2 or WatchUi.CustomMenu) as Void {
+    function setFocusOnItem(
+        settingKey as SettingTypeEnum,
+        menu as WatchUi.Menu2 or WatchUi.CustomMenu
+    ) as Void {
         SettingsMenuHelper.setFocusOnMenuItem(menu, settingKey);
     }
 
-    function openMenu(settingKey as SettingType.Enum, menu as WatchUi.Menu2 or WatchUi.CustomMenu) as Void {
+    function openMenu(settingKey as SettingTypeEnum, menu as WatchUi.Menu2 or WatchUi.CustomMenu) as Void {
         WatchUi.switchToView(menu, new CustomMenuDelegate(settingKey, self._onBackCallback), WatchUi.SLIDE_IMMEDIATE);
     }
 
     function onSelect(item as WatchUi.MenuItem) as Void {
         ResourcesCache.clear();
 
-        var handler = self._subMenuHandlers.get(item.getId() as SettingType.Enum);
+        var handler = self._subMenuHandlers.get(item.getId() as SettingTypeEnum);
 
         if (handler == null) {
             throw new Toybox.Lang.InvalidValueException("Handler is not registered");
@@ -175,10 +180,10 @@ class SettingsMenuBehavior extends WatchUi.Menu2InputDelegate {
 }
 
 class CustomMenuDelegate extends WatchUi.Menu2InputDelegate {
-    var _settingKey as SettingType.Enum;
+    var _settingKey as SettingTypeEnum;
     var _onBackCallback as Method;
 
-    function initialize(settingKey as SettingType.Enum, onBackCallback as Lang.Method) {
+    function initialize(settingKey as SettingTypeEnum, onBackCallback as Lang.Method) {
         Menu2InputDelegate.initialize();
         ResourcesCache.clear();
 
@@ -187,7 +192,7 @@ class CustomMenuDelegate extends WatchUi.Menu2InputDelegate {
     }
 
     function onSelect(item) as Void {
-        SettingsModule.setValue(self._settingKey, item.getId() as SettingType.Enum);
+        SettingsModule.setValue(self._settingKey, item.getId() as SettingTypeEnum);
         self.onBack();
     }
 

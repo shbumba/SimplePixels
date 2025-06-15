@@ -7,7 +7,7 @@ import GlobalKeys;
 
 module Components {
     module TimeViewType {
-        enum Enum {
+        enum TimeViewTypeEnum {
             HOURS = 1,
             MINUTES = 2
         }
@@ -15,13 +15,13 @@ module Components {
 
     typedef TimeViewProps as BoxProps or
         {
-        :type as TimeViewType.Enum?,
-        :textAligment as Graphics.TextJustification?
+        :type as TimeViewType.TimeViewTypeEnum?,
+        :textAlignment as Graphics.TextJustification?
     };
 
     class TimeView extends Box {
-        protected var _timeType as TimeViewType.Enum;
-        protected var _textAligment as Graphics.TextJustification;
+        protected var _timeType as TimeViewType.TimeViewTypeEnum;
+        protected var _textAlignment as Graphics.TextJustification;
         private var _aodFont as ResourceId?;
 
         private var textPosY as Numeric? = null;
@@ -33,8 +33,8 @@ module Components {
             var timeType = params.get(:type);
             self._timeType = timeType != null ? timeType : TimeViewType.HOURS;
 
-            var textAligment = params.get(:textAligment);
-            self._textAligment = textAligment != null ? textAligment : Graphics.TEXT_JUSTIFY_LEFT;
+            var textAlignment = params.get(:textAlignment);
+            self._textAlignment = textAlignment != null ? textAlignment : Graphics.TEXT_JUSTIFY_LEFT;
 
             var aodFont = params.get(:aodFont);
             self._aodFont = aodFont != null ? aodFont : null;
@@ -81,7 +81,7 @@ module Components {
             var width = self.getWidth();
             var height = self.getHeight();
 
-            switch (self._textAligment) {
+            switch (self._textAlignment) {
                 case Graphics.TEXT_JUSTIFY_RIGHT:
                     posX += width;
                     break;
@@ -107,7 +107,7 @@ module Components {
                 self.textPosY,
                 self.getTimeFont(),
                 time.format("%02d"),
-                self._textAligment
+                self._textAlignment
             );
         }
 

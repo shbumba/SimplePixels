@@ -6,7 +6,7 @@ module SettingsModule {
     (:background)
     module SettingType {
         (:background)
-        enum Enum {
+        enum SettingTypeEnum {
             BACKGROUND_COLOR = "BackgroundColor",
             FOREGROUND_COLOR = "ForegroundColor",
             INFO_COLOR = "InfoColor",
@@ -33,20 +33,20 @@ module SettingsModule {
     }
 
     module DisplaySecondsType {
-        enum Enum {
+        enum DisplaySecondsTypeEnum {
             NEVER = 0,
             ON_GESTURE = 1
         }
     }
 
-    function setValue(settingKey as SettingType.Enum, value as String or Boolean or Number) as Void {
+    function setValue(settingKey as SettingType.SettingTypeEnum, value as String or Boolean or Number) as Void {
         Properties.setValue(settingKey as String, value);
     }
 
     (:background)
-    function getValue(settingKey as SettingType.Enum) as String or Number or Boolean or Dictionary or Null {
+    function getValue(settingKey as SettingType.SettingTypeEnum) as String or Number or Boolean or Dictionary or Null {
         try {
-            return Properties.getValue(settingKey as String);
+            return Properties.getValue(settingKey as String) as String or Number or Boolean or Dictionary or Null;
         } catch (e) {
             return null;
         }

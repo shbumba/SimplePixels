@@ -5,11 +5,12 @@ import Services;
 import SettingsModule;
 import SettingsModule.SettingType;
 import ColorsModule;
+import ColorsModule.ColorsTypes;
 import SensorTypes;
 import Components;
 
 class InfoBarView extends Components.Box {
-    private var _sensorType as SensorTypes.Enum = SensorTypes.NONE;
+    private var _sensorType as SensorTypesEnum = SensorTypes.NONE;
     private var _barColor as Number = 0;
     private var _sensorToGoalMap = {
         SensorTypes.BATTERY => SensorTypes.BATTERY_GOAL,
@@ -32,31 +33,31 @@ class InfoBarView extends Components.Box {
 
     private function updateProps() as Void {
         self._barColor = ColorsModule.getColor(
-            SettingsModule.getValue(SettingType.SEPARATOR_COLOR) as ColorsTypes.Enum
+            SettingsModule.getValue(SettingType.SEPARATOR_COLOR) as ColorsTypesEnum
         );
-        self._sensorType = SettingsModule.getValue(SettingType.SEPARATOR_INFO) as SensorTypes.Enum;
+        self._sensorType = SettingsModule.getValue(SettingType.SEPARATOR_INFO) as SensorTypesEnum;
 
         DotPattern.create(DotPattern.INFO_BAR, self.getWidth(), self.getHeight(), self._barColor, self.backgroundColor);
     }
 
-    private function calculatePercente(curentValue as Number?, maxValue as Number?) as Float or Number {
-        if (curentValue == 0 || curentValue == null || maxValue == 0 || maxValue == null) {
+    private function calculatePercent(currentValue as Number?, maxValue as Number?) as Float or Number {
+        if (currentValue == 0 || currentValue == null || maxValue == 0 || maxValue == null) {
             return 0;
         }
 
-        var result = curentValue.toFloat() / (maxValue.toFloat() / 100);
+        var result = currentValue.toFloat() / (maxValue.toFloat() / 100);
 
         return result > 100 ? 100 : result;
     }
 
-    private function getGoal(sensorKey as SensorTypes.Enum) as Number? {
+    private function getGoal(sensorKey as SensorTypesEnum) as Number? {
         var sensorGoal = self._sensorToGoalMap.get(sensorKey);
 
         if (sensorGoal == null) {
             return null;
         }
 
-        return Services.SensorInfo().getValue(sensorGoal);
+        return Services.SensorInfo().getValue(sensorGoal) as Number?;
     }
 
     protected function render(drawContext as Dc) as Void {
@@ -69,9 +70,9 @@ class InfoBarView extends Components.Box {
             var pattern = DotPattern.get(DotPattern.INFO_BAR, 2, height, self.aodColor, Graphics.COLOR_BLACK);
             drawContext.drawBitmap(posX, posY, pattern);
         } else {
-            var sensorValue = Services.SensorInfo().getValue(self._sensorType);
+            var sensorValue = Services.SensorInfo().getValue(self._sensorType) as Number?;
             var maxValue = self.getGoal(self._sensorType);
-            var percent = self.calculatePercente(sensorValue, maxValue);
+            var percent = self.calculatePercent(sensorValue, maxValue);
             var isCompleted = percent.toNumber() == 100;
 
             var barHeight = height.toFloat() * (percent / 100);

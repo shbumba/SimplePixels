@@ -1,7 +1,7 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
-import SettingsModule;
+import SettingsModule.SettingType;
 
 module SettingsMenuHelper {
     typedef MenuItemProps as {
@@ -19,7 +19,7 @@ module SettingsMenuHelper {
         :options as { :alignment as MenuItem.Alignment }?
     };
 
-    typedef MenuValueKey as SettingType.Enum;
+    typedef MenuValueKey as SettingTypeEnum;
 
     function setFocusOnMenuItem(menu as WatchUi.CustomMenu or WatchUi.Menu2, valueKey as MenuValueKey?) as Void {
         if (valueKey != null) {
@@ -44,7 +44,7 @@ module SettingsMenuHelper {
         var valueKey = params.get(:identifier);
 
         if (valueKey != null) {
-            isEnabled = SettingsModule.getValue(valueKey as SettingType.Enum);
+            isEnabled = SettingsModule.getValue(valueKey as SettingTypeEnum);
         }
 
         if (isEnabled == null) {

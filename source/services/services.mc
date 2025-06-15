@@ -2,12 +2,12 @@ import Toybox.Lang;
 import ObserverModule;
 
 module Services {
-    enum ServiceType {
+    enum ServiceTypeEnum {
         SENSORS_INFO = 1,
         OBSERVER_STORE
     }
 
-    var _cachedServices = {} as Dictionary<ServiceType, Object>;
+    var _cachedServices = {} as Dictionary<ServiceTypeEnum, Object>;
 
     function register() as Void {
         if (_cachedServices.size() > 0) {

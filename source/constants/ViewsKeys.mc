@@ -1,7 +1,7 @@
 import Toybox.Lang;
 
 module ViewsKeys {
-    enum Enum {
+    enum ViewsKeysEnum {
         BACKGROUND = "Background",
         PREV_HOURS = "PrevHours",
         DATE = "Date",

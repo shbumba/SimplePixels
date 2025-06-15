@@ -4,8 +4,8 @@ import Toybox.Graphics;
 import GlobalKeys;
 
 module Components {
-    module ListItemsDerection {
-        enum Enum {
+    module ListItemsDirection {
+        enum ListItemsDirectionEnum {
             LEFT = 1,
             RIGHT
         }
@@ -20,12 +20,12 @@ module Components {
     typedef ItemsRenderProps as {
         :items as Array<ItemType>,
         :drawContext as Dc,
-        :derection as ListItemsDerection.Enum?
+        :direction as ListItemsDirection.ListItemsDirectionEnum?
     };
 
     typedef ElementRenderProps as {
         :item as ItemType,
-        :derection as ListItemsDerection.Enum?,
+        :direction as ListItemsDirection.ListItemsDirectionEnum?,
         :posX as Numeric,
         :posY as Numeric
     };
@@ -58,8 +58,8 @@ module Components {
             self._itemHeight = drawContext.getFontHeight(self.getFont());
         }
 
-        private function getJustify(direction as ListItemsDerection.Enum) {
-            if (direction == ListItemsDerection.LEFT) {
+        private function getJustify(direction as ListItemsDirection.ListItemsDirectionEnum) {
+            if (direction == ListItemsDirection.LEFT) {
                 return Graphics.TEXT_JUSTIFY_LEFT;
             }
 
@@ -76,12 +76,12 @@ module Components {
 
             var posX = props.get(:posX);
             var textYPos = props.get(:posY);
-            var textDerection = props.get(:direction);
+            var textDirection = props.get(:direction);
 
             var textXPos = posX + self._iconSize;
-            var textJustify = self.getJustify(textDerection);
+            var textJustify = self.getJustify(textDirection);
 
-            if (textDerection == ListItemsDerection.RIGHT) {
+            if (textDirection == ListItemsDirection.RIGHT) {
                 textXPos = posX - self._iconSize;
             }
 
@@ -99,8 +99,8 @@ module Components {
             var posX = props.get(:posX);
             var posY = props.get(:posY);
 
-            var iconDerection = props.get(:direction);
-            var iconJustify = self.getJustify(iconDerection);
+            var iconDirection = props.get(:direction);
+            var iconJustify = self.getJustify(iconDirection);
 
             drawContext.drawText(posX, posY, icon, GlobalKeys.ICON_SYMBOL, iconJustify);
         }
@@ -116,8 +116,8 @@ module Components {
             var posX = props.get(:posX);
             var posY = props.get(:posY);
 
-            var iconDerection = props.get(:direction);
-            var iconJustify = self.getJustify(iconDerection);
+            var iconDirection = props.get(:direction);
+            var iconJustify = self.getJustify(iconDirection);
 
             for (var i = 0; i < icons.size(); i++) {
                 var icon = icons[i];
@@ -146,9 +146,9 @@ module Components {
             var direction = props.get(:direction);
             var posX = self.getPosX();
             var posY = self.getPosY();
-            direction = direction != null ? direction : ListItemsDerection.LEFT;
+            direction = direction != null ? direction : ListItemsDirection.LEFT;
 
-            if (direction == ListItemsDerection.RIGHT) {
+            if (direction == ListItemsDirection.RIGHT) {
                 posX = posX + self.getWidth();
             }
 

@@ -6,47 +6,48 @@ import Toybox.SensorHistory;
 import SensorTypes;
 
 module SensorsCheckers {
-    var Map = {
-        SensorTypes.NONE => true,
-        SensorTypes.STEPS => true,
-        SensorTypes.CALORIES => true,
-        SensorTypes.BATTERY => true,
-        SensorTypes.BATTERY_IN_DAYS => :checkBatteryInDays,
-        SensorTypes.SOLAR_INTENSITY => :checkSolarIntensity,
-        SensorTypes.IS_CONNECTED => true,
-        SensorTypes.HEART_RATE => true,
-        SensorTypes.FLOORS => :checkFloors,
-        SensorTypes.ALTITUDE => true,
-        SensorTypes.MESSAGES => true,
-        SensorTypes.ALARM_COUNT => true,
-        SensorTypes.MEMORY_USED => true,
-        SensorTypes.CURRENT_WEATHER => true,
-        SensorTypes.WEATHER_FEELS => true,
-        SensorTypes.WEATHER_FORECAST => true,
-        SensorTypes.SUNRISE => true,
-        SensorTypes.SUNSET => true,
-        SensorTypes.SUN_RISE_SET => true,
-        SensorTypes.OXYGEN_SATURATION => :checkOxygenSaturation,
-        SensorTypes.PRESSURE => :checkPressure,
-        SensorTypes.TIME_TO_RECOVERY => :checkTimeToRecovery,
-        SensorTypes.STEPS_GOAL => true,
-        SensorTypes.RESPIRATION_RATE => :checkRespirationRate,
-        SensorTypes.METERS_CLIMBED => :checkMetersClimbed,
-        SensorTypes.IS_DO_NOT_DISTURB => :checkDoNotDisturb,
-        SensorTypes.IS_NIGHT_MODE_ENABLED => :checkIsNightMode,
-        SensorTypes.IS_SLEEP_TIME => true,
-        SensorTypes.SECOND_TIME => true,
-        SensorTypes.FLOORS_CLIMBED_GOAL => :checkFloorsClimbedGoal,
-        SensorTypes.DISTANCE => true,
-        SensorTypes.ACTIVE_MINUTES_DAY => true,
-        SensorTypes.BODY_BATTERY => :checkBodyBattery,
-        SensorTypes.STRESS => :checkStress,
-        SensorTypes.BATTERY_GOAL => true,
-        SensorTypes.ACTIVE_MINUTES_WEEK => true,
-        SensorTypes.ACTIVE_MINUTES_WEEK_GOAL => true
-    } as Dictionary<SensorTypes.Enum, Symbol or Boolean>;
+    var Map =
+        ({
+            SensorTypes.NONE => true,
+            SensorTypes.STEPS => true,
+            SensorTypes.CALORIES => true,
+            SensorTypes.BATTERY => true,
+            SensorTypes.BATTERY_IN_DAYS => :checkBatteryInDays,
+            SensorTypes.SOLAR_INTENSITY => :checkSolarIntensity,
+            SensorTypes.IS_CONNECTED => true,
+            SensorTypes.HEART_RATE => true,
+            SensorTypes.FLOORS => :checkFloors,
+            SensorTypes.ALTITUDE => true,
+            SensorTypes.MESSAGES => true,
+            SensorTypes.ALARM_COUNT => true,
+            SensorTypes.MEMORY_USED => true,
+            SensorTypes.CURRENT_WEATHER => true,
+            SensorTypes.WEATHER_FEELS => true,
+            SensorTypes.WEATHER_FORECAST => true,
+            SensorTypes.SUNRISE => true,
+            SensorTypes.SUNSET => true,
+            SensorTypes.SUN_RISE_SET => true,
+            SensorTypes.OXYGEN_SATURATION => :checkOxygenSaturation,
+            SensorTypes.PRESSURE => :checkPressure,
+            SensorTypes.TIME_TO_RECOVERY => :checkTimeToRecovery,
+            SensorTypes.STEPS_GOAL => true,
+            SensorTypes.RESPIRATION_RATE => :checkRespirationRate,
+            SensorTypes.METERS_CLIMBED => :checkMetersClimbed,
+            SensorTypes.IS_DO_NOT_DISTURB => :checkDoNotDisturb,
+            SensorTypes.IS_NIGHT_MODE_ENABLED => :checkIsNightMode,
+            SensorTypes.IS_SLEEP_TIME => true,
+            SensorTypes.SECOND_TIME => true,
+            SensorTypes.FLOORS_CLIMBED_GOAL => :checkFloorsClimbedGoal,
+            SensorTypes.DISTANCE => true,
+            SensorTypes.ACTIVE_MINUTES_DAY => true,
+            SensorTypes.BODY_BATTERY => :checkBodyBattery,
+            SensorTypes.STRESS => :checkStress,
+            SensorTypes.BATTERY_GOAL => true,
+            SensorTypes.ACTIVE_MINUTES_WEEK => true,
+            SensorTypes.ACTIVE_MINUTES_WEEK_GOAL => true
+        }) as Dictionary<SensorTypesEnum, Symbol or Boolean>;
 
-    function check(sensorType as SensorTypes.Enum) as Boolean {
+    function check(sensorType as SensorTypesEnum) as Boolean {
         var sensorChecker = Map.get(sensorType);
 
         if (sensorChecker == null) {

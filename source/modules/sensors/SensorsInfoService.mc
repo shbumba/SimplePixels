@@ -5,9 +5,10 @@ import SensorsTransformators;
 import SensorsGetters;
 import SensorsCheckers;
 import ResourcesCache;
+import SensorTypes;
 
 class SensorsInfoService {
-    private var awailableSensors as Dictionary<SensorTypes.Enum, Boolean> = {};
+    private var availableSensors as Dictionary<SensorTypesEnum, Boolean> = {};
     var _isInited = false;
 
     function init() {
@@ -26,22 +27,22 @@ class SensorsInfoService {
     }
 
     private function fillAvailableSensors() as Void {
-        var keys = SensorsGetters.Map.keys() as Array<SensorTypes.Enum>;
+        var keys = SensorsGetters.Map.keys() as Array<SensorTypesEnum>;
 
         for (var i = 0; i < keys.size(); i++) {
             var key = keys[i];
 
             if (SensorsCheckers.check(key)) {
-                self.awailableSensors.put(key, true);
+                self.availableSensors.put(key, true);
             }
         }
     }
 
-    function isAvailable(sensorType as SensorTypes.Enum) as Boolean {
-        return self.awailableSensors.hasKey(sensorType);
+    function isAvailable(sensorType as SensorTypesEnum) as Boolean {
+        return self.availableSensors.hasKey(sensorType);
     }
 
-    function getValue(sensorType as SensorTypes.Enum) as SensorsGetters.SensorInfoGetterValue {
+    function getValue(sensorType as SensorTypesEnum) as SensorsGetters.SensorInfoGetterValue {
         if (!self.isAvailable(sensorType)) {
             return null;
         }
@@ -49,11 +50,11 @@ class SensorsInfoService {
         return SensorsGetters.getValue(sensorType);
     }
 
-    function transformValue(sensorType as SensorTypes.Enum) as String {
+    function transformValue(sensorType as SensorTypesEnum) as String {
         return SensorsTransformators.transformValue(sensorType, self.getValue(sensorType));
     }
 
-    function getIcon(sensorType as SensorTypes.Enum) as Toybox.WatchUi.FontResource? {
+    function getIcon(sensorType as SensorTypesEnum) as Toybox.WatchUi.FontResource? {
         var iconSymbol = SensorsIcons.getIcon(sensorType, self.getValue(sensorType));
 
         return iconSymbol != null ? ResourcesCache.get(iconSymbol) as Toybox.WatchUi.FontResource : null;

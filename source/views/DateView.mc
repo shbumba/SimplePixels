@@ -4,9 +4,11 @@ import Toybox.Time;
 import Components;
 import SettingsModule;
 import SettingsModule.SettingType;
+import FormatDate.DisplayDateFormatType;
+import FormatDate;
 
 class DateView extends Components.Box {
-    private var _dateFormatType as FormatDate.DisplayDateFormatType.Enum = FormatDate.DisplayDateFormatType.DDMM;
+    private var _dateFormatType as DisplayDateFormatTypeEnum = DisplayDateFormatType.DDMM;
 
     function initialize(params as Components.BoxProps) {
         Components.Box.initialize(params);
@@ -19,8 +21,7 @@ class DateView extends Components.Box {
     }
 
     private function updateDateFormatType() as Void {
-        self._dateFormatType =
-            SettingsModule.getValue(SettingType.DATE_FORMAT) as FormatDate.DisplayDateFormatType.Enum;
+        self._dateFormatType = SettingsModule.getValue(SettingType.DATE_FORMAT) as DisplayDateFormatTypeEnum;
     }
 
     protected function render(drawContext as Dc) as Void {

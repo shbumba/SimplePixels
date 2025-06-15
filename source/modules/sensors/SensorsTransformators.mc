@@ -9,43 +9,44 @@ import ResourcesCache;
 import GlobalKeys;
 
 module SensorsTransformators {
-    var Map = {
-        SensorTypes.NONE => :_transformToEmpty,
-        SensorTypes.BATTERY => :_transformPercent,
-        SensorTypes.BATTERY_IN_DAYS => :_transformBatteryInDays,
-        SensorTypes.CURRENT_WEATHER => :_transformReTemperature,
-        SensorTypes.WEATHER_FEELS => :_transformTemperature,
-        SensorTypes.WEATHER_FORECAST => :_transformTemperatureForecast,
-        SensorTypes.SUNRISE => :_transformTime,
-        SensorTypes.SUNSET => :_transformTime,
-        SensorTypes.SUN_RISE_SET => :_transformSunRiseSet,
-        SensorTypes.STEPS => :_transformToFourNumbers,
-        SensorTypes.CALORIES => :_transformToFourNumbers,
-        SensorTypes.HEART_RATE => :_transformToThreeNumbers,
-        SensorTypes.STRESS => :_transformPercent,
-        SensorTypes.BODY_BATTERY => :_transformPercent,
-        SensorTypes.OXYGEN_SATURATION => :_transformPercent,
-        SensorTypes.RESPIRATION_RATE => :_transformRespirationRate,
-        SensorTypes.TIME_TO_RECOVERY => :_transformTimeToRecovery,
-        SensorTypes.FLOORS => :_transformToTwoNumbers,
-        SensorTypes.METERS_CLIMBED => :_transformMeters,
-        SensorTypes.DISTANCE => :_transformMeters,
-        SensorTypes.ALTITUDE => :_transformMeters,
-        SensorTypes.PRESSURE => :_transformPressure,
-        SensorTypes.ACTIVE_MINUTES_DAY => :_transformActiveMinutesDay,
-        SensorTypes.ACTIVE_MINUTES_WEEK => :_transformActiveMinutesDay,
-        SensorTypes.MESSAGES => :_transformFullNumbers,
-        SensorTypes.ALARM_COUNT => :_transformFullNumbers,
-        SensorTypes.SOLAR_INTENSITY => :_transformPercent,
-        SensorTypes.IS_CONNECTED => :_transformToEmpty,
-        SensorTypes.IS_DO_NOT_DISTURB => :_transformToEmpty,
-        SensorTypes.IS_NIGHT_MODE_ENABLED => :_transformToEmpty,
-        SensorTypes.IS_SLEEP_TIME => :_transformToEmpty,
-        SensorTypes.SECOND_TIME => :_transformTime,
-        SensorTypes.MEMORY_USED => :_transformBytesToKb
-    } as Dictionary<SensorTypes.Enum, Symbol>;
+    var Map =
+        ({
+            SensorTypes.NONE => :_transformToEmpty,
+            SensorTypes.BATTERY => :_transformPercent,
+            SensorTypes.BATTERY_IN_DAYS => :_transformBatteryInDays,
+            SensorTypes.CURRENT_WEATHER => :_transformReTemperature,
+            SensorTypes.WEATHER_FEELS => :_transformTemperature,
+            SensorTypes.WEATHER_FORECAST => :_transformTemperatureForecast,
+            SensorTypes.SUNRISE => :_transformTime,
+            SensorTypes.SUNSET => :_transformTime,
+            SensorTypes.SUN_RISE_SET => :_transformSunRiseSet,
+            SensorTypes.STEPS => :_transformToFourNumbers,
+            SensorTypes.CALORIES => :_transformToFourNumbers,
+            SensorTypes.HEART_RATE => :_transformToThreeNumbers,
+            SensorTypes.STRESS => :_transformPercent,
+            SensorTypes.BODY_BATTERY => :_transformPercent,
+            SensorTypes.OXYGEN_SATURATION => :_transformPercent,
+            SensorTypes.RESPIRATION_RATE => :_transformRespirationRate,
+            SensorTypes.TIME_TO_RECOVERY => :_transformTimeToRecovery,
+            SensorTypes.FLOORS => :_transformToTwoNumbers,
+            SensorTypes.METERS_CLIMBED => :_transformMeters,
+            SensorTypes.DISTANCE => :_transformMeters,
+            SensorTypes.ALTITUDE => :_transformMeters,
+            SensorTypes.PRESSURE => :_transformPressure,
+            SensorTypes.ACTIVE_MINUTES_DAY => :_transformActiveMinutesDay,
+            SensorTypes.ACTIVE_MINUTES_WEEK => :_transformActiveMinutesDay,
+            SensorTypes.MESSAGES => :_transformFullNumbers,
+            SensorTypes.ALARM_COUNT => :_transformFullNumbers,
+            SensorTypes.SOLAR_INTENSITY => :_transformPercent,
+            SensorTypes.IS_CONNECTED => :_transformToEmpty,
+            SensorTypes.IS_DO_NOT_DISTURB => :_transformToEmpty,
+            SensorTypes.IS_NIGHT_MODE_ENABLED => :_transformToEmpty,
+            SensorTypes.IS_SLEEP_TIME => :_transformToEmpty,
+            SensorTypes.SECOND_TIME => :_transformTime,
+            SensorTypes.MEMORY_USED => :_transformBytesToKb
+        }) as Dictionary<SensorTypesEnum, Symbol>;
 
-    function transformValue(sensorType as SensorTypes.Enum, value as SensorInfoGetterValue) as String {
+    function transformValue(sensorType as SensorTypesEnum, value as SensorInfoGetterValue) as String {
         var handler = Map.get(sensorType) as Symbol;
 
         if (value == null || handler == null) {
@@ -94,7 +95,7 @@ module SensorsTransformators {
             return value.format("%.0f").toString() + "°";
         }
 
-        function _transformReTemperature(value as Array<Number?>) as String{
+        function _transformReTemperature(value as Array<Number?>) as String {
             var temp = value[0];
             temp = temp != null ? _transformTemperature(temp) : temp;
             return temp;
@@ -147,12 +148,12 @@ module SensorsTransformators {
             var distanceUnits = GlobalKeys.DISTANCE_UNITS;
 
             var unitText = "";
-            var isKilometr = value >= 1000;
+            var isKilometer = value >= 1000;
             var isMetricSystem = distanceUnits == System.UNIT_METRIC;
 
             value = value.toFloat();
 
-            if (isKilometr) {
+            if (isKilometer) {
                 unitText = isMetricSystem ? "km" : "mi";
                 value = isMetricSystem ? value / 1000 : _transformMetrToMil(value);
             } else {
